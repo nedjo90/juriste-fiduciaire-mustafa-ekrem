@@ -1,4 +1,4 @@
-"""Porte (h) contrôle visuel (§7.3) : rendu PDF → PNG par page (LibreOffice + pdftoppm), détection simple
+"""Porte (h) contrôle visuel (§7.3) : rendu PDF → PNG par page (Word/PowerPoint du poste via office.py, ou PDF fourni, + pdftoppm), détection simple
 des débordements (encre dans les marges latérales), titres orphelins en bas de page (pdftotext), tableaux et
 images plus larges que la zone de texte (analyse docx). Les PNG restent dans .equipe/run/rendus/ pour le
 regard de modèle de l'appel adverse groupé. Outil absent → « na » avec réserve, jamais un blocage."""
@@ -119,7 +119,7 @@ def verifier(doc, ctx=None):
         tmp = Path(tempfile.mkdtemp(prefix="portes-"))
         pdf = C.vers_pdf(p, tmp)
     if not pdf or not Path(pdf).exists():
-        det.append("rendu PDF impossible (LibreOffice absent) : contrôle visuel limité à l'analyse du document")
+        det.append("rendu PDF impossible (Word/PowerPoint indisponibles sur ce poste) : contrôle visuel limité à l'analyse du document")
         reserves += 1
     else:
         dest = C.EQ / "run" / "rendus" / C.slug(p.stem, 60)

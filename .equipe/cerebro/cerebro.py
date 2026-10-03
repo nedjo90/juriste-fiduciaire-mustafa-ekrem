@@ -65,6 +65,7 @@ def build():
     a = s.add_parser("queue"); a.add_argument("action", choices=["add", "next", "done", "list"]); a.add_argument("arg", nargs="*"); a.add_argument("--priorite", type=int, default=4)
     a = s.add_parser("task-seen"); a.add_argument("type")
     a = s.add_parser("mesure"); a.add_argument("role"); a.add_argument("tache"); a.add_argument("palier"); a.add_argument("--tokens", type=int, default=0); a.add_argument("--ms", type=int, default=0)
+    from cb import routines as RT; RT.parseurs(s)  # routine, regle, reconcile (chantier autonomie)
     return p
 
 def main(argv=None):
@@ -73,6 +74,9 @@ def main(argv=None):
     if not c:
         build().print_help(); return
     from cb import objets as O, recherche as R, sommaires as S, config as K, files as F, horloges as H, metier as M, brief as B, juridique as L, cardinal as X
+    from cb import routines as RT
+    if c in RT.COMMANDES:
+        out(RT.executer(args)); return
     if c == "init":
         for d in ("A-deposer", "Deposes", "Livrables", "Modeles", "Informatique"):
             (core.BUREAU / d).mkdir(parents=True, exist_ok=True)

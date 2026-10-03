@@ -1,4 +1,4 @@
-"""Gabarit PDF de la maison (reportlab) : repli quand LibreOffice est absent, et rapports PDF natifs.
+"""Gabarit PDF de la maison (reportlab) : repli quand Word/PowerPoint sont absents du poste, et rapports PDF natifs.
 Page de titre, en-tête raison sociale | Confidentiel, pied « Version · État du droit au … » | Page x / y."""
 import re
 from pathlib import Path

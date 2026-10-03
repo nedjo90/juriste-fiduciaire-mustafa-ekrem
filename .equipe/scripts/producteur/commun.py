@@ -94,34 +94,23 @@ def objet(oid):
 
 
 # ------------------------------------------------------------------ outils système
-def soffice():
-    for c in ("soffice", "libreoffice", r"C:\Program Files\LibreOffice\program\soffice.exe",
-              r"C:\Program Files (x86)\LibreOffice\program\soffice.exe", "/Applications/LibreOffice.app/Contents/MacOS/soffice",
-              str(Path.home() / "AppData/Local/Programs/LibreOffice/program/soffice.exe"),
-              str(ROOT / ".equipe" / "outils" / "LibreOfficePortable" / "App" / "libreoffice" / "program" / "soffice.exe")):
-        p = shutil.which(c) or (c if Path(c).exists() else None)
-        if p:
-            return p
-    return None
-
-
-def vers_pdf(src, outdir=None, timeout=180):
-    """conversion LibreOffice sans affichage ; None si impossible (le repli reportlab est ailleurs)"""
-    exe = soffice()
-    if not exe:
-        return None
-    src = Path(src)
-    outdir = Path(outdir or src.parent)
-    outdir.mkdir(parents=True, exist_ok=True)
-    prof = Path(os.environ.get("TMPDIR") or os.environ.get("TEMP") or "/tmp") / f"lo-profil-{os.getpid()}"
+def vers_pdf(src, outdir=None, timeout=240):
+    """conversion par Word / PowerPoint / Excel du poste (office.py) ; None si impossible (repli reportlab ailleurs).
+    LibreOffice n'est plus utilisé par le projet."""
     try:
-        subprocess.run([exe, f"-env:UserInstallation={prof.as_uri()}", "--headless", "--norestore", "--convert-to", "pdf",
-                        "--outdir", str(outdir), str(src)], capture_output=True, timeout=timeout)
+        import office
+        return office.vers_pdf(src, outdir, timeout)
     except Exception as e:
-        journal("erreurs-producteur", op="soffice", src=str(src), erreur=repr(e))
+        journal("erreurs-producteur", op="vers_pdf", src=str(src), erreur=repr(e))
         return None
-    pdf = outdir / (src.stem + ".pdf")
-    return pdf if pdf.exists() and pdf.stat().st_size > 0 else None
+
+
+def office_disponible(src="x.docx"):
+    try:
+        import office
+        return office.disponible(office.famille(src) or "word")
+    except Exception:
+        return None
 
 
 def ouvrir(chemin):

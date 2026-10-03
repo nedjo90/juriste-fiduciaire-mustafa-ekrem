@@ -4,7 +4,7 @@ Usage : python produire.py <source.md> [--role redacteur] [--skill production-li
 Front matter : type (memo|note|lettre|pv|calcul|presentation|rapport|mail), client (C-001 ou nom), dossier, objet, langue,
   titre, sous_titre, date_etat, confort, sources [BIB-…|référence datée], destinataire, lieu, salutation, formule, pieces…
 Étapes : corrections automatiques sûres (⚠ sur le droit non sourcé, typographie) → rendu depuis le gabarit → PDF
-(LibreOffice, sinon reportlab) → portes → cerebro deliverable register → ouverture dans l'application par défaut.
+(Word/PowerPoint/Excel du poste via office.py, sinon gabarit PDF reportlab) → portes → cerebro deliverable register → ouverture dans l'application par défaut.
 Sortie JSON. Jamais bloquant : une porte KO est renvoyée au rôle et le livrable sort avec ses réserves."""
 import sys, re, json, argparse, shutil, time
 from pathlib import Path
@@ -198,7 +198,7 @@ def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True
         reserves.append(f"rendu {typ} incomplet ({e.__class__.__name__}) : repli PDF de la maison")
         principal = None
     if (typ == "rapport" or principal is None or (pdf and "pdf" in formats and typ not in ("calcul", "mail") and not pdf_path)):
-        try:  # repli reportlab : LibreOffice absent ou rendu impossible
+        try:  # repli reportlab : Office absent (Linux, poste sans Word) ou rendu impossible
             import rendu_pdf
             pdf_path = dossier / f"{stem}.pdf"
             m["_pied"] = re.sub(r"\s+", " ", __import__("rendu_docx").marqueurs(d, m)["pied"])
@@ -208,8 +208,8 @@ def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True
             rendu_pdf.rendre(pdf_path, d, m, bl_pdf)
             if principal is None:
                 principal = pdf_path
-            if typ != "rapport" and soffice_absent():
-                reserves.append("PDF produit par le gabarit de secours (LibreOffice absent)")
+            if typ != "rapport" and office_absent(principal):
+                reserves.append("PDF produit par le gabarit PDF de la maison (Word/PowerPoint indisponibles ici) ; contrôle visuel limité à l'analyse du fichier")
         except Exception as e:
             C.journal("erreurs-producteur", op="pdf", erreur=repr(e))
             reserves.append("PDF non produit")
@@ -246,8 +246,8 @@ def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True
     return out
 
 
-def soffice_absent():
-    return C.soffice() is None
+def office_absent(principal=None):
+    return C.office_disponible(str(principal or "x.docx")) is None
 
 
 def main(argv=None):

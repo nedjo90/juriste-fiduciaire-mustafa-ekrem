@@ -31,7 +31,7 @@ CAPACITES = [
     ("python-pptx", "bibliotheque-python", "Rien", "-", "MIT", "pypi:python-pptx"),
     ("reportlab", "bibliotheque-python", "Rien", "-", "BSD", "pypi:reportlab"),
     ("matplotlib", "bibliotheque-python", "Rien", "-", "PSF/BSD", "pypi:matplotlib"),
-    ("LibreOffice sans affichage (soffice --convert-to pdf)", "outil", "Rien", "-", "MPL-2.0", "soffice"),
+    ("Conversion PDF par Microsoft 365 (office.py : COM Word/PowerPoint/Excel sous Windows, osascript sous macOS)", "script", "Rien (local, applications Office du poste)", "-", "maison (Office : licence Microsoft 365 du cabinet)", ".equipe/scripts/producteur/office.py"),
     ("poppler (pdftoppm, pdftotext)", "outil", "Rien", "-", "GPL-2.0", "pdftoppm"),
     ("Mermaid CLI (npx @mermaid-js/mermaid-cli)", "outil", "Texte du schéma vers le registre npm au premier téléchargement seulement", "registre npm", "MIT", "npx -y @mermaid-js/mermaid-cli"),
     ("anthropics document-skills (docx, pptx, xlsx, pdf)", "skill-plugin", "Rien (skills chargées par Claude Code)", "-", "propriétaire Anthropic, source disponible : copie interdite hors des Services", "plugin document-skills@anthropic-agent-skills"),
