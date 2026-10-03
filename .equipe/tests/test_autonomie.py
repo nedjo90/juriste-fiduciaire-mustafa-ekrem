@@ -11,6 +11,7 @@ from pathlib import Path
 REEL = Path(__file__).resolve().parents[2]
 PY = sys.executable
 AVEC_MODELE = "--avec-modele" in sys.argv
+VRAI_HOME = {k: os.environ[k] for k in ("HOME", "USERPROFILE") if k in os.environ}  # identifiants de claude (test réel seulement)
 RES, TESTS = [], []
 LUNDI = "2026-10-05"
 
@@ -515,6 +516,7 @@ def _():
         return
     for k in ("CEREBRO_SANS_MODELE", "CEREBRO_CLAUDE"):
         os.environ.pop(k, None)
+    os.environ.update(VRAI_HOME)
     os.environ["CEREBRO_FABRIQUE_SANS_RACCOURCI"] = "1"
     vider_mesures()
     K.set_("modeles.budget_fond_quotidien_appels", "10", source="test")
