@@ -219,21 +219,45 @@ def t_veille_hebdo(arg, fin):
             r = subprocess.run([fond.python_exe(), str(p), "--max", "60"], capture_output=True, text=True, encoding="utf-8", errors="replace",
                                timeout=3600, cwd=str(ROOT), env=fond.env_fond(), stdin=subprocess.DEVNULL)
             scripts = {"code": r.returncode, "sortie": (r.stdout or "")[-200:]}
+    ro = None
+    if not os.environ.get("CEREBRO_SANS_RESEAU"):
+        # publications officielles fédérales de la semaine (RO), réformes à venir comprises : par script, sans modèle
+        import subprocess
+        p = EQ / "scripts" / "bibliotheque" / "veille_ro.py"
+        if p.exists():
+            r = subprocess.run([fond.python_exe(), str(p)], capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               timeout=900, cwd=str(ROOT), env=fond.env_fond(), stdin=subprocess.DEVNULL)
+            try:
+                ro = {k: v for k, v in json.loads(r.stdout).items() if k in ("publications", "retenues", "erreur")}
+                ro["retenues"] = len(ro.get("retenues") or [])
+            except Exception:
+                ro = {"sortie": (r.stdout or r.stderr or "")[-200:]}
     chg, file_ = candidats_veille()
-    if not chg and not file_:
-        core.set_etat("veille", {"semaine": _semaine(), "vide": True, "le": core.iso()})
-        return {"candidats": 0, "semaine_vide": True, "scripts": scripts}
     lignes = [f"- {c['id']} · {core.cut(c['nom'], 100)} · {core.cut(c['resume'], 200)} · source {c['source'] or '?'}" for c in chg]
     lignes += [f"- file {j['tache']} : {core.cut(j['arg'], 200)}" for j in file_]
-    mission = ("Veille hebdomadaire, un seul passage groupé. Candidats préparés par script :\n" + "\n".join(lignes)
+    cantons = K.get("mustafa.cantons_suivis") or ["VD", "GE"]
+    mission = ("Veille hebdomadaire, un seul passage groupé.\n\n1. Candidats préparés par script (publications officielles, nouvelles "
+               "versions de lois) :\n" + ("\n".join(lignes) or "- aucun cette semaine")
                + "\n\nPour chacun : pertinent pour la maison ? (domaines : `cerebro config get mustafa.domaines`, clients en base). Pertinent → "
-               "objet changement_droit (créé si le candidat vient de la file), liens vers clients/positions/règles touchés (`cerebro link`), "
-               "prochaine action datée. Aucune alerte rédigée ici : le script met les alertes en file. "
+               "liens vers clients/positions/règles touchés (`cerebro link`), prochaine action datée.\n\n"
+               "2. Recherche active, sources OFFICIELLES seulement (WebSearch puis WebFetch), sur les 7 derniers jours : circulaires, "
+               "notices et communications de l'AFC (estv.admin.ch) ; arrêts du Tribunal fédéral destinés à publication (bger.ch) en droit "
+               "fiscal, des sociétés, des successions, du travail, des poursuites ; communications de la FINMA et de l'OFAS ; nouveautés "
+               f"fiscales et du registre du commerce des cantons suivis ({', '.join(cantons)}) ; projets mis en consultation ou adoptés "
+               "par le Parlement (admin.ch) dans ces domaines. Pour chaque nouveauté pertinente, absente de la mémoire (`cerebro find` "
+               "d'abord) : `cerebro new changement_droit \"<titre>\" --source <url officielle> --date <date d'analyse> --resume \"<ce qui "
+               "change, date d'effet>\" --domaine veille`, liens vers les objets touchés ; texte fédéral à ajouter à la bibliothèque : "
+               "`cerebro queue add bibliotheque_ingest <numéro RS>`. Rien d'inventé : sans source officielle datée, rien n'est créé.\n\n"
+               "Aucune alerte rédigée ici : le script met les alertes en file. "
                'Dernière ligne : {"pertinents": ["CHG-…"], "non_pertinents": ["CHG-…"], "semaine_vide": false}')
     r = _mi().lancer(mission, role=str(EQ / "roles" / "veilleur.md"), palier="intermediaire", priorite=5, nom="veilleur", tache="veille_hebdo",
-                     elements=chg + file_)
+                     elements=chg + file_ + [{"recherche": "sources officielles de la semaine"}],
+                     outils=_mi().OUTILS + ",WebSearch,WebFetch")
     if not r.get("ok"):
-        out = {"candidats": len(chg) + len(file_), "attente": r.get("saute") or r.get("erreur")}
+        out = {"candidats": len(chg) + len(file_), "attente": r.get("saute") or r.get("erreur"), "ro": ro}
+        if not chg and not file_:  # aucun candidat par script et recherche active non faite (budget, sans modèle)
+            out["semaine_vide"] = True
+            core.set_etat("veille", {"semaine": _semaine(), "vide": True, "le": core.iso(), "recherche_active": "non faite"})
         if r.get("rationne") or r.get("limite"):
             out["_partiel"] = True
         return out
@@ -244,12 +268,15 @@ def t_veille_hebdo(arg, fin):
                                                            (c["id"],)).fetchone()]
     for i in pertinents:
         B.queue_add("alerte_changement", i, 2)
-    for c in chg:
+    nouveaux = [x["id"] for x in con.execute("SELECT id FROM objets WHERE type='changement_droit' AND enregistre_le>=? "
+                                             "AND COALESCE(json_extract(data,'$.veille_jugee'),'')=''", (core.iso(),))]
+    pertinents += [i for i in nouveaux if i not in pertinents and i not in (res.get("non_pertinents") or [])]  # trouvés par la recherche
+    for c in chg + [{"id": i} for i in nouveaux]:
         O.update(c["id"], veille_jugee=core.iso(), acteur="veilleur")
     for j in file_:
         B.queue_done(j["n"])
     core.set_etat("veille", {"semaine": _semaine(), "vide": not pertinents, "le": core.iso(), "pertinents": pertinents})
-    return {"candidats": len(chg) + len(file_), "pertinents": pertinents, "alertes_en_file": len(pertinents), "scripts": scripts}
+    return {"candidats": len(chg) + len(file_), "pertinents": pertinents, "alertes_en_file": len(pertinents), "scripts": scripts, "ro": ro}
 
 
 # ------------------------------------------------------------------ tuteur, revue, anticipation

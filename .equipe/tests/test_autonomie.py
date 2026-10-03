@@ -460,13 +460,15 @@ def _():
     assert "(oui / non)" in (R / O.get(r["document"])["chemin"]).read_text(encoding="utf-8")
 
 
-@test("missions de fond sans matière → aucun appel (tuteur, anticipation, veille)")
+@test("missions de fond sans matière → aucun appel (tuteur, anticipation) ; veille sans candidat : seule la recherche active hebdomadaire")
 def _():
     n0 = len(appels())
-    assert cycle.TACHES["veille_hebdo"]("", FIN()).get("semaine_vide")
+    v = cycle.TACHES["veille_hebdo"]("", FIN())
+    assert v.get("candidats") == 0, v
+    assert len(appels()) == n0 + 1, "veille : une seule recherche active hebdomadaire (sources officielles), rien d'autre"
     core.set_etat("anticipation_revus", {r[0]: core.iso() for r in core.db().execute("SELECT id FROM objets WHERE type='client'")})
     assert cycle.TACHES["anticipation_mensuelle"]("", FIN()) == {"clients": 0}
-    assert len(appels()) == n0
+    assert len(appels()) == n0 + 1
 
 
 @test("expérience : identifiants et gras visibles dans les réponses → révision de l'associé mise en file")

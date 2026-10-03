@@ -108,7 +108,14 @@ def asof(identifiant, date=None, langue="fr"):
 def article(identifiant, art, date=None, langue="fr"):
     v = asof(identifiant, date, langue)
     if not v:
-        return {"erreur": f"{identifiant} ({langue}) absent de la bibliothèque", "reserve": "⚠ aucune source primaire ingérée"}
+        # la bibliothèque n'est jamais limitée à ce qu'elle contient aujourd'hui : texte demandé → ajouté au prochain cycle
+        from .brief import queue_add
+        try:
+            queue_add("bibliotheque_ingest", str(identifiant), 2)
+        except Exception:
+            pass
+        return {"erreur": f"{identifiant} ({langue}) absent de la bibliothèque : ajout demandé (prochain entretien)",
+                "reserve": "⚠ source primaire pas encore dans la bibliothèque : texte officiel à consulter en ligne avant d'affirmer"}
     p = abspath(v["chemin"])
     if not p.exists():
         # texte pas encore téléchargé sur ce poste (la bibliothèque n'est pas dans git) : rattrapage en file, réserve explicite
