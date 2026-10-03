@@ -1,6 +1,6 @@
 ---
 name: fact-chronology
-description: "Chronologie sourcée d'un dossier à partir des documents (litige, réclamation, contrôle, succession)."
+description: "Sourced chronology of a matter built from the documents (dispute, réclamation, audit, succession)."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,28 +23,29 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # fact-chronology (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
-origine: adapté de anthropics/claude-for-legal `litigation-legal/skills/chronology` (Apache 2.0) — voir SOURCE.md ; interaction visible d'origine (entretien de démarrage, validations) retirée : défauts appliqués.
+origin: adapted from anthropics/claude-for-legal `litigation-legal/skills/chronology` (Apache 2.0), see SOURCE.md; original visible interaction (start-up interview, validations) removed: defaults applied.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-préparation d'une réclamation, d'un recours, d'un dossier pour avocat, d'un contrôle ; demande « fais la chronologie ».
+## When to use
+preparing a réclamation, an appeal (recours), a file for a lawyer, an audit/inspection; request « fais la chronologie ».
 
-## Étapes
-1 Sources : documents du dossier (`cerebro find` DOC-, M-, RDV-) ; liste des sources lues.
-2 Extraction : date (précise ou approximative, marquée), événement, acteurs (liens), source (ID + page/section), citation courte.
-3 Provenance obligatoire : événement tiré d'un document → ID ; affirmé par le client → [déclaré par X le …] ; jamais de fait ajouté de mémoire ou par supposition ; une analyse juridique (délai, prescription) → sourcée ou ⚠.
-4 Dédoublonnage ; importance : décisif / utile / contexte (le décisif reste rare ; en cas de doute, le niveau inférieur).
-5 Lacunes : périodes sans événement, pièces attendues manquantes, sources illisibles → listées, jamais comblées.
-6 Sortie : tableau (date · événement · acteurs · source · importance) + schéma chronologique (visualiseur) via deliverable-production ; version pour un tiers sans éléments internes (MET-012).
+## Steps
+1 Sources: matter documents (`cerebro find` DOC-, M-, RDV-); list of sources read.
+2 Extraction: date (exact or approximate, marked), event, actors (links), source (ID + page/section), short quote.
+3 Provenance mandatory: event drawn from a document → ID; asserted by the client → [déclaré par X le …]; never a fact added from memory or by assumption; legal analysis (deadline, prescription) → sourced or ⚠.
+4 Deduplication; importance: décisif / utile / contexte (décisif stays rare; when in doubt, the lower level).
+5 Gaps: periods without events, expected documents missing, illegible sources → listed, never filled.
+6 Output: table (date · event · actors · source · importance) + timeline diagram (visualiser) via deliverable-production; third-party version without internal elements (MET-012).
 
-## Structure du livrable
-En-tête (dossier, date, sources, nombre d'événements) · chronologie · événements décisifs détaillés · lacunes · version.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Header (matter, date, sources, number of events) · chronology · decisive events in detail · gaps · version.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] chaque entrée a sa source · [ ] aucun fait non sourcé · [ ] importances sobres · [ ] lacunes listées · [ ] délais calculés par horloge
+## Checks
+[ ] each entry has its source · [ ] no unsourced fact · [ ] importance ratings sober · [ ] gaps listed · [ ] deadlines computed by clock
 
-## Principes appliqués et portes qui les vérifient (§7.5)
+## Principles applied and gates (§7.5)
 L7 → P-SRC · L5 → P-LIEN · L6 → P-COUV · L9 → P-PRES
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

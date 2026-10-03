@@ -1,6 +1,6 @@
 ---
 name: legal-memo
-description: "Mémo ou avis de droit suisse au niveau grande étude : résumé, droit sourcé, options, confort."
+description: "Swiss-law memo or legal opinion at top-firm level: summary, sourced law, options, comfort level."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,32 +23,33 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # legal-memo (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-question de droit nécessitant une réponse écrite et motivée ; demande « fais-moi un mémo / un avis / une note » ; analyse à conserver pour le dossier.
+## When to use
+legal question needing a written, reasoned answer; request « fais-moi un mémo / un avis / une note »; analysis to keep on file.
 
-## Étapes
-1 Ligne de tête MET-013 (canton, langue, période, délais) ; client et dossier : `cerebro find "<client> <sujet>"` → `cerebro summary <ID>`.
-2 Réutiliser (MET-016) : `cerebro find --type position --type livrable --type precedent "<sujet>"` ; droit inchangé ? (`cerebro find --type changement_droit "<sujet>"`).
-3 Recherche : sous-agent chercheur → table des autorités (MET-003) + positions ; spécialiste du domaine → analyse (MET-001) avec arguments contraires (MET-009).
-4 Chiffres : sous-agent calculateur (script, barèmes `cerebro rates get`).
-5 Rédaction : sous-agent redacteur, structure ci-dessous, styles de `.team/brain/firm/styles.md`, niveaux de confort (MET-011).
-6 Vérification des citations : sous-agent documentaliste (rapport de sources, « vérifié le », ⚠ sinon).
-7 Humanisation : sous-agent human-editor.
-8 Sortie : skill deliverable-production (gabarit mémo, Word, pied de page version + date d'état) → portes déterministes.
-9 Panel adverse : un seul appel (sous-agent adversarial-panel, MET-010) → corrections par l'auteur.
-10 Relecteur → présentation (« voici le mémo, ouvert à côté »), réserves explicites si une correction n'a pas abouti.
-11 Sortie par le sommaire : `cerebro deliverable register <chemin> --client <C> --dossier <D> --type memo --portes '<json>' --reserves "…"` ; position réutilisable → `cerebro new position "<question>" --client <C> --lien <BIB-…> --resume "<réponse + confort>"` ; `cerebro regen <IDs>`.
+## Steps
+1 Header line MET-013 (canton, language, period, deadlines); client and matter: `cerebro find "<client> <sujet>"` → `cerebro summary <ID>`.
+2 Reuse (MET-016): `cerebro find --type position --type livrable --type precedent "<sujet>"`; law unchanged? (`cerebro find --type changement_droit "<sujet>"`).
+3 Research: researcher sub-agent → table of authorities (MET-003) + positions; domain specialist → analysis (MET-001) with counter-arguments (MET-009).
+4 Figures: calculator sub-agent (script, scales via `cerebro rates get`).
+5 Drafting: redacteur sub-agent, structure below, styles from `.team/brain/firm/styles.md`, comfort levels (MET-011).
+6 Citation check: documentalist sub-agent (sources report, « vérifié le », else ⚠).
+7 Humanisation: human-editor sub-agent.
+8 Output: skill deliverable-production (memo template, Word, footer version + date of state of the law) → deterministic gates.
+9 Adversarial panel: a single call (adversarial-panel sub-agent, MET-010) → corrections by the author.
+10 Reviewer → presentation (« voici le mémo, ouvert à côté »), explicit reservations if a correction did not succeed.
+11 Exit through the summary: `cerebro deliverable register <chemin> --client <C> --dossier <D> --type memo --portes '<json>' --reserves "…"`; reusable position → `cerebro new position "<question>" --client <C> --lien <BIB-…> --resume "<réponse + confort>"`; `cerebro regen <IDs>`.
 
-## Structure du livrable
-en-tête confidentialité · destinataire, date, date d'état du droit, canton · 1 Résumé exécutif (≤ 1 page : réponse, confort, actions, délais) · 2 Question · 3 Faits retenus · 4 Droit applicable · 5 Analyse · 6 Arguments contraires et réponses · 7 Options (tableau chiffré) · 8 Risques · 9 Recommandation · 10 Réserves · 11 Niveaux de confort · Annexes : table des autorités, rapport de sources, pièces.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+confidentiality header · recipient, date, date of state of the law, canton · 1 Executive summary (≤ 1 page: answer, comfort, actions, deadlines) · 2 Question · 3 Facts relied on · 4 Applicable law · 5 Analysis · 6 Counter-arguments and replies · 7 Options (costed table) · 8 Risks · 9 Recommendation · 10 Reservations · 11 Comfort levels · Annexes: table of authorities, sources report, documents. Headings in the deliverable's language (French: Résumé exécutif, Question, Faits retenus, Droit applicable, Analyse, Arguments contraires et réponses, Options, Risques, Recommandation, Réserves, Niveaux de confort).
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] chaque affirmation de droit : BIB- daté ou ⚠ · [ ] confort par conclusion, cohérent avec le résumé · [ ] chiffres par script · [ ] délais en horloges avec document prêt · [ ] panel passé, relecteur passé · [ ] aucune note interne (MET-012) · [ ] prochaine action datée
+## Checks
+[ ] each legal assertion: dated BIB- or ⚠ · [ ] comfort per conclusion, consistent with the summary · [ ] figures by script · [ ] deadlines as clocks with document ready · [ ] panel passed, reviewer passed · [ ] no internal note (MET-012) · [ ] dated next action
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

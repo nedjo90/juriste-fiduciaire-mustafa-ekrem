@@ -1,6 +1,6 @@
 ---
 name: law-change-alert
-description: "Changement de droit → alertes clients rédigées (clients touchés, effet, actions datées), brouillons seulement."
+description: "Change in law → drafted client alerts (clients affected, effect, dated actions), drafts only."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,26 +23,27 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # law-change-alert (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-nouveau changement de droit (CHG-) ; Mustafa mentionne une nouveauté ; veille hebdomadaire.
+## When to use
+new change in law (CHG-); Mustafa mentions something new; weekly watch.
 
-## Étapes
-1 Changement : `cerebro summary <CHG-…>` ; texte ingéré et daté (documentaliste) ; sinon ⚠ et vérification avant toute alerte.
-2 Impact : `cerebro find "<notion>"` sur clients, entités, positions, gabarits ; liste des clients touchés avec raison.
-3 Par client : alerte dans sa langue (structure ci-dessous) → `cerebro new document "Alerte — <sujet>" --client <C> --lien <CHG-…> --statut "brouillon à relire" --corps-fichier <f>`.
-4 Positions et gabarits à réviser → prochaine action datée ; opportunité → commercial (`cerebro pipeline add …`).
-5 Version publique éventuelle → marketeur (brouillon).
+## Steps
+1 Change: `cerebro summary <CHG-…>`; text ingested and dated (documentalist); else ⚠ and verification before any alert.
+2 Impact: `cerebro find "<notion>"` on clients, entities, positions, templates; list of affected clients with reason.
+3 Per client: alert in the client's language (structure below) → `cerebro new document "Alerte — <sujet>" --client <C> --lien <CHG-…> --statut "brouillon à relire" --corps-fichier <f>`.
+4 Positions and templates to revise → dated next action; opportunity → business development (`cerebro pipeline add …`).
+5 Public version if any → marketer (draft).
 
-## Structure du livrable
-Objet clair · ce qui change et depuis quand (source) · ce que cela signifie pour vous · ce qu'il faut faire, avant quand · notre proposition.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Clear subject · what changes and since when (source) · what it means for you · what to do, by when · our proposal.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] source officielle datée · [ ] date d'entrée en vigueur exacte · [ ] clients reliés · [ ] langue du client · [ ] brouillons seulement
+## Checks
+[ ] dated official source · [ ] exact entry-into-force date · [ ] clients linked · [ ] client's language · [ ] drafts only
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

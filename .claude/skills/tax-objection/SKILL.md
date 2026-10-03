@@ -1,6 +1,6 @@
 ---
 name: tax-objection
-description: "Décision de taxation reçue : délai, analyse, projet de réclamation complet, jamais déposé."
+description: "Décision de taxation received: deadline, analysis, complete draft réclamation, never filed."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,29 +23,30 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # tax-objection (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-décision de taxation reçue ou déposée ; demande « conteste », « fais la réclamation », « on a reçu la taxation ».
+## When to use
+décision de taxation received or dropped in; request « conteste », « fais la réclamation », « on a reçu la taxation ».
 
-## Étapes
-1 Événement : `cerebro event taxation --client <C> --contribuable <P-|E-> --autorite "<autorité>" --canton <CT> --periode <AAAA> --date <date de notification> --montant <écart>` → horloge (règle de délai RD- : vérifiée ou ⚠) et document à préparer.
-2 Pièces : décision, déclaration, comptes, correspondance (`cerebro find`) ; date de notification prouvée (enveloppe, suivi) ; sinon [hypothèse] la plus prudente.
-3 Écarts : tableau poste par poste (déclaré · taxé · différence · motif de l'autorité · contestable ? · base légale · confort · pièce).
-4 Analyse : spécialiste fiscal (MET-001, MET-009, « que dirait l'administration ») ; chiffrage de l'enjeu par le calculateur.
-5 Décision proposée : contester tout / partie / pas (coût, chances, risque de reformatio in peius selon la procédure : texte à lire) — une phrase à Mustafa avec recommandation, pas de question.
-6 Rédaction : sous-agent litigator, structure ci-dessous, langue de la procédure.
-7 Documentaliste → human-editor → deliverable-production → portes → panel adverse (livrable important) → relecteur.
-8 Prêt au plus tard J-5 avant l'échéance ; `cerebro deliverable register … --type reclamation` ; prochaine action « signature et dépôt par Mustafa ou le client » datée ; `cerebro regen <IDs>`.
+## Steps
+1 Event: `cerebro event taxation --client <C> --contribuable <P-|E-> --autorite "<autorité>" --canton <CT> --periode <AAAA> --date <date de notification> --montant <écart>` → clock (deadline rule RD-: verified or ⚠) and document to prepare.
+2 Documents: decision, tax return, accounts, correspondence (`cerebro find`); notification date proven (envelope, tracking); else the most cautious [hypothèse].
+3 Differences: item-by-item table (declared · assessed · difference · authority's reason · contestable? · legal basis · comfort · document).
+4 Analysis: tax specialist (MET-001, MET-009, « que dirait l'administration »); stake quantified by the calculator.
+5 Proposed decision: contest all / part / none (cost, chances, risk of reformatio in peius depending on the procedure: text to read); one sentence to Mustafa with a recommendation, no question.
+6 Drafting: litigator sub-agent, structure below, language of the procedure.
+7 Documentalist → human-editor → deliverable-production → gates → adversarial panel (important deliverable) → reviewer.
+8 Ready no later than D-5 before the deadline; `cerebro deliverable register … --type reclamation`; dated next action « signature et dépôt par Mustafa ou le client »; `cerebro regen <IDs>`.
 
-## Structure du livrable
-Autorité et adresse · références de la décision · contribuable, période · Conclusions (chiffrées, principales et subsidiaires) · En fait (numéroté, pièces) · En droit (motifs sourcés, du plus fort au plus faible) · Offres de preuve · Bordereau de pièces · lieu, date, signature laissée au signataire.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Authority and address · references of the decision · taxpayer, period · Conclusions (quantified, principal and subsidiary) · En fait (numbered, documents) · En droit (sourced grounds, strongest to weakest) · Offres de preuve · Bordereau de pièces · place, date, signature left to the signatory.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] horloge posée le jour de la réception · [ ] date de notification documentée · [ ] conclusions chiffrées · [ ] chaque motif sourcé ou ⚠ · [ ] pièces jointes listées et existantes · [ ] prêt avant J-5 · [ ] jamais déposé
+## Checks
+[ ] clock set on the day of receipt · [ ] notification date documented · [ ] conclusions quantified · [ ] each ground sourced or ⚠ · [ ] attached documents listed and existing · [ ] ready before D-5 · [ ] never filed
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

@@ -1,6 +1,6 @@
 ---
 name: email-drafting
-description: "Brouillon de mail professionnel dans la langue du destinataire ; jamais envoyé."
+description: "Draft of a professional email in the recipient's language; never sent."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,27 +23,28 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # email-drafting (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-mail reçu dans un dossier suivi ; demande « réponds à… », « écris à… », « prépare un mail » ; relance ; transmission de document.
+## When to use
+email received in a tracked matter; request « réponds à… », « écris à… », « prépare un mail »; reminder; forwarding of a document.
 
-## Étapes
-1 Contexte : `cerebro find "<expéditeur ou objet>"` → summary du mail (M-) et du client ; historique utile seulement (MET-015).
-2 Langue : celle du destinataire (sinon celle de son mail) ; registre selon `.team/brain/firm/styles.md`.
-3 Fond : question de droit → réponse seulement avec ce que la bibliothèque confirme (`cerebro law article …`) ; sinon formulation prudente et vérification inscrite (⚠ interne, jamais visible dans le mail).
-4 Rédaction : objet « <client> — <sujet> — <action/date> », réponse en une ou deux phrases, motivation brève, prochaine étape, pièces nommées client-objet-date-version, signature de la maison ; ni puces ni gras ; lecteur humain intégré (relire comme le destinataire).
-5 Contrôle MET-012 : aucune note interne, aucun identifiant, rien d'un autre client.
-6 Brouillon : dans la messagerie si un accès sans droit d'envoi est connecté, sinon fichier texte via skill deliverable-production ; `cerebro new document "Brouillon — <objet>" --client <C> --lien <M-…> --statut "brouillon à relire" --prochaine-action "Mustafa relit" --date <aujourd'hui> --corps-fichier <fichier>` ; `cerebro update <M-…> statut="brouillon prêt"`.
+## Steps
+1 Context: `cerebro find "<expéditeur ou objet>"` → summary of the email (M-) and of the client; only useful history (MET-015).
+2 Language: the recipient's (else that of their email); register per `.team/brain/firm/styles.md`.
+3 Substance: legal question → answer only with what the library confirms (`cerebro law article …`); else cautious wording and a verification logged (internal ⚠, never visible in the email).
+4 Drafting: subject « <client> — <sujet> — <action/date> », answer in one or two sentences, brief reasoning, next step, attachments named client-objet-date-version, house signature; no bullets, no bold; built-in human reader (reread as the recipient).
+5 Check MET-012: no internal note, no ID, nothing from another client.
+6 Draft: in the mailbox if an access without send rights is connected (never sent), else text file via skill deliverable-production; `cerebro new document "Brouillon — <objet>" --client <C> --lien <M-…> --statut "brouillon à relire" --prochaine-action "Mustafa relit" --date <aujourd'hui> --corps-fichier <fichier>`; `cerebro update <M-…> statut="brouillon prêt"`.
 
-## Structure du livrable
-Objet · appel · réponse (1-2 phrases) · motivation · prochaine étape et date · pièces · clôture · signature. Texte brut lisible dans Outlook et Gmail.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Subject · salutation · answer (1-2 sentences) · reasoning · next step and date · attachments · closing · signature. Plain text readable in Outlook and Gmail.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] langue du destinataire · [ ] réponse en tête · [ ] aucun tic (MET-005) · [ ] aucune information interne · [ ] pièces nommées · [ ] brouillon seulement, jamais envoyé
+## Checks
+[ ] recipient's language · [ ] answer first · [ ] no tics (MET-005) · [ ] no internal information · [ ] attachments named · [ ] draft only, never sent
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L2 → brouillon seulement (journal d'audit) · L9 → P-PRES + lecteur humain intégré · L7 → P-SRC · L5 → P-LIEN · L6 → P-COUV
+## Principles applied and gates (§7.5)
+L2 → draft only (journal d'audit) · L9 → P-PRES + built-in human reader · L7 → P-SRC · L5 → P-LIEN · L6 → P-COUV
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

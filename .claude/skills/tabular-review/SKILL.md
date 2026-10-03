@@ -1,6 +1,6 @@
 ---
 name: tabular-review
-description: "Extraire les mêmes points d'un lot de documents dans un tableau cité (due diligence, baux)."
+description: "Extract the same points from a batch of documents into a cited table (due diligence, leases)."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,28 +23,29 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # tabular-review (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
-origine: adapté de anthropics/claude-for-legal `corporate-legal/skills/tabular-review` (Apache 2.0) — voir SOURCE.md ; interaction visible d'origine (entretien de démarrage, validations) retirée : défauts appliqués.
+origin: adapted from anthropics/claude-for-legal `corporate-legal/skills/tabular-review` (Apache 2.0), see SOURCE.md; original visible interaction (start-up interview, validations) removed: defaults applied.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-plusieurs documents à interroger sur les mêmes questions ; due diligence ; « fais-moi un tableau de ces contrats ».
+## When to use
+several documents to query on the same questions; due diligence; « fais-moi un tableau de ces contrats ».
 
-## Étapes
-1 Documents : `cerebro find` (objets DOC- du client) ; périmètre et nombre ; au-delà de 200 → sous-ensemble par importance.
-2 Schéma de colonnes typées : verbatim · classification (liste fermée) · date · durée · montant · nombre · libre (rare) ; chaque colonne : id, libellé, type, question, options. Défaut : colonnes de la maison pour le type de document ; pas de validation demandée à Mustafa.
-3 Essai sur 3 à 5 documents ; ajuster les questions ambiguës.
-4 Extraction : un sous-agent par document (lecture intégrale du document, pas d'extraits) ; chaque cellule = {valeur, état, citation exacte, localisation} ; état ∈ répondu | absent | incertain | à revoir ; citation impossible à copier mot pour mot → « à revoir » avec motif.
-5 Normalisation colonne par colonne : valeurs hors liste, formats, valeurs aberrantes ; contrôle par échantillon des citations contre la source (≥ 10 % ou 3-5 lignes) ; une citation reconstruite → toute la colonne revue.
-6 Sortie : skill deliverable-production → Excel (colonne source cachée par colonne de données, commentaire avec la citation, couleurs par état, colonne « vérifié » vide, onglet schéma) + CSV ; synthèse : charge de vérification par colonne.
+## Steps
+1 Documents: `cerebro find` (client's DOC- objects); scope and count; above 200 → subset by importance.
+2 Typed column schema: verbatim · classification (closed list) · date · duration · amount · number · free (rare); each column: id, label, type, question, options. Default: house columns for the document type; no validation asked of Mustafa.
+3 Trial on 3 to 5 documents; adjust ambiguous questions.
+4 Extraction: one sub-agent per document (full reading of the document, no excerpts); each cell = {value, state, exact quote, location}; state ∈ répondu | absent | incertain | à revoir; quote that cannot be copied word for word → « à revoir » with reason.
+5 Normalisation column by column: off-list values, formats, outliers; sample check of quotes against the source (≥ 10 % or 3-5 rows); one reconstructed quote → whole column reviewed.
+6 Output: skill deliverable-production → Excel (hidden source column per data column, comment with the quote, colours by state, empty « vérifié » column, schema sheet) + CSV; summary: verification load per column.
 
-## Structure du livrable
-Classeur : onglet Revue (document · colonnes · vérifié) · onglet Sources (citations, localisations) · onglet Schéma · synthèse (absent / incertain / à revoir par colonne).
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Workbook: Revue sheet (document · columns · vérifié) · Sources sheet (quotes, locations) · Schéma sheet · summary (absent / incertain / à revoir per column).
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] chaque cellule répondue a une citation exacte et localisée · [ ] aucun blanc (état explicite) · [ ] échantillon de citations vérifié · [ ] chaque document a une ligne · [ ] « chaque cellule est une piste, pas une conclusion » rappelé en interne
+## Checks
+[ ] each answered cell has an exact, located quote · [ ] no blank (explicit state) · [ ] quote sample verified · [ ] each document has a row · [ ] « chaque cellule est une piste, pas une conclusion » recalled internally
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC (citations) · L8 → contrôle par échantillon contre la source · L5 → P-LIEN · L9 → P-PRES
+## Principles applied and gates (§7.5)
+L7 → P-SRC (quotes) · L8 → sample check against the source · L5 → P-LIEN · L9 → P-PRES
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

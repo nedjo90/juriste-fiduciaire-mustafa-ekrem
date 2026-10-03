@@ -1,6 +1,6 @@
 ---
 name: github-backup
-description: "Mustafa accepte la copie en ligne : la mettre en place pas à pas sur son propre compte GitHub, en privé."
+description: "Mustafa accepts the online copy: set it up step by step on his own GitHub account, private."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,29 +23,30 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # github-backup (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.11 ; extension d'entretien sauvegarde_github
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-Mustafa répond oui au conseil « copie en ligne », ou demande lui-même une copie de son travail sur son compte GitHub. Jamais proposé avant (le conseil vient seul, après trois semaines). Facultatif : s'il dit non ou « plus tard », on n'en reparle pas.
+## When to use
+Mustafa says yes to the « copie en ligne » tip, or himself asks for a copy of his work on his GitHub account. Never offered before that (the tip comes on its own, after three weeks). Optional: if he says no or « plus tard », never raise it again.
 
-## Principe
-Il fait trois gestes dans son navigateur (compte, dépôt, autorisation) ; l'équipe fait tout le reste. Une étape par message, phrases courtes, aucun mot de mécanique hors « GitHub », « compte » et « copie ». On attend sa réponse avant l'étape suivante. Le dépôt de l'équipe (`origin`) n'est jamais touché : il sert aux mises à jour. La copie part vers un second dépôt nommé `sauvegarde`, PRIVÉ, sur son compte.
+## Principle
+He makes three moves in his browser (account, repository, authorisation); the team does everything else. One step per message, short sentences, no mechanism word other than « GitHub », « compte » and « copie ». Wait for his answer before the next step. The team repository (`origin`) is never touched: it serves updates. The copy goes to a second repository named `sauvegarde`, PRIVATE, on his account.
 
-## Étapes
-0 Si `git remote` liste déjà `sauvegarde` : dire que la copie existe déjà, vérifier qu'elle est privée (étape 4), s'arrêter là.
-1 Compte. Demander : « Avez-vous déjà un compte GitHub ? » Non → ouvrir `https://github.com/signup` dans son navigateur (`start` sous Windows, `open` sous macOS) : « Créez votre compte avec votre adresse e-mail, puis dites-moi votre nom d'utilisateur. » Oui → « Quel est votre nom d'utilisateur GitHub ? »
-2 Dépôt privé. Ouvrir `https://github.com/new?name=jurix-sauvegarde&visibility=private` : « Vérifiez que "Private" est coché, puis cliquez sur "Create repository" en bas. Dites-moi quand c'est fait. »
-3 Liaison (l'équipe, sans rien lui montrer) : `git remote add sauvegarde https://github.com/<utilisateur>/jurix-sauvegarde.git`, puis `git push -u sauvegarde HEAD`. La première fois, une fenêtre GitHub s'ouvre : « Une fenêtre GitHub va s'ouvrir : cliquez sur "Sign in with your browser", puis sur "Authorize". » L'autorisation est gardée par Windows (gestionnaire d'identifiants), on ne la redemande plus.
-4 Contrôle de confidentialité AVANT de dire que c'est fait : `https://api.github.com/repos/<utilisateur>/jurix-sauvegarde` interrogé sans identifiant doit répondre 404 (privé, invisible du public). 200 → dépôt public : `git remote remove sauvegarde`, incident « dépôt de sauvegarde public », et à Mustafa : « Le dépôt est visible de tous ; ouvrez ses réglages (Settings, tout en bas, "Change visibility", "Make private"), puis dites-le-moi. » On reprend l'étape 4 ensuite.
-5 Fin : `cerebro conseil` marqué suivi ; une phrase : « C'est fait : une copie privée de votre travail part chaque jour sur votre compte GitHub. Vous n'avez rien d'autre à faire. »
+## Steps
+0 If `git remote` already lists `sauvegarde`: say the copy already exists, check it is private (step 4), stop there.
+1 Account. Ask: « Avez-vous déjà un compte GitHub ? » No → open `https://github.com/signup` in his browser (`start` on Windows, `open` on macOS): « Créez votre compte avec votre adresse e-mail, puis dites-moi votre nom d'utilisateur. » Yes → « Quel est votre nom d'utilisateur GitHub ? »
+2 Private repository. Open `https://github.com/new?name=jurix-sauvegarde&visibility=private`: « Vérifiez que "Private" est coché, puis cliquez sur "Create repository" en bas. Dites-moi quand c'est fait. »
+3 Linking (the team, showing him nothing): `git remote add sauvegarde https://github.com/<utilisateur>/jurix-sauvegarde.git`, then `git push -u sauvegarde HEAD`. The first time, a GitHub window opens: « Une fenêtre GitHub va s'ouvrir : cliquez sur "Sign in with your browser", puis sur "Authorize". » The authorisation is kept by Windows (credential manager); never asked again.
+4 Privacy check BEFORE saying it is done: `https://api.github.com/repos/<utilisateur>/jurix-sauvegarde` queried without credentials must return 404 (private, invisible to the public). 200 → public repository: `git remote remove sauvegarde`, incident « dépôt de sauvegarde public », and to Mustafa: « Le dépôt est visible de tous ; ouvrez ses réglages (Settings, tout en bas, "Change visibility", "Make private"), puis dites-le-moi. » Then redo step 4.
+5 End: `cerebro conseil` marked as followed; one sentence: « C'est fait : une copie privée de votre travail part chaque jour sur votre compte GitHub. Vous n'avez rien d'autre à faire. »
 
-## En cas de difficulté
-Fenêtre d'autorisation absente ou refusée → refaire l'étape 3 une fois ; sinon incident et « on réessaiera ensemble une autre fois », sans détail technique. Nom de dépôt déjà pris → `jurix-sauvegarde-2`. Jamais de jeton à copier-coller, jamais de mot de passe demandé dans la conversation.
+## If something goes wrong
+Authorisation window missing or refused → redo step 3 once; else incident and « on réessaiera ensemble une autre fois », no technical detail. Repository name already taken → `jurix-sauvegarde-2`. Never a token to copy-paste, never a password asked in the conversation.
 
-## Contrôles
-[ ] dépôt privé vérifié (404 sans identifiant) avant tout message de fin · [ ] `origin` inchangé · [ ] une étape par message · [ ] aucun jargon au-delà de GitHub, compte, copie
+## Checks
+[ ] private repository verified (404 without credentials) before any closing message · [ ] `origin` unchanged · [ ] one step per message · [ ] no jargon beyond GitHub, compte, copie
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L1 → une étape par message, sans jargon (P-PRES) · L2 → seul son propre dépôt privé reçoit la copie (journal d'audit) · L5 → incident tracé en cas d'échec (P-LIEN)
+## Principles applied and gates (§7.5)
+L1 → one step per message, no jargon (P-PRES) · L2 → only his own private repository receives the copy (journal d'audit) · L5 → incident logged on failure (P-LIEN)
 
-## Ne fait jamais
-envoyer le travail vers un dépôt public, ni vers le dépôt de l'équipe · demander un mot de passe ou un jeton dans la conversation · insister s'il dit non ou plus tard · reproposer la copie de lui-même après un refus
+## Never does
+send the work to a public repository, or to the team repository · ask for a password or token in the conversation · insist if he says no or later · offer the copy again on its own initiative after a refusal

@@ -1,6 +1,6 @@
 ---
 name: general-meeting-minutes
-description: "Convocation et PV d'assemblée ou de séance d'organe (SA, Sàrl), avec les suites."
+description: "Notice and PV of a general meeting or board/body meeting (SA, Sàrl), with follow-on steps."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,27 +23,28 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # general-meeting-minutes (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-clôture des comptes (AG ordinaire), dividende, élection ou démission d'organe, modification des statuts, augmentation de capital, toute séance d'organe.
+## When to use
+closing of accounts (ordinary AG), dividend, election or resignation of a body member, amendment of the articles (statuts), capital increase, any meeting of a body.
 
-## Étapes
-1 Source : extrait du registre daté + statuts + règlement d'organisation ; organes jamais supposés.
-2 Calendrier : `cerebro deadlines --client <C>` ; AG ordinaire : horloge (`cerebro clock start …`) ; délai et forme de convocation : statuts puis loi (texte lu, sinon ⚠).
-3 Ordre du jour et propositions ; documents à mettre à disposition (comptes, rapport de révision ou renonciation).
-4 Convocation (brouillon) puis projet de PV (structure ci-dessous) ; majorités et quorum tirés des statuts et de la loi ; acte authentique requis ? → notaire (signalé).
-5 Dividende : `cerebro event dividende --client <C> --societe <E> --date <échéance> --montant <montant>` → horloge impôt anticipé et déclaration préparée.
-6 Suites : réquisition au registre préparée (pièces listées), registre des actions/AED mis à jour, prochaine action datée ; sortie par deliverable-production → portes → relecteur (panel si modification des statuts ou opération de capital).
+## Steps
+1 Source: dated registry extract + statuts + règlement d'organisation; bodies never assumed.
+2 Calendar: `cerebro deadlines --client <C>`; ordinary AG: clock (`cerebro clock start …`); notice period and form of convocation: statuts then law (text read, else ⚠).
+3 Agenda and proposals; documents to make available (accounts, audit report or opting-out).
+4 Convocation (draft) then draft PV (structure below); majorities and quorum taken from statuts and law; acte authentique required? → notary (flagged).
+5 Dividend: `cerebro event dividende --client <C> --societe <E> --date <échéance> --montant <montant>` → impôt anticipé clock and return prepared.
+6 Follow-on: registry filing (réquisition) prepared (documents listed), share register / AED register updated, dated next action; output via deliverable-production → gates → reviewer (panel if statuts amended or capital transaction).
 
-## Structure du livrable
-Société (raison, IDE, siège) · date, heure, lieu ou forme · président, secrétaire, scrutateur · présences et représentations, capital représenté · constatation de la convocation régulière · ordre du jour · délibérations et résultats des votes par point · divers · clôture · signatures.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Company (name, IDE, registered office) · date, time, place or form · chair, secretary, vote counter · attendance and proxies, capital represented · finding of proper convocation · agenda · deliberations and vote results per item · miscellaneous · closing · signatures.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] registre daté et statuts lus · [ ] convocation régulière constatée · [ ] quorum et majorités par point · [ ] acte authentique identifié si requis · [ ] horloges (dividende, inscription) · [ ] réquisition préparée, non déposée
+## Checks
+[ ] dated registry and statuts read · [ ] proper convocation recorded · [ ] quorum and majorities per item · [ ] acte authentique identified if required · [ ] clocks (dividend, registration) · [ ] réquisition prepared, not filed
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

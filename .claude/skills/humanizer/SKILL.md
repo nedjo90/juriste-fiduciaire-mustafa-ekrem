@@ -1,6 +1,6 @@
 ---
 name: humanizer
-description: "Retirer les tics de machine d'un texte anglais sans en changer le sens."
+description: "Remove machine tells from an English text without changing its meaning."
 license: MIT
 metadata:
   version: "3.1.0"
@@ -27,6 +27,8 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 # Humanizer: remove AI writing patterns
 
 Rewrite AI-sounding text so it reads like the writer, not a chatbot. Keep what it says. Do not make anything up.
+
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language. The rewritten text stays in English.
 
 ## Why AI text sounds the way it does
 

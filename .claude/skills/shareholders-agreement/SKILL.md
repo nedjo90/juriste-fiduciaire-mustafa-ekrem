@@ -1,6 +1,6 @@
 ---
 name: shareholders-agreement
-description: "Rédiger ou revoir une convention d'actionnaires ou d'associés suisse."
+description: "Draft or review a Swiss shareholders' or partners' agreement (convention d'actionnaires / d'associés)."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,27 +23,28 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # shareholders-agreement (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-création de société à plusieurs, entrée d'un investisseur, transmission familiale, conflit d'actionnaires à prévenir, revue d'une convention existante.
+## When to use
+company formed by several founders, investor entry, family transfer, shareholder conflict to prevent, review of an existing agreement.
 
-## Étapes
-1 Faits : `cerebro entity show <E>` + extrait du registre daté ; participations (`cerebro entity chain <E>`) ; statuts en vigueur ; objectifs de chaque partie (MET-007).
-2 Réutiliser : `cerebro find --type precedent --type gabarit "convention d'actionnaires"`.
-3 Term sheet : une page, points clés par partie ; rapports de force ; points de négociation (MET-006).
-4 Rédaction clause par clause (structure ci-dessous) : variante pro-majoritaire, pro-minoritaire, compromis, commentaire ; ce qui doit aller dans les statuts (opposabilité) vs la convention : texte CO lu (spécialiste sociétés).
-5 Fiscal : impôt anticipé, droits de timbre, prix de transfert des actions, imposition des gains (spécialiste fiscal) ; LBA si nouvel actionnaire (compliance-officer).
-6 Sortie : deliverable-production (Word, suivi des modifications si revue) → portes → panel → relecteur.
+## Steps
+1 Facts: `cerebro entity show <E>` + dated registry extract; holdings (`cerebro entity chain <E>`); statuts in force; each party's objectives (MET-007).
+2 Reuse: `cerebro find --type precedent --type gabarit "convention d'actionnaires"`.
+3 Term sheet: one page, key points per party; balance of power; negotiation points (MET-006).
+4 Clause-by-clause drafting (structure below): pro-majority variant, pro-minority variant, compromise, commentary; what must go in the statuts (enforceability against third parties) vs the agreement: CO text read (corporate specialist).
+5 Tax: impôt anticipé, stamp duties, transfer price of shares, taxation of gains (tax specialist); LBA if new shareholder (compliance-officer).
+6 Output: deliverable-production (Word, tracked changes if review) → gates → panel → reviewer.
 
-## Structure du livrable
-Parties · Préambule · Définitions · Gouvernance (CA, représentation, majorités qualifiées) · Transferts (préemption, emption, tag-along, drag-along, lock-up, changement de contrôle) · Financement et augmentation de capital · Politique de dividendes · Non-concurrence et non-sollicitation · Confidentialité · Décès, incapacité, divorce · Sortie et méthode d'évaluation · Violation et peine conventionnelle · Durée · Droit applicable, for ou arbitrage · Annexes (actionnariat, adhésion).
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Parties · Preamble · Definitions · Governance (CA, representation, qualified majorities) · Transfers (préemption, emption, tag-along, drag-along, lock-up, change of control) · Financing and capital increase · Dividend policy · Non-compete and non-solicitation · Confidentiality · Death, incapacity, divorce · Exit and valuation method · Breach and peine conventionnelle · Term · Governing law, for or arbitration · Annexes (shareholding, accession). Headings in the deliverable's language.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] registre et statuts lus · [ ] cohérence convention ↔ statuts · [ ] chaque clause : variantes commentées · [ ] méthode d'évaluation précise · [ ] effets fiscaux vérifiés · [ ] termes définis constants · [ ] signatures et adhésion prévues
+## Checks
+[ ] registry and statuts read · [ ] consistency agreement ↔ statuts · [ ] each clause: variants commented · [ ] precise valuation method · [ ] tax effects verified · [ ] defined terms consistent · [ ] signatures and accession provided for
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

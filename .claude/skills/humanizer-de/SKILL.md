@@ -1,6 +1,6 @@
 ---
 name: humanizer-de
-description: "Deutschen Text (Schweiz) ohne Maschinenspuren überarbeiten, Inhalt unverändert."
+description: "Rework a German text (Swiss usage) to remove machine tells, content unchanged."
 license: MIT (abgeleitet von blader/humanizer, siehe SOURCE.md)
 ---
 
@@ -22,29 +22,30 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 <!-- /BLOC-CARDINAL -->
 
 
-# Deutsche Texte vermenschlichen (Schweizer Usanz)
+# Humanise German texts (Swiss usage)
 
-Abgeleitet von `humanizer` (blader/humanizer, nach Wikipedia « Signs of AI writing »), angepasst an juristisches Schweizer Hochdeutsch und an die Verfassung (§7.2). Gesetz 9 ; §4 Grundsatz 21 ; Tore `tics` und `typographie`.
+Derived from `humanizer` (blader/humanizer, after Wikipedia « Signs of AI writing »), adapted to Swiss legal Standard German and to the constitution (§7.2). Law 9; §4 principle 21; gates `tics` and `typographie`.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language. The rewritten text stays in German.
 
-## Vorgehen
+## Method
 
-1. Tor laufen lassen : `python .team/scripts/gates/gates.py <Datei> --langue de --portes tics,typographie`.
-2. Den Absatz um seine Kernaussage neu schreiben. Nichts hinzufügen (keine Tatsache, Zahl, Quelle, die nicht im Text oder im cerebro steht).
-3. Stimme der Kanzlei : Fazit zuerst, kurze und lange Sätze gemischt, aktive Verben, präzise Zahlen mit Quelle, ein Gedanke pro Absatz, klare Position mit Sicherheitsgrad.
-4. Tor erneut laufen lassen.
+1. Run the gate: `python .team/scripts/gates/gates.py <Datei> --langue de --portes tics,typographie`.
+2. Rewrite the paragraph around its core statement. Add nothing (no fact, figure or source that is not in the text or in cerebro).
+3. Firm voice: conclusion first, short and long sentences mixed, active verbs, precise figures with source, one idea per paragraph, clear position with comfort level.
+4. Rerun the gate.
 
-## Typische Muster auf Deutsch
+## Typical patterns in German
 
-- Standardeinstieg und -schluss : « Ich hoffe, diese Nachricht erreicht Sie wohl », « Zögern Sie nicht, mich zu kontaktieren », « Für weitere Fragen stehe ich Ihnen gerne zur Verfügung ». Mit dem nächsten konkreten Schritt enden. « Freundliche Grüsse » bleibt.
-- Füllformeln : « Es ist wichtig zu beachten », « Abschliessend lässt sich sagen », « Zusammenfassend ist festzuhalten ».
-- Inszenierte Kontraste : « nicht nur … sondern auch ».
-- Aufgeblähtes Vokabular : « entscheidend », « von zentraler Bedeutung », « vielschichtig », « bahnbrechend », « eintauchen », « im Herzen von ».
-- Dreierlisten in jedem Satz, Gedankenstriche in Serie, Fettdruck und Aufzählungen in Briefen, Emojis, Erwähnung der KI.
+- Standard openings and closings: « Ich hoffe, diese Nachricht erreicht Sie wohl », « Zögern Sie nicht, mich zu kontaktieren », « Für weitere Fragen stehe ich Ihnen gerne zur Verfügung ». End with the concrete next step. « Freundliche Grüsse » stays.
+- Filler phrases: « Es ist wichtig zu beachten », « Abschliessend lässt sich sagen », « Zusammenfassend ist festzuhalten ».
+- Staged contrasts: « nicht nur … sondern auch ».
+- Inflated vocabulary: « entscheidend », « von zentraler Bedeutung », « vielschichtig », « bahnbrechend », « eintauchen », « im Herzen von ».
+- Triads in every sentence, dashes in series, bold and bullet lists in letters, emojis, mention of AI.
 
-## Schweizer Usanz
+## Swiss usage
 
-Immer « ss » statt « ß » ; Anführungszeichen «…» ohne Leerschlag ; Beträge CHF 1'234.50 ; Datum « 3. Oktober 2026 » ; Helvetismen der Rechtssprache korrekt verwenden (Verfügung, Einsprache, Veranlagung, ESTV, kantonales Steueramt, Traktandum, Generalversammlung, Handelsregisteramt).
+Always « ss » instead of « ß »; quotation marks «…» without space; amounts CHF 1'234.50; date « 3. Oktober 2026 »; use legal Helvetisms correctly (Verfügung, Einsprache, Veranlagung, ESTV, kantonales Steueramt, Traktandum, Generalversammlung, Handelsregisteramt).
 
-## Nicht anfassen
+## Do not touch
 
-Zitate, Gesetzestexte, amtliche Titel, Eigennamen, Grussformeln eines Briefes, feste juristische Begriffe.
+Quotations, statutory texts, official titles, proper names, courtesy formulas of a letter, established legal terms.

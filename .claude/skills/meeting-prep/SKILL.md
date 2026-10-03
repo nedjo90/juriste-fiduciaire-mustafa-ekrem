@@ -1,6 +1,6 @@
 ---
 name: meeting-prep
-description: "Fiche de rendez-vous la veille : participants, historique, délais, documents, questions."
+description: "Meeting brief the day before: participants, history, deadlines, documents, questions."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,25 +23,26 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # meeting-prep (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-rendez-vous dans les 24 heures (agenda connecté ou mentionné par Mustafa) ; demande « prépare mon rendez-vous ».
+## When to use
+appointment within 24 hours (connected calendar or mentioned by Mustafa); request « prépare mon rendez-vous ».
 
-## Étapes
-1 RDV : `cerebro summary <RDV-…>` ; participants → `cerebro find "<nom>"` (rôle, liens, historique).
-2 Client : `cerebro open <C>-VUE` ; `cerebro deadlines --client <C> --days 60` ; dossiers ouverts.
-3 Fiche (structure ci-dessous), une page ; schéma de structure si utile (visualiseur).
-4 `cerebro new document "Fiche RDV — <client> — <date>" --client <C> --lien <RDV-…> --corps-fichier <f> --prochaine-action "rendez-vous" --date <date>` ; `cerebro update <RDV-…> statut="fiche prête"`.
+## Steps
+1 Appointment: `cerebro summary <RDV-…>`; participants → `cerebro find "<nom>"` (role, links, history).
+2 Client: `cerebro open <C>-VUE`; `cerebro deadlines --client <C> --days 60`; open matters.
+3 Brief (structure below), one page; structure diagram if useful (visualiser).
+4 `cerebro new document "Fiche RDV — <client> — <date>" --client <C> --lien <RDV-…> --corps-fichier <f> --prochaine-action "rendez-vous" --date <date>`; `cerebro update <RDV-…> statut="fiche prête"`.
 
-## Structure du livrable
-Qui (rôle, lien, dernier échange) · objet · contexte en cinq lignes · délais et dossiers ouverts · documents à avoir · questions à poser · ce que vous n'avez pas demandé · objectif du rendez-vous.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Who (role, link, last exchange) · subject · context in five lines · deadlines and open matters · documents to have · questions to ask · what you did not ask · goal of the meeting.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] une page · [ ] délais exacts · [ ] questions concrètes · [ ] aucune perception exposée si la fiche est partagée
+## Checks
+[ ] one page · [ ] exact deadlines · [ ] concrete questions · [ ] no perceptions exposed if the brief is shared
 
-## Principes appliqués et portes qui les vérifient (§7.5)
+## Principles applied and gates (§7.5)
 L4 → P-SOM · L5 → P-LIEN · L6 → P-COUV · L3 → P-EFF · L10 → journal d'audit · L9 → P-PRES
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

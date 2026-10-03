@@ -1,6 +1,6 @@
 ---
 name: conflict-check
-description: "Contrôle de conflit avant un nouveau mandat, client ou partie ; signale sans bloquer."
+description: "Conflict check before a new mandate, client or party; flags without blocking."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,26 +23,27 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # conflict-check (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-nouveau mandat, nouveau dossier, nouvelle partie adverse ou nouvel intervenant dans un dossier.
+## When to use
+new mandate, new matter, new opposing party or new participant in a matter.
 
-## Étapes
-1 Dossier : `cerebro matter new <C> "<objet>" --partie "<partie adverse>" --canton <CT> --domaine <domaine>`.
-2 Recherche : `cerebro conflict-check "<nom 1>" "<nom 2>" … --client <C>` (alias et anciens noms compris) ; pour chaque société : `cerebro entity chain <E>` et organes (personnes liées).
-3 Analyse : conflit direct (partie adverse = client) · indirect (participation, organe commun, famille) · positionnel (même question, intérêts opposés) · aucun.
-4 Rapport interne (structure ci-dessous) → `cerebro new note "Conflits — <dossier>" --client <C> --lien <D-…> --corps-fichier <f>`.
-5 Conflit trouvé : une phrase à Mustafa avec recommandation (« Le dossier X touche aussi Y, client depuis 2024 : je vous suggère de… ») ; jamais de blocage, jamais d'information au tiers.
+## Steps
+1 Matter: `cerebro matter new <C> "<objet>" --partie "<partie adverse>" --canton <CT> --domaine <domaine>`.
+2 Search: `cerebro conflict-check "<nom 1>" "<nom 2>" … --client <C>` (aliases and former names included); for each company: `cerebro entity chain <E>` and bodies (linked persons).
+3 Analysis: direct conflict (opposing party = client) · indirect (holding, shared body member, family) · positional (same question, opposed interests) · none.
+4 Internal report (structure below) → `cerebro new note "Conflits — <dossier>" --client <C> --lien <D-…> --corps-fichier <f>`.
+5 Conflict found: one sentence to Mustafa with a recommendation (« Le dossier X touche aussi Y, client depuis 2024 : je vous suggère de… »); never block, never inform the third party.
 
-## Structure du livrable
-Noms contrôlés · résultats bruts · liens trouvés (schéma si utile) · appréciation · recommandation · date du contrôle.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Names checked · raw results · links found (diagram if useful) · assessment · recommendation · date of check.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] tous les noms et alias contrôlés · [ ] sociétés liées et organes examinés · [ ] rapport enregistré et lié · [ ] recommandation formulée · [ ] rien communiqué à l'extérieur
+## Checks
+[ ] all names and aliases checked · [ ] linked companies and bodies examined · [ ] report saved and linked · [ ] recommendation stated · [ ] nothing communicated externally
 
-## Principes appliqués et portes qui les vérifient (§7.5)
+## Principles applied and gates (§7.5)
 L4 → P-SOM · L5 → P-LIEN · L6 → P-COUV · L3 → P-EFF · L10 → journal d'audit
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

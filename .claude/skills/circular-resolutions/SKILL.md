@@ -1,6 +1,6 @@
 ---
 name: circular-resolutions
-description: "Décision d'un organe par voie de circulation : texte, bulletins, constatation."
+description: "Decision of a corporate body by circular resolution: text, ballots, record of result."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,26 +23,27 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # circular-resolutions (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-décision urgente ou formelle du CA ou des gérants sans séance ; approbation de comptes par l'organe ; nomination de fondé de procuration ; décision d'assemblée par écrit si admise.
+## When to use
+urgent or formal decision of the board (CA) or managers (gérants) without a meeting; approval of accounts by the body; appointment of a fondé de procuration; written general meeting decision where allowed.
 
-## Étapes
-1 Organe et membres : extrait du registre daté ; règlement d'organisation ; conditions de la décision circulaire (texte CO et statuts lus : unanimité ou majorité, droit de demander une délibération) — sinon ⚠.
-2 Rédaction : en-tête, décisions numérotées et autonomes, motifs brefs, bulletin par membre (approuve / refuse / s'abstient, date, signature) ; signature électronique : préparation seulement.
-3 Suivi : objet document avec prochaine action datée par membre ; relance en brouillon.
-4 Constatation : consolidation des bulletins, résultat, date d'effet ; archivage lié à l'entité.
-5 Suites : réquisition au registre si nécessaire (préparée), horloges éventuelles ; sortie deliverable-production → portes → relecteur.
+## Steps
+1 Body and members: dated registry extract; organisational regulations (règlement d'organisation); conditions for a circular decision (CO text and articles of association read: unanimity or majority, right to request a deliberation), else ⚠.
+2 Drafting: heading, numbered self-contained decisions, brief reasons, one ballot per member (approves / refuses / abstains, date, signature); electronic signature: preparation only.
+3 Follow-up: document object with a dated next action per member; reminder as draft.
+4 Record of result: consolidate ballots, result, effective date; archive linked to the entity.
+5 Follow-on steps: registry filing (réquisition) prepared if needed, clocks if any; output deliverable-production → gates → reviewer.
 
-## Structure du livrable
-« Décision prise par voie de circulation » · société · organe · rappel du droit de demander une délibération (si applicable, sourcé) · décisions numérotées · bulletins individuels · constatation du résultat et date.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+« Décision prise par voie de circulation » · company · body · reminder of the right to request a deliberation (if applicable, sourced) · numbered decisions · individual ballots · record of result and date.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] conditions de la voie circulaire vérifiées · [ ] tous les membres inscrits au registre ont un bulletin · [ ] décisions autonomes et précises · [ ] résultat constaté · [ ] suites préparées
+## Checks
+[ ] conditions for circular route verified · [ ] every member entered in the registry has a ballot · [ ] decisions self-contained and precise · [ ] result recorded · [ ] follow-on steps prepared
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

@@ -1,6 +1,6 @@
 ---
 name: humanizer-fr
-description: "Retirer les tics de machine d'un texte français (Suisse romande) sans en changer le sens."
+description: "Remove machine tics from a French text (Suisse romande) without changing its meaning."
 license: MIT (dérivée de blader/humanizer, voir SOURCE.md)
 ---
 
@@ -22,31 +22,32 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 <!-- /BLOC-CARDINAL -->
 
 
-# Humaniser un texte français de Suisse romande
+# Humanise a French text (Suisse romande)
 
-Dérivée de `humanizer` (blader/humanizer, d'après Wikipédia « Signs of AI writing »), adaptée au français juridique romand et à la constitution (§7.2). Principes : loi 9 ; §4 principe 21 ; porte `tics` (`.team/scripts/gates/p_tics.py`) et porte `typographie`.
+Derived from `humanizer` (blader/humanizer, after Wikipedia « Signs of AI writing »), adapted to Romand legal French and to the constitution (§7.2). Principles: law 9; §4 principle 21; gate `tics` (`.team/scripts/gates/p_tics.py`) and gate `typographie`.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language. The rewritten text stays in French.
 
-## Méthode
+## Method
 
-1. Passer la porte : `python .team/scripts/gates/gates.py <fichier> --portes tics,typographie`. Elle liste les motifs ; elle ne réécrit rien.
-2. Réécrire le paragraphe autour de son idée, pas la formule seule. Ne rien ajouter : aucun fait, chiffre, date, nom ou source qui ne soit pas dans le texte ou le cerebro.
-3. Voix de la maison et de Mustafa : conclusion d'abord, phrases courtes mêlées de longues, verbes actifs, chiffres précis avec source, une idée par paragraphe, position assumée avec son niveau de confort. Si le profil de style de Mustafa (`.team/brain/firm/mustafa-profile.md`, section style) contient un échantillon, il prime.
-4. Repasser la porte. Ce qui reste est assumé ou corrigé.
+1. Run the gate: `python .team/scripts/gates/gates.py <fichier> --portes tics,typographie`. It lists the patterns; it rewrites nothing.
+2. Rewrite the paragraph around its idea, not the phrase alone. Add nothing: no fact, figure, date, name or source that is not in the text or in cerebro.
+3. House and Mustafa voice: conclusion first, short sentences mixed with long ones, active verbs, precise figures with source, one idea per paragraph, position owned with its comfort level. If Mustafa's style profile (`.team/brain/firm/mustafa-profile.md`, style section) contains a sample, it prevails.
+4. Rerun the gate. What remains is either deliberate or fixed.
 
-## Tics propres au français (en plus des motifs de humanizer)
+## French-specific tics (in addition to humanizer patterns)
 
-- Ouvertures et clôtures passe-partout : « J'espère que ce message vous trouve bien », « N'hésitez pas à me contacter », « Je reste à votre entière disposition pour toute question ». Finir sur la prochaine étape concrète (« je vous appelle jeudi »). Les formules de politesse d'usage d'une lettre suisse (« Je vous prie d'agréer… », « Meilleures salutations ») restent.
-- Remplissage : « Il est important de noter que », « Il convient de souligner », « Force est de constater », « Il va sans dire », « Dans un monde où ».
-- Résumés redondants : « En conclusion », « En résumé », « En somme », « Pour conclure » — la conclusion est déjà en tête.
-- Contrastes mis en scène : « non seulement… mais aussi », « ce n'est pas X, c'est Y ». Dire Y.
-- Vocabulaire gonflé : « véritable levier », « incontournable », « au cœur de », « paysage fiscal », « crucial », « primordial », « plonger dans ».
-- Précautions empilées : « il pourrait éventuellement être envisageable ». Une réserve, une fois, avec le niveau de confort.
-- Triades systématiques (« la société, la holding et l'actionnaire » à chaque phrase), tirets longs en cascade (remplacer par virgule, deux-points, parenthèses), gras et puces dans une correspondance, émoticônes, mention de l'outil ou de l'IA.
+- Boilerplate openings and closings: « J'espère que ce message vous trouve bien », « N'hésitez pas à me contacter », « Je reste à votre entière disposition pour toute question ». End on the concrete next step (« je vous appelle jeudi »). Customary Swiss letter courtesy formulas (« Je vous prie d'agréer… », « Meilleures salutations ») stay.
+- Filler: « Il est important de noter que », « Il convient de souligner », « Force est de constater », « Il va sans dire », « Dans un monde où ».
+- Redundant summaries: « En conclusion », « En résumé », « En somme », « Pour conclure »; the conclusion is already at the top.
+- Staged contrasts: « non seulement… mais aussi », « ce n'est pas X, c'est Y ». Say Y.
+- Inflated vocabulary: « véritable levier », « incontournable », « au cœur de », « paysage fiscal », « crucial », « primordial », « plonger dans ».
+- Stacked qualifiers: « il pourrait éventuellement être envisageable ». One reservation, once, with the comfort level.
+- Systematic triads (« la société, la holding et l'actionnaire » in every sentence), cascading long dashes (replace with comma, colon, parentheses), bold and bullets in correspondence, emoticons, mention of the tool or of AI.
 
-## Usages romands
+## Romand usage
 
-Septante, huitante (Vaud, Fribourg), nonante ; « déjeuner / dîner / souper » ; « état de fait », « décision de taxation », « réclamation », « AFC », « ACI » ; montants CHF 1'234.50 ; dates « 3 octobre 2026 » ; espace insécable avant ; : ! ? et dans « ». Vouvoiement par défaut (`cerebro config get mustafa.tutoiement`).
+Septante, huitante (Vaud, Fribourg), nonante; « déjeuner / dîner / souper »; « état de fait », « décision de taxation », « réclamation », « AFC », « ACI »; amounts CHF 1'234.50; dates « 3 octobre 2026 »; non-breaking space before ; : ! ? and inside « ». Vouvoiement by default (`cerebro config get mustafa.tutoiement`).
 
-## Quand ne pas toucher
+## When not to touch
 
-Citations, textes de loi, titres officiels, noms propres, formules de politesse d'une lettre, termes juridiques consacrés (« dans le cadre de » en droit, « nonobstant »).
+Quotations, statutory texts, official titles, proper names, courtesy formulas of a letter, established legal terms (« dans le cadre de » in legal usage, « nonobstant »).

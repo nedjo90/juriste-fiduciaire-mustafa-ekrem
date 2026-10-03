@@ -1,6 +1,6 @@
 ---
 name: deliverable-production
-description: "Sortir un livrable fini (Word, Excel, PowerPoint, PDF, mail, schéma) depuis les gabarits, contrôlé."
+description: "Produce a finished, checked deliverable (Word, Excel, PowerPoint, PDF, email, diagram) from the house templates."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -21,67 +21,69 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 <!-- /BLOC-CARDINAL -->
 
 
-# Production des livrables
+# Deliverable production
 
-Principes appliqués et portes : §4 principe 16 (aucun livrable sans contrôle) → toutes les portes ; principe 17 (schéma d'abord) → blocs `mermaid` / `graphique` ; principe 21 (niveau des grandes maisons) → portes `tics`, `typographie`, `presentation`, `visuel` ; loi 5 et 7 → portes `liens`, `sources` ; loi 6 → porte `couverture` ; loi 3 → porte `budget`, tout par script.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## 1. Rédiger le markdown structuré (côté machine, jamais dans Bureau)
+Principles applied and gates: §4 principle 16 (no deliverable without checks) → all gates; principle 17 (diagram first) → `mermaid` / `graphique` blocks; principle 21 (top-firm level) → gates `tics`, `typographie`, `presentation`, `visuel`; laws 5 and 7 → gates `liens`, `sources`; law 6 → gate `couverture`; law 3 → gate `budget`, everything by script.
 
-Écrire `.team/run/producteur/<objet>.md` :
+## 1. Write the structured markdown (machine side, never in Bureau)
+
+Write `.team/run/producteur/<objet>.md`:
 
 ```markdown
 ---
 type: memo            # memo | note | lettre | pv | calcul | presentation | rapport | mail
-client: C-001         # identifiant cerebro (ou nom)
-dossier: D-001        # facultatif ; la couverture vérifie sa prochaine action datée
-objet: dividende 2026 # court ; sert au nom de fichier (ASCII, kebab-case)
-langue: fr            # fr | de | it | en (langue du destinataire)
-titre: Le dividende peut être versé fin octobre   # titre-affirmation
-date_etat: 2026-10-01 # date d'état du droit (pied de page)
-confort: moyen        # élevé | moyen | faible, avec la raison dans la section dédiée
-sources: [BIB-001]    # identifiants de la bibliothèque (cerebro law article …)
+client: C-001         # cerebro ID (or name)
+dossier: D-001        # optional; the couverture gate checks its dated next action
+objet: dividende 2026 # short; used for the file name (ASCII, kebab-case)
+langue: fr            # fr | de | it | en (recipient's language)
+titre: Le dividende peut être versé fin octobre   # assertion title
+date_etat: 2026-10-01 # date of state of the law (footer)
+confort: moyen        # élevé | moyen | faible, with the reason in the dedicated section
+sources: [BIB-001]    # library IDs (cerebro law article …)
 ---
 ## Résumé exécutif
 …
 ```
 
-- Mémo / avis : sections Résumé exécutif, Question, Faits, Droit applicable, Analyse, Options, Risques, Recommandation, Réserves, Niveau de confort, Annexe des sources (titres reconnus en FR/DE/IT/EN, `system.yaml` › `alias_sections`).
-- Chaque règle de droit, taux ou délai porte `BIB-…` (ou une référence officielle datée : « état au … », ATF …) ; sinon le producteur insère ⚠. Les `BIB-…` deviennent des renvois [n] et l'annexe des sources est construite depuis la bibliothèque.
-- Faits étiquetés : [fait vérifié], [déclaré par X le …], [hypothèse]. Aucune perception ni note interne recopiée.
-- Lettre : `destinataire` (bloc multiligne), `lieu`, `salutation`, `formule`, `annexes`. PV : `societe`, `date_seance`, `lieu`, `president`, `secretaire`. Mail : `a`, `cc`, `salutation`, `formule`, `pieces` (fichiers nommés client-objet-date-vN). Présentation : un titre `##` par diapositive, rédigé comme une affirmation, trois à cinq puces, une ligne « Notes : … ». Calcul : `hypotheses`, `calculs` (formules sur les noms d'hypothèses, `{C1}` = étape 1), `sensibilites` — aucune valeur en dur.
-- Schéma : bloc ```` ```mermaid ```` (organigramme, chronologie, arbre de décision) → PNG/SVG + fichier draw.io. Graphique : bloc ```` ```graphique ```` en YAML (`type`, `message`, `unite`, `source`, `x`, `series`).
-- Écrire dans la voix de la maison (skills `humanizer-fr|de|it`) : conclusion d'abord, aucune formule passe-partout.
+- Memo / opinion: sections Résumé exécutif, Question, Faits, Droit applicable, Analyse, Options, Risques, Recommandation, Réserves, Niveau de confort, Annexe des sources (titles recognised in FR/DE/IT/EN, `system.yaml` › `alias_sections`).
+- Every rule of law, rate or deadline carries `BIB-…` (or a dated official reference: « état au … », ATF …); otherwise the producer inserts ⚠. `BIB-…` become [n] cross-references and the sources annex is built from the library.
+- Facts labelled: [fait vérifié], [déclaré par X le …], [hypothèse]. No perceptions, no internal note copied.
+- Letter: `destinataire` (multiline block), `lieu`, `salutation`, `formule`, `annexes`. PV: `societe`, `date_seance`, `lieu`, `president`, `secretaire`. Email: `a`, `cc`, `salutation`, `formule`, `pieces` (files named client-objet-date-vN). Presentation: one `##` title per slide, written as an assertion, three to five bullets, one line « Notes : … ». Calculation: `hypotheses`, `calculs` (formulas on hypothesis names, `{C1}` = step 1), `sensibilites`; no hard-coded value.
+- Diagram: ```` ```mermaid ```` block (org chart, timeline, decision tree) → PNG/SVG + draw.io file. Chart: ```` ```graphique ```` block in YAML (`type`, `message`, `unite`, `source`, `x`, `series`).
+- Write in the house voice (skills `humanizer-fr|de|it`): conclusion first, no boilerplate phrases.
 
-## 2. Produire
+## 2. Produce
 
 `python .team/scripts/producer/produce.py .team/run/producteur/<objet>.md --role <rôle>`
 
-Le producteur corrige d'office ce qui est sûr (⚠ sur le droit non sourcé, typographie suisse), rend le document depuis `Bureau/Modeles/` (python-docx, openpyxl, python-pptx), crée le PDF (LibreOffice, sinon gabarit reportlab), passe les portes, inscrit le livrable (`cerebro deliverable register`) et l'ouvre dans l'application par défaut quand c'est possible. Sortie JSON : `principal`, `pdf`, `fichiers`, `portes`, `a_renvoyer`, `corrections`, `reserves`, `livrable`.
+The producer auto-fixes what is safe (⚠ on unsourced law, Swiss typography), renders the document from `Bureau/Modeles/` (python-docx, openpyxl, python-pptx), creates the PDF (LibreOffice, else reportlab template), runs the gates, registers the deliverable (`cerebro deliverable register`) and opens it in the default application when possible. JSON output: `principal`, `pdf`, `fichiers`, `portes`, `a_renvoyer`, `corrections`, `reserves`, `livrable`.
 
-## 3. Corriger ce que les portes renvoient
+## 3. Fix what the gates return
 
-`a_renvoyer` indique la porte fermée et le rôle responsable ; `corrections` donne le constat et la correction suggérée. Corriger le markdown, relancer `produce.py` (version suivante vN+1 automatique). Une seule boucle de correction par défaut ; deux au plus pour un livrable important. Contrôle isolé : `python .team/scripts/gates/gates.py <fichier> [--corriger]`.
+`a_renvoyer` names the closed gate and the responsible role; `corrections` gives the finding and the suggested fix. Fix the markdown, rerun `produce.py` (next version vN+1 automatic). One correction loop by default; at most two for an important deliverable. Standalone check: `python .team/scripts/gates/gates.py <fichier> [--corriger]`.
 
-| Porte | Ce qu'elle vérifie |
+| Gate | What it checks |
 |---|---|
-| liens | tout identifiant cité existe (redirections suivies) |
-| sources | toute affirmation de droit a BIB-… ou une référence datée, sinon ⚠ |
-| typographie | espaces insécables, guillemets, CHF 1'234.50, dates, ß → ss |
-| tics | formules passe-partout, contrastes, triades, tirets, puces en correspondance, émoticônes, IA, longueurs uniformes |
-| regle_zero | aucun mot de mécanique dans un texte pour Mustafa (`destinataire: mustafa`) |
-| presentation | gabarit et styles de la maison, en-tête Confidentiel, pied version + état du droit, structure du type |
-| couverture | chaque dossier touché a une prochaine action datée |
-| visuel | rendu en images, débordements de marge, titres orphelins, tableaux trop larges |
-| budget | longueur, tokens estimés, résumé exécutif ≤ une page |
+| liens | every cited ID exists (redirects followed) |
+| sources | every legal assertion has BIB-… or a dated reference, else ⚠ |
+| typographie | non-breaking spaces, quotation marks, CHF 1'234.50, dates, ß → ss |
+| tics | boilerplate phrases, staged contrasts, triads, dashes, bullets in correspondence, emoticons, AI mentions, uniform lengths |
+| regle_zero | no mechanism word in a text for Mustafa (`destinataire: mustafa`) |
+| presentation | house template and styles, Confidentiel header, footer with version + state of the law, structure of the type |
+| couverture | every matter touched has a dated next action |
+| visuel | rendered as images, margin overflow, orphan headings, tables too wide |
+| budget | length, estimated tokens, executive summary ≤ one page |
 
-## 4. Présenter
+## 4. Present
 
-Jamais retenu : après correction, ou à défaut, le livrable est présenté avec ses réserves en une phrase (« voici le mémo, ouvert à côté ; un taux reste à confirmer contre le texte officiel »). Aucun chemin, aucun nom d'outil, aucun mot de mécanique à Mustafa. Livrable important (mémo, avis, modèle, document de société, présentation) : un seul appel adverse groupé puis le relecteur (§6.2), les images de `.team/run/rendus/<livrable>/` servant au regard visuel.
+Never withheld: after correction, or failing that, the deliverable is presented with its reservations in one sentence (« voici le mémo, ouvert à côté ; un taux reste à confirmer contre le texte officiel »). No path, no tool name, no mechanism word to Mustafa. Important deliverable (memo, opinion, template, corporate document, presentation): a single grouped adversarial call then the reviewer (§6.2), with the images in `.team/run/rendus/<livrable>/` used for the visual review.
 
-## 5. Sortir par le sommaire
+## 5. Exit through the summary
 
-Le livrable reçoit son identifiant LIV-… ; mettre à jour la prochaine action du dossier (`cerebro update D-… prochaine_action=… prochaine_date=…`) puis `cerebro regen`. Le tableau de bord des principes (`python .team/scripts/gates/dashboard.py`) mesure le passage du premier coup par rôle et par skill.
+The deliverable gets its LIV-… ID; update the matter's next action (`cerebro update D-… prochaine_action=… prochaine_date=…`) then `cerebro regen`. The principles dashboard (`python .team/scripts/gates/dashboard.py`) measures first-pass success per role and per skill.
 
-## Gabarits
+## Templates
 
-`Bureau/Modeles/` : memo.docx, lettre.docx, pv-assemblee.docx, modele-calcul.xlsx, presentation.pptx, gabarit-rapport.pdf — générés par `python .team/scripts/producer/templates.py --inscrire` depuis `.team/brain/firm/design/system.yaml` (skill `brand-guidelines`). Ne jamais les modifier à la main : changer le YAML et régénérer.
+`Bureau/Modeles/`: memo.docx, lettre.docx, pv-assemblee.docx, modele-calcul.xlsx, presentation.pptx, gabarit-rapport.pdf; generated by `python .team/scripts/producer/templates.py --inscrire` from `.team/brain/firm/design/system.yaml` (skill `brand-guidelines`). Never edit them by hand: change the YAML and regenerate.

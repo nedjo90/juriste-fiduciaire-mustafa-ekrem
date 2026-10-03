@@ -1,6 +1,6 @@
 ---
 name: meeting-report
-description: "Compte rendu d'un rendez-vous ou d'un appel : décisions, actions, délais nés, version client."
+description: "Report of a meeting or call: decisions, actions, deadlines arising, client version."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,26 +23,27 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # meeting-report (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-après un rendez-vous ou un appel ; note vocale ou notes déposées ; demande « fais le compte rendu ».
+## When to use
+after a meeting or call; voice note or notes dropped in; request « fais le compte rendu ».
 
-## Étapes
-1 Sources : notes, transcription (note vocale), fiche RDV de la veille (`cerebro find "Fiche RDV <client>"`).
-2 Extraire : décisions · actions (porteur, échéance) · engagements envers des tiers (`cerebro engagement <C> "<envers>" "<objet>" <AAAA-MM-JJ>`) · délais nés (`cerebro clock start …`) · questions ouvertes · faits nouveaux étiquetés.
-3 Version interne (complète) → objet document lié au RDV ; version client nettoyée (MET-012 : aucune perception, aucune stratégie interne).
-4 Brouillon de mail de transmission (skill email-drafting).
-5 `cerebro update <RDV-…> statut="compte rendu prêt"` ; `cerebro regen <IDs>`.
+## Steps
+1 Sources: notes, transcript (voice note), the previous day's meeting brief (`cerebro find "Fiche RDV <client>"`).
+2 Extract: decisions · actions (owner, due date) · commitments to third parties (`cerebro engagement <C> "<envers>" "<objet>" <AAAA-MM-JJ>`) · deadlines arising (`cerebro clock start …`) · open questions · new facts labelled.
+3 Internal version (complete) → document object linked to the RDV; cleaned client version (MET-012: no perceptions, no internal strategy).
+4 Draft cover email (skill email-drafting).
+5 `cerebro update <RDV-…> statut="compte rendu prêt"`; `cerebro regen <IDs>`.
 
-## Structure du livrable
-Date, participants · décisions · actions (qui, quoi, quand) · points ouverts · délais · prochain rendez-vous.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Date, participants · decisions · actions (who, what, when) · open points · deadlines · next meeting.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] chaque action a porteur et date · [ ] délais en horloges · [ ] version client nettoyée · [ ] engagements enregistrés
+## Checks
+[ ] each action has owner and date · [ ] deadlines as clocks · [ ] client version cleaned · [ ] commitments recorded
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

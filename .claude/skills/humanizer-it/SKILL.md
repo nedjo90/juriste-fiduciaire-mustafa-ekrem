@@ -1,6 +1,6 @@
 ---
 name: humanizer-it
-description: "Togliere le tracce di macchina da un testo italiano (Svizzera), contenuto invariato."
+description: "Remove machine tells from an Italian text (Swiss usage), content unchanged."
 license: MIT (derivata da blader/humanizer, vedi SOURCE.md)
 ---
 
@@ -22,29 +22,30 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 <!-- /BLOC-CARDINAL -->
 
 
-# Umanizzare un testo italiano (uso svizzero)
+# Humanise an Italian text (Swiss usage)
 
-Derivata da `humanizer` (blader/humanizer, secondo Wikipedia « Signs of AI writing »), adattata all'italiano giuridico ticinese e alla costituzione (§7.2). Legge 9 ; §4 principio 21 ; porte `tics` e `typographie`.
+Derived from `humanizer` (blader/humanizer, after Wikipedia « Signs of AI writing »), adapted to Ticino legal Italian and to the constitution (§7.2). Law 9; §4 principle 21; gates `tics` and `typographie`.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language. The rewritten text stays in Italian.
 
-## Metodo
+## Method
 
-1. Eseguire la porta : `python .team/scripts/gates/gates.py <file> --langue it --portes tics,typographie`.
-2. Riscrivere il paragrafo attorno alla sua idea. Non aggiungere nulla (nessun fatto, cifra, data o fonte assente dal testo o dal cerebro).
-3. Voce dello studio : conclusione in testa, frasi brevi alternate a frasi lunghe, verbi attivi, cifre precise con fonte, un'idea per paragrafo, posizione assunta con il grado di certezza.
-4. Eseguire di nuovo la porta.
+1. Run the gate: `python .team/scripts/gates/gates.py <file> --langue it --portes tics,typographie`.
+2. Rewrite the paragraph around its idea. Add nothing (no fact, figure, date or source absent from the text or from cerebro).
+3. Firm voice: conclusion first, short sentences alternating with long ones, active verbs, precise figures with source, one idea per paragraph, position owned with its degree of certainty.
+4. Rerun the gate.
 
-## Modelli tipici in italiano
+## Typical patterns in Italian
 
-- Aperture e chiusure standard : « Spero che questo messaggio la trovi bene », « Non esiti a contattarmi », « Resto a sua completa disposizione per qualsiasi domanda ». Chiudere con il passo successivo concreto. « Cordiali saluti » resta.
-- Riempitivi : « È importante notare che », « In conclusione », « In sintesi », « Per concludere ».
-- Contrasti messi in scena : « non solo … ma anche ».
-- Lessico gonfiato : « cruciale », « fondamentale », « imprescindibile », « nel cuore di », « panorama fiscale », « immergersi ».
-- Terne in ogni frase, trattini lunghi in serie, grassetto ed elenchi puntati nelle lettere, emoji, menzione dell'IA.
+- Standard openings and closings: « Spero che questo messaggio la trovi bene », « Non esiti a contattarmi », « Resto a sua completa disposizione per qualsiasi domanda ». End with the concrete next step. « Cordiali saluti » stays.
+- Filler: « È importante notare che », « In conclusione », « In sintesi », « Per concludere ».
+- Staged contrasts: « non solo … ma anche ».
+- Inflated vocabulary: « cruciale », « fondamentale », « imprescindibile », « nel cuore di », « panorama fiscale », « immergersi ».
+- Triads in every sentence, long dashes in series, bold and bullet lists in letters, emojis, mention of AI.
 
-## Uso svizzero
+## Swiss usage
 
-Virgolette «…» ; importi CHF 1'234.50 ; date « 3 ottobre 2026 » ; terminologia ticinese e federale (decisione di tassazione, reclamo, AFC, Divisione delle contribuzioni, assemblea generale, ufficio del registro di commercio).
+Quotation marks «…»; amounts CHF 1'234.50; dates « 3 ottobre 2026 »; Ticino and federal terminology (decisione di tassazione, reclamo, AFC, Divisione delle contribuzioni, assemblea generale, ufficio del registro di commercio).
 
-## Da non toccare
+## Do not touch
 
-Citazioni, testi di legge, titoli ufficiali, nomi propri, formule di cortesia di una lettera, termini giuridici consolidati.
+Quotations, statutory texts, official titles, proper names, courtesy formulas of a letter, established legal terms.

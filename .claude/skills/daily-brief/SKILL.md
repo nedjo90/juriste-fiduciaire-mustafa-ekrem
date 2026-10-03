@@ -1,6 +1,6 @@
 ---
 name: daily-brief
-description: "Brief du jour ou « où en est-on ? » : urgences, délais, rendez-vous, brouillons prêts, une question au plus."
+description: "Daily brief or « où en est-on ? »: urgent items, deadlines, appointments, drafts ready, at most one question."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,25 +23,26 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # daily-brief (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-début de journée, première ouverture, ou demande de point de situation.
+## When to use
+start of day, first opening, or request for a status update.
 
-## Étapes
-1 `cerebro brief` (données prêtes, script) ; rien d'autre n'est chargé.
-2 Trier : urgent (≤ 3 jours) · aujourd'hui · prêt pour vous (brouillons, documents) · à venir (≤ 30 jours) · ce que vous n'avez pas demandé.
-3 Une question au plus : `cerebro question next` (canal brief) ; un conseil au plus : `cerebro conseil next`.
-4 Écrire en français soigné (ou langue de Mustafa), sans titre lourd ni mécanique ; un écran au plus.
+## Steps
+1 `cerebro brief` (data ready, script); nothing else is loaded.
+2 Sort: urgent (≤ 3 days) · today · ready for you (drafts, documents) · upcoming (≤ 30 days) · what you did not ask.
+3 At most one question: `cerebro question next` (brief channel); at most one tip: `cerebro conseil next`.
+4 Write in polished French (or Mustafa's language), no heavy headings, no mechanics; one screen at most.
 
-## Structure du livrable
-Bonjour en une ligne · urgences · aujourd'hui · prêt pour vous · à venir · une ligne « ce que vous n'avez pas demandé » · une question (si elle existe) · un conseil (si il existe).
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Greeting in one line · urgent · today · ready for you · upcoming · one line « ce que vous n'avez pas demandé » · one question (if any) · one tip (if any). Section labels in Mustafa's language (French: urgences · aujourd'hui · prêt pour vous · à venir).
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] ≤ 1 écran · [ ] aucune mécanique, aucun identifiant · [ ] ≤ 1 question, ≤ 1 conseil · [ ] délais avec dates exactes
+## Checks
+[ ] ≤ 1 screen · [ ] no mechanics, no IDs · [ ] ≤ 1 question, ≤ 1 tip · [ ] deadlines with exact dates
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L1 → filtre de vocabulaire (journal) · L6 → P-COUV · L3 → P-EFF (script d'abord) · L9 → P-PRES
+## Principles applied and gates (§7.5)
+L1 → vocabulary filter (journal) · L6 → P-COUV · L3 → P-EFF (script first) · L9 → P-PRES
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

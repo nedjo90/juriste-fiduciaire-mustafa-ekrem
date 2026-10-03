@@ -1,6 +1,6 @@
 ---
 name: client-onboarding
-description: "Nouveau client ou mandat : sociétés, personnes, conflits, LBA, échéances, sans questionnaire."
+description: "New client or mandate: companies, persons, conflicts, LBA, deadlines, without a questionnaire."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,28 +23,29 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # client-onboarding (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-nouveau client mentionné, documents d'un nouveau client déposés, nouveau mandat.
+## When to use
+new client mentioned, documents of a new client dropped, new mandate.
 
-## Étapes
-1 Client : `cerebro find "<nom>"` (existe déjà ?) → sinon `cerebro client new "<nom>" --forme "<forme>" --canton <CT> --langue <fr|de|it|en> --alias "<alias>"`.
-2 Sociétés : extrait Zefix daté → `cerebro entity new "<raison>" --client <C> --forme <SA|Sàrl…> --ide <CHE-…> --siege "<commune>" --canton <CT> --organes '<json>'` ; personnes : `cerebro person new "<nom>" --client <C> --canton <CT>` ; participations : `cerebro participation <détenteur> <détenue> <pct> [--ayant-droit] --source "<pièce>"`.
-3 Conflits : skill conflict-check. LBA : skill aml-file (si la relation relève de la LBA).
-4 Lettre de mission (brouillon) : périmètre, honoraires, responsabilité, protection des données.
-5 Calendrier : horloges des échéances connues (AG, déclarations, TVA, revues) ; documents attendus → prochaines actions.
-6 Ce qui manque : défaut appliqué + `cerebro question add …` (une formulation simple, réponse en un mot) ; jamais de questionnaire.
-7 Première revue : skill foresight-review ; `cerebro regen <IDs>`.
+## Steps
+1 Client: `cerebro find "<nom>"` (already exists?) → else `cerebro client new "<nom>" --forme "<forme>" --canton <CT> --langue <fr|de|it|en> --alias "<alias>"`.
+2 Companies: dated Zefix extract → `cerebro entity new "<raison>" --client <C> --forme <SA|Sàrl…> --ide <CHE-…> --siege "<commune>" --canton <CT> --organes '<json>'`; persons: `cerebro person new "<nom>" --client <C> --canton <CT>`; holdings: `cerebro participation <détenteur> <détenue> <pct> [--ayant-droit] --source "<pièce>"`.
+3 Conflicts: skill conflict-check. LBA: skill aml-file (if the relationship falls under the LBA).
+4 Engagement letter (draft): scope, fees, liability, data protection.
+5 Calendar: clocks for known deadlines (AG, tax returns, TVA, reviews); expected documents → next actions.
+6 Missing info: default applied + `cerebro question add …` (one simple wording, one-word answer); never a questionnaire.
+7 First review: skill foresight-review; `cerebro regen <IDs>`.
 
-## Structure du livrable
-Vue client prête (`<C>-VUE`) · schéma de structure · dossier LBA · rapport de conflits · lettre de mission (brouillon) · calendrier.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Client view ready (`<C>-VUE`) · structure diagram · LBA file · conflict report · engagement letter (draft) · calendar.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] doublon vérifié · [ ] sociétés depuis le registre (date) · [ ] conflits contrôlés · [ ] LBA ouverte si requise · [ ] horloges posées · [ ] aucune question en rafale
+## Checks
+[ ] duplicate checked · [ ] companies from the registry (dated) · [ ] conflicts checked · [ ] LBA opened if required · [ ] clocks set · [ ] no burst of questions
 
-## Principes appliqués et portes qui les vérifient (§7.5)
+## Principles applied and gates (§7.5)
 L4 → P-SOM · L5 → P-LIEN · L6 → P-COUV · L3 → P-EFF · L10 → journal d'audit · L7 → P-SRC
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

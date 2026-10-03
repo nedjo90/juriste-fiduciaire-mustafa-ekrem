@@ -1,6 +1,6 @@
 ---
 name: sourced-legal-research
-description: "Question de droit suisse ou étranger : recherche sourcée, table des autorités, note réutilisable."
+description: "Swiss or foreign law question: sourced research, table of authorities, reusable note."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,28 +23,29 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # sourced-legal-research (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-question de droit nouvelle ou incertaine ; source manquante (⚠) ; préparation d'un mémo, d'une réclamation ou d'un dossier pour avocat.
+## When to use
+new or uncertain legal question; missing source (⚠); preparation of a memo, a réclamation or a file for a lawyer.
 
-## Étapes
-1 Question fermée + ligne MET-013.
-2 Réutiliser : `cerebro find --type position --type note "<sujet>"`.
-3 Bibliothèque : `cerebro law search "<notion>"` → `cerebro law article <abrév> "art. N"` → `cerebro law asof <RS> --date <date des faits>`.
-4 Sources officielles en liste blanche (§10) ; recherche académique (OpenAlex, Semantic Scholar, CrossRef) pour la doctrine (références) ; accès refusé → repli navigateur, `cerebro incident add "<source> inaccessible" --categorie source --repli "<repli>"`.
-5 Table des autorités (MET-003), contraires comprises ; « que dirait l'administration ».
-6 Textes nouveaux → documentaliste (`cerebro law ingest …`).
-7 Note de recherche (structure ci-dessous) → `cerebro new note "Recherche — <question>" --client <C> --lien <BIB-…> --corps-fichier <f>` ; position → `cerebro new position …` ; `cerebro regen <IDs>`.
+## Steps
+1 Closed question + MET-013 line.
+2 Reuse: `cerebro find --type position --type note "<sujet>"`.
+3 Library: `cerebro law search "<notion>"` → `cerebro law article <abrév> "art. N"` → `cerebro law asof <RS> --date <date des faits>`.
+4 Whitelisted official sources (§10); academic search (OpenAlex, Semantic Scholar, CrossRef) for doctrine (references); access refused → browser fallback, `cerebro incident add "<source> inaccessible" --categorie source --repli "<repli>"`.
+5 Table of authorities (MET-003), contrary ones included; « que dirait l'administration ».
+6 New texts → documentalist (`cerebro law ingest …`).
+7 Research note (structure below) → `cerebro new note "Recherche — <question>" --client <C> --lien <BIB-…> --corps-fichier <f>`; position → `cerebro new position …`; `cerebro regen <IDs>`.
 
-## Structure du livrable
-Question · Réponse courte + niveau de confort · Table des autorités · Synthèse par autorité · Ce que dirait l'administration · Doctrine (références) · Lacunes ⚠ · Prochaines vérifications.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Question · Short answer + comfort level · Table of authorities · Synthesis per authority · What the administration would say · Doctrine (references) · Gaps ⚠ · Next verifications.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] aucune réponse de mémoire · [ ] chaque autorité : ID BIB- ou ⚠ · [ ] contraires présents · [ ] versions applicables aux faits · [ ] position enregistrée si réutilisable
+## Checks
+[ ] no answer from memory · [ ] each authority: BIB- ID or ⚠ · [ ] contrary authorities present · [ ] versions applicable to the facts · [ ] position saved if reusable
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (si important) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L7 → P-SRC · L5 → P-LIEN · L4 → P-SOM · L6 → P-COUV · L9 → P-PRES + RELEC · L8 → PANEL (if important) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation

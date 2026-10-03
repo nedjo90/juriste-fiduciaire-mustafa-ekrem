@@ -1,6 +1,6 @@
 ---
 name: spreadsheet-audit
-description: "Auditer un classeur Excel : formules, valeurs en dur, totaux, barèmes sourcés."
+description: "Audit an Excel workbook: formulas, hard-coded values, totals, sourced rates and scales (barèmes)."
 ---
 
 <!-- BLOC-CARDINAL v3b027d468768 -->
@@ -23,27 +23,28 @@ Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : ce
 
 # spreadsheet-audit (machine)
 version: 1 · statut: actif · maj: 2026-10-03 · source: constitution §4.2, §6, §7
-origine: adapté de anthropics/financial-services `plugins/vertical-plugins/financial-analysis/skills/audit-xls` (Apache 2.0) — voir SOURCE.md ; interaction visible d'origine (entretien de démarrage, validations) retirée : défauts appliqués.
+origin: adapted from anthropics/financial-services `plugins/vertical-plugins/financial-analysis/skills/audit-xls` (Apache 2.0), see SOURCE.md; original visible interaction (start-up interview, validations) removed: defaults applied.
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Quand l'utiliser
-avant toute livraison d'un Excel ; fichier reçu d'un client ou d'un tiers ; « vérifie ce tableau ».
+## When to use
+before delivering any Excel; file received from a client or third party; « vérifie ce tableau ».
 
-## Étapes
-1 Portée par défaut : classeur entier (aucune question) ; grand classeur → onglets de calcul d'abord.
-2 Contrôles mécaniques par script (openpyxl) : erreurs (#REF!, #DIV/0!, #VALUE!, #N/A), valeurs en dur dans des formules, formules incohérentes dans une plage, références hors plage, liens externes, cellules masquées utilisées.
-3 Contrôles de cohérence : totaux et sous-totaux, signes, unités (CHF, %, années), arrondis, périodes ; recalcul indépendant des résultats clés par script.
-4 Contrôles de sources : chaque taux ou barème a sa source datée (onglet Sources, `cerebro rates get`) ; sinon ⚠.
-5 Rapport : tableau (onglet · cellule · problème · gravité · correction proposée) ; corrections appliquées seulement sur une copie versionnée.
+## Steps
+1 Default scope: whole workbook (no question); large workbook → calculation sheets first.
+2 Mechanical checks by script (openpyxl): errors (#REF!, #DIV/0!, #VALUE!, #N/A), hard-coded values inside formulas, inconsistent formulas within a range, out-of-range references, external links, hidden cells in use.
+3 Consistency checks: totals and subtotals, signs, units (CHF, %, years), rounding, periods; independent recomputation of key results by script.
+4 Source checks: each rate or barème has its dated source (Sources sheet, `cerebro rates get`); else ⚠.
+5 Report: table (sheet · cell · issue · severity · proposed fix); fixes applied only on a versioned copy.
 
-## Structure du livrable
-Rapport d'audit (tableau) + copie corrigée versionnée si demandée par le rôle auteur.
-Sortie : skill deliverable-production (gabarit de la maison, format final, nommage client-objet-date-version, rangement dans Bureau/Livrables, ouverture) puis portes déterministes (§7.5) ; livrable important → panel adverse (MET-010) puis relecteur.
+## Deliverable structure
+Audit report (table) + versioned corrected copy if requested by the author role.
+Output: skill deliverable-production (house template, final format, naming client-objet-date-version, filed in Bureau/Livrables, opened) then deterministic gates (§7.5); important deliverable → adversarial panel (MET-010) then reviewer.
 
-## Contrôles
-[ ] scan complet des erreurs · [ ] aucune valeur en dur dans une formule · [ ] totaux recalculés · [ ] chaque barème sourcé · [ ] original intact
+## Checks
+[ ] full error scan · [ ] no hard-coded value in a formula · [ ] totals recomputed · [ ] each barème sourced · [ ] original intact
 
-## Principes appliqués et portes qui les vérifient (§7.5)
-L8 → contrôle par script (pas d'auto-jugement) · L7 → P-SRC (barèmes) · L3 → P-EFF
+## Principles applied and gates (§7.5)
+L8 → check by script (no self-judgement) · L7 → P-SRC (barèmes) · L3 → P-EFF
 
-## Ne fait jamais
-envoyer quoi que ce soit à un tiers · déposer auprès d'une administration, d'un registre, d'un tribunal ou d'une caisse · signer · communiquer au MROS · inventer un taux, un article, un barème ou un délai · montrer à Mustafa un mot de mécanique, un chemin ou un identifiant · lui demander une confirmation
+## Never does
+send anything to a third party · file with an administration, registry, court or caisse · sign · report to the MROS · invent a rate, article, barème or deadline · show Mustafa a mechanism word, path or ID · ask him for confirmation
