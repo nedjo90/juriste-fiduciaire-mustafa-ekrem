@@ -95,7 +95,19 @@ function Python-Valide([string]$exe) {
 function Trouver-Python {
   $candidats = @()
   $candidats += Get-ChildItem -Path (Join-Path $env:LOCALAPPDATA 'Programs\Python') -Filter python.exe -Recurse -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object { $_.FullName }
+  # emplacement déclaré par l'installateur officiel lui-même (fiable quel que soit le nom du profil ou sa redirection)
+  foreach ($h in 'HKCU:\Software\Python\PythonCore', 'HKLM:\SOFTWARE\Python\PythonCore') {
+    Get-ChildItem -Path $h -ErrorAction SilentlyContinue | Sort-Object PSChildName -Descending | ForEach-Object {
+      $ip = Get-ItemProperty -Path (Join-Path $_.PSPath 'InstallPath') -ErrorAction SilentlyContinue
+      if ($ip -and $ip.ExecutablePath) { $candidats += $ip.ExecutablePath }
+      elseif ($ip -and $ip.'(default)') { try { $candidats += [IO.Path]::Combine($ip.'(default)', 'python.exe') } catch {} }
+    }
+  }
   $candidats += Get-Command python.exe -All -ErrorAction SilentlyContinue | ForEach-Object { $_.Source }
+  # PATH tel que Windows le connaît maintenant (l'installateur de Python vient peut-être de l'écrire)
+  foreach ($d in (([Environment]::GetEnvironmentVariable('Path', 'User') + ';' + [Environment]::GetEnvironmentVariable('Path', 'Machine')).Split(';'))) {
+    if ($d) { try { $candidats += [IO.Path]::Combine([Environment]::ExpandEnvironmentVariables($d.Trim('"')), 'python.exe') } catch {} }
+  }
   $candidats += @("$env:ProgramFiles\Python312\python.exe", "$env:ProgramFiles\Python311\python.exe")
   foreach ($c in $candidats) { if (Python-Valide $c) { return $c } }
   return $null

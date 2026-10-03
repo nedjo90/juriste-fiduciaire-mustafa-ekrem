@@ -273,6 +273,10 @@ jobs:
           "fenetre placee dans : " + (Get-Location).Path
           Get-Content -LiteralPath (Join-Path $env:TEMP 'mon-equipe-amorcage\amorcage.log') -Encoding UTF8 -ErrorAction SilentlyContinue | Select-Object -Last 15
           Get-Content -LiteralPath (Join-Path $env:USERPROFILE 'Documents\jurix\.team\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+          "--- diagnostic Python ---"
+          Get-ChildItem 'HKCU:\Software\Python\PythonCore' -ErrorAction SilentlyContinue | ForEach-Object { (Get-ItemProperty (Join-Path $_.PSPath 'InstallPath') -ErrorAction SilentlyContinue).ExecutablePath }
+          Get-ChildItem -Path $env:TEMP, ([IO.Path]::GetTempPath()) -Filter 'Python*.log' -ErrorAction SilentlyContinue | Select-Object -First 1 | ForEach-Object { "--- $($_.FullName)"; Get-Content $_.FullName -ErrorAction SilentlyContinue | Select-String -Pattern 'error|failed|TargetDir|Variable: LocalAppDataFolder|Apply complete|Exit code' | Select-Object -Last 25 }
+          Get-Content -LiteralPath (Join-Path $env:USERPROFILE 'Documents\jurix\.team\run\installation.log') -Encoding UTF8 -ErrorAction SilentlyContinue | Select-String -Pattern 'python|winget|t.l.chargement' | Select-Object -First 25
 
       - name: Vérifier (nouvelle fenêtre, chemins avec accent, espace et « & »)
         shell: powershell
