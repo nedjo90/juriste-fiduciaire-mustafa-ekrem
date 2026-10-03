@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Producteur (§6.3, §7.1) : markdown structuré → livrable au format final, depuis les gabarits de la maison.
 Usage : python produire.py <source.md> [--role redacteur] [--skill production-livrables] [--sans-ouvrir] [--sans-pdf] [--sans-inscrire]
-Front matter : type (memo|note|lettre|pv|calcul|presentation|rapport|mail), client (C-001 ou nom), dossier, objet, langue,
+                           [--sans-panel | --panel]
+Front matter : type (memo|avis|note|lettre|pv|convention|contrat|calcul|presentation|rapport|mail), client (C-001 ou nom), dossier, objet, langue,
   titre, sous_titre, date_etat, confort, sources [BIB-…|référence datée], destinataire, lieu, salutation, formule, pieces…
 Étapes : corrections automatiques sûres (⚠ sur le droit non sourcé, typographie) → rendu depuis le gabarit → PDF
 (Word/PowerPoint/Excel du poste via office.py, sinon gabarit PDF reportlab) → portes → cerebro deliverable register → ouverture dans l'application par défaut.
+Livrables importants (mémo, avis, calcul, présentation, PV, convention, contrat) : orchestration panel.py — un appel
+adverse groupé (modèle le plus capable), corrections par le rédacteur (un appel au plus, intermédiaire), relecteur, portes
+sommaires / contexte / panel. --sans-panel (ou PRODUCTEUR_SANS_PANEL, CEREBRO_SANS_MODELE) : production seule ; une
+source tirée de .equipe/tests/fixtures/ est produite sans panel sauf --panel.
 Sortie JSON. Jamais bloquant : une porte KO est renvoyée au rôle et le livrable sort avec ses réserves."""
 import sys, re, json, argparse, shutil, time
 from pathlib import Path
@@ -14,7 +19,7 @@ import commun as C
 import design as D
 import mdparse as MD
 
-FORMATS = {"memo": ["docx", "pdf"], "note": ["docx", "pdf"], "lettre": ["docx", "pdf"], "pv": ["docx", "pdf"],
+FORMATS = {"memo": ["docx", "pdf"], "avis": ["docx", "pdf"], "convention": ["docx", "pdf"], "contrat": ["docx", "pdf"], "note": ["docx", "pdf"], "lettre": ["docx", "pdf"], "pv": ["docx", "pdf"],
            "calcul": ["xlsx"], "presentation": ["pptx", "pdf"], "rapport": ["pdf"], "mail": ["eml", "txt"]}
 PORTES_TEXTE = ["liens", "sources", "typographie", "tics", "regle_zero", "couverture", "budget"]
 PORTES_SORTIE = ["presentation", "visuel"]
@@ -122,7 +127,7 @@ def pages_des_titres(pdf, titres, debut=2):
     return res, len([p for p in pages if p.strip()])
 
 
-def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True):
+def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True, version=None):
     t0 = time.time()
     import portes as P
     raw0 = Path(source).read_text(encoding="utf-8")
@@ -140,7 +145,7 @@ def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True
     dossier = C.LIVRABLES / C.nom_dossier(client_nom) / f"{date}-{C.slug(objet, 40)}"
     dossier.mkdir(parents=True, exist_ok=True)
     base = f"{C.slug(client_nom, 30)}-{C.slug(objet, 40)}-{date}"
-    v = int(meta.get("version")) if str(meta.get("version", "")).isdigit() else version_suivante(dossier, base)
+    v = int(version) if version else int(meta.get("version")) if str(meta.get("version", "")).isdigit() else version_suivante(dossier, base)
     stem = f"{base}-v{v}"
     # 2. source corrigée gardée côté machine (pour les portes texte et la traçabilité)
     run_dir = C.EQ / "run" / "producteur"; run_dir.mkdir(parents=True, exist_ok=True)
@@ -155,15 +160,15 @@ def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True
     formats = meta2.get("formats") or FORMATS.get(typ, ["docx", "pdf"])
     # 4. rendu
     try:
-        if typ in ("memo", "note", "lettre", "pv"):
+        if typ in ("memo", "avis", "note", "lettre", "pv", "convention", "contrat"):
             import rendu_docx as R
             principal = dossier / f"{stem}.docx"
-            fn = {"memo": R.memo, "note": R.memo, "lettre": R.lettre, "pv": R.pv}[typ]
+            fn = {"memo": R.memo, "avis": R.memo, "note": R.memo, "convention": R.memo, "contrat": R.memo, "lettre": R.lettre, "pv": R.pv}[typ]
             titres = fn(m, blocs, principal, d, sources)
             if pdf and "pdf" in formats:
                 pdf_path = C.vers_pdf(principal, dossier)
                 lim = (d["livrables"].get(typ) or {}).get("table_des_matieres_au_dela_pages")
-                if pdf_path and lim and typ in ("memo", "note"):
+                if pdf_path and lim and typ in ("memo", "avis", "note"):
                     tp, npages = pages_des_titres(pdf_path, titres)
                     if npages > lim:  # table des matières au-delà de dix pages : deux passes pour des numéros exacts
                         n_toc = 1 + len(titres) // 32
@@ -241,7 +246,8 @@ def produire(source, role=None, skill=None, ouvrir=True, pdf=True, inscrire=True
            "fichiers": [str(f) for f in fichiers if f], "version": v, "corrections_automatiques": stats_corr,
            "portes": {n: r["etat"] for n, r in portes.items()}, "a_renvoyer": ko,
            "corrections": {n: portes[n]["corrections"][:8] for n in ko}, "reserves": reserves, "ouvert": ouvert,
-           "source_corrigee": str(md_corr), "duree_ms": int((time.time() - t0) * 1000)}
+           "source_corrigee": str(md_corr), "type": typ, "langue": langue, "client_id": client_id, "dossier": meta2.get("dossier"),
+           "objet": str(objet), "cle": cle, "duree_ms": int((time.time() - t0) * 1000)}
     C.journal("producteur", op="produire", source=str(source), livrable=lid, ko=list(ko), duree_ms=out["duree_ms"])
     return out
 
@@ -254,9 +260,16 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("source"); ap.add_argument("--role"); ap.add_argument("--skill", default="production-livrables")
     ap.add_argument("--sans-ouvrir", action="store_true"); ap.add_argument("--sans-pdf", action="store_true"); ap.add_argument("--sans-inscrire", action="store_true")
+    g = ap.add_mutually_exclusive_group()
+    g.add_argument("--sans-panel", action="store_true", help="production seule, sans appel adverse (tests)")
+    g.add_argument("--panel", action="store_true", help="force le panel (même pour une source de test)")
     a = ap.parse_args(argv)
     try:
-        out = produire(a.source, a.role, a.skill, not a.sans_ouvrir, not a.sans_pdf, not a.sans_inscrire)
+        import panel as PN
+        if PN.panel_voulu(a.source, a.sans_panel, a.panel):
+            out = PN.livrer(a.source, a.role, a.skill, not a.sans_ouvrir, not a.sans_pdf, not a.sans_inscrire)
+        else:
+            out = PN.livrer(a.source, a.role, a.skill, not a.sans_ouvrir, not a.sans_pdf, not a.sans_inscrire, panel=False)
     except Exception as e:
         C.journal("erreurs-producteur", op="main", source=a.source, erreur=repr(e))
         out = {"erreur": repr(e), "reserves": ["production interrompue : l'intendant reprend"]}

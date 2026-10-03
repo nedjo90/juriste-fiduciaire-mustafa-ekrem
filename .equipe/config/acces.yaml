@@ -29,3 +29,23 @@ deepl:
   source: défaut
   question: ''
   effet: 1
+m365_client_id:
+  valeur: null
+  defaut: 14d82eec-204b-4c2f-b7e8-296a70dab67e
+  source: défaut (application Microsoft « Microsoft Graph Command Line Tools », client public délégué)
+  question: Votre informaticien vous a-t-il remis un identifiant d'application pour relier la messagerie ? (sinon je garde
+    celui de Microsoft)
+  effet: 1
+m365_annuaire:
+  valeur: null
+  defaut: common
+  source: défaut
+  question: ''
+  effet: 1
+m365_dossiers_suivis:
+  valeur: null
+  defaut:
+  - inbox
+  source: défaut
+  question: ''
+  effet: 1

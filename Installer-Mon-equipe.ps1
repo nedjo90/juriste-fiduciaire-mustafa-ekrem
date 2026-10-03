@@ -23,6 +23,16 @@ New-Item -ItemType Directory -Force -Path $Tmp | Out-Null
 $Journal = Join-Path $Tmp 'amorcage.log'
 function Noter([string]$m) { try { Add-Content -LiteralPath $Journal -Value ((Get-Date -Format s) + ' ' + $m) -Encoding UTF8 } catch {} }
 function Dire([string]$m) { Write-Host $m; Noter $m }
+function Lancer([string]$fichier, [string[]]$arguments, [int]$secondes, [string]$dossier = $null, [switch]$Visible) {
+  # attend SEULEMENT ce processus (Start-Process -Wait attendrait aussi les processus lances en arriere-plan), avec un delai maximal
+  $o = @{ FilePath = $fichier; PassThru = $true }
+  if ($arguments) { $o.ArgumentList = $arguments }
+  if ($dossier) { $o.WorkingDirectory = $dossier }
+  if ($Visible) { $o.NoNewWindow = $true } else { $o.WindowStyle = 'Hidden' }
+  try { $p = Start-Process @o } catch { Noter ("lancement impossible $fichier : " + $_); return -1 }
+  if (-not $p.WaitForExit($secondes * 1000)) { Noter ("delai depasse ($secondes s) : $fichier"); try { $p.Kill() } catch {}; return -2 }
+  return $p.ExitCode
+}
 
 function Ajouter-Path([string]$d) {
   if (-not $d -or -not (Test-Path -LiteralPath $d)) { return }
@@ -65,9 +75,9 @@ if (-not $Git) {
   if ($ok) {
     $dest = Join-Path $env:LOCALAPPDATA 'Programs\PortableGit'
     New-Item -ItemType Directory -Force -Path $dest | Out-Null
-    Start-Process -FilePath $sfx -ArgumentList ('-o"' + $dest + '"'), '-y' -Wait -WindowStyle Hidden
+    $null = Lancer $sfx @(('-o"' + $dest + '"'), '-y') 900
     if (Test-Path -LiteralPath (Join-Path $dest 'post-install.bat')) {
-      Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'post-install.bat' -WorkingDirectory $dest -Wait -WindowStyle Hidden
+      $null = Lancer 'cmd.exe' @('/c', 'post-install.bat') 300 $dest
     }
   }
   $Git = Trouver-Git
@@ -115,8 +125,8 @@ Dire 'Etape 2/3 : le dossier est pret.'
 # ------------------------------------------------------------------ 3. installateur du projet (Python, outils, Claude, reglages, raccourci)
 Dire 'Etape 3/3 : installation des outils de votre equipe...'
 $inst = Join-Path $Dossier '.equipe\scripts\installer.ps1'
-$p = Start-Process -FilePath 'powershell.exe' -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + $inst + '"') -Wait -NoNewWindow -PassThru
-Noter ("installateur : code " + $p.ExitCode)
+$code = Lancer 'powershell.exe' @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + $inst + '"')) 3600 $null -Visible
+Noter ("installateur : code " + $code)
 Dire ''
 Dire "C'est termine. Ouvrez une NOUVELLE fenetre PowerShell (ou double-cliquez sur 'Mon equipe' sur le bureau) et tapez :  claude"
 }

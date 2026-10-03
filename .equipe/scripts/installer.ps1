@@ -24,6 +24,33 @@ function Noter([string]$m) {
 }
 function Dire([string]$m) { Write-Host $m; Noter $m }
 function Bilan([string]$m) { $Rapport.Add($m) | Out-Null; Noter ('BILAN ' + $m) }
+function Executer([string]$exe, [string[]]$arguments, [int]$secondes = 300) {
+  # commande externe avec délai maximal et sortie capturée (jamais d'attente infinie, jamais de fenêtre)
+  try {
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $exe
+    $psi.Arguments = (($arguments | ForEach-Object { if ($_ -match '[\s"]') { '"' + ($_ -replace '"', '\"') + '"' } else { $_ } }) -join ' ')
+    $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true
+    $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
+    $p = [System.Diagnostics.Process]::Start($psi)
+    $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
+    if (-not $p.WaitForExit($secondes * 1000)) { try { $p.Kill() } catch {}; Noter ("délai dépassé ($secondes s) : $exe " + ($arguments -join ' ')); return '' }
+    $null = $o.Wait(5000); $null = $e.Wait(5000)
+    $r = ''; if ($o.IsCompleted) { $r += $o.Result }; if ($e.IsCompleted) { $r += $e.Result }
+    Noter ("$exe " + ($arguments -join ' ') + ' : ' + $r.Trim())
+    return $r
+  } catch { Noter ("échec $exe : " + $_); return '' }
+}
+function Lancer([string]$fichier, [string[]]$arguments, [int]$secondes, [string]$dossier = $null, [switch]$Visible) {
+  # attend SEULEMENT ce processus (Start-Process -Wait attendrait aussi les processus lances en arriere-plan), avec un delai maximal
+  $o = @{ FilePath = $fichier; PassThru = $true }
+  if ($arguments) { $o.ArgumentList = $arguments }
+  if ($dossier) { $o.WorkingDirectory = $dossier }
+  if ($Visible) { $o.NoNewWindow = $true } else { $o.WindowStyle = 'Hidden' }
+  try { $p = Start-Process @o } catch { Noter ("lancement impossible $fichier : " + $_); return -1 }
+  if (-not $p.WaitForExit($secondes * 1000)) { Noter ("délai dépassé ($secondes s) : $fichier"); try { $p.Kill() } catch {}; return -2 }
+  return $p.ExitCode
+}
 
 function Ajouter-PathUtilisateur([string]$dossier) {
   if (-not $dossier -or -not (Test-Path -LiteralPath $dossier)) { return }
@@ -89,7 +116,7 @@ if (-not $Py) {
     $arch = 'amd64'
     if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { $arch = 'arm64' }
     if (Telecharger "https://www.python.org/ftp/python/3.12.8/python-3.12.8-$arch.exe" $exe) {
-      Start-Process -FilePath $exe -ArgumentList '/quiet', 'InstallAllUsers=0', 'PrependPath=1', 'Include_launcher=0', 'Include_test=0', 'Shortcuts=0' -Wait
+      $null = Lancer $exe @('/quiet', 'InstallAllUsers=0', 'PrependPath=1', 'Include_launcher=0', 'Include_test=0', 'Shortcuts=0') 1200
       $Py = Trouver-Python
     }
   }
@@ -114,6 +141,23 @@ if ($Py) {
   $manque = & $Py -c "import importlib.util as u; m=[x for x in ('yaml','docx','openpyxl','pptx','reportlab','matplotlib','pandas','cryptography','pypdf') if not u.find_spec(x)]; print(','.join(m))" 2>$null
   if ($manque) { Bilan "Outils de documents : il manque $manque (nouvel essai au prochain lancement de l'installateur)." }
   else { Bilan 'Outils de documents : prêts.' }
+  # [connecteurs] courrier Outlook (.msg) et liaison Microsoft 365 (lecture et brouillons) : installation séparée,
+  # pour qu'un échec ici n'empêche jamais les outils de documents
+  $libsCourrier = @('extract-msg', 'msal', 'msal-extensions')
+  if (-not $SansReseau) {
+    & $Py -m pip install --user --upgrade --disable-pip-version-check --no-warn-script-location @libsCourrier 2>&1 | ForEach-Object { Noter ("pip: " + $_) }
+  }
+  $manqueC = & $Py -c "import importlib.util as u; m=[x for x in ('extract_msg','msal','msal_extensions') if not u.find_spec(x)]; print(','.join(m))" 2>$null
+  if ($manqueC) { Bilan "Courrier Outlook et messagerie : il manque $manqueC (nouvel essai au prochain lancement de l'installateur)." }
+  else { Bilan 'Courrier Outlook et messagerie : prêts.' }
+  # [connecteurs] OPTIONNEL : transcription des notes vocales sur le poste (faster-whisper, processeur seul).
+  # Échec = repli (l'équipe demande un court résumé), jamais bloquant.
+  if (-not $SansReseau) {
+    & $Py -m pip install --user --disable-pip-version-check --no-warn-script-location 'faster-whisper' 2>&1 | ForEach-Object { Noter ("pip (optionnel): " + $_) }
+  }
+  $fw = & $Py -c "import importlib.util as u; print('ok' if u.find_spec('faster_whisper') else '')" 2>$null
+  if ($fw) { Bilan 'Notes vocales : transcription sur ce poste prête (le modèle, environ 500 Mo, se télécharge à la première note).' }
+  else { Bilan "Notes vocales : transcription non disponible sur ce poste ; l'équipe vous demandera un court résumé à la place." }
   $scripts = & $Py -c "import sysconfig, os; print(sysconfig.get_path('scripts', os.name + '_user'))" 2>$null
   if ($scripts) { Ajouter-PathUtilisateur (("$scripts").Trim()) }
 }
@@ -143,9 +187,9 @@ if (-not $GitBash) {
         if (Telecharger $asset.browser_download_url $sfx) {
           $dest = Join-Path $env:LOCALAPPDATA 'Programs\PortableGit'
           New-Item -ItemType Directory -Force -Path $dest | Out-Null
-          Start-Process -FilePath $sfx -ArgumentList "-o`"$dest`"", '-y' -Wait -WindowStyle Hidden
+          $null = Lancer $sfx @("-o`"$dest`"", '-y') 900
           if (Test-Path (Join-Path $dest 'post-install.bat')) {
-            Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'post-install.bat' -WorkingDirectory $dest -Wait -WindowStyle Hidden
+            $null = Lancer 'cmd.exe' @('/c', 'post-install.bat') 300 $dest
           }
           $GitBash = Trouver-GitBash
         }
@@ -181,29 +225,36 @@ if (-not $Claude -and -not $SansReseau) {
   Dire 'Installation de Claude…'
   try {
     # commande officielle : irm https://claude.ai/install.ps1 | iex (dans un processus séparé, fenêtre cachée)
-    Start-Process -FilePath 'powershell.exe' -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', '"irm https://claude.ai/install.ps1 | iex"' -Wait -WindowStyle Hidden
+    $null = Lancer 'powershell.exe' @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', '"irm https://claude.ai/install.ps1 | iex"') 900
   } catch { Noter ("installation de Claude en échec : " + $_) }
   Ajouter-PathUtilisateur (Join-Path $env:USERPROFILE '.local\bin')
   $Claude = Trouver-Claude
 }
 if ($Claude) { Ajouter-PathUtilisateur (Split-Path -Parent $Claude); Bilan 'Claude : prêt.' }
+# « claude » tapé dans n'importe quel terminal ouvre l'équipe : la commande du projet (.equipe\bin\claude.cmd) passe en tête du PATH
+$binEquipe = Join-Path $Racine '.equipe\bin'
+$u = [Environment]::GetEnvironmentVariable('Path', 'User'); if (-not $u) { $u = '' }
+$parts = @($u.Split(';') | Where-Object { $_ -ne '' -and $_ -ne $binEquipe })
+[Environment]::SetEnvironmentVariable('Path', ((@($binEquipe) + $parts) -join ';'), 'User')
+$env:Path = $binEquipe + ';' + (($env:Path.Split(';') | Where-Object { $_ -ne $binEquipe }) -join ';')
+if (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Commande « claude » : ouvre votre équipe depuis n''importe quelle fenêtre.' }
 else { Bilan "Claude : non installé (nouvel essai au prochain lancement de l'installateur)." }
 
 # ---------------------------------------------------------------- 4 bis. modèles de documents officiels d'Anthropic (plugin)
 if ($Claude -and -not $SansReseau) {
   try {
-    $installes = (& $Claude plugin list 2>&1 | Out-String)
+    $installes = Executer $Claude @('plugin', 'list') 120
     if ($installes -notmatch 'document-skills') {
-      $liste = (& $Claude plugin marketplace list 2>&1 | Out-String)
+      $liste = Executer $Claude @('plugin', 'marketplace', 'list') 120
       if ($liste -notmatch 'anthropics/skills') {
-        & $Claude plugin marketplace add anthropics/skills 2>&1 | ForEach-Object { Noter ("plugin: " + $_) }
-        $liste = (& $Claude plugin marketplace list 2>&1 | Out-String)
+        $null = Executer $Claude @('plugin', 'marketplace', 'add', 'anthropics/skills') 300
+        $liste = Executer $Claude @('plugin', 'marketplace', 'list') 120
       }
       $nom = 'anthropic-agent-skills'
       $m = [regex]::Match($liste, '>\s*(\S+)\s*\r?\n\s*Source:\s*GitHub \(anthropics/skills\)')
       if ($m.Success) { $nom = $m.Groups[1].Value }
-      & $Claude plugin install ('document-skills@' + $nom) --scope user -y 2>&1 | ForEach-Object { Noter ("plugin: " + $_) }
-      $installes = (& $Claude plugin list 2>&1 | Out-String)
+      $null = Executer $Claude @('plugin', 'install', ('document-skills@' + $nom), '--scope', 'user', '-y') 300
+      $installes = Executer $Claude @('plugin', 'list') 120
     }
     if ($installes -match 'document-skills') { Bilan 'Modèles de documents (Word, Excel, PowerPoint, PDF) : prêts.' }
     else { Bilan 'Modèles de documents complémentaires : non installés (nouvel essai au prochain lancement ; l''équipe a les siens).' }
@@ -251,8 +302,10 @@ if (-not (Get-Command pdftotext -ErrorAction SilentlyContinue)) {
   }
   if ($okPop) { Bilan 'Lecture avancée des PDF : prête.' } else { Bilan 'Lecture avancée des PDF : non installée (optionnelle).' }
 }
-$soffice = @("$env:ProgramFiles\LibreOffice\program\soffice.exe", (Join-Path $env:LOCALAPPDATA 'Programs\LibreOffice\program\soffice.exe')) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
-if (-not $soffice) { Bilan 'Conversion bureautique avancée : non installée (optionnelle ; les documents sont produits sans).' }
+# conversions PDF et anciens formats : Microsoft 365 (Word, Excel, PowerPoint) déjà présent sur le poste, piloté sans fenêtre
+$office = $false
+foreach ($prog in 'Word.Application') { try { $t = [Type]::GetTypeFromProgID($prog); if ($t) { $office = $true } } catch {} }
+if ($office) { Bilan 'Microsoft 365 : utilisé pour les PDF et les anciens formats.' } else { Bilan 'Microsoft 365 non détecté : les PDF sont produits directement.' }
 
 # ---------------------------------------------------------------- 6. réglages de Claude : confiance du dossier, mode sans demande, poste
 $Valider = Join-Path $Racine '.equipe\scripts\valider_config.py'

@@ -321,12 +321,28 @@ def adapter_poste(python=None):
     pm = ROOT / ".mcp.json"
     if pm.exists():
         m = lire_json(pm)
+        avant = json.dumps(m, sort_keys=True)
         for nom, srv in (m.get("mcpServers") or {}).items():
             exe = srv.get("command", "")
-            if Path(exe).name.lower() in NOMS_PYTHON and (os.name == "nt" or not _resolu(exe)) and exe != python:
+            base = Path(exe).name.lower()
+            args = srv.setdefault("args", [])
+            if base in NOMS_PYTHON and (os.name == "nt" or not _resolu(exe)) and exe != python:
                 srv["command"] = python
-                ecrire_json(pm, m)
-                change = True
+            elif base in ("npx", "npx.cmd"):
+                # Windows : npx est un .cmd que Claude Code ne peut pas lancer directement → cmd /c npx …
+                if os.name == "nt":
+                    srv["command"], srv["args"] = "cmd", ["/c", "npx"] + args
+            elif base in ("uvx", "uvx.exe") and _resolu(exe):
+                srv["command"] = _resolu(exe)  # chemin exact : indépendant du PATH du terminal
+            # navigateur du poste pour Playwright : Edge sous Windows (toujours présent), Chrome sous macOS s'il existe
+            if "@playwright/mcp" in " ".join(srv.get("args", [])) and "--browser" not in srv["args"]:
+                if os.name == "nt":
+                    srv["args"] += ["--browser", "msedge"]
+                elif sys.platform == "darwin" and Path("/Applications/Google Chrome.app").exists():
+                    srv["args"] += ["--browser", "chrome"]
+        if json.dumps(m, sort_keys=True) != avant:
+            ecrire_json(pm, m)
+            change = True
     return change
 
 

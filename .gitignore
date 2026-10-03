@@ -22,3 +22,5 @@ __pycache__/
 *.pyc
 .claude/settings.local.json
 .equipe/cerveau/journal/*.jsonl
+# modèles de transcription vocale (téléchargés au premier usage, volumineux) — chantier connecteurs
+.equipe/outils/whisper/

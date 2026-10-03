@@ -15,7 +15,8 @@ noter() { echo "$(date '+%Y-%m-%dT%H:%M:%S') $*" >> "$LOG" 2>/dev/null; }
 dire() { echo "$*"; noter "$*"; }
 bilan() { RAPPORT+=("$1"); noter "BILAN $1"; }
 reseau() { [ -z "${INSTALLER_SANS_RESEAU:-}" ]; }
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.local/node/bin:$PATH"
+TMPD="$(mktemp -d 2>/dev/null || echo /tmp)"
 
 dire ""
 dire "Installation de votre équipe : cela prend quelques minutes. Vous pouvez laisser cette fenêtre ouverte."
@@ -53,6 +54,25 @@ if [ -n "$PY" ]; then
   fi
   M="$(manque)"
   if [ -n "$M" ]; then bilan "Outils de documents : il manque $M (nouvel essai au prochain lancement)."; else bilan "Outils de documents : prêts."; fi
+  # [connecteurs] courrier Outlook (.msg) et liaison Microsoft 365 : installation séparée (un échec n'empêche pas les outils de documents)
+  LIBS_COURRIER="extract-msg msal msal-extensions"
+  manque_c() { "$PY" -c "import importlib.util as u; m=[x for x in ('extract_msg','msal','msal_extensions') if not u.find_spec(x)]; print(' '.join(m))" 2>/dev/null; }
+  if [ -n "$(manque_c)" ] && reseau; then
+    "$PY" -m pip install --user --upgrade --disable-pip-version-check $LIBS_COURRIER >>"$LOG" 2>&1 \
+      || "$PY" -m pip install --user --break-system-packages --disable-pip-version-check $LIBS_COURRIER >>"$LOG" 2>&1 \
+      || "$PY" -m pip install --user --break-system-packages --use-pep517 --disable-pip-version-check $LIBS_COURRIER >>"$LOG" 2>&1 \
+      || { command -v uv >/dev/null 2>&1 && uv pip install --python "$PY" --system $LIBS_COURRIER >>"$LOG" 2>&1; }
+  fi
+  MC="$(manque_c)"
+  if [ -n "$MC" ]; then bilan "Courrier Outlook et messagerie : il manque $MC (nouvel essai au prochain lancement)."; else bilan "Courrier Outlook et messagerie : prêts."; fi
+  # [connecteurs] OPTIONNEL : transcription des notes vocales sur le poste (faster-whisper) ; échec = repli, jamais bloquant
+  fw() { "$PY" -c "import importlib.util as u; print('ok' if u.find_spec('faster_whisper') else '')" 2>/dev/null; }
+  if [ -z "$(fw)" ] && reseau; then
+    "$PY" -m pip install --user --disable-pip-version-check faster-whisper >>"$LOG" 2>&1 \
+      || "$PY" -m pip install --user --break-system-packages --disable-pip-version-check faster-whisper >>"$LOG" 2>&1 || true
+  fi
+  if [ -n "$(fw)" ]; then bilan "Notes vocales : transcription sur ce poste prête (le modèle, environ 500 Mo, se télécharge à la première note)."
+  else bilan "Notes vocales : transcription non disponible sur ce poste ; l'équipe vous demandera un court résumé à la place."; fi
 fi
 
 # ------------------------------------------------------------- 3. Git
@@ -85,14 +105,56 @@ if [ -n "$CLAUDE" ] && reseau; then
   else bilan "Modèles de documents complémentaires : non installés (nouvel essai au prochain lancement ; l'équipe a les siens)."; fi
 fi
 
-# ------------------------------------------------------------- 5. optionnels (Node, poppler, LibreOffice)
+# ------------------------------------------------------------- 5. Node (navigateur automatisé, MCP Playwright) et poppler
+if ! command -v npx >/dev/null 2>&1 && reseau; then
+  if [ "$SYS" = "Darwin" ] && command -v brew >/dev/null 2>&1; then
+    brew install node >>"$LOG" 2>&1
+  fi
+  if ! command -v npx >/dev/null 2>&1; then
+    # Node officiel en mode utilisateur, sans Homebrew ni droits administrateur
+    ARCH="$(uname -m)"; case "$ARCH" in arm64|aarch64) NA=arm64 ;; *) NA=x64 ;; esac
+    OS=linux; [ "$SYS" = "Darwin" ] && OS=darwin
+    VER="$(curl -fsSL https://nodejs.org/dist/index.json 2>>"$LOG" | "$PY" -c 'import json,sys;print(next(v["version"] for v in json.load(sys.stdin) if v["lts"]))' 2>>"$LOG")"
+    if [ -n "$VER" ]; then
+      mkdir -p "$HOME/.local/node" "$HOME/.local/bin"
+      if curl -fsSL "https://nodejs.org/dist/$VER/node-$VER-$OS-$NA.tar.gz" -o "$TMPD/node.tgz" 2>>"$LOG"; then
+        tar xzf "$TMPD/node.tgz" -C "$HOME/.local/node" --strip-components 1 2>>"$LOG"
+        for b in node npm npx; do ln -sf "$HOME/.local/node/bin/$b" "$HOME/.local/bin/$b"; done
+      fi
+    fi
+  fi
+fi
+if command -v npx >/dev/null 2>&1; then
+  # navigateur pour Playwright : Chrome s'il est installé, sinon Chromium téléchargé une fois (mode utilisateur)
+  if [ "$SYS" = "Darwin" ] && [ ! -d "/Applications/Google Chrome.app" ] && reseau; then
+    npx -y playwright@latest install chromium >>"$LOG" 2>&1 || true
+  fi
+  bilan "Navigateur automatisé : prêt."
+else
+  bilan "Navigateur automatisé : non installé (nouvel essai au prochain lancement ; l'équipe travaille sans)."
+fi
 if [ "$SYS" = "Darwin" ] && command -v brew >/dev/null 2>&1 && reseau; then
-  command -v npx >/dev/null 2>&1 || brew install node >>"$LOG" 2>&1
   command -v pdftotext >/dev/null 2>&1 || brew install poppler >>"$LOG" 2>&1
 fi
-command -v npx >/dev/null 2>&1 || bilan "Navigateur automatisé : non installé (optionnel, l'équipe travaille sans)."
 command -v pdftotext >/dev/null 2>&1 || bilan "Lecture avancée des PDF : non installée (optionnelle)."
-command -v soffice >/dev/null 2>&1 || [ -d "/Applications/LibreOffice.app" ] || bilan "Conversion bureautique avancée : non installée (optionnelle)."
+
+# ------------------------------------------------------------- 5 bis. « claude » dans n'importe quel Terminal ouvre l'équipe
+BLOC_DEBUT="# >>> mon-equipe >>>"; BLOC_FIN="# <<< mon-equipe <<<"
+for rc in "$HOME/.zprofile" "$HOME/.bash_profile" "$HOME/.profile"; do
+  [ -f "$rc" ] || [ "$rc" = "$HOME/.zprofile" ] || [ "$rc" = "$HOME/.profile" ] || continue
+  touch "$rc"
+  "$PY" - "$rc" "$RACINE" <<'PYEOF'
+import sys, re
+rc, racine = sys.argv[1], sys.argv[2]
+t = open(rc, encoding="utf-8", errors="ignore").read()
+t = re.sub(r"(?s)# >>> mon-equipe >>>.*?# <<< mon-equipe <<<\n?", "", t)
+q = racine.replace("'", "'\\''")
+bloc = f"# >>> mon-equipe >>>\nexport PATH='{q}/.equipe/bin':\"$HOME/.local/bin:$HOME/.local/node/bin:$PATH\"\n# <<< mon-equipe <<<\n"
+open(rc, "w", encoding="utf-8").write(t.rstrip() + ("\n\n" if t.strip() else "") + bloc)
+PYEOF
+done
+export PATH="$RACINE/.equipe/bin:$HOME/.local/bin:$HOME/.local/node/bin:$PATH"
+bilan "Commande « claude » : ouvre votre équipe depuis n'importe quel Terminal."
 
 # ------------------------------------------------------------- 6. réglages de Claude
 VALIDER="$RACINE/.equipe/scripts/valider_config.py"

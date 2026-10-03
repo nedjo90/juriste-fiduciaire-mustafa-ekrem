@@ -2,6 +2,7 @@
 """Portes déterministes (§7.5) — scripts, jamais des avis d'agent, jamais bloquantes.
 Usage : python portes.py <fichier> [--type memo] [--langue fr] [--role redacteur] [--skill production-livrables]
                          [--corriger] [--pdf rendu.pdf] [--portes liens,sources,...] [--sans-enregistrer]
+                         [--livrable LIV-…] [--tour N]
 Sortie JSON : {fichier, ok, portes: {porte: {etat: ok|ko|na, details, corrections}}, reserves, a_renvoyer}
 --corriger (markdown) : écrit <fichier>.corrige.md avec ⚠ insérés et typographie corrigée.
 Code de sortie toujours 0 : une porte KO renvoie la correction au rôle ; à défaut le livrable sort avec réserves."""
@@ -12,24 +13,26 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "producteur"))
 import commun as C
 from commun_portes import charger
-import p_liens, p_sources, p_typo, p_tics, p_jargon, p_presentation, p_couverture, p_visuel, p_budget
+import p_liens, p_sources, p_typo, p_tics, p_jargon, p_presentation, p_couverture, p_visuel, p_budget, p_sommaires, p_contexte, p_panel
 
 PORTES = {"liens": p_liens, "sources": p_sources, "typographie": p_typo, "tics": p_tics, "regle_zero": p_jargon,
-          "presentation": p_presentation, "couverture": p_couverture, "visuel": p_visuel, "budget": p_budget}
+          "presentation": p_presentation, "couverture": p_couverture, "visuel": p_visuel, "budget": p_budget,
+          "sommaires": p_sommaires, "contexte": p_contexte, "panel": p_panel}
 RESPONSABLE = {"liens": "archiviste", "sources": "documentaliste", "typographie": "relecteur", "tics": "editeur-humain",
                "regle_zero": "associe", "presentation": "directeur-artistique", "couverture": "chef-de-cabinet",
-               "visuel": "directeur-artistique", "budget": "redacteur"}
+               "visuel": "directeur-artistique", "budget": "redacteur",
+               "sommaires": "archiviste", "contexte": "chef-de-cabinet", "panel": "producteur"}
 TEXTE_SEUL = {"md", "txt", "eml"}
 
 
-def executer(chemin, type_=None, langue=None, role=None, skill=None, pdf=None, portes=None, enregistrer=True, meta=None, cle=None):
+def executer(chemin, type_=None, langue=None, role=None, skill=None, pdf=None, portes=None, enregistrer=True, meta=None, cle=None, contexte=None):
     t0 = time.time()
     doc = charger(chemin, dict(meta or {}, type=type_, langue=langue))
     if type_:
         doc["type"] = type_
     if langue:
         doc["langue"] = langue
-    ctx = {"pdf": pdf}
+    ctx = {"pdf": pdf, **(contexte or {})}
     doc["ctx"] = ctx
     noms = portes or list(PORTES)
     if doc["format"] in TEXTE_SEUL:
@@ -74,9 +77,11 @@ def main(argv=None):
     ap.add_argument("--type"); ap.add_argument("--langue"); ap.add_argument("--role"); ap.add_argument("--skill")
     ap.add_argument("--pdf"); ap.add_argument("--portes"); ap.add_argument("--corriger", action="store_true")
     ap.add_argument("--sans-enregistrer", action="store_true")
+    ap.add_argument("--livrable"); ap.add_argument("--tour")
     a = ap.parse_args(argv)
     try:
-        out = executer(a.fichier, a.type, a.langue, a.role, a.skill, a.pdf, a.portes.split(",") if a.portes else None, not a.sans_enregistrer)
+        ctxe = {k: v for k, v in (("livrable", a.livrable), ("tour", a.tour)) if v}
+        out = executer(a.fichier, a.type, a.langue, a.role, a.skill, a.pdf, a.portes.split(",") if a.portes else None, not a.sans_enregistrer, contexte=ctxe)
         if a.corriger and Path(a.fichier).suffix.lower() in (".md", ".markdown"):
             raw = Path(a.fichier).read_text(encoding="utf-8")
             nv, stats = corriger_markdown(raw, out.get("langue") or "fr")

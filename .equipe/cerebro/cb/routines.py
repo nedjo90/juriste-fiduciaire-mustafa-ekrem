@@ -120,6 +120,7 @@ def routine_add(enonce, cadence=None, mission="", client=None, script=None, acte
     cad = normaliser_cadence(cadence) if cadence else cadence_depuis_texte(enonce)
     if not cad:
         return {"erreur": "cadence illisible : lundi…dimanche, quotidien, hebdo, mensuel ou evenement:<type>"}
+    mission_donnee = bool((mission or "").strip())
     mission = (mission or enonce).strip()
     candidats = {h["id"] for h in find(enonce, limit=8, types=["routine"]) if h.get("id")}
     candidats |= {o["id"] for o in _routines(("actif", "suspendu"))}
@@ -130,7 +131,7 @@ def routine_add(enonce, cadence=None, mission="", client=None, script=None, acte
             maj = {}
             if o["data"].get("cadence") != cad:
                 maj["cadence"] = cad
-            if mission and o["data"].get("mission") != mission:
+            if mission_donnee and o["data"].get("mission") != mission:
                 maj["mission"] = mission
             if o["statut"] != "actif":
                 maj["statut"] = "actif"

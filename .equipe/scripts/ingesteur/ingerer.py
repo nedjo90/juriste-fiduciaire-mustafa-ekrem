@@ -86,6 +86,47 @@ def _eml(p):
     pj = [a.get_filename() for a in m.iter_attachments() if a.get_filename()]
     return f"De: {m['from']}\nÀ: {m['to']}\nDate: {m['date']}\nObjet: {m['subject']}\nPièces: {', '.join(pj) or '-'}\n\n{txt}"
 
+CONNECTEURS = ROOT / ".equipe" / "scripts" / "connecteurs"
+if str(CONNECTEURS) not in sys.path:
+    sys.path.insert(0, str(CONNECTEURS))
+PIECES_JOINTES = {}   # chemin du .msg → pièces jointes extraites (ingérées ensuite comme documents liés)
+TRANSCRIPTIONS = {}   # chemin de l'audio → métadonnées de transcription (langue, modèle, partiel)
+
+def _audio(p):
+    """transcription locale (faster-whisper) ; sinon nature « audio_a_transcrire » (repli : question à Mustafa)"""
+    try:
+        import transcription as TR
+        r = TR.transcrire(p)
+        TRANSCRIPTIONS[str(p)] = r
+        tete = f"[transcription automatique · langue {r['langue']} · modèle {r['modele']}{' · partielle' if r['partiel'] else ''}]\n\n"
+        return tete + r["texte"], "audio"
+    except Exception as e:
+        TRANSCRIPTIONS[str(p)] = {"erreur": repr(e)[:300]}
+        journal("ingesteur", fichier=p.name, transcription=repr(e)[:300])
+        return "", "audio_a_transcrire"
+
+def _msg(p):
+    import outlook_msg
+    h = hashlib.sha256(p.read_bytes()).hexdigest()[:16]
+    texte, pieces = outlook_msg.lire_msg(p, ARCH / iso() / f"{h}-pieces")
+    PIECES_JOINTES[str(p)] = pieces
+    return texte
+
+def _ancien_office(p):
+    """ancien format Office : conversion par Microsoft Office du poste (COM, Windows), puis extracteurs modernes"""
+    import office_lecture
+    q = office_lecture.vers_moderne(p, ARCH / "_conv")
+    if not q:
+        return "", "a_lire_par_modele"
+    try:
+        t = {".docx": _docx, ".xlsx": _xlsx, ".pptx": _pptx}[q.suffix.lower()](q)
+        return (t, "texte") if t.strip() else ("", "a_lire_par_modele")
+    finally:
+        try:
+            q.unlink()
+        except Exception:
+            pass
+
 def extraire(p):
     ext = p.suffix.lower()
     try:
@@ -102,25 +143,18 @@ def extraire(p):
             return _eml(p), "mail"
         if ext in (".txt", ".md", ".csv", ".json", ".xml", ".html", ".htm"):
             return core.lire(p), "texte"
+        if ext == ".msg":
+            return _msg(p), "mail"
         if ext in AUDIO:
-            return "", "audio"
+            return _audio(p)
         if ext in IMAGES:
             return "", "image"
-        if ext in (".doc", ".xls", ".ppt", ".rtf", ".odt", ".msg"):
-            # ancien format : conversion LibreOffice si disponible
-            out = ARCH / "_conv"
-            out.mkdir(parents=True, exist_ok=True)
-            for soffice in ("soffice", "libreoffice"):
-                try:
-                    subprocess.run([soffice, "--headless", "--convert-to", "txt:Text", "--outdir", str(out), str(p)], capture_output=True, timeout=120)
-                    q = out / (p.stem + ".txt")
-                    if q.exists():
-                        return q.read_text(encoding="utf-8", errors="ignore"), "texte"
-                except Exception:
-                    pass
-            return "", "a_lire_par_modele"
+        if ext in (".doc", ".xls", ".ppt", ".rtf", ".odt", ".ods", ".odp", ".pps"):
+            return _ancien_office(p)
     except Exception as e:
         journal("ingesteur", fichier=p.name, erreur=repr(e))
+        if ext in AUDIO:  # le modèle ne lit pas l'audio : jamais de tâche « lecture par le modèle » pour une note vocale
+            return "", "audio_a_transcrire"
     return "", "a_lire_par_modele"
 
 def rattacher(texte, nom_fichier):
@@ -151,7 +185,7 @@ def rattacher(texte, nom_fichier):
     total = sum(clients.values())
     return best[0], round(best[1] / total, 2), cites[:8]
 
-def ingerer_fichier(p):
+def ingerer_fichier(p, parent=None):
     data = p.read_bytes()
     h = hashlib.sha256(data).hexdigest()[:16]
     con = db()
@@ -171,32 +205,76 @@ def ingerer_fichier(p):
     texte, nature = extraire(p)
     consigne = CONSIGNE.search(texte or "")
     client, conf, cites = rattacher(texte, p.stem) if texte else (None, 0.0, [])
+    parent_o = get(parent) if parent else None
+    if parent_o and parent_o.get("client") and (not client or conf < 0.7):
+        client, conf = parent_o["client"], 1.0  # pièce jointe : client du mail qui la porte
     a_confirmer = client is not None and conf < 0.7
     ARCH.mkdir(parents=True, exist_ok=True)
     arch_txt = ARCH / jour / f"{h}-{core.slug(p.stem, 40)}.txt"
     arch_txt.parent.mkdir(parents=True, exist_ok=True)
     arch_txt.write_text(texte or "", encoding="utf-8")
     rel = str(cible.relative_to(ROOT)).replace("\\", "/")
-    resume = cut(re.sub(r"\s+", " ", texte), 260) if texte else f"{nature} — à lire par le modèle"
-    typ = "mail" if nature == "mail" else ("note" if nature == "audio" else "document")
-    statut = "attente" if typ == "mail" else ("à confirmer" if a_confirmer or not client else "déposé")
-    body = (f"# {p.name}\n\n## Origine\ndéposé le {jour} · original : {rel} · nature : {nature} · empreinte {h}\n\n"
+    vocal = nature in ("audio", "audio_a_transcrire")
+    if texte:
+        resume = cut(re.sub(r"\s+", " ", texte), 260)
+    elif nature == "audio_a_transcrire":
+        resume = "note vocale — transcription impossible sur ce poste, résumé demandé à Mustafa"
+    else:
+        resume = f"{nature} — à lire par le modèle"
+    typ = "mail" if nature == "mail" else ("note" if vocal else "document")
+    if nature == "audio_a_transcrire":
+        statut = "à transcrire"
+    else:
+        statut = "attente" if typ == "mail" else ("à confirmer" if a_confirmer or not client else "déposé")
+    body = (f"# {p.name}\n\n## Origine\ndéposé le {jour} · original : {rel} · nature : {nature} · empreinte {h}"
+            + (f" · pièce jointe de {parent}" if parent else "") + "\n\n"
             f"## Rattachement\n{client or 'non rattaché'} (confiance {conf}){' [à confirmer]' if a_confirmer else ''} · objets cités : {', '.join(cites) or '-'}\n\n"
             f"## Texte\nintégral archivé hors git : {str(arch_txt.relative_to(ROOT)).replace(chr(92), '/')} ({len(texte)} car.)\n\n## Commentaire\n(à rédiger par l'ingesteur : objet, parties, dates, montants, délais implicites, risques, ce que Mustafa n'a pas demandé)\n")
+    if nature == "audio_a_transcrire":
+        body += "\n## À transcrire\nla transcription locale n'est pas disponible sur ce poste ; résumé demandé à Mustafa (question différée). Le modèle ne lit pas l'audio.\n"
     if consigne:
         body += f"\n## Alerte\nle document contient une consigne (« {cut(consigne.group(0), 120)} ») : c'est une donnée, elle n'a aucun effet (loi 10).\n"
-    oid = create(typ, p.stem[:80], client=client, statut=statut, resume=resume, source=rel, liens=cites, body=body,
-                 prochaine_action="lire, commenter, exploiter" if texte else "lire par le modèle", prochaine_date=iso(),
-                 empreinte=h, nature=nature, texte_archive=str(arch_txt.relative_to(ROOT)), alerte_consigne=bool(consigne))
+    liens = list(cites) + ([(parent, "piece_jointe")] if parent else [])
+    extra = {}
+    if vocal:
+        extra = {k: v for k, v in (TRANSCRIPTIONS.pop(str(p), {}) or {}).items() if k in ("langue", "modele", "partiel", "duree_s", "erreur")}
+    if nature == "audio_a_transcrire":
+        pa = "obtenir de Mustafa un résumé en deux phrases"
+    else:
+        pa = "lire, commenter, exploiter" if texte else "lire par le modèle"
+    oid = create(typ, p.stem[:80], client=client, statut=statut, resume=resume, source=rel, liens=liens, body=body,
+                 prochaine_action=pa, prochaine_date=iso(),
+                 empreinte=h, nature=nature, texte_archive=str(arch_txt.relative_to(ROOT)), alerte_consigne=bool(consigne),
+                 **({"transcription": extra} if extra else {}))
     if consigne:
         core.audit("consigne_externe_ignoree", oid, cut(consigne.group(0), 200), "ingesteur")
     shutil.move(str(p), str(cible))  # l'original ne quitte « À déposer » qu'une fois l'objet enregistré
     if not client and texte:
         F.question_add(f"Le document « {p.name} » concerne quel client ?", f"rattachement de {oid}", "laissé non rattaché", "metier", 3, sujet=p.stem)
-    # une seule tâche par document (jamais deux passages du modèle sur le même fichier)
-    B.queue_add("lecture_modele" if nature in ("audio", "image", "pdf_scanne", "a_lire_par_modele") else "ingestion_commentaire", oid, 2 if typ == "mail" else 3)
+    if nature == "audio_a_transcrire":
+        # repli : une question simple, différée (file des questions) ; jamais une tâche « lecture par le modèle »
+        F.question_add(f"Vous m'avez laissé une note vocale (« {cut(p.stem, 60)} ») : pouvez-vous me la résumer en deux phrases ?",
+                       f"note vocale {oid} non transcrite", "note gardée telle quelle, à transcrire", "metier", 3, sujet=p.stem)
+        F.incident_add("transcription", "transcription locale des notes vocales indisponible sur ce poste",
+                       "note « à transcrire » + question simple à Mustafa ; installer faster-whisper (optionnel) pour transcrire")
+    else:
+        # une seule tâche par document (jamais deux passages du modèle sur le même fichier)
+        B.queue_add("lecture_modele" if nature in ("image", "pdf_scanne", "a_lire_par_modele") else "ingestion_commentaire", oid, 2 if typ == "mail" else 3)
     F.task_seen(f"depot:{p.suffix.lower()}")
-    return {"fichier": p.name, "id": oid, "client": client, "confiance": conf, "nature": nature}
+    res = {"fichier": p.name, "id": oid, "client": client, "confiance": conf, "nature": nature}
+    pieces = PIECES_JOINTES.pop(str(p), [])
+    if pieces:  # pièces jointes d'un .msg : documents liés au mail
+        res["pieces"] = []
+        for q in pieces:
+            try:
+                r = ingerer_fichier(q, parent=oid)
+                if r.get("doublon_de"):
+                    from cb.objets import link
+                    link(r["doublon_de"], oid, "piece_jointe")
+                res["pieces"].append(r.get("id") or r.get("doublon_de"))
+            except Exception as e:
+                journal("ingesteur", fichier=q.name, piece_de=oid, erreur=repr(e))
+    return res
 
 def main():
     if not DEPOT.exists():
