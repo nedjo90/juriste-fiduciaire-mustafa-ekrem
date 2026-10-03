@@ -1,0 +1,164 @@
+name: test-poste-vierge
+# Test temporaire de construction : installateur sur un Windows rendu vierge et sur un macOS avec un profil neuf.
+# Retiré du dossier livré une fois l'installation validée.
+on:
+  push:
+    branches: [ccr-e8f5838b-808ukj]
+    paths:
+      - '.github/workflows/test-poste-vierge.yml'
+      - 'Installer.bat'
+      - '.equipe/scripts/installer.ps1'
+      - '.equipe/scripts/installer.sh'
+      - '.equipe/scripts/lanceurs/**'
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rendre le poste vierge (Python, Git, Node, LibreOffice retirés ; PATH utilisateur vidé)
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Continue'
+          foreach ($f in 'C:\Windows\py.exe', 'C:\Windows\pyw.exe') { Remove-Item $f -Force -ErrorAction SilentlyContinue }
+          foreach ($d in 'C:\hostedtoolcache\windows\Python', 'C:\Program Files\Git', 'C:\Program Files\nodejs', 'C:\Program Files\LibreOffice', 'C:\Strawberry', 'C:\msys64', 'C:\mingw64', 'C:\tools') {
+            if (Test-Path $d) { try { Rename-Item -LiteralPath $d -NewName ((Split-Path $d -Leaf) + '-cache') -ErrorAction Stop; "retiré : $d" } catch { "impossible de retirer $d : $_" } }
+          }
+          Remove-Item 'HKCU:\Software\Python', 'HKLM:\SOFTWARE\Python' -Recurse -Force -ErrorAction SilentlyContinue
+          [Environment]::SetEnvironmentVariable('Path', '', 'User')
+          $env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'
+          foreach ($c in 'python', 'py', 'git', 'node', 'npx', 'claude') { $x = Get-Command $c -ErrorAction SilentlyContinue; "$c : " + $(if ($x) { $x.Source } else { 'absent' }) }
+
+      - name: Copier le dossier dans un chemin avec espace et accent (comme reçu)
+        shell: powershell
+        run: |
+          $e = [char]0x00E9
+          $dest = Join-Path $env:USERPROFILE ("Documents\Dossier " + $e + "quipe test\mon-equipe")
+          New-Item -ItemType Directory -Force -Path $dest | Out-Null
+          Get-ChildItem -Force -LiteralPath $env:GITHUB_WORKSPACE | Where-Object { $_.Name -ne '.git' } | ForEach-Object { Copy-Item -LiteralPath $_.FullName -Destination $dest -Recurse -Force }
+          Remove-Item -LiteralPath (Join-Path $dest '.github') -Recurse -Force -ErrorAction SilentlyContinue
+          "RACINE=$dest" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Installer comme Mustafa (double-clic sur Installer.bat, aucune question)
+        shell: powershell
+        run: |
+          $env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'
+          $env:MON_EQUIPE_SANS_PAUSE = '1'
+          $bat = Join-Path $env:RACINE 'Installer.bat'
+          $t0 = Get-Date
+          $p = Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', ('"' + $bat + '"') -Wait -NoNewWindow -PassThru
+          "code de sortie : $($p.ExitCode) ; durée : $([int]((Get-Date) - $t0).TotalSeconds) s"
+          Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+
+      - name: Vérifier l'installation
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $ko = New-Object System.Collections.Generic.List[string]
+          function Verif([string]$nom, [bool]$ok, [string]$detail = '') { if ($ok) { "OK     $nom" } else { "ÉCHEC  $nom $detail"; $ko.Add($nom) } }
+          $env:PYTHONIOENCODING = 'utf-8'
+          $poste = Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\poste.json') -Raw -Encoding UTF8 -ErrorAction SilentlyContinue | ConvertFrom-Json
+          $py = $poste.python
+          Verif 'Python installé en mode utilisateur' ($py -and (Test-Path -LiteralPath $py) -and ($py -like "$env:LOCALAPPDATA*")) $py
+          $libs = & $py -c "import yaml, docx, openpyxl, pptx, reportlab, matplotlib, pypdf; print('ok')" 2>&1
+          Verif 'Bibliothèques de documents' ("$libs" -match 'ok') "$libs"
+          Verif 'Git (bash) pour Claude Code' ($poste.git_bash -and (Test-Path -LiteralPath $poste.git_bash)) "$($poste.git_bash)"
+          $cl = $poste.claude
+          $v = if ($cl) { & $cl --version 2>&1 } else { 'absent' }
+          Verif 'Claude Code installé et lançable' ("$v" -match 'Claude Code') "$v"
+          $lnk = Join-Path ([Environment]::GetFolderPath('Desktop')) ('Mon ' + [char]0x00E9 + 'quipe.lnk')
+          Verif 'Raccourci « Mon équipe » sur le bureau' (Test-Path -LiteralPath $lnk) $lnk
+          $t = Get-ScheduledTask -TaskName 'MonEquipe-Entretien' -ErrorAction SilentlyContinue
+          Verif 'Entretien automatique planifié' ($null -ne $t)
+          $cj = Get-Content -LiteralPath (Join-Path $env:USERPROFILE '.claude.json') -Raw -Encoding UTF8 -ErrorAction SilentlyContinue
+          Verif 'Dossier déclaré de confiance' ("$cj" -match 'hasTrustDialogAccepted') ''
+          $st = Get-Content -LiteralPath (Join-Path $env:USERPROFILE '.claude\settings.json') -Raw -ErrorAction SilentlyContinue
+          Verif 'Mode sans demande accepté' ("$st" -match 'skipDangerousModePermissionPrompt') ''
+          Verif 'Zone machine cachée' (((Get-Item -LiteralPath (Join-Path $env:RACINE '.equipe') -Force).Attributes -band [IO.FileAttributes]::Hidden) -ne 0)
+          $cb = Join-Path $env:RACINE '.equipe\cerebro\cerebro.py'
+          $h = & $py $cb health 2>&1 | Out-String
+          Verif 'Mémoire de l''équipe opérationnelle' ($h -match '"objets"') $h.Substring(0, [Math]::Min(300, $h.Length))
+          $m = & $py $cb summary MET-001 2>&1 | Out-String
+          Verif 'Méthodes livrées (rechargées des exports)' ($m -match '"type": "methode"') $m.Substring(0, [Math]::Min(200, $m.Length))
+          $f = & $py $cb find "réclamation taxation" 2>&1 | Out-String
+          Verif 'Recherche accentuée sous Windows' ($f -match 'RD-') $f.Substring(0, [Math]::Min(200, $f.Length))
+          $hk = '{"source":"startup","session_id":"ci"}' | & $py (Join-Path $env:RACINE '.claude\hooks\hook.py') SessionStart 2>&1 | Out-String
+          Verif 'Hook de démarrage (brief injecté)' ($hk -match 'additionalContext') $hk.Substring(0, [Math]::Min(200, $hk.Length))
+          $err = $null; $null = [System.Management.Automation.Language.Parser]::ParseFile((Join-Path $env:RACINE '.equipe\scripts\lanceurs\Mon-equipe.ps1'), [ref]$null, [ref]$err)
+          Verif 'Lanceur PowerShell sans erreur de syntaxe' ($err.Count -eq 0) "$err"
+          $vc = & $py (Join-Path $env:RACINE '.equipe\scripts\valider_config.py') --sans-session 2>&1 | Select-Object -Last 1
+          Verif 'Configuration validée sous Windows' ("$vc" -match '"ok": true') "$vc"
+          ""
+          "=== tests du noyau sous Windows ==="
+          & $py (Join-Path $env:RACINE '.equipe\tests\test_cerebro.py') 2>&1 | Select-Object -Last 15
+          Verif 'Tests du noyau sous Windows' ($LASTEXITCODE -eq 0)
+          "=== tests de plomberie sous Windows ==="
+          & $py (Join-Path $env:RACINE '.equipe\tests\test_plomberie.py') 2>&1 | Select-Object -Last 15
+          Verif 'Tests de plomberie sous Windows' ($LASTEXITCODE -eq 0)
+          "=== tests de production sous Windows ==="
+          & $py (Join-Path $env:RACINE '.equipe\tests\test_production.py') 2>&1 | Select-Object -Last 10
+          Verif 'Tests de production sous Windows' ($LASTEXITCODE -eq 0)
+          ""
+          "BILAN : $($ko.Count) échec(s) : $($ko -join ' | ')"
+          if ($ko.Count -gt 0) { exit 1 }
+
+      - name: Relancer l'installateur (idempotence)
+        if: always()
+        shell: powershell
+        run: |
+          $env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'
+          $env:MON_EQUIPE_SANS_PAUSE = '1'
+          $p = Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', ('"' + (Join-Path $env:RACINE 'Installer.bat') + '"') -Wait -NoNewWindow -PassThru
+          "code de sortie : $($p.ExitCode)"
+          Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+          if ($p.ExitCode -ne 0) { exit 1 }
+
+      - name: Journaux
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journaux-windows
+          path: |
+            ${{ env.RACINE }}/.equipe/run/installation.log
+            ${{ env.RACINE }}/.equipe/run/rapport-installation.txt
+            ${{ env.RACINE }}/.equipe/cerveau/journal/
+          if-no-files-found: warn
+
+  macos:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer avec un profil neuf et un PATH système
+        shell: bash
+        run: |
+          export HOME="$(mktemp -d)/mustafa"
+          mkdir -p "$HOME/Documents" "$HOME/Desktop"
+          RACINE="$HOME/Documents/mon-equipe"
+          mkdir -p "$RACINE"
+          rsync -a --exclude .git --exclude .github "$GITHUB_WORKSPACE/" "$RACINE/"
+          export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
+          echo "HOME_TEST=$HOME" >> "$GITHUB_ENV"
+          echo "RACINE=$RACINE" >> "$GITHUB_ENV"
+          /bin/bash "$RACINE/.equipe/scripts/installer.sh" 2>&1 | tail -40
+      - name: Vérifier
+        shell: bash
+        run: |
+          export HOME="$HOME_TEST"
+          export PATH="$HOME/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+          PY="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["python"])' "$RACINE/.equipe/run/poste.json" 2>/dev/null || echo python3)"
+          echo "python : $PY"
+          "$PY" -c "import yaml, docx, openpyxl, pptx, reportlab; print('libs ok')"
+          command -v claude && claude --version || echo "claude absent"
+          "$PY" "$RACINE/.equipe/cerebro/cerebro.py" summary MET-001 | head -c 200; echo
+          "$PY" "$RACINE/.equipe/tests/test_cerebro.py" | tail -5
+      - name: Journaux
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journaux-macos
+          path: ${{ env.RACINE }}/.equipe/run/
+          if-no-files-found: warn
