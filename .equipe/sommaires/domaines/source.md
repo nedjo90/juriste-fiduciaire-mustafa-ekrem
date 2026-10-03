@@ -1,0 +1,17 @@
+# domaine source — niveau 1
+[BIB-001] source · CO (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-002] source · LFus (fr, état 2023-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-003] source · LIFD (fr, état 2026-09-02) · actif · 2027-01-01 vérifier mise à jour
+[BIB-004] source · LHID (fr, état 2025-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-005] source · LIA (fr, état 2025-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-006] source · OIA (fr, état 2025-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-007] source · LT (fr, état 2024-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-008] source · LTVA (fr, état 2025-03-31) · actif · 2027-01-01 vérifier mise à jour
+[BIB-009] source · LBA (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-010] source · LTPM (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-011] source · LPD (fr, état 2025-07-07) · actif · 2027-01-01 vérifier mise à jour
+[BIB-012] source · LP (fr, état 2026-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-013] source · LTF (fr, état 2026-04-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-014] source · 173.110.3 (fr, état 1963-10-03) · actif · 2027-01-01 vérifier mise à jour
+[BIB-015] source · OR (de, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-016] source · DBG (de, état 2026-09-02) · actif · 2027-01-01 vérifier mise à jour

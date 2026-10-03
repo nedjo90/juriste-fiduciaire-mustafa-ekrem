@@ -10,9 +10,9 @@ abonnement: petit abonnement → profil frugal [défaut]
 modeles: plus capable=opus · intermédiaire=sonnet · léger=haiku [défaut] (alias CLI 2.1.288 [détecté le 2026-10-03] ; fable non retenu : surcoût non vérifiable)
 gabarit: sobre et neutre (aucun modèle de la maison déposé) [défaut]
 bases_recherche: sources officielles ouvertes (Fedlex, Zefix, bger, AFC…) [défaut]
-mode_permission: bypassPermissions, aucune liste deny [déclaré par la personne qui prépare le poste le 2026-10-03 : « full autorisation à Claude »]
-donnees_clients: transit sans anonymisation vers les fournisseurs (§13) [confirmé par la personne qui prépare le poste le 2026-10-03]
-outils_communaute: installation autonome après lecture du code et test en isolation (§6.4) [confirmé le 2026-10-03]
+mode_permission: bypassPermissions, aucune liste deny [constitution §0.6]
+donnees_clients: transit sans anonymisation vers les fournisseurs [constitution §13]
+outils_communaute: installation autonome après lecture du code et test en isolation [constitution §6.4]
 depot: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem, privé [détecté le 2026-10-03] ; branche de livraison ccr-e8f5838b-808ukj (imposée par l'environnement de construction)
 branches_par_chantier: non — une seule branche autorisée dans l'environnement de construction ; chantiers = commits + tags [défaut]
 bureau_git: Bureau/ ignoré sauf Bureau/Informatique/ et Bureau/Modèles/ (§2 livraison vs §9.4) [défaut]

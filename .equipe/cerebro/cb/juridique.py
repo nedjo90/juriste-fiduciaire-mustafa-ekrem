@@ -76,9 +76,14 @@ def verify_rules():
     con = db()
     out = []
     for r in con.execute("SELECT * FROM regles_delais WHERE juridiction='CH'").fetchall():
-        rs = (r["source"] or "").replace("RS", "").strip()
+        # la source est réécrite après vérification (« RS 642.11 (BIB-002, version …) ») : n'en garder que le numéro RS
+        m = re.search(r"(?:RS\s*)?([0-9]+(?:\.[0-9]+)*)", r["source"] or "")
+        rs = m.group(1) if m else (r["source"] or "").strip()
         res = article(rs, r["article"])
-        ok = "texte" in res and fold(r["extrait_attendu"]) in fold(res["texte"])
+        ok = "texte" in res and bool(r["extrait_attendu"]) and fold(r["extrait_attendu"]) in fold(res["texte"])
+        if not ok and r["verifie_le"]:
+            # une règle qui n'est plus confirmée par le texte en vigueur perd sa vérification (nouvelle version, abrogation)
+            con.execute("UPDATE regles_delais SET verifie_le=NULL WHERE id=?", (r["id"],))
         if ok:
             con.execute("UPDATE regles_delais SET verifie_le=?, source=? WHERE id=?", (iso(), f"RS {rs} ({res['source']}, version {res['version']})", r["id"]))
             link(r["id"], res["source"], "source")
@@ -87,7 +92,8 @@ def verify_rules():
                 o = get(d[0])
                 if o and o["risque"] and "non vérifiée" in o["risque"]:
                     update(d[0], risque=None, resume=(o["resume"] or "").split(" ⚠")[0] + f" Vérifié le {iso()} contre {res['source']}.")
-        out.append({"regle": r["type"], "article": f"RS {rs} {r['article']}", "verifie": ok, "detail": res.get("erreur") or cut(res.get("texte", ""), 160)})
+        out.append({"id": r["id"], "regle": r["type"], "article": f"RS {rs} {r['article']}", "extrait_attendu": r["extrait_attendu"], "verifie": ok,
+                    "version": res.get("version"), "detail": res.get("erreur") or cut(res.get("texte", ""), 160)})
     con.commit()
     return out
 

@@ -6,9 +6,9 @@ Document lisible par un humain (informaticien ou responsable de la fiduciaire). 
 
 | Sujet | Décision | Source |
 |---|---|---|
-| Autorisations Claude Code | Mode `bypassPermissions` (aucune demande d'autorisation), aucune liste `deny`, liste `allow` large en repli | Constitution §0.6 ; confirmé par la personne qui prépare le poste le 2026-10-03 (« full autorisation à Claude ») |
-| Données des clients | Les conversations et requêtes de recherche transitent par les services des fournisseurs (Anthropic, serveurs de recherche, éditeurs) sans anonymisation ni restriction de contenu | Constitution §13 ; confirmé le 2026-10-03 |
-| Outils tiers | Installation autonome d'outils, skills et serveurs MCP, après lecture du code et test en isolation, inventaire obligatoire | Constitution §6.4 ; confirmé le 2026-10-03 |
+| Autorisations Claude Code | Mode `bypassPermissions` (aucune demande d'autorisation), aucune liste `deny`, liste `allow` large en repli | Constitution §0.6 |
+| Données des clients | Les conversations et requêtes de recherche transitent par les services des fournisseurs (Anthropic, serveurs de recherche, éditeurs) sans anonymisation ni restriction de contenu | Constitution §13 |
+| Outils tiers | Installation autonome d'outils, skills et serveurs MCP, après lecture du code et test en isolation, inventaire obligatoire | Constitution §6.4 |
 | Envois vers des tiers | Jamais d'envoi automatique : brouillons uniquement, connecteurs sans droit d'envoi quand l'éditeur le permet | Constitution §4.4, §12 |
 | Stockage | Poste de Mustafa + dépôt git privé `github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem`. Aucun autre cloud | Constitution §4.11 |
 | Mode « entre nous » | Rien n'est écrit par l'équipe ; le transcript local de Claude Code (`~/.claude/projects/…`) existe hors de notre contrôle | Constitution §11 |
