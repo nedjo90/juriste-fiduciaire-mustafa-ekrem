@@ -165,6 +165,14 @@ def attendre(flux=None, confiance=True):
         r = app.acquire_token_by_device_flow(flux)  # bloque jusqu'à l'autorisation ou l'expiration du code
     finally:
         FLUX.unlink(missing_ok=True)
+    if "access_token" not in r and r.get("error") not in ("expired_token", "authorization_declined", "access_denied"):
+        # flux par code d'appareil refusé par une stratégie de l'organisation : connexion par le navigateur (même application,
+        # mêmes permissions déléguées) ; Mustafa clique « Autoriser » dans la page qui s'ouvre
+        G._journal(repli_navigateur=str(r.get("error_description") or r.get("error"))[:200])
+        try:
+            r = app.acquire_token_interactive(G.SCOPES, timeout=600, prompt="select_account")
+        except Exception as e:
+            r = {"error": "interactive", "error_description": repr(e)[:300]}
     if "access_token" not in r:
         return ecrire_etat(etat="échec", detail=str(r.get("error_description") or r.get("error"))[:300],
                            phrase="La liaison avec votre messagerie n'a pas abouti ; je vous la reproposerai plus tard.")

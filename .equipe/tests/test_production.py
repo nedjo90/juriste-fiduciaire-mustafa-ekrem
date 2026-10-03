@@ -74,6 +74,7 @@ def main():
         # --- mémo de démonstration
         out, r = py(t, PROD / "produire.py", FIX / "memo_demo.md", "--role", "redacteur")
         check("produire.py renvoie un JSON sans erreur", out and not out.get("erreur"), (r.stderr or r.stdout)[-500:])
+        out_memo = out or {}
         docx_p = Path(out["principal"]) if out else None
         check("docx créé dans Bureau/Livrables/<client>/<date>-<objet>/",
               docx_p and docx_p.exists() and docx_p.parent.parent.parent == t / "Bureau" / "Livrables", str(docx_p))
@@ -155,7 +156,11 @@ def main():
         # --- tableau de bord des principes
         o, _ = py(t, PORTES / "tableau.py")
         check("tableau de bord : passages enregistrés par rôle", o and "redacteur" in o["par_role"], json.dumps(o)[:300] if o else "")
-        check("visuel : images de contrôle rendues", list((t / ".equipe" / "run" / "rendus").rglob("page-*.png")))
+        # Avec un moteur de rendu (Office, poppler, PyMuPDF) : images de contrôle. Sans : repli explicite, jamais bloquant.
+        images = list((t / ".equipe" / "run" / "rendus").rglob("page-*.png"))
+        repli = out_memo.get("portes", {}).get("visuel") in ("ok", "na") and any("contrôle visuel limité" in x for x in out_memo.get("reserves", []))
+        check("visuel : images de contrôle rendues, ou repli « contrôle visuel limité » non bloquant", images or repli,
+              json.dumps({"visuel": out_memo.get("portes", {}).get("visuel"), "reserves": out_memo.get("reserves", [])[:4]}, ensure_ascii=False))
     finally:
         if not os.environ.get("GARDER_RACINE"):
             shutil.rmtree(t, ignore_errors=True)

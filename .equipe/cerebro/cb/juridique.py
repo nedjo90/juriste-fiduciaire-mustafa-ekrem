@@ -136,9 +136,10 @@ def verify_rules():
     """vérifie chaque règle de délai contre le texte officiel ingéré : l'extrait attendu doit figurer dans l'article"""
     con = db()
     out = []
-    for r in con.execute("SELECT * FROM regles_delais WHERE juridiction='CH'").fetchall():
-        # la source est réécrite après vérification (« RS 642.11 (BIB-002, version …) ») : n'en garder que le numéro RS
-        m = re.search(r"(?:RS\s*)?([0-9]+(?:\.[0-9]+)*)", r["source"] or "")
+    for r in con.execute("SELECT * FROM regles_delais WHERE COALESCE(juridiction,'CH')<>'maison'").fetchall():
+        # la source est réécrite après vérification (« RS 642.11 (BIB-002, version …) ») : n'en garder que le numéro RS,
+        # ou l'abréviation d'un texte cantonal (« LI-VD (BIB-030, version …) », règles cantonales : cantons.yaml)
+        m = re.match(r"\s*(?:RS\s+)?([^\s(]+)", r["source"] or "")
         rs = m.group(1) if m else (r["source"] or "").strip()
         res = article(rs, r["article"])
         ok = "texte" in res and bool(r["extrait_attendu"]) and fold(r["extrait_attendu"]) in fold(res["texte"])
@@ -146,14 +147,15 @@ def verify_rules():
             # une règle qui n'est plus confirmée par le texte en vigueur perd sa vérification (nouvelle version, abrogation)
             con.execute("UPDATE regles_delais SET verifie_le=NULL WHERE id=?", (r["id"],))
         if ok:
-            con.execute("UPDATE regles_delais SET verifie_le=?, source=? WHERE id=?", (iso(), f"RS {rs} ({res['source']}, version {res['version']})", r["id"]))
+            pre = "RS " if rs[:1].isdigit() else ""
+            con.execute("UPDATE regles_delais SET verifie_le=?, source=? WHERE id=?", (iso(), f"{pre}{rs} ({res['source']}, version {res['version']})", r["id"]))
             link(r["id"], res["source"], "source")
             # lever la réserve des délais déjà ouverts
             for d in con.execute("SELECT id FROM delais WHERE regle=? AND statut='ouvert'", (r["id"],)).fetchall():
                 o = get(d[0])
                 if o and o["risque"] and "non vérifiée" in o["risque"]:
                     update(d[0], risque=None, resume=(o["resume"] or "").split(" ⚠")[0] + f" Vérifié le {iso()} contre {res['source']}.")
-        out.append({"id": r["id"], "regle": r["type"], "article": f"RS {rs} {r['article']}", "extrait_attendu": r["extrait_attendu"], "verifie": ok,
+        out.append({"id": r["id"], "regle": r["type"], "article": f"{'RS ' if rs[:1].isdigit() else ''}{rs} {r['article']}", "juridiction": r["juridiction"] or "CH", "extrait_attendu": r["extrait_attendu"], "verifie": ok,
                     "version": res.get("version"), "detail": res.get("erreur") or cut(res.get("texte", ""), 160)})
     con.commit()
     return out

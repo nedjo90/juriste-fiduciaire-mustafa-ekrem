@@ -145,7 +145,7 @@ if ($Py) {
   # pour qu'un échec ici n'empêche jamais les outils de documents
   $libsCourrier = @('extract-msg', 'msal', 'msal-extensions')
   if (-not $SansReseau) {
-    & $Py -m pip install --user --upgrade --disable-pip-version-check --no-warn-script-location @libsCourrier 2>&1 | ForEach-Object { Noter ("pip: " + $_) }
+    $null = Executer $Py (@('-m', 'pip', 'install', '--user', '--upgrade', '--disable-pip-version-check', '--no-warn-script-location') + $libsCourrier) 900
   }
   $manqueC = & $Py -c "import importlib.util as u; m=[x for x in ('extract_msg','msal','msal_extensions') if not u.find_spec(x)]; print(','.join(m))" 2>$null
   if ($manqueC) { Bilan "Courrier Outlook et messagerie : il manque $manqueC (nouvel essai au prochain lancement de l'installateur)." }
@@ -153,7 +153,7 @@ if ($Py) {
   # [connecteurs] OPTIONNEL : transcription des notes vocales sur le poste (faster-whisper, processeur seul).
   # Échec = repli (l'équipe demande un court résumé), jamais bloquant.
   if (-not $SansReseau) {
-    & $Py -m pip install --user --disable-pip-version-check --no-warn-script-location 'faster-whisper' 2>&1 | ForEach-Object { Noter ("pip (optionnel): " + $_) }
+    $null = Executer $Py @('-m', 'pip', 'install', '--user', '--disable-pip-version-check', '--no-warn-script-location', 'faster-whisper') 900
   }
   $fw = & $Py -c "import importlib.util as u; print('ok' if u.find_spec('faster_whisper') else '')" 2>$null
   if ($fw) { Bilan 'Notes vocales : transcription sur ce poste prête (le modèle, environ 500 Mo, se télécharge à la première note).' }

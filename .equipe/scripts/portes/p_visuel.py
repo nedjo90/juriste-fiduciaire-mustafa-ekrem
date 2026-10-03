@@ -83,17 +83,34 @@ def _pptx_cadres(chemin, corr):
                     corr.append({"diapo": i, "probleme": f"texte probablement trop long pour « {sh.name} » ({n} car.)", "correction": "raccourcir ou scinder la diapositive"})
 
 
+LIMITE = "contrôle visuel limité"
+
+
 def rendre_png(pdf, dest):
-    exe = shutil.which("pdftoppm")
-    if not exe:
-        return []
+    """PDF → PNG par page : pdftoppm (poppler), sinon PyMuPDF ou pypdfium2 s'ils sont installés ; [] sinon"""
     dest.mkdir(parents=True, exist_ok=True)
     for old in dest.glob("page-*.png"):
         old.unlink()
-    try:
-        subprocess.run([exe, "-r", str(DPI), "-png", str(pdf), str(dest / "page")], capture_output=True, timeout=120)
-    except Exception:
-        return []
+    exe = shutil.which("pdftoppm")
+    if exe:
+        try:
+            subprocess.run([exe, "-r", str(DPI), "-png", str(pdf), str(dest / "page")], capture_output=True, timeout=120)
+        except Exception:
+            pass
+    if not list(dest.glob("page-*.png")):
+        try:
+            import fitz  # PyMuPDF
+            with fitz.open(str(pdf)) as d:
+                for i, pg in enumerate(d, 1):
+                    pg.get_pixmap(dpi=DPI).save(str(dest / f"page-{i:02d}.png"))
+        except Exception:
+            try:
+                import pypdfium2 as pdfium
+                d = pdfium.PdfDocument(str(pdf))
+                for i in range(len(d)):
+                    d[i].render(scale=DPI / 72).to_pil().save(str(dest / f"page-{i + 1:02d}.png"))
+            except Exception:
+                pass
     return sorted(dest.glob("page-*.png"))
 
 
@@ -119,7 +136,7 @@ def verifier(doc, ctx=None):
         tmp = Path(tempfile.mkdtemp(prefix="portes-"))
         pdf = C.vers_pdf(p, tmp)
     if not pdf or not Path(pdf).exists():
-        det.append("rendu PDF impossible (Word/PowerPoint indisponibles sur ce poste) : contrôle visuel limité à l'analyse du document")
+        det.insert(0, f"{LIMITE} à l'analyse du document : rendu PDF impossible (Word/PowerPoint indisponibles sur ce poste)")
         reserves += 1
     else:
         dest = C.EQ / "run" / "rendus" / C.slug(p.stem, 60)
@@ -129,7 +146,7 @@ def verifier(doc, ctx=None):
             _marges_png(pngs, d, corr)
             det.append(f"{len(pngs)} page(s) rendue(s) en images ({C.EQ.name}/run/rendus/{dest.name})")
         else:
-            det.append("pdftoppm absent : pas d'images de contrôle"); reserves += 1
+            det.insert(0, f"{LIMITE} : aucun moteur de rendu d'images (poppler, PyMuPDF) sur ce poste"); reserves += 1
         pages_txt = pdf_texte(pdf, par_page=True)
         if pages_txt:
             ctx["pages"] = ctx.get("pages") or len([x for x in pages_txt if x.strip()])

@@ -104,16 +104,53 @@ def matter_new(client, objet, parties=(), canton=None, domaine=None):
     return {"dossier": did, "conflit": cc}
 
 # ------------------------------------------------------------------ événements déclencheurs
+_CANTONS_NOMS = {"vaud": "VD", "vaudois": "VD", "vaudoise": "VD", "geneve": "GE", "genevois": "GE", "genevoise": "GE", "valais": "VS",
+                 "neuchatel": "NE", "fribourg": "FR", "jura": "JU", "berne": "BE", "zurich": "ZH", "tessin": "TI", "ticino": "TI"}
+_CODES = {"AG", "AI", "AR", "BE", "BL", "BS", "FR", "GE", "GL", "GR", "JU", "LU", "NE", "NW", "OW", "SG", "SH", "SO", "SZ", "TG", "TI", "UR", "VD", "VS", "ZG", "ZH"}
+
+def _taxation_regles(autorite, canton, impot):
+    """[(type de règle, impôt, canton)] : IFD → LIFD art. 132 ; ICC → règle du canton (cantons suivis : loi cantonale
+    vérifiée ; autre canton : cadre LHID art. 48, pratique cantonale à vérifier). Une décision cantonale qui couvre IFD et
+    ICC ouvre les deux horloges en parallèle. Autorité fédérale seule (AFC) → IFD seulement."""
+    a, imp = fold(autorite or ""), (impot or "").upper()
+    c = (canton or "").strip().upper() or None
+    if not c:
+        toks = set((autorite or "").replace("(", " ").replace(")", " ").split())
+        c = next((t for t in toks if t in _CODES), None) or next((v for k, v in _CANTONS_NOMS.items() if k in a), None)
+    federale = ("afc" in a.split() or "federal" in a or "confederation" in a) and "cantonal" not in a
+    ifd = "IFD" in imp or "LIFD" in imp or "DBG" in imp or federale or not imp
+    icc = ("ICC" in imp or "CANTON" in imp or "COMMUN" in imp or not imp) and not (federale and "ICC" not in imp)
+    if imp and "IFD" in imp and "ICC" not in imp and not federale and "/" not in imp:
+        icc = False
+    out = []
+    if icc:
+        types = {r[0] for r in horloges.REGLES}
+        t = f"reclamation_icc_{c.lower()}" if c and f"reclamation_icc_{c.lower()}" in types else "reclamation_icc"
+        out.append((t, "ICC", c))
+    if ifd:
+        out.append(("reclamation_ifd", "IFD", c))
+    return out or [("reclamation_ifd", "IFD", c)]
+
 def event_taxation(client, contribuable, autorite, canton, periode, notifiee_le, montant=None, impot="IFD/ICC"):
-    """décision de taxation → horloge de réclamation + projet de réclamation (§17 c6)"""
+    """décision de taxation → horloge(s) de réclamation + projet de réclamation (§17 c6). Règle choisie selon l'autorité
+    et le canton (IFD : LIFD ; ICC : loi du canton) ; décision IFD/ICC → deux horloges, la cantonale en premier."""
     dt_id = create("decision_taxation", f"Décision de taxation {periode} — {autorite}", client=client, canton=canton, domaine="fiscalité",
                    chiffre_cle=(f"CHF {montant:,.2f}".replace(",", "'") if montant else None), liens=[contribuable] if contribuable else [],
                    resume=f"Décision {impot} {periode}, notifiée le {notifiee_le} par {autorite}", prochaine_action="examiner : réclamation ?", prochaine_date=iso(),
                    typed=("decisions_taxation", {"client": client, "contribuable": contribuable, "autorite": autorite, "canton": canton, "periode": periode,
                                                  "notifiee_le": notifiee_le, "montant": montant, "impot": impot}))
-    h = horloges.clock_start("reclamation_ifd", notifiee_le, client=client, canton=canton, objet=f"décision {periode}")
-    link(h["delai"], dt_id, "declencheur")
-    return {"decision": dt_id, **h}
+    hs = []
+    for type_, imp, c in _taxation_regles(autorite, canton, impot):
+        h = horloges.clock_start(type_, notifiee_le, client=client, canton=c or canton, objet=f"décision {periode} ({imp})")
+        if "delai" not in h:
+            continue
+        link(h["delai"], dt_id, "declencheur")
+        hs.append({**h, "regle": type_, "impot": imp})
+    if not hs:  # règle introuvable : jamais sans horloge
+        h = horloges.clock_start("reclamation_ifd", notifiee_le, client=client, canton=canton, objet=f"décision {periode}")
+        link(h["delai"], dt_id, "declencheur")
+        hs.append({**h, "regle": "reclamation_ifd", "impot": "IFD"})
+    return {"decision": dt_id, **hs[0], "horloges": hs}
 
 def event_dividende(client, societe, echeance_dividende, montant=None):
     h = horloges.clock_start("impot_anticipe_dividende", echeance_dividende, client=client, objet=f"dividende {get(societe)['nom'] if get(societe) else societe}")

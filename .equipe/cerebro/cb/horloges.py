@@ -16,6 +16,11 @@ REGLES = [
     ("annonce_ayant_droit", "Annonce de l'ayant droit économique à la société", 1, "mois", "acquisition", 10, "955.3", "art. 13 al. 3", "un mois à compter de la création du contrôle", "annonce_adb"),  # corrigé 2026-10-03 : art. 697j CO abrogé au 1.10.2026 (LTPM)
     ("opposition_poursuite", "Opposition au commandement de payer", 10, "jours", "notification", 3, "281.1", "art. 74", "dix jours", "opposition"),
     ("recours_tf", "Recours au Tribunal fédéral", 30, "jours", "notification", 10, "173.110", "art. 100", "30 jours", "recours_tf"),
+    # cantonal (ICC) : « RS » = abréviation du texte cantonal ingéré (cantons.yaml) ; juridiction posée par cantons.py verifier
+    ("reclamation_icc_vd", "Réclamation contre une décision de taxation ICC (VD)", 30, "jours", "notification", 10, "LI-VD", "art. 186", "dans les trente jours dès la notification", "reclamation"),  # LI VD (BLV 642.11) état 2026-05-01, al. 1
+    ("reclamation_icc_ge", "Réclamation contre une décision de taxation ICC (GE)", 30, "jours", "notification", 10, "LPFisc-GE", "art. 39", "dans les 30 jours qui suivent sa notification", "reclamation"),  # LPFisc (rsGE D 3 17) état 2026-01-01, al. 1
+    ("recours_icc_ge", "Recours contre une décision sur réclamation ICC (GE)", 30, "jours", "notification", 10, "LPFisc-GE", "art. 49", "dans les 30 jours à compter de la notification", "recours"),  # LPFisc art. 49 al. 1 (TAPI)
+    ("reclamation_icc", "Réclamation contre une décision de taxation ICC (cadre LHID, canton non suivi)", 30, "jours", "notification", 10, "642.14", "art. 48", "dans les 30 jours qui suivent sa notification", "reclamation"),  # LHID art. 48 al. 1 ; pratique cantonale à vérifier
 ]
 # règles internes (politique de la maison, pas du droit) : pas de vérification, étiquette [pratique maison]
 REGLES_MAISON = [

@@ -12,7 +12,9 @@ import json, re, time, threading, unicodedata
 from pathlib import Path
 
 T0 = time.time()
-LIMITE = float(os.environ.get("CEREBRO_HOOK_LIMITE", "1.7"))
+# délai interne par événement (Claude Code accorde 10 s) : le brief de démarrage vaut d'attendre un peu sur un poste lent
+LIMITE = float(os.environ.get("CEREBRO_HOOK_LIMITE") or {"SessionStart": 8.0, "UserPromptSubmit": 4.0}.get(sys.argv[1] if len(sys.argv) > 1 else "", 1.7))
+os.environ.setdefault("CEREBRO_BUSY_MS", "1500")  # un hook n'attend jamais longtemps un verrou tenu par l'entretien
 ICI = Path(__file__).resolve().parent              # <racine>/.claude/hooks
 RACINE = ICI.parents[1]
 ENTRETIEN = RACINE / ".equipe" / "scripts" / "entretien"
@@ -35,13 +37,18 @@ except BaseException as _e:  # socle illisible : on journalise à la main et on 
     journal("hooks-erreurs", evenement=(sys.argv[1:] or [""])[0], erreur="socle fond.py illisible: " + repr(_e)[:300])
 
 DEBUT_MAX, TOUR_MAX = 8000, 6000
+CACHE_DEBUT = Path(__file__).resolve().parents[2] / ".equipe" / "run" / "contexte-debut.txt"
 GREFFIER_TOUS_LES = 15
 CONTROLE = bool(os.environ.get("CEREBRO_CONTROLE"))  # session de contrôle : rien d'écrit dans inbox, aucun job de fond
 
 
 def _garde_fou():
-    journal("hooks", evenement=EVT, statut="délai dépassé, sortie vide", ms=int((time.time() - T0) * 1000))
+    """délai dépassé : au démarrage, on sert le dernier brief calculé (jamais une session sans contexte) ; sinon sortie vide"""
+    journal("hooks", evenement=EVT, statut="délai dépassé", ms=int((time.time() - T0) * 1000))
     try:
+        if EVT == "SessionStart" and CACHE_DEBUT.exists():
+            ctx = CACHE_DEBUT.read_text(encoding="utf-8")
+            sys.stdout.buffer.write(json.dumps(sortie_contexte("SessionStart", ctx, DEBUT_MAX), ensure_ascii=False).encode("utf-8"))
         sys.stdout.flush()
     except Exception:
         pass
@@ -77,6 +84,10 @@ def session_start(data):
     except Exception:
         pass
     ctx = B.session_start(src)
+    try:
+        CACHE_DEBUT.write_text(ctx, encoding="utf-8")
+    except Exception:
+        pass
     if src != "compact":
         fond.lancer_detache(ENTRETIEN / "cycle.py", "--rattrapage", nom="cycle-rattrapage")
     return sortie_contexte("SessionStart", ctx, DEBUT_MAX)

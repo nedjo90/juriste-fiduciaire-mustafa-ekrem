@@ -85,10 +85,16 @@ def brief(max_chars=5000):
     retard = con.execute("SELECT COUNT(*) FROM objets WHERE prochaine_date<? AND statut NOT IN ('archive','fait','resolu','repondue','abandonnee') AND type NOT IN ('question','incident','conseil','capacite','regle_delai','source')", (iso(),)).fetchone()[0]
     if retard:
         L.append(f"EN RETARD : {retard} objets dont la prochaine action est passée (entretien : replanifier)")
-    q = files.question_next(canal="brief")
+    try:
+        q = files.question_next(canal="brief")
+    except Exception:
+        q = None
     if q:
         L.append(f"QUESTION (une seule, à glisser naturellement) [{q['id']}] {q['formulation']}")
-    c = files.conseil_next()
+    try:
+        c = files.conseil_next()
+    except Exception:
+        c = None
     if c:
         L.append(f"CONSEIL (une phrase) [{c['id']}] {c['texte']}")
     r = get_etat("rattrape", "")
@@ -119,10 +125,13 @@ def construction_ligne():
 def session_start(source="startup"):
     """contexte de début de session : niveau 0 + brief + état, ≤ 8 000 caractères"""
     n = (get_etat("sessions", 0) or 0) + (1 if source in ("startup", "clear", None) else 0)
-    set_etat("sessions", n)
-    if n == 1:
-        set_etat("premiere_session_le", iso())
-    set_etat("injectes", {})
+    try:  # écritures d'état : jamais bloquantes (entretien en cours) — le contexte sort quand même
+        set_etat("sessions", n)
+        if n == 1:
+            set_etat("premiere_session_le", iso())
+        set_etat("injectes", {})
+    except Exception as e:
+        journal("hooks-erreurs", ou="session_start", erreur=repr(e)[:200])
     jour = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"][today().weekday()]
     parts = [f"Aujourd'hui : {jour} {iso()} {now().strftime('%H:%M')} (Europe/Zurich). Session n°{n}" + (" — toute première session de Mustafa : accueil bref, aucune question." if n == 1 else "."),
              niveau0(), brief(), etat_session(), construction_ligne(),
@@ -136,7 +145,10 @@ def context(prompt, session_id="", tour=None):
         return "MODE « ENTRE NOUS » : ne rien capturer, ne rien écrire, ne rien classer pour cet échange."
     con = db()
     tour = tour or (get_etat("tour", 0) or 0) + 1
-    set_etat("tour", tour)
+    try:
+        set_etat("tour", tour)
+    except Exception:
+        pass
     fp = fold((prompt or "")[:4000])
     cites = {}
     for i in ID_RE.findall(prompt or ""):
@@ -176,7 +188,10 @@ def context(prompt, session_id="", tour=None):
         L.append(b)
         total += len(b)
         inj[o["id"]] = h
-    set_etat("injectes", inj)
+    try:
+        set_etat("injectes", inj)
+    except Exception:
+        pass
     head = f"[tour {tour} · {now().strftime('%Y-%m-%d %H:%M')}]"
     return head + ("\n" + "\n".join(L) if L else "")
 

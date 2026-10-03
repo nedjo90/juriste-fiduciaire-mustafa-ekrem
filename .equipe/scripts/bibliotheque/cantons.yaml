@@ -1,20 +1,19 @@
-# Sources officielles cantonales (§10, §14). Cantons par défaut : VD et GE ([défaut], à remplacer par
-# mustafa.cantons_suivis dès que connu). URL vérifiées par requête HTTP le 2026-10-03 (code 200) ; rien n'est ingéré tant
-# qu'un convertisseur n'existe pas : en attendant, toute affirmation de droit cantonal porte ⚠ « pratique cantonale à vérifier »
-# sauf lecture directe du texte officiel à l'URL ci-dessous.
+# Sources officielles cantonales (§10, §14). Cantons suivis : mustafa.cantons_suivis (défaut VD, GE).
+# Convertisseurs et ingestion : cantons.py (BLV pour VD, silgeneve pour GE), lancés par la tâche `bibliotheque_cantons`
+# du cycle d'entretien (extension taches/qualite.py, cadence 30 j + cycle complet). Un canton suivi sans entrée dans
+# `ingestion` reste « pratique cantonale à vérifier » (⚠) jusqu'à ce qu'un texte y soit ajouté.
 verifie_le: '2026-10-03'
 cantons:
   VD:
     recueil: Recueil systématique de la législation vaudoise (RSV), Base législative vaudoise (BLV)
     url: https://prestations.vd.ch/pub/blv-publication/
     langue: fr
-    acces_automatise: partiel
+    acces_automatise: oui
     detail: >-
-      Application Angular. API JSON publique non documentée, sans identifiants :
-      api/recueil-systematique (arborescence RSV, 200, JSON) ; api/actes/{CATEGORIE}?id=&cote= (versions d'un acte) puis
-      api/actes/{htmlId}/html (texte) et api/actes/{id}/pdf?type= ; api/actes/rechercher et api/actes/recemment-modifies
-      répondent 500 sans paramètres complets. Ingestion possible après rétro-ingénierie des paramètres : non faite.
-    ingere: false
+      Application Angular. API JSON publique non documentée, sans identifiants (vérifiée 2026-10-03) :
+      api/recueil-systematique?code=<volume> → atelierId de l'acte ; api/actes/CONSOLIDE?id=<atelierId>&cote=<cote>
+      → versions (ACTUELLE, versionDateMiseEnVigueur) ; api/actes/<htmlId>/html → texte (Akoma Ntoso rendu).
+    ingere: true
     textes_prioritaires:  # cotes et titres lus dans api/recueil-systematique?code=6 le 2026-10-03
       - {cote: '642.11', titre: "LOI du 04.07.2000 sur les impôts directs cantonaux (LI; BLV 642.11)", statut: à ingérer}
       - {cote: '642.00.011024.2', titre: "LOI du 01.10.2024 sur l'impôt 2026 (BLV 642.00.011024.2)", statut: à ingérer}
@@ -28,8 +27,8 @@ cantons:
     detail: >-
       Chaque texte est une page HTML statique (export Word) : https://silgeneve.ch/legis/program/books/rsg/htm/rsg_<lettre><n>_<nn>.htm
       — vérifié : rsg_d3_08.htm = « rsGE D 3 08 : Loi sur l'imposition des personnes physiques (LIPP) » (200, 274 ko).
-      Convertisseur HTML Word → « ## Art. N » à écrire (dette) ; puis cerebro law ingest --juridiction GE.
-    ingere: false
+      « Dernières modifications au … » = état du droit ; convertisseur cantons.silgeneve_html_vers_markdown.
+    ingere: true
     textes_prioritaires:
       - {cote: 'D 3 08', titre: "Loi sur l'imposition des personnes physiques (LIPP)", url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_08.htm', statut: URL vérifiée}
       - {cote: 'D 3 15', titre: "Loi sur l'imposition des personnes morales (LIPM)", url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_15.htm', statut: URL vérifiée}
@@ -42,3 +41,19 @@ lexfind:
     Répertoire intercantonal (droit fédéral et 26 cantons). /api/fe/fr/entities répond en JSON (200) ; l'application utilise
     api/frontend/v1 (systematics, by-version, recent-changes, compare). Utilisable pour découvrir les textes et leurs versions
     cantonales, puis lire le texte à la source officielle du canton. Non intégré dans cette passe (dette).
+# Textes ingérés par cantons.py (identifiant pérenne du recueil ; abréviation = clé de `cerebro law article`).
+ingestion:
+  VD:
+    - {abrev: LI-VD, identifiant: 'BLV 642.11', cote: '642.11', methode: blv, langue: fr,
+       titre: "Loi du 4 juillet 2000 sur les impôts directs cantonaux (LI ; BLV 642.11)"}
+  GE:
+    - {abrev: LPFisc-GE, identifiant: 'rsGE D 3 17', cote: 'D 3 17', methode: silgeneve, langue: fr,
+       url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_17.htm', titre: "Loi de procédure fiscale (LPFisc ; rsGE D 3 17)"}
+    - {abrev: LIPP-GE, identifiant: 'rsGE D 3 08', cote: 'D 3 08', methode: silgeneve, langue: fr,
+       url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_08.htm', titre: "Loi sur l'imposition des personnes physiques (LIPP ; rsGE D 3 08)"}
+    - {abrev: LIPM-GE, identifiant: 'rsGE D 3 15', cote: 'D 3 15', methode: silgeneve, langue: fr,
+       url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_15.htm', titre: "Loi sur l'imposition des personnes morales (LIPM ; rsGE D 3 15)"}
+# Règles de délai cantonales (horloges.REGLES) et leur juridiction ; vérifiées par `cerebro law verify` contre le texte ingéré.
+regles:
+  reclamation_icc_vd: VD
+  reclamation_icc_ge: GE

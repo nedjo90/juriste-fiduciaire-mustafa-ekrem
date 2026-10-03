@@ -190,10 +190,14 @@ _CON = None
 _DV = None  # PRAGMA data_version vu en dernier : change quand UN AUTRE processus a validé une écriture
 
 def _ouvrir():
-    con = sqlite3.connect(str(DB_PATH), timeout=20)
+    ms = int(os.environ.get("CEREBRO_BUSY_MS", "20000"))
+    con = sqlite3.connect(str(DB_PATH), timeout=ms / 1000)
     con.row_factory = sqlite3.Row
-    con.execute("PRAGMA journal_mode=WAL")
-    con.execute("PRAGMA busy_timeout=20000")
+    try:
+        con.execute("PRAGMA journal_mode=WAL")
+    except sqlite3.OperationalError:
+        pass  # base momentanément verrouillée : le mode WAL est déjà actif depuis la création
+    con.execute(f"PRAGMA busy_timeout={ms}")
     return con
 
 def db():

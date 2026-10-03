@@ -283,6 +283,8 @@ def _():
 
 @test("Lanceur Linux : configuration corrompue restaurée, Claude lancé en mode automatique (critères 1, 38)")
 def _():
+    if os.name == "nt":
+        return  # sans objet sous Windows : le lanceur PowerShell est vérifié par le test d'installation Windows
     fb = TMP / "faux-bin"
     fb.mkdir(exist_ok=True)
     trace = TMP / "claude-args.txt"

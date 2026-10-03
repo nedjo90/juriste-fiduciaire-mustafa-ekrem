@@ -86,7 +86,10 @@ def niveau0():
         txt = txt[: N0_MAX - 2].rsplit("\n", 1)[0] + "\n…"
     SOMMAIRES.mkdir(parents=True, exist_ok=True)
     (SOMMAIRES / "SOMMAIRE.md").write_text(txt + "\n", encoding="utf-8")
-    set_etat("n0_sale", [])
+    try:
+        set_etat("n0_sale", [])
+    except Exception:
+        pass  # base occupée par l'entretien : sans conséquence
     return txt
 
 def tout():
