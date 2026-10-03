@@ -1,0 +1,23 @@
+# §9.4 : git ne suit que config, constitution, rôles, skills, tests, scripts, exports structurés, narratif
+.equipe/bibliotheque/
+.equipe/archives/
+.equipe/inbox/
+.equipe/cerebro/*.db
+.equipe/cerebro/*.db-*
+.equipe/cerebro/index/
+.equipe/cerebro/embeddings/
+.equipe/cerebro/sauvegardes/
+.equipe/journal-local/
+.equipe/run/
+# Bureau/ (zone humaine) n'est pas suivi, sauf les deux dossiers techniques et les gabarits de la maison
+Bureau/*
+!Bureau/Informatique/
+!Bureau/Modèles/
+Bureau/Modèles/*.tmp
+# secrets
+.env
+*.key
+secrets*
+__pycache__/
+*.pyc
+.claude/settings.local.json
