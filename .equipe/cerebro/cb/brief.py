@@ -22,8 +22,17 @@ def queue_next(max_prio=6):
     return dict(r) if r else None
 
 def queue_done(n, statut="fait"):
-    db().execute("UPDATE file_entretien SET statut=?, fait_le=? WHERE n=?", (statut, stamp(), n))
-    db().commit()
+    """une tâche identique déjà marquée faite → la ligne en attente est simplement retirée (contrainte d'unicité)"""
+    con = db()
+    r = con.execute("SELECT tache, arg FROM file_entretien WHERE n=?", (n,)).fetchone()
+    if not r:
+        return
+    if con.execute("SELECT 1 FROM file_entretien WHERE tache=? AND arg=? AND statut=? AND n!=?", (r["tache"], r["arg"], statut, n)).fetchone():
+        con.execute("UPDATE file_entretien SET fait_le=? WHERE tache=? AND arg=? AND statut=?", (stamp(), r["tache"], r["arg"], statut))
+        con.execute("DELETE FROM file_entretien WHERE n=?", (n,))
+    else:
+        con.execute("UPDATE file_entretien SET statut=?, fait_le=? WHERE n=?", (statut, stamp(), n))
+    con.commit()
 
 # ------------------------------------------------------------------ brief
 def brief(max_chars=5000):

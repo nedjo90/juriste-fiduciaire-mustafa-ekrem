@@ -49,7 +49,7 @@ def preparer():
     env = dict(os.environ)
     for k in ("CEREBRO_BACKGROUND", "CEREBRO_CONTROLE", "CEREBRO_DB", "CEREBRO_HOOK_TEST_ERREUR"):
         env.pop(k, None)
-    env.update({"CEREBRO_ROOT": str(R), "CEREBRO_SANS_MODELE": "1", "CEREBRO_CLE_SAUVEGARDE": str(tmp / "cle.key"),
+    env.update({"CEREBRO_ROOT": str(R), "CEREBRO_SANS_MODELE": "1", "CEREBRO_SANS_RESEAU": "1", "CEREBRO_CLE_SAUVEGARDE": str(tmp / "cle.key"),
                 "CEREBRO_TODAY": "2026-10-01", "PYTHONIOENCODING": "utf-8", "HOME": str(tmp / "home"), "USERPROFILE": str(tmp / "home")})
     (tmp / "home").mkdir()
     subprocess.run([PY, str(R / ".equipe/tests/fixtures/dossier_fictif.py")], env=env, capture_output=True, timeout=120)

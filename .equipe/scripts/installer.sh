@@ -41,8 +41,8 @@ if [ -n "$PY" ]; then bilan "Python : prêt ($PY)"; else bilan "Python : non ins
 # ------------------------------------------------------------- 2. bibliothèques (mode utilisateur)
 if [ -n "$PY" ]; then
   dire "Installation des outils de documents (Word, Excel, PowerPoint, PDF, graphiques)…"
-  LIBS="pyyaml python-docx openpyxl python-pptx reportlab matplotlib pandas cryptography"
-  manque() { "$PY" -c "import importlib.util as u; m=[x for x in ('yaml','docx','openpyxl','pptx','reportlab','matplotlib','pandas','cryptography') if not u.find_spec(x)]; print(' '.join(m))" 2>/dev/null; }
+  LIBS="pyyaml python-docx openpyxl python-pptx reportlab matplotlib pandas cryptography pypdf"
+  manque() { "$PY" -c "import importlib.util as u; m=[x for x in ('yaml','docx','openpyxl','pptx','reportlab','matplotlib','pandas','cryptography','pypdf') if not u.find_spec(x)]; print(' '.join(m))" 2>/dev/null; }
   if [ -n "$(manque)" ] && reseau; then
     "$PY" -m pip install --user --upgrade --disable-pip-version-check $LIBS >>"$LOG" 2>&1 \
       || "$PY" -m pip install --user --break-system-packages --disable-pip-version-check $LIBS >>"$LOG" 2>&1 \
@@ -74,8 +74,24 @@ if [ -z "$CLAUDE" ] && reseau; then
 fi
 if [ -n "$CLAUDE" ]; then bilan "Claude : prêt."; else bilan "Claude : non installé (nouvel essai au prochain lancement de l'installateur)."; fi
 
-# ------------------------------------------------------------- 5. optionnels
+# ------------------------------------------------------------- 4 bis. modèles de documents officiels d'Anthropic (plugin)
+if [ -n "$CLAUDE" ] && reseau; then
+  if ! "$CLAUDE" plugin list 2>/dev/null | grep -q document-skills; then
+    "$CLAUDE" plugin marketplace list 2>/dev/null | grep -q "anthropics/skills" || "$CLAUDE" plugin marketplace add anthropics/skills >>"$LOG" 2>&1
+    NOM="$("$CLAUDE" plugin marketplace list 2>/dev/null | grep -B1 "anthropics/skills" | sed -n 's/^ *> *\([^ ]*\).*/\1/p' | head -1)"
+    "$CLAUDE" plugin install "document-skills@${NOM:-anthropic-agent-skills}" --scope user -y >>"$LOG" 2>&1
+  fi
+  if "$CLAUDE" plugin list 2>/dev/null | grep -q document-skills; then bilan "Modèles de documents (Word, Excel, PowerPoint, PDF) : prêts."
+  else bilan "Modèles de documents complémentaires : non installés (nouvel essai au prochain lancement ; l'équipe a les siens)."; fi
+fi
+
+# ------------------------------------------------------------- 5. optionnels (Node, poppler, LibreOffice)
+if [ "$SYS" = "Darwin" ] && command -v brew >/dev/null 2>&1 && reseau; then
+  command -v npx >/dev/null 2>&1 || brew install node >>"$LOG" 2>&1
+  command -v pdftotext >/dev/null 2>&1 || brew install poppler >>"$LOG" 2>&1
+fi
 command -v npx >/dev/null 2>&1 || bilan "Navigateur automatisé : non installé (optionnel, l'équipe travaille sans)."
+command -v pdftotext >/dev/null 2>&1 || bilan "Lecture avancée des PDF : non installée (optionnelle)."
 command -v soffice >/dev/null 2>&1 || [ -d "/Applications/LibreOffice.app" ] || bilan "Conversion bureautique avancée : non installée (optionnelle)."
 
 # ------------------------------------------------------------- 6. réglages de Claude

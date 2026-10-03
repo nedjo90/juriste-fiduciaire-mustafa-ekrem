@@ -32,7 +32,7 @@ if ! "$CLAUDE" --version >/dev/null 2>&1; then
   [ -n "$PY" ] && "$PY" "$VALIDER" --restaurer >/dev/null 2>&1 && "$PY" "$VALIDER" --lancement >/dev/null 2>&1
 fi
 # entretien de fond (rattrapage), priorité basse, détaché ; le verrou évite les doublons avec le hook de début
-if [ -n "$PY" ]; then
+if [ -n "$PY" ] && [ ! -f "$RACINE/.equipe/run/sans-fond" ]; then
   ( CEREBRO_BACKGROUND=1 nohup nice -n 10 "$PY" "$RACINE/.equipe/scripts/entretien/cycle.py" --rattrapage >/dev/null 2>&1 & ) 2>/dev/null
 fi
 T0=$(date +%s)

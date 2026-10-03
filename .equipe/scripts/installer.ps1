@@ -107,11 +107,11 @@ if ($Py) {
 if ($Py) {
   Dire 'Installation des outils de documents (Word, Excel, PowerPoint, PDF, graphiques)…'
   & $Py -m ensurepip --user 2>&1 | Out-Null
-  $libs = @('pyyaml', 'python-docx', 'openpyxl', 'python-pptx', 'reportlab', 'matplotlib', 'pandas', 'cryptography', 'uv')
+  $libs = @('pyyaml', 'python-docx', 'openpyxl', 'python-pptx', 'reportlab', 'matplotlib', 'pandas', 'cryptography', 'pypdf', 'uv')
   if (-not $SansReseau) {
     & $Py -m pip install --user --upgrade --disable-pip-version-check --no-warn-script-location @libs 2>&1 | ForEach-Object { Noter ("pip: " + $_) }
   }
-  $manque = & $Py -c "import importlib.util as u; m=[x for x in ('yaml','docx','openpyxl','pptx','reportlab','matplotlib','pandas','cryptography') if not u.find_spec(x)]; print(','.join(m))" 2>$null
+  $manque = & $Py -c "import importlib.util as u; m=[x for x in ('yaml','docx','openpyxl','pptx','reportlab','matplotlib','pandas','cryptography','pypdf') if not u.find_spec(x)]; print(','.join(m))" 2>$null
   if ($manque) { Bilan "Outils de documents : il manque $manque (nouvel essai au prochain lancement de l'installateur)." }
   else { Bilan 'Outils de documents : prêts.' }
   $scripts = & $Py -c "import sysconfig, os; print(sysconfig.get_path('scripts', os.name + '_user'))" 2>$null
@@ -189,10 +189,67 @@ if (-not $Claude -and -not $SansReseau) {
 if ($Claude) { Ajouter-PathUtilisateur (Split-Path -Parent $Claude); Bilan 'Claude : prêt.' }
 else { Bilan "Claude : non installé (nouvel essai au prochain lancement de l'installateur)." }
 
-# ---------------------------------------------------------------- 5. optionnel : Node (navigateur automatisé), LibreOffice (conversion PDF)
+# ---------------------------------------------------------------- 4 bis. modèles de documents officiels d'Anthropic (plugin)
+if ($Claude -and -not $SansReseau) {
+  try {
+    $installes = (& $Claude plugin list 2>&1 | Out-String)
+    if ($installes -notmatch 'document-skills') {
+      $liste = (& $Claude plugin marketplace list 2>&1 | Out-String)
+      if ($liste -notmatch 'anthropics/skills') {
+        & $Claude plugin marketplace add anthropics/skills 2>&1 | ForEach-Object { Noter ("plugin: " + $_) }
+        $liste = (& $Claude plugin marketplace list 2>&1 | Out-String)
+      }
+      $nom = 'anthropic-agent-skills'
+      $m = [regex]::Match($liste, '>\s*(\S+)\s*\r?\n\s*Source:\s*GitHub \(anthropics/skills\)')
+      if ($m.Success) { $nom = $m.Groups[1].Value }
+      & $Claude plugin install ('document-skills@' + $nom) --scope user -y 2>&1 | ForEach-Object { Noter ("plugin: " + $_) }
+      $installes = (& $Claude plugin list 2>&1 | Out-String)
+    }
+    if ($installes -match 'document-skills') { Bilan 'Modèles de documents (Word, Excel, PowerPoint, PDF) : prêts.' }
+    else { Bilan 'Modèles de documents complémentaires : non installés (nouvel essai au prochain lancement ; l''équipe a les siens).' }
+  } catch { Noter ("plugin en échec : " + $_) }
+}
+
+# ---------------------------------------------------------------- 5. optionnel : Node (navigateur automatisé), poppler (lecture PDF), LibreOffice
+function Zip-Utilisateur([string]$url, [string]$nom) {
+  $zip = Join-Path $Tmp ($nom + '.zip')
+  $dest = Join-Path $env:LOCALAPPDATA ('Programs\' + $nom)
+  if (-not (Telecharger $url $zip)) { return $null }
+  try { Expand-Archive -LiteralPath $zip -DestinationPath $dest -Force; return $dest } catch { Noter ("décompression en échec $nom : " + $_); return $null }
+}
 if (-not (Get-Command npx -ErrorAction SilentlyContinue)) {
-  if (Winget-Utilisateur 'OpenJS.NodeJS.LTS') { Bilan 'Navigateur automatisé : prêt.' }
+  $okNode = Winget-Utilisateur 'OpenJS.NodeJS.LTS'
+  if (-not $okNode -and -not $SansReseau) {
+    try {
+      $idx = Invoke-RestMethod -Uri 'https://nodejs.org/dist/index.json' -UseBasicParsing -TimeoutSec 60
+      $lts = $idx | Where-Object { $_.lts } | Select-Object -First 1
+      $a = 'x64'; if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { $a = 'arm64' }
+      $d = Zip-Utilisateur ("https://nodejs.org/dist/$($lts.version)/node-$($lts.version)-win-$a.zip") 'node'
+      if ($d) {
+        $bin = Get-ChildItem -LiteralPath $d -Directory | Select-Object -First 1
+        if ($bin) { Ajouter-PathUtilisateur $bin.FullName; $okNode = $true }
+      }
+    } catch { Noter ("Node portable en échec : " + $_) }
+  }
+  if ($okNode) { Bilan 'Navigateur automatisé : prêt.' }
   else { Bilan 'Navigateur automatisé : non installé (optionnel, l''équipe travaille sans).' }
+}
+if (-not (Get-Command pdftotext -ErrorAction SilentlyContinue)) {
+  $okPop = $false
+  if (-not $SansReseau) {
+    try {
+      $rel = Invoke-RestMethod -Uri 'https://api.github.com/repos/oschwartz10612/poppler-windows/releases/latest' -UseBasicParsing -TimeoutSec 60
+      $asset = $rel.assets | Where-Object { $_.name -match '\.zip$' } | Select-Object -First 1
+      if ($asset) {
+        $d = Zip-Utilisateur $asset.browser_download_url 'poppler'
+        if ($d) {
+          $bin = Get-ChildItem -LiteralPath $d -Recurse -Filter pdftotext.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+          if ($bin) { Ajouter-PathUtilisateur $bin.DirectoryName; $okPop = $true }
+        }
+      }
+    } catch { Noter ("poppler en échec : " + $_) }
+  }
+  if ($okPop) { Bilan 'Lecture avancée des PDF : prête.' } else { Bilan 'Lecture avancée des PDF : non installée (optionnelle).' }
 }
 $soffice = @("$env:ProgramFiles\LibreOffice\program\soffice.exe", (Join-Path $env:LOCALAPPDATA 'Programs\LibreOffice\program\soffice.exe')) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
 if (-not $soffice) { Bilan 'Conversion bureautique avancée : non installée (optionnelle ; les documents sont produits sans).' }

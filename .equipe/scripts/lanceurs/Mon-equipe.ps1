@@ -47,7 +47,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # entretien de fond (rattrapage), priorité basse, fenêtre cachée ; le verrou évite les doublons avec le hook de début
-if ($Py) {
+if ($Py -and -not (Test-Path -LiteralPath (Join-Path $Racine '.equipe\run\sans-fond'))) {
   $Pyw = Join-Path (Split-Path -Parent $Py) 'pythonw.exe'
   if (-not (Test-Path -LiteralPath $Pyw)) { $Pyw = $Py }
   try {

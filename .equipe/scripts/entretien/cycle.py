@@ -20,6 +20,7 @@ from fond import ROOT, EQ, RUN, SCRIPTS, journal
 
 INCREMENT_S = 120
 MODELES = {"initiative", "greffier"}  # tâches qui appellent un modèle : sautées si CEREBRO_SANS_MODELE (tests)
+RESEAU = {"bibliotheque_mise_a_jour"}  # tâches longues qui interrogent Internet : sautées si CEREBRO_SANS_RESEAU (tests)
 COMPLET_APRES_H = 20
 CADENCES = {  # tâche: (jours, priorité)
     "rappel": (7, 4), "cardinal": (7, 4), "revue_hebdomadaire": (7, 5),
@@ -100,6 +101,7 @@ def planifier(complet=False, mode="rattrapage"):
             ajouter(t, "", prio)
     if complet:
         for t, p in [("sommaires", 1), ("rappel", 4), ("cardinal", 4), ("sante", 4), ("brief", 4),
+                     ("bibliotheque_mise_a_jour", 5), ("tests_cerebro", 6),
                      ("sauvegarde", 6), ("export", 6), ("commit_push", 6)]:
             ajouter(t, "", p)
         p = EQ / "cerveau" / "session" / "construction.md"
@@ -326,7 +328,53 @@ def t_greffier(arg, fin):
     return _script(Path(__file__).resolve().parent / "greffier.py", timeout=1200)
 
 
-TACHES = {"intendant": t_intendant, "regen": t_regen, "sommaires": t_sommaires, "vues_client": t_vues_client,
+def t_gabarits(arg, fin):
+    """posée par cerebro config set cabinet.* : régénère et inscrit les gabarits de la maison"""
+    return _script(SCRIPTS / "producteur" / "gabarits.py", "--inscrire", timeout=600)
+
+
+def bibliotheque_vide():
+    """textes officiels absents du poste (ils ne sont pas dans git) : la LIFD sert de témoin"""
+    from cb import juridique as L
+    from cb.objets import abspath
+    try:
+        r = L.asof("642.11")
+    except Exception:
+        return True
+    return not r or not r.get("chemin") or not abspath(r["chemin"]).exists()
+
+
+def t_bibliotheque_mise_a_jour(arg, fin):
+    C()
+    r = {}
+    if bibliotheque_vide():
+        r["ingestion"] = _script(SCRIPTS / "bibliotheque" / "fedlex.py", "priorites", timeout=3600)
+    r["mise_a_jour"] = _script(SCRIPTS / "bibliotheque" / "mise_a_jour.py", timeout=3600)
+    return r
+
+
+def t_tests_cerebro(arg, fin):
+    t = EQ / "tests" / "test_cerebro.py"
+    if not t.exists():
+        return {"absent": True}
+    p = subprocess.run([fond.python_exe(), str(t)], capture_output=True, text=True, encoding="utf-8", errors="ignore",
+                       timeout=1800, cwd=str(ROOT), env=fond.env_fond(), stdin=subprocess.DEVNULL)
+    der = (p.stdout or "").strip().splitlines()[-1:] or [""]
+    if p.returncode != 0:
+        echecs = [l for l in (p.stdout or "").splitlines() if l.startswith("ÉCHEC")][:5]
+        fond.incident("tests de la mémoire (test_cerebro) en échec : " + "; ".join(echecs)[:200], "tests", "ticket ouvert pour la fabrique")
+        try:
+            from cb import objets as O
+            import datetime as _d
+            O.create("ticket", "Tests cerebro en échec au cycle complet", resume="; ".join(echecs)[:280],
+                     prochaine_action="corriger (fabrique)", prochaine_date=(_d.date.today() + _d.timedelta(days=2)).isoformat())
+        except Exception as e:
+            journal("erreurs-fond", job="tests_cerebro", erreur=repr(e))
+    return {"code": p.returncode, "bilan": der[0][:200]}
+
+
+TACHES = {"gabarits": t_gabarits, "bibliotheque_mise_a_jour": t_bibliotheque_mise_a_jour, "tests_cerebro": t_tests_cerebro,
+          "intendant": t_intendant, "regen": t_regen, "sommaires": t_sommaires, "vues_client": t_vues_client,
           "croisements": t_croisements, "coverage_gc": t_coverage_gc, "rappel": t_rappel, "cardinal": t_cardinal,
           "sante": t_sante, "brief": t_brief, "export": t_export, "sauvegarde": t_sauvegarde,
           "test_restauration": t_test_restauration, "commit_push": t_commit_push, "ingesteur": t_ingesteur,
@@ -346,7 +394,8 @@ def increment(bilan, max_prio=6, budget=INCREMENT_S):
         if fond.mustafa_ecrit():
             return "pause"
         todo = [t for t in en_attente(max_prio) if t["tache"] in TACHES and t["n"] not in vus
-                and not (os.environ.get("CEREBRO_SANS_MODELE") and t["tache"] in MODELES)]
+                and not (os.environ.get("CEREBRO_SANS_MODELE") and t["tache"] in MODELES)
+                and not (os.environ.get("CEREBRO_SANS_RESEAU") and t["tache"] in RESEAU)]
         if not todo:
             return "vide" if not any(t["n"] in vus for t in en_attente(max_prio)) else "budget"
         t = todo[0]
