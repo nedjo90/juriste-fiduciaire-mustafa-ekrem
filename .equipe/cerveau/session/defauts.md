@@ -13,7 +13,7 @@ bases_recherche: sources officielles ouvertes (Fedlex, Zefix, bger, AFC…) [dé
 mode_permission: bypassPermissions, aucune liste deny [constitution §0.6]
 donnees_clients: transit sans anonymisation vers les fournisseurs [constitution §13]
 outils_communaute: installation autonome après lecture du code et test en isolation [constitution §6.4]
-depot: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem, privé [détecté le 2026-10-03] ; branche de livraison ccr-e8f5838b-808ukj (imposée par l'environnement de construction)
+depot: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem, PUBLIC (installation et mises à jour seulement) ; aucun envoi des données de Mustafa ; envoi seulement vers un dépôt privé nommé « sauvegarde » s'il est ajouté [décidé le 2026-10-03]
 branches_par_chantier: non — une seule branche autorisée dans l'environnement de construction ; chantiers = commits + tags [défaut]
 bureau_git: Bureau/ ignoré sauf Bureau/Informatique/ et Bureau/Modeles/ (§2 livraison vs §9.4) [défaut]
 fuseau: Europe/Zurich [défaut §11]

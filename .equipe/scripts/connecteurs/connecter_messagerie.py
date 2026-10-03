@@ -44,8 +44,6 @@ def lire_etat():
 
 
 def presse_papiers(txt):
-    for cmd in (["clip"] if os.name == "nt" else ["pbcopy"] if sys.platform == "darwin" else ["xclip", "-selection", "clipboard"]):
-        pass
     try:
         exe = "clip" if os.name == "nt" else ("pbcopy" if sys.platform == "darwin" else "xclip")
         if shutil.which(exe):
@@ -69,7 +67,7 @@ def apres_connexion(compte):
     """configuration, question close, état ; jamais bloquant"""
     try:
         core, K, F = _cb()
-        K.set_("poste.messagerie_connectee", "oui", source=f"détecté le {core.iso()}") if K.get_full("poste.messagerie_connectee") else None
+        K.set_("poste.messagerie_connectee", "oui", source=f"détecté le {core.iso()}")
         K.set_("poste.messagerie", "Outlook / Microsoft 365", source=f"détecté le {core.iso()}")
         con = core.db()
         for r in con.execute("SELECT id FROM questions_ouvertes WHERE statut='ouverte' AND (cle_config IN ('poste.messagerie_connectee','poste.messagerie') OR formulation LIKE '%brancher sur votre messagerie%')").fetchall():

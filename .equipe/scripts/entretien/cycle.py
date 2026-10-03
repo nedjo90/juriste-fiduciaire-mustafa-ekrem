@@ -297,9 +297,12 @@ def t_commit_push(arg, fin):
             if not commit:
                 fond.incident("commit automatique en échec", "git", (r.stderr or r.stdout)[-200:])
         br = git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip() or "HEAD"
-        if not git("remote").stdout.strip():
-            return {"commit": commit, "push": "pas de dépôt distant"}
-        p = git("push", "-q", "origin", br, timeout=120)
+        # Le dépôt d'origine (« origin ») est public : il sert à livrer et mettre à jour l'équipe, JAMAIS à recevoir le travail
+        # de Mustafa (secret professionnel). Les données restent sur le poste (commits locaux + sauvegarde chiffrée).
+        # Envoi uniquement vers un dépôt PRIVÉ explicitement configuré sous le nom « sauvegarde ».
+        if "sauvegarde" not in git("remote").stdout.split():
+            return {"commit": commit, "push": "local seulement (aucun dépôt privé de sauvegarde configuré)"}
+        p = git("push", "-q", "sauvegarde", br, timeout=120)
         if p.returncode != 0:
             fond.incident("envoi sur le dépôt privé en échec (réseau ou accès)", "git", "nouvel essai au prochain cycle")
             return {"commit": commit, "push": False}

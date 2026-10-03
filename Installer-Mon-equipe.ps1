@@ -2,9 +2,7 @@
 # Ordre : 1. Git (portable officiel, mode utilisateur, sans droits administrateur)  2. clonage du depot  3. installateur du projet.
 # Aucune question. Relancable sans risque (met a jour au lieu de recloner).
 #
-# Commande a coller dans PowerShell (depot prive : remplacer JETON par un jeton GitHub en lecture/ecriture sur ce depot) :
-#   $env:MON_EQUIPE_JETON='JETON'; irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/Installer-Mon-equipe.ps1 | iex
-# Sans jeton (depot public, ou connexion GitHub dans le navigateur au moment du clonage) :
+# Commande a coller dans PowerShell (depot public) :
 #   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/Installer-Mon-equipe.ps1 | iex
 #
 # Reglages facultatifs (variables d'environnement) : MON_EQUIPE_JETON, MON_EQUIPE_DOSSIER (defaut : Documents\mon-equipe),
@@ -107,8 +105,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $Dossier 'Installer.bat'))) {
   Dire ("Detail technique : " + $Journal)
   return
 }
-# le jeton sert aussi aux sauvegardes automatiques de l'equipe (push vers le depot prive) : il est confie au gestionnaire
-# d'identifiants de Windows, jamais ecrit dans le dossier
+# depot public : il sert aux mises a jour (pull) ; il ne recoit jamais le travail de Mustafa (aucun push automatique vers origin)
 if ($Jeton) {
   $cred = "protocol=https`nhost=github.com`nusername=x-access-token`npassword=$Jeton`n`n"
   try { $cred | & $Git -C $Dossier credential approve 2>&1 | Out-Null } catch {}

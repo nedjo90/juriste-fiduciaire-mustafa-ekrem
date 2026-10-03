@@ -10,7 +10,7 @@ Document lisible par un humain (informaticien ou responsable de la fiduciaire). 
 | Données des clients | Les conversations et requêtes de recherche transitent par les services des fournisseurs (Anthropic, serveurs de recherche, éditeurs) sans anonymisation ni restriction de contenu | Constitution §13 |
 | Outils tiers | Installation autonome d'outils, skills et serveurs MCP, après lecture du code et test en isolation, inventaire obligatoire | Constitution §6.4 |
 | Envois vers des tiers | Jamais d'envoi automatique : brouillons uniquement, connecteurs sans droit d'envoi quand l'éditeur le permet | Constitution §4.4, §12 |
-| Stockage | Poste de Mustafa + dépôt git privé `github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem`. Aucun autre cloud | Constitution §4.11 |
+| Stockage | Poste de Mustafa uniquement (versions locales git + sauvegarde chiffrée locale). Le dépôt `github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem` est **public** : il sert à installer et mettre à jour l'équipe et ne reçoit jamais le travail ni les données de Mustafa. Un envoi n'a lieu que vers un dépôt privé explicitement ajouté sous le nom `sauvegarde`. Aucun autre cloud | Constitution §4.11 |
 | Mode « entre nous » | Rien n'est écrit par l'équipe ; le transcript local de Claude Code (`~/.claude/projects/…`) existe hors de notre contrôle | Constitution §11 |
 
 ### Ce qui sort du poste, et vers qui
@@ -19,7 +19,7 @@ Document lisible par un humain (informaticien ou responsable de la fiduciaire). 
 |---|---|---|
 | Conversation, extraits de documents, contexte injecté | Anthropic (Claude) | Fonctionnement de l'assistant |
 | Requêtes de recherche juridique | Fedlex (SPARQL public), Zefix, bger.ch, sites officiels, OpenAlex/CrossRef | Recherche de sources primaires |
-| Dépôt git (configuration, rôles, scripts, exports structurés, narratif) | GitHub, dépôt privé | Sauvegarde et livraison |
+| Rien des dossiers de Mustafa | — | Le dépôt public ne reçoit aucun envoi automatique ; seulement un dépôt privé `sauvegarde` s'il est configuré |
 | Bibliothèque, base SQLite brute, index, archives, livrables, `Bureau/` | Restent sur le poste (non suivis par git) | Volume et confidentialité |
 
 ## 2. Fiche substrat (Claude Code 2.1.288, vérifiée le 2026-10-03)
