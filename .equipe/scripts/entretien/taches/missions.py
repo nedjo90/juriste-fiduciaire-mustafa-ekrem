@@ -139,19 +139,24 @@ FAIT_RE = re.compile(r"(\b\d{1,2}[./]\d{1,2}[./]\d{2,4}\b|\b\d{4}-\d{2}-\d{2}\b|
 
 
 def faits_omis(c):
-    """faits datés ou chiffrés d'une capture introuvables en base (script) : signal pour la double lecture"""
+    """faits datés ou chiffrés dits par Mustafa dans une capture, introuvables en base (script) : signal pour la double lecture.
+    Recherche par groupes de chiffres (« 48'750 » ≈ « 48 750 » ≈ « 48750 ») dans l'index plein texte et les champs courts."""
     core = _cb()[0]
-    from cb.recherche import find
-    texte = f"{c.get('prompt') or ''}\n{c.get('reponse') or ''}"
+    con = core.db()
     omis = []
     for f in sorted({m.group(0).strip() for m in FAIT_RE.finditer(c.get("prompt") or "")})[:8]:
-        norm = re.sub(r"[’' ]", "", f)
-        con = core.db()
-        trouve = con.execute("SELECT 1 FROM objets WHERE replace(replace(COALESCE(resume,'')||' '||COALESCE(chiffre_cle,'')||' '||nom,'''',''),' ','') LIKE ? LIMIT 1",
-                             (f"%{norm}%",)).fetchone()
-        if not trouve:
-            hits = [h for h in find(f, limit=3) if h.get("id") and not h.get("presque")]
-            trouve = bool(hits)
+        chiffres = re.findall(r"\d+", f)
+        if not chiffres:
+            continue
+        colle = "".join(chiffres)
+        trouve = any(colle in re.sub(r"\D", "", f"{r[0] or ''} {r[1] or ''} {r[2] or ''}")
+                     for r in con.execute("SELECT resume, chiffre_cle, nom FROM objets WHERE COALESCE(resume,'')||COALESCE(chiffre_cle,'')||nom LIKE ?",
+                                          (f"%{chiffres[-1]}%",)))
+        if not trouve and core.has_fts():
+            try:
+                trouve = bool(con.execute("SELECT 1 FROM objets_fts WHERE objets_fts MATCH ? LIMIT 1", ('"' + " ".join(chiffres) + '"',)).fetchone())
+            except Exception:
+                trouve = False
         if not trouve:
             omis.append(f)
     return omis

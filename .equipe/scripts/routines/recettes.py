@@ -33,7 +33,7 @@ def nom_client(cid):
 
 def horizon(texte, defaut=7):
     f = fold(texte)
-    m = re.search(r"(\d+)\s*(jours|j\b|days|tage)", f)
+    m = re.search(r"(\d+)\s*(?:[a-z]+\s+)?(jours|j\b|days|tage|giorni)", f)
     if m:
         return min(120, int(m.group(1)))
     if re.search(r"deux semaines|quinzaine|2 semaines", f):

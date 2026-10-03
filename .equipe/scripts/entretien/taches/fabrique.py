@@ -93,11 +93,19 @@ def valider_fichier(p):
     t, head = _entete(p)
     if head is None:
         return ["en-tête YAML absent"], []
+    corr = []
+    m = re.search(r"^description:[ \t]*([^\"'\s].*)$", head, re.M)
+    if m:  # description non citée (un « : » casserait le YAML) : citée par script
+        nh = head[:m.start()] + "description: " + json.dumps(m.group(1).strip(), ensure_ascii=False) + head[m.end():]
+        t = t.replace(head, nh, 1)
+        p.write_text(t, encoding="utf-8")
+        head = nh
+        corr.append("description citée")
     try:
         y = yaml.safe_load(head) or {}
     except Exception as e:
-        return [f"YAML illisible : {repr(e)[:80]}"], []
-    err, corr = [], []
+        return [f"YAML illisible : {repr(e)[:80]}"], corr
+    err = []
     nom, desc = str(y.get("name") or ""), str(y.get("description") or "")
     if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", nom):
         err.append(f"nom non conforme : {nom!r}")
@@ -107,10 +115,6 @@ def valider_fichier(p):
         err.append("description absente")
     elif len(desc) > DESC_MAX:
         err.append(f"description trop longue ({len(desc)} > {DESC_MAX})")
-    elif not re.search(r'^description:\s*"', head, re.M):
-        nt = re.sub(r"^description:.*$", "description: " + json.dumps(desc, ensure_ascii=False), t, count=1, flags=re.M)
-        p.write_text(nt, encoding="utf-8")
-        corr.append("description citée")
     if p.parent.name == "agents" and str(y.get("model") or "") not in ("opus", "sonnet", "haiku", "inherit", ""):
         err.append(f"modèle inconnu : {y.get('model')}")
     return err, corr
@@ -131,7 +135,7 @@ def valider_config():
 def ecarter(rel, raison):
     """fichier fabriqué refusé : mis à l'écart (rien ne se perd), incident"""
     src = ROOT / rel
-    dest = EQ / "skills-dormantes" / "_rejets" / f"{dt.date.today().isoformat()}-{src.parent.name if src.name == 'SKILL.md' else src.stem}"
+    dest = EQ / "skills-dormantes" / "_rejets" / f"{_cb()[0].iso()}-{src.parent.name if src.name == 'SKILL.md' else src.stem}"
     dest.parent.mkdir(parents=True, exist_ok=True)
     try:
         if src.name == "SKILL.md":
