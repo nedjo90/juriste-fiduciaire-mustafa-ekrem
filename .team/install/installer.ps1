@@ -288,16 +288,49 @@ elseif (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Com
 try {
   $cible = Join-Path $binEquipe 'claude.cmd'
   $c = ($cible -replace "'", "''")
-  $bloc = "# >>> mon-equipe >>>`r`n# « jurix » et « claude » ouvrent JURIX (ajouté par l'installateur de JURIX)`r`nfunction claude { & '" + $c + "' @args }`r`n" +
-          "function jurix {`r`n  if (`$args.Count -eq 0) {`r`n    Write-Host ''`r`n    Write-Host '   ░▒▓█  J U R I X  █▓▒░' -ForegroundColor Cyan`r`n    Write-Host '   cabinet augmenté · droit suisse · en ligne' -ForegroundColor DarkCyan`r`n    Write-Host ''`r`n  }`r`n  & '" + $c + "' @args`r`n}`r`n# <<< mon-equipe <<<"
+  $bloc = @'
+# >>> mon-equipe >>>
+# « jurix » et « claude » ouvrent JURIX (ajouté par l'installateur de JURIX)
+function __jurix_env {
+  # fenêtre ouverte avant l'installation (terminal de VS Code, par exemple) : réglages de l'utilisateur relus
+  foreach ($v in 'CLAUDE_CODE_GIT_BASH_PATH', 'CEREBRO_CLAUDE', 'CEREBRO_PYTHON') {
+    $x = [Environment]::GetEnvironmentVariable($v, 'User'); if ($x) { Set-Item -Path ('Env:' + $v) -Value $x }
+  }
+  $p = ("$env:Path").Split(';')
+  foreach ($d in ([Environment]::GetEnvironmentVariable('Path', 'User') + ';' + [Environment]::GetEnvironmentVariable('Path', 'Machine')).Split(';')) {
+    if ($d -and ($p -notcontains $d)) { $env:Path = ("$env:Path").TrimEnd(';') + ';' + $d }
+  }
+}
+function claude { __jurix_env; & '__CIBLE__' @args }
+function jurix {
+  __jurix_env
+  if ($args.Count -eq 0) {
+    Write-Host ''
+    Write-Host '   ░▒▓█  J U R I X  █▓▒░' -ForegroundColor Cyan
+    Write-Host '   cabinet augmenté · droit suisse · en ligne' -ForegroundColor DarkCyan
+    Write-Host ''
+  }
+  & '__CIBLE__' @args
+}
+# <<< mon-equipe <<<
+'@
+  $bloc = $bloc.Replace('__CIBLE__', $c).Replace("`r`n", "`n").Replace("`n", "`r`n")
   $docs = [Environment]::GetFolderPath('MyDocuments')
-  foreach ($prof in @((Join-Path $docs 'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'), (Join-Path $docs 'PowerShell\Microsoft.PowerShell_profile.ps1'))) {
-    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $prof) | Out-Null
-    $ancien = ''
-    if (Test-Path -LiteralPath $prof) { $ancien = [IO.File]::ReadAllText($prof) }
-    $neuf = [regex]::Replace($ancien, '(?s)\r?\n?# >>> mon-equipe >>>.*?# <<< mon-equipe <<<\r?\n?', "`r`n").TrimEnd()
-    $neuf = (($neuf + "`r`n`r`n" + $bloc).TrimStart()) + "`r`n"
-    if ($neuf -ne $ancien) { [IO.File]::WriteAllText($prof, $neuf, (New-Object System.Text.UTF8Encoding $true)) }
+  # profile.ps1 (tous les hôtes) : lu par la fenêtre PowerShell, le terminal de VS Code et celui de son extension PowerShell ;
+  # le bloc d'une version précédente, écrit dans le profil propre à la console, est retiré
+  foreach ($sous in 'WindowsPowerShell', 'PowerShell') {
+    foreach ($nomProf in 'profile.ps1', 'Microsoft.PowerShell_profile.ps1') {
+      $prof = Join-Path (Join-Path $docs $sous) $nomProf
+      $ancien = ''
+      if (Test-Path -LiteralPath $prof) { $ancien = [IO.File]::ReadAllText($prof) }
+      $neuf = [regex]::Replace($ancien, '(?s)\r?\n?# >>> mon-equipe >>>.*?# <<< mon-equipe <<<\r?\n?', "`r`n").TrimEnd()
+      if ($nomProf -eq 'profile.ps1') { $neuf = (($neuf + "`r`n`r`n" + $bloc).TrimStart()) + "`r`n" }
+      elseif ($neuf) { $neuf += "`r`n" }
+      if ($neuf -ne $ancien) {
+        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $prof) | Out-Null
+        [IO.File]::WriteAllText($prof, $neuf, (New-Object System.Text.UTF8Encoding $true))
+      }
+    }
   }
   # le profil n'est lu que si la politique d'exécution le permet ; « Restricted » (défaut des postes Windows) l'empêche :
   # RemoteSigned pour l'utilisateur seul (défaut de Microsoft sur ses serveurs ; aucun droit d'administrateur)

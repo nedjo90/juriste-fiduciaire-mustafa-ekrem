@@ -312,10 +312,16 @@ jobs:
           $nf = powershell.exe -Command "(Get-Command jurix).CommandType; jurix --version; claude --version" 2>&1 | Out-String
           "--- nouvelle fenetre ---"; $nf
           Verif 'Nouvelle fenetre : jurix et claude' (($nf -match 'Function') -and ([regex]::Matches($nf, 'Claude Code').Count -ge 2)) $nf
-          Set-Location -LiteralPath $R
-          $m = (& (Join-Path $R '.team\bin\claude.cmd') mcp list 2>&1 | Out-String)
-          "--- mcp ---"; $m
+          # terminal ouvert AVANT l'installation (cas du terminal de VS Code) : PATH d'origine, sans les réglages ajoutés depuis
+          $vieux = "`$env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'; " +
+                   "foreach (`$v in 'CLAUDE_CODE_GIT_BASH_PATH', 'CEREBRO_CLAUDE', 'CEREBRO_PYTHON') { Remove-Item -Path ('Env:' + `$v) -ErrorAction SilentlyContinue }; " +
+                   "jurix --version; claude mcp list; 'GITBASH=' + `$env:CLAUDE_CODE_GIT_BASH_PATH"
+          $m = powershell.exe -Command $vieux 2>&1 | Out-String
+          "--- terminal ouvert avant l'installation ---"; $m
+          Verif 'Terminal ouvert avant installation : jurix demarre' ($m -match 'Claude Code') ''
+          Verif 'Terminal ouvert avant installation : Git Bash retrouve' ($m -match 'GITBASH=\S') ''
           Verif 'MCP cerebro connecte' ($m -match 'cerebro[^\r\n]*(✓|√|Connected)') ''
+          Set-Location -LiteralPath $R
           # tache d'entretien : son action exacte, lancee telle quelle
           $t = Get-ScheduledTask -TaskName 'JURIX-Entretien' -ErrorAction SilentlyContinue
           Verif 'Entretien planifie' ($null -ne $t)
