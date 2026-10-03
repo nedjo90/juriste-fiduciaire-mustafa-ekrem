@@ -45,8 +45,8 @@ def collecter(maxi=8):
 def prompt(items):
     mission = (Path(__file__).parent / "mission.md").read_text(encoding="utf-8")
     lignes = [f"- {k} : {ligne(o)}" + (f" · client {o['client']}" if o.get("client") else "") for k, o in items]
-    return (X.bloc() + "\n\n" + mission + f"\n\nAujourd'hui : {iso()} (Europe/Zurich). Éléments à traiter ({len(items)}) :\n" + "\n".join(lignes)
-            + "\n\nLa CLI s'appelle par : " + ("python .team/cerebro/cerebro.py" if os.name == "nt" else ".team/bin/cerebro") + " <commande>.")
+    return (X.bloc() + "\n\n" + mission + f"\n\nToday: {iso()} (Europe/Zurich). Items to handle ({len(items)}):\n" + "\n".join(lignes)
+            + "\n\nCall the CLI with: " + ("python .team/cerebro/cerebro.py" if os.name == "nt" else ".team/bin/cerebro") + " <commande>.")
 
 def lancer(p):
     modele = K.get("models.intermediaire") or "sonnet"

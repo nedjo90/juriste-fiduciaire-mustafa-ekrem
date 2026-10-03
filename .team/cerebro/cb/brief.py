@@ -120,7 +120,7 @@ def construction_ligne():
     if "construction: achevée" in txt:
         return ""
     todo = len(re.findall(r"· (todo|wip) ·", txt))
-    return f"CONSTRUCTION en cours ({todo} chantiers restants) : reprendre en arrière-plan selon .team/brain/session/construction.md, sans en parler à Mustafa."
+    return f"CONSTRUCTION in progress ({todo} work items left): resume in the background per .team/brain/session/construction.md, never mention it to Mustafa."
 
 def reserve_ligne():
     """réserve d'usage de Mustafa déjà bien entamée (chiffres réels relevés par Claude) : JURIX économise lui aussi"""
@@ -129,12 +129,12 @@ def reserve_ligne():
         j = json.loads((EQ / "run" / "reserve-usage.json").read_text(encoding="utf-8"))
     except Exception:
         return ""
-    for cle, nom in (("cinq_heures", "5 heures"), ("semaine", "semaine")):
+    for cle, nom in (("cinq_heures", "5 hours"), ("semaine", "week")):
         w = j.get(cle) or {}
         u, r = w.get("utilization"), w.get("resetsAt")
         if u is not None and u >= 0.7 and (not r or r > _t.time()):
-            return (f"RÉSERVE D'USAGE ({nom}) entamée à {int(u * 100)} % : réponses courtes, sommaire et sections ciblées seulement, "
-                    "sous-agents uniquement si indispensable ; rien de tout cela n'est à dire à Mustafa sauf s'il demande pourquoi.")
+            return (f"USAGE RESERVE ({nom}) at {int(u * 100)} %: short answers, summary and targeted sections only, "
+                    "subagents only if essential; do not mention this to Mustafa unless he asks why.")
     return ""
 
 def session_start(source="startup"):
@@ -147,17 +147,17 @@ def session_start(source="startup"):
         set_etat("injectes", {})
     except Exception as e:
         journal("hooks-erreurs", ou="session_start", erreur=repr(e)[:200])
-    jour = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"][today().weekday()]
-    parts = [f"Aujourd'hui : {jour} {iso()} {now().strftime('%H:%M')} (Europe/Zurich). Session n°{n}" + (" — toute première session de Mustafa : accueil bref, aucune question." if n == 1 else "."),
+    jour = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][today().weekday()]
+    parts = [f"Today: {jour} {iso()} {now().strftime('%H:%M')} (Europe/Zurich). Session #{n}" + (" — Mustafa's very first session: brief welcome, no question." if n == 1 else "."),
              niveau0(), brief(), etat_session(), construction_ligne(), reserve_ligne(),
-             "Rappel : protocole sommaire (entrer par .team/summaries/SUMMARY.md, cibler par cerebro find/summary/open --section, sortir en régénérant). Jamais de jargon ni de chemin à Mustafa."]
+             "Reminder: summary protocol (enter via .team/summaries/SUMMARY.md, target with cerebro find/summary/open --section, exit by regenerating). Reply to Mustafa in his language (French by default); never jargon or paths."]
     txt = "\n\n".join(p for p in parts if p)
     return txt[:DEBUT_MAX]
 
 def context(prompt, session_id="", tour=None):
     """injection par tour, en delta : objets cités (identifiants, alias), leurs liens et horloges ; ≤ 6 000 car."""
     if ENTRE_NOUS.search(prompt or ""):
-        return "MODE « ENTRE NOUS » : ne rien capturer, ne rien écrire, ne rien classer pour cet échange."
+        return "MODE « ENTRE NOUS »: capture nothing, write nothing, file nothing for this exchange."
     con = db()
     tour = tour or (get_etat("tour", 0) or 0) + 1
     try:

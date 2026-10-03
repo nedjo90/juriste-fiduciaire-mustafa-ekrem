@@ -24,7 +24,7 @@ Entrer : .equipe/sommaires/SOMMAIRE.md puis niveau 1 du client/domaine. Cibler :
 
 # Charte de la maison
 
-Source unique de vérité : `.equipe/cerveau/cabinet/design/systeme.yaml` (lu par tous les générateurs). Cette skill le résume pour un rôle qui compose à la main (HTML, canvas, schéma, slide hors producteur). En cas d'écart, le YAML l'emporte.
+Source unique de vérité : `.team/brain/firm/design/system.yaml` (lu par tous les générateurs). Cette skill le résume pour un rôle qui compose à la main (HTML, canvas, schéma, slide hors producteur). En cas d'écart, le YAML l'emporte.
 
 Principes appliqués : §4 principe 21 (niveau des plus grandes maisons), §7.3 (tout livrable sort d'un gabarit) — vérifiés par les portes `presentation`, `visuel`, `typographie`.
 
