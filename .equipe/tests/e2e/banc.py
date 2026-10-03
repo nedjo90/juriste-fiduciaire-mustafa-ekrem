@@ -21,7 +21,7 @@ CONFIRM = re.compile(r"(voulez-vous que je|souhaitez-vous que je|dois-je|je (cr√
 def copie_jetable():
     """copie des fichiers suivis par git (= ce qui est livr√©) dans un dossier temporaire, puis init comme l'installateur"""
     tmp = Path(tempfile.mkdtemp(prefix="banc-mustafa-"))
-    racine = tmp / "mon-equipe"
+    racine = tmp / "jurix"
     files = subprocess.run(["git", "ls-files", "-z"], cwd=REPO, capture_output=True).stdout.decode().split("\0")
     for f in filter(None, files):
         src, dst = REPO / f, racine / f

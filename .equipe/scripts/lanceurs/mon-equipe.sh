@@ -1,5 +1,5 @@
 #!/bin/bash
-# Lanceur « Mon équipe » (Linux ; appelé aussi par Mon-equipe.command sous macOS).
+# Lanceur de JURIX (Linux ; appelé aussi par Mon-equipe.command sous macOS).
 # Dossier du projet, PATH += .equipe/bin, contrôle rapide de la configuration (restauration si cassée),
 # vérification que Claude Code démarre, entretien en arrière-plan, puis Claude Code en mode automatique.
 ICI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

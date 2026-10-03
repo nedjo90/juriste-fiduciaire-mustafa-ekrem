@@ -10,18 +10,18 @@ Sur le poste de Mustafa, qu'il ait déjà des outils (Claude, Git, Python) ou ri
 2. Coller cette ligne, puis Entrée :
 
    ```
-   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-mon-equipe.ps1 | iex
+   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-jurix.ps1 | iex
    ```
 
 3. Attendre la fin (quelques minutes). Si Claude n'est pas encore connecté, une page de connexion s'ouvre à la fin : se connecter avec le compte de Mustafa.
 
-La commande fait tout, sans droits d'administrateur et sans aucune question : elle installe Git (version portable officielle, dans le profil de l'utilisateur), récupère le dossier de l'équipe dans `Documents\mon-equipe`, puis installe Python, les outils de documents, Claude et ses extensions, déclare le dossier de confiance, supprime les demandes d'autorisation, crée le raccourci « Mon équipe » sur le bureau et programme l'entretien automatique. Ce qui est déjà installé n'est ni réinstallé ni modifié : le rapport final l'indique (« Claude : déjà installé sur cet ordinateur, gardé tel quel »), et le compte Claude déjà connecté reste connecté. Elle peut être relancée sans risque : elle met à jour au lieu de tout refaire. Les scripts d'installation sont rangés dans la partie cachée du dossier (`.equipe/installation`) : Mustafa ne les voit pas.
+La commande fait tout, sans droits d'administrateur et sans aucune question : elle installe Git (version portable officielle, dans le profil de l'utilisateur), récupère JURIX dans `Documents\jurix`, puis installe Python, les outils de documents, Claude et ses extensions, déclare le dossier de confiance, supprime les demandes d'autorisation, crée le raccourci « JURIX » sur le bureau et programme l'entretien automatique. Ce qui est déjà installé n'est ni réinstallé ni modifié : le rapport final l'indique (« Claude : déjà installé sur cet ordinateur, gardé tel quel »), et le compte Claude déjà connecté reste connecté. Elle peut être relancée sans risque : elle met à jour au lieu de tout refaire. Les scripts d'installation sont rangés dans la partie cachée du dossier (`.equipe/installation`) : Mustafa ne les voit pas.
 
 ## Ensuite
 
-Dans la même fenêtre, taper `claude` : à la fin de la commande, la fenêtre est déjà placée dans le dossier `mon-equipe` et la commande est active. Plus tard : double-cliquer sur « Mon équipe » sur le bureau, ou taper `claude` dans n'importe quelle fenêtre PowerShell (elle se place toujours d'elle-même dans le bon dossier). L'équipe s'ouvre directement, avec son brief du jour ; Mustafa n'a plus qu'à parler. Microsoft 365 (Word, Excel, PowerPoint) est utilisé pour les PDF ; aucun autre logiciel n'est nécessaire.
+Dans la même fenêtre, taper `jurix` : à la fin de la commande, la fenêtre est déjà placée dans le dossier `Documents\jurix` et la commande est active. Plus tard : double-cliquer sur « JURIX » sur le bureau, ou taper `jurix` (ou `claude`) dans n'importe quelle fenêtre PowerShell : elle se place toujours d'elle-même dans le bon dossier. L'équipe s'ouvre directement, avec son brief du jour ; Mustafa n'a plus qu'à parler. Microsoft 365 (Word, Excel, PowerPoint) est utilisé pour les PDF ; aucun autre logiciel n'est nécessaire.
 
-**Mac** : ouvrir Terminal et lancer `sh ~/Documents/mon-equipe/.equipe/installation/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/mon-equipe`), puis taper `claude` dans un nouveau Terminal.
+**Mac** : ouvrir Terminal et lancer `sh ~/Documents/jurix/.equipe/installation/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/jurix`), puis taper `jurix` dans un nouveau Terminal.
 
 **Confidentialité** : le dépôt de l'équipe est public et ne reçoit jamais le travail de Mustafa ; ses dossiers restent sur son poste (versions locales et sauvegarde chiffrée).
 
@@ -36,7 +36,7 @@ Dans la même fenêtre, taper `claude` : à la fin de la commande, la fenêtre e
 Par défaut, l'équipe se connecte avec l'application publique de Microsoft « Microsoft Graph Command Line Tools » (identifiant `14d82eec-204b-4c2f-b7e8-296a70dab67e`), en permissions **déléguées** et par le flux « code d'appareil ». Si la fiduciaire interdit aux utilisateurs de consentir eux-mêmes, ou bloque cette application, ou si vous préférez une application dédiée (recommandé : traçabilité dans les journaux de connexion, révocation propre, aucun consentement partagé avec d'autres outils), procédez ainsi, en dix minutes :
 
 1. Centre d'administration Microsoft Entra (https://entra.microsoft.com) → Identité → Applications → **Inscriptions d'applications** → **Nouvelle inscription**.
-   - Nom : `Mon équipe — Mustafa (lecture et brouillons)`.
+   - Nom : `JURIX — Mustafa (lecture et brouillons)`.
    - Types de comptes pris en charge : **Comptes dans cet annuaire organisationnel uniquement**.
    - URI de redirection : plateforme **Client public/natif (mobile et bureau)**, valeur `http://localhost`.
 2. **Authentification** → Paramètres avancés → **Autoriser les flux de clients publics : Oui** (nécessaire au flux par code d'appareil).
@@ -48,7 +48,7 @@ Par défaut, l'équipe se connecte avec l'application publique de Microsoft « M
    **N'ajoutez aucune permission d'envoi** (`Mail.Send`, `Mail.Send.Shared`) **ni aucune autorisation d'application** : l'équipe ne doit jamais pouvoir envoyer.
 4. Cliquer sur **Accorder un consentement d'administrateur pour <votre organisation>**, ou ouvrir l'URL de consentement administrateur (remplacer les deux valeurs) :
    `https://login.microsoftonline.com/<ID-annuaire>/adminconsent?client_id=<ID-application>`
-5. Sur le poste de Mustafa, dans un terminal ouvert dans le dossier `mon-equipe`, inscrire l'application (ou les donner à l'équipe en conversation) :
+5. Sur le poste de Mustafa, dans un terminal ouvert dans le dossier `jurix`, inscrire l'application (ou les donner à l'équipe en conversation) :
    ```
    python .equipe\cerebro\cerebro.py config set acces.m365_client_id <ID-application> --source "informaticien"
    python .equipe\cerebro\cerebro.py config set acces.m365_annuaire <ID-annuaire> --source "informaticien"
@@ -71,5 +71,5 @@ Les mises à jour de l'équipe continuent d'arriver de ce dépôt-ci : relancer 
 ## En cas de souci
 
 - Le raccourci a disparu ou ne s'ouvre plus : relancer la commande d'installation ci-dessus.
-- Changement d'ordinateur : copier tout le dossier `mon-equipe` et, pour pouvoir relire les anciennes sauvegardes, le fichier `cle-sauvegarde.key` du dossier `.cerebro` de l'utilisateur ; puis lancer la commande d'installation sur le nouveau poste.
+- Changement d'ordinateur : copier tout le dossier `jurix` et, pour pouvoir relire les anciennes sauvegardes, le fichier `cle-sauvegarde.key` du dossier `.cerebro` de l'utilisateur ; puis lancer la commande d'installation sur le nouveau poste.
 - Le détail technique (journal d'installation, réglages, incidents) se trouve dans `.equipe/run/installation.log` et dans `DOSSIER-TECHNIQUE.md`.

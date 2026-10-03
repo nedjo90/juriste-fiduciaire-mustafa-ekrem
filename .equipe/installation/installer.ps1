@@ -1,6 +1,6 @@
-﻿# Installateur « Mon équipe » pour Windows (constitution §2, §5). Fichier UTF-8 avec BOM, compatible PowerShell 5.1.
+﻿# Installateur de JURIX pour Windows (constitution §2, §5). Fichier UTF-8 avec BOM, compatible PowerShell 5.1.
 # Sans droits d'administrateur, sans aucune question, idempotent (peut être relancé autant de fois que nécessaire).
-# Lancement : la commande unique (installer-mon-equipe.ps1, qui clone puis appelle ce script), ou double-clic sur
+# Lancement : la commande unique (installer-jurix.ps1, qui clone puis appelle ce script), ou double-clic sur
 # .equipe\installation\installer.bat. Ce qui est déjà installé (Python, Git, Claude) est gardé tel quel : « déjà installé ».
 # Étapes : Python (utilisateur) · bibliothèques · Git (utilisateur ou portable) · Claude Code · Node (optionnel)
 #          · confiance du dossier · mode sans demande · réglages adaptés au poste · base cerebro · raccourci bureau
@@ -105,7 +105,7 @@ function Trouver-Python {
 try { Get-ChildItem -LiteralPath $Racine -Recurse -File -Force -ErrorAction SilentlyContinue | Unblock-File -ErrorAction SilentlyContinue } catch {}
 
 Dire ''
-Dire 'Installation de votre équipe : cela prend quelques minutes. Vous pouvez laisser cette fenêtre ouverte.'
+Dire 'Installation de JURIX : cela prend quelques minutes. Vous pouvez laisser cette fenêtre ouverte.'
 Noter "racine: $Racine"
 
 # ---------------------------------------------------------------- 1. Python (mode utilisateur)
@@ -270,12 +270,14 @@ $parts = @($u.Split(';') | Where-Object { $_ -ne '' -and $_ -ne $binEquipe })
 [Environment]::SetEnvironmentVariable('Path', ((@($binEquipe) + $parts) -join ';'), 'User')
 $env:Path = $binEquipe + ';' + (($env:Path.Split(';') | Where-Object { $_ -ne $binEquipe }) -join ';')
 if (-not $Claude) { Bilan "Claude : non installé (connexion Internet ?) ; nouvel essai en relançant la même commande." }
-elseif (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Commande « claude » : ouvre votre équipe depuis n''importe quelle fenêtre.' }
+elseif (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Commande « jurix » (ou « claude ») : ouvre JURIX depuis n''importe quelle fenêtre.' }
 # un Claude installé pour tout l'ordinateur (PATH système, lu AVANT le PATH utilisateur) passerait devant la commande de
 # l'équipe : dans PowerShell, une fonction « claude » du profil de l'utilisateur passe devant tout programme du PATH
 try {
   $cible = Join-Path $binEquipe 'claude.cmd'
-  $bloc = "# >>> mon-equipe >>>`r`n# « claude » ouvre l'équipe (ajouté par l'installateur de Mon équipe)`r`nfunction claude { & '" + ($cible -replace "'", "''") + "' @args }`r`n# <<< mon-equipe <<<"
+  $c = ($cible -replace "'", "''")
+  $bloc = "# >>> mon-equipe >>>`r`n# « jurix » et « claude » ouvrent JURIX (ajouté par l'installateur de JURIX)`r`nfunction claude { & '" + $c + "' @args }`r`n" +
+          "function jurix {`r`n  if (`$args.Count -eq 0) {`r`n    Write-Host ''`r`n    Write-Host '   ░▒▓█  J U R I X  █▓▒░' -ForegroundColor Cyan`r`n    Write-Host '   cabinet augmenté · droit suisse · en ligne' -ForegroundColor DarkCyan`r`n    Write-Host ''`r`n  }`r`n  & '" + $c + "' @args`r`n}`r`n# <<< mon-equipe <<<"
   $docs = [Environment]::GetFolderPath('MyDocuments')
   foreach ($prof in @((Join-Path $docs 'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'), (Join-Path $docs 'PowerShell\Microsoft.PowerShell_profile.ps1'))) {
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $prof) | Out-Null
@@ -402,19 +404,20 @@ if ($Py) {
   if ($r -match '"import"') { Bilan 'Mémoire de l''équipe : reconstituée.' } else { Bilan 'Mémoire de l''équipe : en place.' }
 }
 
-# ---------------------------------------------------------------- 8. raccourci « Mon équipe » sur le bureau
+# ---------------------------------------------------------------- 8. raccourci « JURIX » sur le bureau
 try {
   $bureau = [Environment]::GetFolderPath('Desktop')
-  $lnk = Join-Path $bureau ('Mon ' + [char]0x00E9 + 'quipe.lnk')   # « Mon équipe » sans dépendre de l'encodage du fichier
+  $lnk = Join-Path $bureau 'JURIX.lnk'
+  Remove-Item -LiteralPath (Join-Path $bureau ('Mon ' + [char]0x00E9 + 'quipe.lnk')) -ErrorAction SilentlyContinue   # ancien nom
   $ws = New-Object -ComObject WScript.Shell
   $sc = $ws.CreateShortcut($lnk)
   $sc.TargetPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
   $sc.Arguments = '-NoProfile -ExecutionPolicy Bypass -File "' + (Join-Path $Racine '.equipe\scripts\lanceurs\Mon-equipe.ps1') + '"'
   $sc.WorkingDirectory = $Racine
-  $sc.Description = 'Ouvrir mon équipe'
+  $sc.Description = 'Ouvrir JURIX'
   $sc.IconLocation = (Join-Path $env:SystemRoot 'System32\imageres.dll') + ',117'
   $sc.Save()
-  Bilan 'Raccourci « Mon équipe » : sur le bureau.'
+  Bilan 'Raccourci « JURIX » : sur le bureau.'
 } catch { Noter ("raccourci en échec : " + $_); Bilan 'Raccourci : non créé (ouvrir le fichier Mon-equipe.bat dans le dossier .equipe\scripts\lanceurs).' }
 
 # ---------------------------------------------------------------- 9. entretien automatique (Planificateur de tâches, utilisateur)
@@ -439,7 +442,7 @@ if ($Py) {
     return @"
 <?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.3" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
-  <RegistrationInfo><Description>Entretien automatique de Mon equipe (rattrapage, sauvegarde, classement).</Description></RegistrationInfo>
+  <RegistrationInfo><Description>Entretien automatique de JURIX (rattrapage, sauvegarde, classement).</Description></RegistrationInfo>
   <Triggers>
 $trig
   </Triggers>
@@ -465,7 +468,8 @@ $trig
   $ok = $false
   foreach ($t in @($declencheurs, $minimal)) {
     try {
-      Register-ScheduledTask -TaskName 'MonEquipe-Entretien' -Xml (Xml-Tache $t) -Force -ErrorAction Stop | Out-Null
+      Register-ScheduledTask -TaskName 'JURIX-Entretien' -Xml (Xml-Tache $t) -Force -ErrorAction Stop | Out-Null
+      Unregister-ScheduledTask -TaskName 'MonEquipe-Entretien' -Confirm:$false -ErrorAction SilentlyContinue   # ancien nom
       $ok = $true; break
     } catch { Noter ("tâche planifiée refusée : " + $_) }
   }
@@ -512,7 +516,7 @@ Dire ''
 Dire '==================== Installation terminée ===================='
 foreach ($l in $Rapport) { Dire ('- ' + $l) }
 Dire ''
-Dire 'Pour commencer : double-cliquez sur « Mon équipe » sur le bureau.'
+Dire 'Pour commencer : double-cliquez sur « JURIX » sur le bureau, ou tapez jurix.'
 Dire 'Au tout premier lancement, Claude peut demander de se connecter : connectez-vous avec votre compte.'
 Dire '================================================================'
 try { [IO.File]::WriteAllLines((Join-Path $Run 'rapport-installation.txt'), $Rapport, (New-Object System.Text.UTF8Encoding $true)) } catch {}

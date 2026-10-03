@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installateur « Mon équipe » pour macOS et Linux (constitution §2, §5). Sans droits administrateur, sans question, idempotent.
+# Installateur de JURIX pour macOS et Linux (constitution §2, §5). Sans droits administrateur, sans question, idempotent.
 # Étapes : Python (système, sinon via uv en mode utilisateur) · bibliothèques · Git (constat) · Claude Code (installateur officiel)
 #          · confiance du dossier · mode sans demande · réglages adaptés au poste · base cerebro · raccourci bureau
 #          · entretien planifié (launchd sous macOS, cron sous Linux) · zone machine cachée · validation · rapport simple.
@@ -19,7 +19,7 @@ export PATH="$HOME/.local/bin:$HOME/.local/node/bin:$PATH"
 TMPD="$(mktemp -d 2>/dev/null || echo /tmp)"
 
 dire ""
-dire "Installation de votre équipe : cela prend quelques minutes. Vous pouvez laisser cette fenêtre ouverte."
+dire "Installation de JURIX : cela prend quelques minutes. Vous pouvez laisser cette fenêtre ouverte."
 noter "racine: $RACINE ; système: $SYS"
 
 # ------------------------------------------------------------- 1. Python ≥ 3.10
@@ -177,7 +177,7 @@ open(rc, "w", encoding="utf-8").write(t.rstrip() + ("\n\n" if t.strip() else "")
 PYEOF
 done
 export PATH="$RACINE/.equipe/bin:$HOME/.local/bin:$HOME/.local/node/bin:$PATH"
-bilan "Commande « claude » : ouvre votre équipe depuis n'importe quel Terminal."
+bilan "Commande « jurix » (ou « claude ») : ouvre JURIX depuis n'importe quel Terminal."
 
 # ------------------------------------------------------------- 6. réglages de Claude
 VALIDER="$RACINE/.equipe/scripts/valider_config.py"
@@ -210,30 +210,32 @@ if [ -n "$PY" ]; then
   esac
 fi
 
-# ------------------------------------------------------------- 8. raccourci « Mon équipe » sur le bureau
+# ------------------------------------------------------------- 8. raccourci « JURIX » sur le bureau
 BUREAU_U="$HOME/Desktop"
 [ -d "$HOME/Bureau" ] && [ ! -d "$HOME/Desktop" ] && BUREAU_U="$HOME/Bureau"
 command -v xdg-user-dir >/dev/null 2>&1 && [ "$SYS" != "Darwin" ] && D="$(xdg-user-dir DESKTOP 2>/dev/null)" && [ -n "$D" ] && BUREAU_U="$D"
 mkdir -p "$BUREAU_U"
 echo "$RACINE" > "$HOME/.mon-equipe-racine"
 if [ "$SYS" = "Darwin" ]; then
-  cp "$RACINE/.equipe/scripts/lanceurs/Mon-equipe.command" "$BUREAU_U/Mon équipe.command" && chmod +x "$BUREAU_U/Mon équipe.command"
+  rm -f "$BUREAU_U/Mon équipe.command"  # ancien nom
+  cp "$RACINE/.equipe/scripts/lanceurs/Mon-equipe.command" "$BUREAU_U/JURIX.command" && chmod +x "$BUREAU_U/JURIX.command"
 else
-  cat > "$BUREAU_U/mon-equipe.desktop" <<EOF
+  rm -f "$BUREAU_U/mon-equipe.desktop" "$HOME/.local/share/applications/mon-equipe.desktop"  # ancien nom
+  cat > "$BUREAU_U/jurix.desktop" <<EOF
 [Desktop Entry]
 Type=Application
-Name=Mon équipe
-Comment=Ouvrir mon équipe
+Name=JURIX
+Comment=Ouvrir JURIX
 Exec=bash "$RACINE/.equipe/scripts/lanceurs/mon-equipe.sh"
 Path=$RACINE
 Terminal=true
 Icon=utilities-terminal
 EOF
-  chmod +x "$BUREAU_U/mon-equipe.desktop"
-  mkdir -p "$HOME/.local/share/applications" && cp "$BUREAU_U/mon-equipe.desktop" "$HOME/.local/share/applications/" 2>/dev/null
-  command -v gio >/dev/null 2>&1 && gio set "$BUREAU_U/mon-equipe.desktop" metadata::trusted true 2>/dev/null
+  chmod +x "$BUREAU_U/jurix.desktop"
+  mkdir -p "$HOME/.local/share/applications" && cp "$BUREAU_U/jurix.desktop" "$HOME/.local/share/applications/" 2>/dev/null
+  command -v gio >/dev/null 2>&1 && gio set "$BUREAU_U/jurix.desktop" metadata::trusted true 2>/dev/null
 fi
-bilan "Raccourci « Mon équipe » : sur le bureau."
+bilan "Raccourci « JURIX » : sur le bureau."
 
 # ------------------------------------------------------------- 9. entretien automatique
 CYCLE="$RACINE/.equipe/scripts/entretien/cycle.py"
@@ -291,7 +293,7 @@ dire ""
 dire "==================== Installation terminée ===================="
 for l in "${RAPPORT[@]}"; do dire "- $l"; done
 dire ""
-dire "Pour commencer : double-cliquez sur « Mon équipe » sur le bureau."
+dire "Pour commencer : double-cliquez sur « JURIX » sur le bureau, ou tapez jurix dans un Terminal."
 dire "Au tout premier lancement, Claude peut demander de se connecter : connectez-vous avec votre compte."
 dire "================================================================"
 printf '%s\n' "${RAPPORT[@]}" > "$RUN/rapport-installation.txt"

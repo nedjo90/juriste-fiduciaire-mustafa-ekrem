@@ -226,7 +226,7 @@ Vérifie chacun dans la version installée, teste-le, note-le dans `DOSSIER-TECH
 
 - **Mode non interactif** : `claude -p` pour les rôles de fond, outils limités, mode automatique, `CEREBRO_BACKGROUND=1`.
 
-- **Lanceur** : raccourci « Mon équipe » sur le bureau, qui ouvre Claude Code dans le dossier avec l'option de mode automatique et démarre le processus d'entretien en arrière-plan.
+- **Lanceur** : raccourci « JURIX » sur le bureau (nom de l’équipe), qui ouvre Claude Code dans le dossier avec l'option de mode automatique et démarre le processus d'entretien en arrière-plan.
 
 - **Première ouverture** : confiance du dossier, connexion, confirmation du mode automatique : réglées par toi ou par le script d'installation ; au plus « appuyez sur Entrée ».
 
@@ -371,7 +371,7 @@ Tableau de bord des principes, tenu à chaque cycle d'entretien : par rôle et p
 ## 8. Arborescence cible
 
 ```
-<racine>/                      Mustafa ne voit que « Bureau » et le raccourci « Mon équipe »
+<racine>/                      Mustafa ne voit que « Bureau » et le raccourci « JURIX »
   Bureau/                      zone humaine
     À déposer/                 il y glisse tout ; vidé par l'ingesteur après traitement
     Déposés/<date>/            ce qui a été traité, noms d'origine conservés

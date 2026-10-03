@@ -1,12 +1,12 @@
-# Installation complete de "Mon equipe" en UNE commande, sur un Windows sans rien (ni Git, ni Python, ni Claude)
+# Installation complete de JURIX en UNE commande, sur un Windows sans rien (ni Git, ni Python, ni Claude)
 # ou deja equipe : ce qui est present (Git, Python, Claude et son compte) est garde tel quel ("deja installe").
 # Ordre : 1. Git (portable officiel, mode utilisateur, sans droits administrateur)  2. clonage du depot  3. installateur du projet.
 # Aucune question. Relancable sans risque (met a jour au lieu de recloner).
 #
 # Commande a coller dans PowerShell (depot public) :
-#   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-mon-equipe.ps1 | iex
+#   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-jurix.ps1 | iex
 #
-# Reglages facultatifs (variables d'environnement) : MON_EQUIPE_JETON, MON_EQUIPE_DOSSIER (defaut : Documents\mon-equipe),
+# Reglages facultatifs (variables d'environnement) : MON_EQUIPE_JETON, MON_EQUIPE_DOSSIER (defaut : Documents\jurix),
 # MON_EQUIPE_DEPOT, MON_EQUIPE_BRANCHE. Pas de bloc param ni de exit : le script doit pouvoir etre execute par "iex".
 
 & {
@@ -17,7 +17,7 @@ try { [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding $false } c
 
 $Depot   = if ($env:MON_EQUIPE_DEPOT)   { $env:MON_EQUIPE_DEPOT }   else { 'https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git' }
 $Branche = if ($env:MON_EQUIPE_BRANCHE) { $env:MON_EQUIPE_BRANCHE } else { 'ccr-e8f5838b-808ukj' }
-$Dossier = if ($env:MON_EQUIPE_DOSSIER) { $env:MON_EQUIPE_DOSSIER } else { Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'mon-equipe' }
+$Dossier = if ($env:MON_EQUIPE_DOSSIER) { $env:MON_EQUIPE_DOSSIER } else { Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'jurix' }
 $Jeton   = $env:MON_EQUIPE_JETON
 $Tmp = Join-Path $env:TEMP 'mon-equipe-amorcage'
 New-Item -ItemType Directory -Force -Path $Tmp | Out-Null
@@ -55,7 +55,7 @@ function Trouver-Git {
 }
 
 Dire ''
-Dire 'Installation de votre equipe. Cela prend de 10 a 20 minutes ; laissez cette fenetre ouverte.'
+Dire 'Installation de JURIX. Cela prend de 10 a 20 minutes ; laissez cette fenetre ouverte.'
 
 # ------------------------------------------------------------------ 1. Git (portable officiel de git-for-windows, mode utilisateur)
 $Git = Trouver-Git
@@ -96,7 +96,7 @@ if (Test-Path -LiteralPath $bash) { [Environment]::SetEnvironmentVariable('CLAUD
 if ($GitDeja) { Dire 'Etape 1/3 : Git est deja installe.' } else { Dire 'Etape 1/3 : Git est installe.' }
 
 # ------------------------------------------------------------------ 2. clonage (ou mise a jour) du depot
-Dire 'Etape 2/3 : recuperation du dossier de votre equipe...'
+Dire 'Etape 2/3 : recuperation de JURIX...'
 $auth = @()
 if ($Jeton) {
   $b64 = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes('x-access-token:' + $Jeton))
@@ -138,7 +138,7 @@ if ($Jeton) {
 Dire 'Etape 2/3 : le dossier est pret.'
 
 # ------------------------------------------------------------------ 3. installateur du projet (Python, outils, Claude, reglages, raccourci)
-Dire 'Etape 3/3 : installation des outils de votre equipe...'
+Dire 'Etape 3/3 : installation des outils de JURIX...'
 $inst = Join-Path $Dossier '.equipe\installation\installer.ps1'
 $code = Lancer 'powershell.exe' @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + $inst + '"')) 3600 $null -Visible
 Noter ("installateur : code " + $code)
@@ -152,8 +152,17 @@ $cible = Join-Path $Dossier '.equipe\bin\claude.cmd'
 if (Test-Path -LiteralPath $cible) {
   Set-Item -Path 'function:global:claude' -Value ([ScriptBlock]::Create("& '" + ($cible -replace "'", "''") + "' @args"))
 }
+if (Test-Path -LiteralPath $cible) {
+  # « jurix » : banniere puis l'equipe (caracteres speciaux par leur code : ce fichier reste en ASCII pour « irm | iex »)
+  $b = [string][char]0x2591 + [char]0x2592 + [char]0x2593 + [char]0x2588
+  $f = [string][char]0x2588 + [char]0x2593 + [char]0x2592 + [char]0x2591
+  $l1 = '   ' + $b + '  J U R I X  ' + $f
+  $l2 = '   cabinet augment' + [char]0x00E9 + ' ' + [char]0x00B7 + ' droit suisse ' + [char]0x00B7 + ' en ligne'
+  $corps = "if (`$args.Count -eq 0) { Write-Host ''; Write-Host '" + $l1 + "' -ForegroundColor Cyan; Write-Host '" + $l2 + "' -ForegroundColor DarkCyan; Write-Host '' }; & '" + ($cible -replace "'", "''") + "' @args"
+  Set-Item -Path 'function:global:jurix' -Value ([ScriptBlock]::Create($corps))
+}
 if (Test-Path -LiteralPath $Dossier) { Set-Location -LiteralPath $Dossier }
 Dire ''
-Dire "C'est termine. Tapez maintenant :  claude"
-Dire "(Plus tard : double-cliquez sur 'Mon equipe' sur le bureau, ou tapez claude dans n'importe quelle fenetre PowerShell.)"
+Dire "C'est termine. Tapez maintenant :  jurix"
+Dire "(Plus tard : double-cliquez sur JURIX sur le bureau, ou tapez jurix dans n'importe quelle fenetre PowerShell.)"
 }

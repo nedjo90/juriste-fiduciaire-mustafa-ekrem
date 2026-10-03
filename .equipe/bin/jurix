@@ -1,0 +1,7 @@
+#!/bin/sh
+# « jurix » tapé dans un Terminal : bannière, puis JURIX (même chose que « claude »)
+ICI="$(cd "$(dirname "$0")" && pwd)"
+if [ "$#" -eq 0 ] && [ -t 1 ]; then
+  printf '\n   \033[36m░▒▓█  J U R I X  █▓▒░\033[0m\n   \033[2mcabinet augmenté · droit suisse · en ligne\033[0m\n\n'
+fi
+exec "$ICI/claude" "$@"

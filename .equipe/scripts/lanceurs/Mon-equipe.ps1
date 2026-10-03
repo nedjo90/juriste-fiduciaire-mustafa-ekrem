@@ -1,4 +1,4 @@
-﻿# Lanceur « Mon équipe » (Windows, PowerShell 5.1+). Fichier UTF-8 avec BOM.
+﻿# Lanceur de JURIX (raccourci du bureau ; Windows, PowerShell 5.1+). Fichier UTF-8 avec BOM.
 # 1. se place dans le dossier du projet, ajoute .equipe\bin au PATH ;
 # 2. contrôle rapide de la configuration (restaure la dernière configuration valide si elle est cassée) ;
 # 3. vérifie que Claude Code démarre (claude --version), sinon restaure et réessaie ;
@@ -59,6 +59,10 @@ if ($Py -and -not (Test-Path -LiteralPath (Join-Path $Racine '.equipe\run\sans-f
 }
 
 $t0 = Get-Date
+Write-Host ''
+Write-Host '   ░▒▓█  J U R I X  █▓▒░' -ForegroundColor Cyan
+Write-Host '   cabinet augmenté · droit suisse · en ligne' -ForegroundColor DarkCyan
+Write-Host ''
 # pas encore connecté : la page de connexion s'ouvre dans le navigateur (aucun /login à taper)
 try { if ((& $Claude auth status --json 2>$null | Out-String) -notmatch '"loggedIn":\s*true') { & $Claude auth login --claudeai } } catch {}
 if ($args.Count -eq 0) { & $Claude --dangerously-skip-permissions 'Bonjour' } else { & $Claude --dangerously-skip-permissions @args }
