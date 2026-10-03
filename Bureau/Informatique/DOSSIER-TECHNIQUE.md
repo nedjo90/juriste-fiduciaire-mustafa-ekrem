@@ -58,6 +58,8 @@ Utilisés : `SessionStart`, `UserPromptSubmit`, `Stop`, `PreCompact`, `SessionEn
 - 2026-10-03 · construction · une seule branche git autorisée dans l'environnement de construction → les chantiers sont des commits et des tags sur `ccr-e8f5838b-808ukj` au lieu d'une branche chacun.
 - 2026-10-03 · construction · `bger.ch` ne répond pas depuis la machine distante → repli sur les autres sources officielles, nouvel essai depuis le poste.
 - 2026-10-03 · construction · OpenAlex renvoie 429 (limite d'accès automatisés) → repli CrossRef / Semantic Scholar, puis navigateur.
+- 2026-10-03 · configuration · configuration refusée par la validation : session de contrôle : délai dépassé → aucune copie valide disponible
+- 2026-10-03 · configuration · configuration refusée par la validation : hooks non exécutés pendant la session de contrôle : ['SessionStart', 'UserPromptSubmit'] → aucune copie valide disponible
 
 ## 4. Coût de la construction
 (tokens par chantier et par palier, complété à chaque étape)

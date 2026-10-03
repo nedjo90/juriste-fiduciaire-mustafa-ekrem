@@ -6,6 +6,7 @@ import sys, os, json, argparse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cb import core
 from cb.core import out
+core.utf8_io()
 
 def J(s):
     try:
@@ -19,6 +20,7 @@ def build():
     a = s.add_parser("init"); a.add_argument("--import-provisoire", action="store_true")
     a = s.add_parser("find"); a.add_argument("q", nargs="+"); a.add_argument("--limit", type=int, default=10); a.add_argument("--deep", action="store_true"); a.add_argument("--asof"); a.add_argument("--type", action="append")
     a = s.add_parser("summary"); a.add_argument("id")
+    a = s.add_parser("asof", help="état d'un objet à une date (bitemporalité)"); a.add_argument("id"); a.add_argument("date")
     a = s.add_parser("open"); a.add_argument("id"); a.add_argument("--section")
     a = s.add_parser("trace"); a.add_argument("id"); a.add_argument("-n", type=int, default=30)
     a = s.add_parser("regen"); a.add_argument("ids", nargs="*"); a.add_argument("--tout", action="store_true"); a.add_argument("--sales", action="store_true")
@@ -82,6 +84,8 @@ def main(argv=None):
         out(r)
     elif c == "find":
         out(R.find(" ".join(args.q), args.limit, args.deep, args.asof, args.type))
+    elif c == "asof":
+        o = O.etat_au(args.id, args.date); out({k: o[k] for k in ("id", "type", "nom", "statut", "client", "resume", "etat_au")} if o else {"erreur": "inconnu"})
     elif c == "summary":
         out(R.summary(args.id))
     elif c == "open":
@@ -99,29 +103,45 @@ def main(argv=None):
             ids = [r[0] for r in con.execute("SELECT id FROM objets")]
         elif args.sales or not ids:
             ids = [r[0] for r in con.execute("SELECT id FROM objets WHERE a_regenerer=1")]
-        lignes = [O.regen(i) for i in ids]
+        lignes, erreurs = [], []
+        for i in ids:
+            try:
+                lignes.append(O.regen(i))
+            except Exception as e:  # un objet en défaut n'arrête jamais la régénération des autres
+                erreurs.append(f"{i}: {repr(e)[:120]}")
+                con.rollback()
         S.niveau0()
-        out({"regeneres": len(lignes), "lignes": [l for l in lignes if l][:20]})
+        out({"regeneres": len(lignes), "lignes": [l for l in lignes if l][:20], "erreurs": erreurs[:10]})
     elif c == "new":
-        body = open(args.corps_fichier, encoding="utf-8").read() if args.corps_fichier else None
-        oid = O.create(args.type, args.nom, body=body, client=args.client, resume=args.resume, prochaine_action=args.prochaine_action, prochaine_date=args.date,
+        body = core.lire(args.corps_fichier) if args.corps_fichier else None
+        chemin = None
+        if args.type in O.EXTERNES and args.source and (core.ROOT / args.source).is_file():
+            chemin = args.source.replace("\\", "/")
+        oid = O.create(args.type, args.nom, body=body, client=args.client, chemin=chemin, resume=args.resume, prochaine_action=args.prochaine_action, prochaine_date=args.date,
                        liens=args.lien, alias=args.alias, source=args.source, statut=args.statut, canton=args.canton, domaine=args.domaine, risque=args.risque,
                        chiffre_cle=args.chiffre, mots_cles=args.mots_cles)
         out({"id": oid, "ligne": S.ligne(O.get(oid)), "chemin": O.get(oid)["chemin"]})
     elif c == "update":
+        mal = [x for x in args.champs if "=" not in x]
+        if mal:
+            out({"erreur": f"attendu clé=valeur : {', '.join(mal)}"}); return
+        if not O.get(args.id):
+            out({"erreur": f"objet inconnu : {args.id}"}); return
         kw = dict(x.split("=", 1) for x in args.champs)
         body = open(args.corps_fichier, encoding="utf-8").read() if args.corps_fichier else None
         out({"ligne": O.update(args.id, body=body, **kw)})
     elif c == "archive":
         out({"ligne": O.archive(args.id, args.vers)})
     elif c == "rename":
-        out({"ligne": O.rename(args.id, args.nom)})
+        out({"ligne": O.rename(args.id, args.nom)} if O.get(args.id) else {"erreur": f"objet inconnu : {args.id}"})
     elif c == "link":
         O.link(args.src, args.dst, args.type); core.db().commit(); O.regen(args.src); O.regen(args.dst); out({"ok": True})
     elif c == "links":
         o, i = O.links_of(O.resolve(args.id)); out({"sortants": o, "entrants": i})
     elif c == "alias":
-        O.add_alias(args.id, args.alias, args.langue); core.db().commit(); O.regen(args.id); out({"ok": True})
+        if not O.get(args.id):
+            out({"erreur": f"objet inconnu : {args.id}"}); return
+        O.add_alias(O.resolve(args.id), args.alias, args.langue); core.db().commit(); O.regen(args.id); out({"ok": True})
     elif c == "client":
         if args.action == "show": out(M.client_show(args.arg))
         elif args.action == "vue": out({"vue": M.vue_client(args.arg)})
@@ -199,7 +219,8 @@ def main(argv=None):
     elif c == "deliverable":
         out({"id": F.deliverable_register(args.chemin, args.client, args.dossier, args.type, J(args.portes), args.reserves)})
     elif c == "config":
-        if args.action == "get": out({"cle": args.cle, "valeur": K.get(args.cle), "detail": K.get_full(args.cle)})
+        if args.action in ("get", "set") and not args.cle: out({"erreur": "clé manquante (ex. poste.messagerie)"})
+        elif args.action == "get": out({"cle": args.cle, "valeur": K.get(args.cle), "detail": K.get_full(args.cle)})
         elif args.action == "set": out(K.set_(args.cle, args.valeur, args.source))
         else: out(K.gaps())
     elif c == "brief":
@@ -242,6 +263,10 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
     except Exception as e:  # jamais de trace brute : une erreur est un incident journalisé
-        core.journal("erreurs-cli", argv=sys.argv[1:], erreur=repr(e))
-        out({"erreur": repr(e)})
+        core.journal("erreurs-cli", argv=[a[:200] for a in sys.argv[1:]], erreur=repr(e)[:300])
+        try:
+            core.db().rollback()
+        except Exception:
+            pass
+        out({"erreur": repr(e)[:300]})
         sys.exit(1)

@@ -1,0 +1,44 @@
+# Sources officielles cantonales (§10, §14). Cantons par défaut : VD et GE ([défaut], à remplacer par
+# mustafa.cantons_suivis dès que connu). URL vérifiées par requête HTTP le 2026-10-03 (code 200) ; rien n'est ingéré tant
+# qu'un convertisseur n'existe pas : en attendant, toute affirmation de droit cantonal porte ⚠ « pratique cantonale à vérifier »
+# sauf lecture directe du texte officiel à l'URL ci-dessous.
+verifie_le: '2026-10-03'
+cantons:
+  VD:
+    recueil: Recueil systématique de la législation vaudoise (RSV), Base législative vaudoise (BLV)
+    url: https://prestations.vd.ch/pub/blv-publication/
+    langue: fr
+    acces_automatise: partiel
+    detail: >-
+      Application Angular. API JSON publique non documentée, sans identifiants :
+      api/recueil-systematique (arborescence RSV, 200, JSON) ; api/actes/{CATEGORIE}?id=&cote= (versions d'un acte) puis
+      api/actes/{htmlId}/html (texte) et api/actes/{id}/pdf?type= ; api/actes/rechercher et api/actes/recemment-modifies
+      répondent 500 sans paramètres complets. Ingestion possible après rétro-ingénierie des paramètres : non faite.
+    ingere: false
+    textes_prioritaires:  # cotes et titres lus dans api/recueil-systematique?code=6 le 2026-10-03
+      - {cote: '642.11', titre: "LOI du 04.07.2000 sur les impôts directs cantonaux (LI; BLV 642.11)", statut: à ingérer}
+      - {cote: '642.00.011024.2', titre: "LOI du 01.10.2024 sur l'impôt 2026 (BLV 642.00.011024.2)", statut: à ingérer}
+      - {cote: '650.11', titre: "LOI du 05.12.1956 sur les impôts communaux (LICom; BLV 650.11)", statut: à ingérer}
+  GE:
+    recueil: Recueil systématique genevois (rs/GE), législation genevoise (SIL)
+    url: https://silgeneve.ch/legis/
+    portail: https://www.ge.ch/legislation-genevoise
+    langue: fr
+    acces_automatise: oui
+    detail: >-
+      Chaque texte est une page HTML statique (export Word) : https://silgeneve.ch/legis/program/books/rsg/htm/rsg_<lettre><n>_<nn>.htm
+      — vérifié : rsg_d3_08.htm = « rsGE D 3 08 : Loi sur l'imposition des personnes physiques (LIPP) » (200, 274 ko).
+      Convertisseur HTML Word → « ## Art. N » à écrire (dette) ; puis cerebro law ingest --juridiction GE.
+    ingere: false
+    textes_prioritaires:
+      - {cote: 'D 3 08', titre: "Loi sur l'imposition des personnes physiques (LIPP)", url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_08.htm', statut: URL vérifiée}
+      - {cote: 'D 3 15', titre: "Loi sur l'imposition des personnes morales (LIPM)", url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_15.htm', statut: URL vérifiée}
+      - {cote: 'D 3 17', titre: "Loi de procédure fiscale (LPFisc)", url: 'https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_17.htm', statut: URL vérifiée}
+lexfind:
+  url: https://www.lexfind.ch/fe/fr
+  api: https://www.lexfind.ch/api/fe/fr/entities
+  acces_automatise: oui
+  detail: >-
+    Répertoire intercantonal (droit fédéral et 26 cantons). /api/fe/fr/entities répond en JSON (200) ; l'application utilise
+    api/frontend/v1 (systematics, by-version, recent-changes, compare). Utilisable pour découvrir les textes et leurs versions
+    cantonales, puis lire le texte à la source officielle du canton. Non intégré dans cette passe (dette).

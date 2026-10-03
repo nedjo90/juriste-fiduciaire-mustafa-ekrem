@@ -26,6 +26,9 @@ usage: toute position importante ; première voix du panel adverse ; préparatio
 - décider : modifier la position, ajouter une réserve, réunir une preuve, abaisser le niveau de confort, changer de stratégie
 - consigner dans le livrable (section « arguments contraires et réponses ») et dans la table des autorités (lignes « contre »)
 
+## Étapes
+1 nommer l'adversaire exact et son objectif · 2 rédiger le temps 1 séparément, sources comprises · 3 relire notre position contre chaque argument (temps 2) · 4 classer fatal / sérieux / mineur · 5 modifier position, preuve ou niveau de confort et consigner
+
 ## Contrôle
 [ ] temps 1 rédigé séparément et complet · [ ] sources adverses réelles (bibliothèque) · [ ] chaque objection classée · [ ] conséquence tirée (position, preuve, confort) · [ ] aucune objection fatale laissée sans réponse ni réserve
 

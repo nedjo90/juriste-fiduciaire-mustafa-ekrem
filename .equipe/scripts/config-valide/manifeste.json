@@ -1,0 +1,11 @@
+{
+  "le": "2026-10-03T17:03:26",
+  "fichiers": {
+    ".claude/settings.json": "543c807f82f04292",
+    ".mcp.json": "cc1fcb36e9f84e76",
+    "CLAUDE.md": "aff4fdfe2dd7dd27",
+    ".claude/hooks/hook.py": "7b418aa12602f0df",
+    ".claude/hooks/vocabulaire-technique.txt": "a22b2e8417204282",
+    ".equipe/scripts/entretien/fond.py": "2ee791cfe4b59e14"
+  }
+}

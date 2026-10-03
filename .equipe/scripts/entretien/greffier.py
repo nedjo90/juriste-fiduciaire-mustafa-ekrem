@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Greffier groupé (§9.4, §11) : classe les captures non traitées de .equipe/inbox/ par UN appel claude -p (modèle léger).
 Verrou (un seul greffier à la fois) ; état des lignes traitées dans .equipe/inbox/_etat-greffier.json ; mesure des tokens.
-Usage : greffier.py [--max N] [--simuler] [--modele haiku]   (--simuler : prépare le lot sans appeler le modèle)
+Usage : greffier.py [--max N] [--simuler] [--modele haiku] [--marquer-tout]   (--simuler : prépare le lot sans appeler le modèle)
 Rien à classer → aucun appel (loi 3). Échec → incident, captures laissées non classées (reprises au cycle suivant)."""
 import sys, os, json, time, argparse, subprocess
 from pathlib import Path
@@ -101,6 +101,7 @@ def lancer(maxi=40, simuler=False, modele=None):
         pass
     if ok:
         marquer(lot, n_lot)
+        core.set_etat("greffier_dernier_ok", core.stamp())
         journal("greffier", statut="fin", ok=True, captures=len(lignes), ms=ms, tokens=tokens, cache_lu=u.get("cache_read_input_tokens"),
                 cout_usd=res.get("total_cost_usd"), refus=len(res.get("permission_denials") or []), rapport=core.cut(res.get("result"), 600))
     else:
@@ -115,7 +116,14 @@ def main():
     ap.add_argument("--max", type=int, default=40)
     ap.add_argument("--simuler", action="store_true")
     ap.add_argument("--modele")
+    ap.add_argument("--marquer-tout", action="store_true", help="marque toutes les captures actuelles comme traitées, sans les classer (ex. échanges de construction)")
     a = ap.parse_args()
+    if a.marquer_tout:
+        lot = non_classees(10_000_000)
+        marquer(lot, len(lot))
+        journal("greffier", statut="captures marquées sans classement", n=len(lot))
+        print(json.dumps({"marquees": len(lot)}))
+        return
     v = fond.Verrou("greffier", peremption=1800)
     if not v.prendre():
         journal("greffier", statut="déjà en cours")

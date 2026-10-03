@@ -8,10 +8,10 @@ risque_principal:
 chiffre_clé: 
 résumé: Toute conclusion porte un niveau de confort : will, should, more likely than not, reasonable basis — jamais surélevé, abaissé par le droit étranger, la pratique non vérifiée ou les faits non prouvés ; équivalents FR/DE/IT.
 mots_clés: méthode cabinet
-liens: 
+liens: CAB-004
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Niveaux de confort (machine) — échelle de la maison : cabinet « niveaux-confort » (CAB)
+# Niveaux de confort (machine) — échelle de la maison : CAB-004 (niveaux-confort.md)
 usage: chaque conclusion d'un mémo, avis, réponse de droit ; résumé exécutif ; mails de conseil.
 
 ## Échelle (convention de la maison, inspirée des opinions fiscales anglo-saxonnes ; pourcentages indicatifs internes, jamais écrits au client)
@@ -29,6 +29,12 @@ usage: chaque conclusion d'un mémo, avis, réponse de droit ; résumé exécuti
 4 un niveau par conclusion, placé dans la phrase même (« La reprise devrait être annulée »), rappelé au résumé exécutif
 5 interdits sans W : « certainement », « sans aucun doute », „zweifellos“, « indubbiamente »
 6 expliquer en une phrase ce qui ferait monter ou descendre le niveau
+
+## Étapes
+1 pour chaque conclusion, lister ce qui la soutient (textes lus, jurisprudence, pratique, faits prouvés) et ce qui la contredit
+2 choisir le niveau selon les exigences de CAB-004 ; appliquer les abaissements obligatoires
+3 écrire la formule du niveau dans la phrase de conclusion et au résumé exécutif
+4 ajouter une phrase : ce qui ferait monter ou descendre le niveau
 
 ## Contrôle
 [ ] chaque conclusion a son niveau · [ ] cohérence résumé ↔ corps · [ ] abaissements appliqués · [ ] aucun adverbe de certitude sans W

@@ -36,13 +36,19 @@ def _load(f):
     return (yaml.safe_load(p.read_text(encoding="utf-8")) or {}) if p.exists() else {}
 
 def _save(f, data):
+    """écriture atomique : fichier temporaire puis remplacement (jamais de YAML à moitié écrit)"""
+    import os
     p = CONF / f"{f}.yaml"
-    head = p.read_text(encoding="utf-8").splitlines()[0] if p.exists() else f"# {f}.yaml"
-    with open(p, "w", encoding="utf-8") as fh:
-        fh.write(head + "\n")
+    head = [l for l in p.read_text(encoding="utf-8").splitlines() if l.startswith("#")] if p.exists() else [f"# {f}.yaml"]
+    tmp = p.with_suffix(".yaml.tmp")
+    with open(tmp, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(head) + "\n")
         yaml.safe_dump(data, fh, allow_unicode=True, sort_keys=False)
+    os.replace(tmp, p)
 
 def get(key):
+    if not key or "." not in key:
+        return None
     f, k = key.split(".", 1)
     e = _load(f).get(k)
     if e is None:
@@ -50,10 +56,14 @@ def get(key):
     return e.get("valeur") if e.get("valeur") not in (None, "", []) else e.get("defaut")
 
 def get_full(key):
+    if not key or "." not in key:
+        return None
     f, k = key.split(".", 1)
     return _load(f).get(k)
 
-def _parse(v):
+LISTES = {"cantons_suivis", "langues", "domaines", "bases_recherche", "principaux", "connecteurs"}
+
+def _parse(v, liste=False):
     if isinstance(v, str):
         s = v.strip()
         if s[:1] in "[{" or s in ("true", "false", "null") or re.fullmatch(r"-?\d+(\.\d+)?", s):
@@ -61,15 +71,21 @@ def _parse(v):
                 return json.loads(s)
             except Exception:
                 pass
-        if "," in s:
-            return [x.strip() for x in s.split(",") if x.strip()]
+        if liste:
+            return [x.strip() for x in re.split(r"[,;]", s) if x.strip()]
     return v
 
 def set_(key, valeur, source=None, acteur="agent"):
+    if not key or "." not in key:
+        return {"erreur": "clé attendue sous la forme fichier.clé (ex. poste.messagerie)"}
+    if valeur is None or (isinstance(valeur, str) and not valeur.strip()):
+        return {"cle": key, "ignore": "valeur vide : le défaut reste appliqué"}
     f, k = key.split(".", 1)
+    if not (CONF / f"{f}.yaml").exists():
+        return {"erreur": f"fichier de configuration inconnu : {f} (connus : {', '.join(p.stem for p in CONF.glob('*.yaml'))})"}
     data = _load(f)
     e = data.get(k) or {"valeur": None, "defaut": None, "source": "défaut", "question": "", "effet": 1}
-    e["valeur"] = _parse(valeur)
+    e["valeur"] = _parse(valeur, liste=(k in LISTES or isinstance(e.get("defaut"), list)))
     e["source"] = source or f"déclaré par Mustafa le {iso()}"
     data[k] = e
     _save(f, data)

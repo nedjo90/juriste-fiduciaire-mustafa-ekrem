@@ -56,4 +56,9 @@ def build(today="2026-10-01"):
     return {"clients": [c1, c2], "personnes": [pA, pB, pC], "entites": [h1, e1, e2], "dossier": d1, "taxation": tax, "dividende": div, "lba": lba1, "mail": m1}
 
 if __name__ == "__main__":
+    if not os.environ.get("CEREBRO_DB") and not os.environ.get("CEREBRO_ROOT"):
+        import tempfile
+        os.environ["CEREBRO_DB"] = str(Path(tempfile.mkdtemp(prefix="fictif-")) / "fictif.db")
+        core.DB_PATH = None
+        print(f"(base fictive isolée : {os.environ['CEREBRO_DB']} — la base réelle n'est pas touchée)", file=sys.stderr)
     print(json.dumps(build(), ensure_ascii=False))

@@ -126,6 +126,8 @@ def calcul(d):
     for r, (nom, lib, val, u, src, ver) in enumerate(exemples, 5):
         for i, v in enumerate((nom, lib, val, u, src, ver), 1):
             c = ws.cell(row=r, column=i, value=v); c.style = "Maison Saisie" if i == 3 else "Maison Texte"
+        if u == "%":
+            ws.cell(row=r, column=3).number_format = "0.00%"
         wb.defined_names[nom] = DefinedName(nom, attr_text=f"'Hypothèses'!$C${r}")
     for col, w in zip("ABCDEF", (18, 34, 14, 8, 40, 12)):
         ws.column_dimensions[col].width = w
@@ -134,7 +136,7 @@ def calcul(d):
     wc["A1"] = "Calculs"; wc["A1"].style = "Maison Titre"
     for i, h in enumerate(["Étape", "Libellé", "Résultat", "Unité", "Formule (lisible)", "Note"], 1):
         c = wc.cell(row=3, column=i, value=h); c.style = "Maison En-tête"
-    lignes = [("1", "Montant soumis", "=montant_base", "CHF", "montant_base", ""), ("2", "Résultat", "=C4*taux/100", "CHF", "étape 1 × taux", "")]
+    lignes = [("1", "Montant soumis", "=montant_base", "CHF", "montant_base", ""), ("2", "Résultat", "=C4*taux", "CHF", "étape 1 × taux", "")]
     for r, ligne in enumerate(lignes, 4):
         for i, v in enumerate(ligne, 1):
             c = wc.cell(row=r, column=i, value=v); c.style = "Maison Calcul" if i == 3 else "Maison Texte"
@@ -142,12 +144,12 @@ def calcul(d):
         wc.column_dimensions[col].width = w
     wsn = wb.create_sheet("Sensibilités")
     wsn["A1"] = "Sensibilités"; wsn["A1"].style = "Maison Titre"
-    for i, h in enumerate(["Écart sur le taux (pas)", "Taux testé", "Résultat"], 1):
+    for i, h in enumerate(["Nombre de pas (saisie)", "Taux testé", "Résultat"], 1):
         c = wsn.cell(row=3, column=i, value=h); c.style = "Maison En-tête"
     for k, r in enumerate(range(4, 9)):
-        wsn.cell(row=r, column=1, value=f"={k - 2}*variation").style = "Maison Calcul"
-        wsn.cell(row=r, column=2, value=f"=taux+A{r}").style = "Maison Calcul"
-        wsn.cell(row=r, column=3, value=f"=Calculs!$C$4*B{r}/100").style = "Maison Calcul"
+        wsn.cell(row=r, column=1, value=k - 2).style = "Maison Saisie"
+        c = wsn.cell(row=r, column=2, value=f"=taux+A{r}*variation"); c.style = "Maison Calcul"; c.number_format = "0.00%"
+        wsn.cell(row=r, column=3, value=f"=Calculs!$C$4*B{r}").style = "Maison Calcul"
     for col, w in zip("ABC", (24, 14, 16)):
         wsn.column_dimensions[col].width = w
     wsr = wb.create_sheet("Sources")
@@ -200,19 +202,24 @@ def presentation(d):
     g = d["grille"]["presentation"]
     prs.slide_width, prs.slide_height = Cm(g["largeur_cm"]), Cm(g["hauteur_cm"])
     _theme_pptx(prs, d)
-    # repositionner les zones des dispositions sur le format 16:9
-    for layout in prs.slide_layouts:
-        for ph in layout.placeholders:
-            try:
-                ph.left = int(ph.left * g["largeur_cm"] / 25.4)
-                ph.width = int(ph.width * g["largeur_cm"] / 25.4)
-            except Exception:
-                pass
-    for ph in prs.slide_master.placeholders:
+    # repositionner les zones (master puis dispositions) sur le format 16:9 : les quatre cotes sont écrites,
+    # sinon python-pptx crée un cadre de hauteur nulle pour une zone héritée
+    k = g["largeur_cm"] / 25.4
+    def _echelle(ph):
         try:
-            ph.left = int(ph.left * g["largeur_cm"] / 25.4); ph.width = int(ph.width * g["largeur_cm"] / 25.4)
+            if ph._element.spPr.find("{http://schemas.openxmlformats.org/drawingml/2006/main}xfrm") is None:
+                return  # position héritée du master, déjà mise à l'échelle
+            l, tp, w, h = ph.left, ph.top, ph.width, ph.height
+            if None in (l, tp, w, h):
+                return
+            ph.left, ph.top, ph.width, ph.height = int(l * k), tp, int(w * k), h
         except Exception:
             pass
+    for ph in prs.slide_master.placeholders:
+        _echelle(ph)
+    for layout in prs.slide_layouts:
+        for ph in layout.placeholders:
+            _echelle(ph)
     s = prs.slides.add_slide(prs.slide_layouts[0])
     s.shapes.title.text = "{{titre}}"
     s.placeholders[1].text = "{{client}} · {{date}}"

@@ -24,6 +24,8 @@ def _write_n1(path, titre, rows):
         return [path]
     parts = [lines[i:i + N1_MAX] for i in range(0, len(lines), N1_MAX)]
     files = []
+    for old in path.parent.glob(path.stem + "--*.md"):
+        old.unlink()
     for i, chunk in enumerate(parts, 1):
         p = path.with_name(f"{path.stem}--{i}.md")
         p.write_text(f"# {titre} (partie {i}/{len(parts)})\n" + "\n".join(chunk) + "\n", encoding="utf-8")

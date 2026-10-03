@@ -139,7 +139,7 @@ def numerotation_titres(doc, d):
         lvl = OxmlElement("w:lvl"); lvl.set(qn("w:ilvl"), str(i))
         for tag, val in (("w:start", "1"), ("w:numFmt", "decimal"), ("w:pStyle", niv["style"].replace(" ", "")), ("w:lvlText", niv["numero"]), ("w:lvlJc", "left")):
             e = OxmlElement(tag); e.set(qn("w:val"), val); lvl.append(e)
-        ppr = OxmlElement("w:pPr"); ind = OxmlElement("w:ind"); ind.set(qn("w:left"), str(int(567 + 284 * i))); ind.set(qn("w:hanging"), str(int(567 + 284 * i))); ppr.append(ind); lvl.append(ppr)
+        ppr = OxmlElement("w:pPr"); ind = OxmlElement("w:ind"); ind.set(qn("w:left"), str(int(737 + 284 * i))); ind.set(qn("w:hanging"), str(int(737 + 284 * i))); ppr.append(ind); lvl.append(ppr)
         an.append(lvl)
     # abstractNum avant les w:num (ordre imposé par le schéma)
     first_num = numbering.find(qn("w:num"))
@@ -317,6 +317,7 @@ def table_des_matieres(doc, d, titres, apres_paragraphe=None, libelle="Table des
             paras.append(q)
     end = doc.add_paragraph()
     r5 = end.add_run(); fc = OxmlElement("w:fldChar"); fc.set(qn("w:fldCharType"), "end"); r5._r.append(fc)
+    end.add_run().add_break(WD_BREAK.PAGE)
     paras.append(end)
     if apres_paragraphe is not None:  # déplacer le bloc juste après un paragraphe donné
         anchor = apres_paragraphe._p

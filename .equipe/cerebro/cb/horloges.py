@@ -31,12 +31,18 @@ def _objet_regle(rid, lib, resume, source):
 def seed():
     con = db()
     for t, lib, n, u, dep, pre, rs, art, ext, doc in REGLES:
-        r = con.execute("SELECT id FROM regles_delais WHERE type=?", (t,)).fetchone()
+        r = con.execute("SELECT * FROM regles_delais WHERE type=?", (t,)).fetchone()
         if r:
+            # règle corrigée dans le code : la base suit, et la vérification contre le texte est à refaire
+            if (r["duree"], r["unite"], r["article"], r["extrait_attendu"]) != (n, u, art, ext):
+                con.execute("UPDATE regles_delais SET libelle=?, duree=?, unite=?, depuis=?, article=?, extrait_attendu=?, source=?, verifie_le=NULL, report=? WHERE id=?",
+                            (lib, n, u, dep, art, ext, f"RS {rs}", REPORT.get(t, "suivant"), r["id"]))
+            elif r["report"] != REPORT.get(t, "suivant"):
+                con.execute("UPDATE regles_delais SET report=? WHERE id=?", (REPORT.get(t, "suivant"), r["id"]))
             continue
         rid = new_id(con, "regle_delai")
-        con.execute("INSERT INTO regles_delais(id,type,libelle,duree,unite,depuis,preavis_jours,source,article,extrait_attendu,document_type) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-                    (rid, t, lib, n, u, dep, pre, f"RS {rs}", art, ext, doc))
+        con.execute("INSERT INTO regles_delais(id,type,libelle,duree,unite,depuis,preavis_jours,source,article,extrait_attendu,document_type,report) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+                    (rid, t, lib, n, u, dep, pre, f"RS {rs}", art, ext, doc, REPORT.get(t, "suivant")))
         _objet_regle(rid, lib, f"{n} {u} dès {dep} — RS {rs} {art} ; extrait attendu « {ext} » ; non vérifiée tant que le texte officiel n'est pas ingéré", f"RS {rs} {art}")
     for t, lib, n, u, dep, pre, src in REGLES_MAISON:
         if con.execute("SELECT 1 FROM regles_delais WHERE type=?", (t,)).fetchone():
@@ -53,19 +59,63 @@ def add_months(d, n):
     import calendar
     return dt.date(y, m, min(d.day, calendar.monthrange(y, m)[1]))
 
-def report_jour_ouvrable(d):
-    """samedi et dimanche reportés au lundi ; jours fériés cantonaux non connus → signalés"""
-    while d.weekday() >= 5:
-        d += dt.timedelta(days=1)
-    return d
+# Sens du report quand l'échéance tombe un jour non ouvrable.
+# « suivant » : délais de procédure (le dernier jour non ouvrable est reporté) ; « precedent » : obligations à remplir
+# « au plus tard » / « dans les » (on avance au dernier jour ouvrable, jamais au-delà de la fenêtre).
+REPORT = {"reclamation_ifd": "suivant", "recours_ifd": "suivant", "opposition_poursuite": "suivant", "recours_tf": "suivant",
+          "impot_anticipe_dividende": "precedent", "decompte_tva": "precedent", "assemblee_generale": "precedent", "annonce_ayant_droit": "precedent"}
+
+def paques(y):
+    """dimanche de Pâques (calendrier grégorien, algorithme anonyme)"""
+    a, b, c = y % 19, y // 100, y % 100
+    d, e = b // 4, b % 4
+    f = (b + 8) // 25
+    g = (b - f + 1) // 3
+    h = (19 * a + b - d - g + 15) % 30
+    i, k = c // 4, c % 4
+    l = (32 + 2 * e + 2 * i - h - k) % 7
+    m = (a + 11 * h + 22 * l) // 451
+    mois = (h + l - 7 * m + 114) // 31
+    jour = (h + l - 7 * m + 114) % 31 + 1
+    return dt.date(y, mois, jour)
+
+def feries_usuels(y):
+    """jours fériés observés dans la plupart des cantons ; la liste cantonale exacte n'est pas vérifiée (⚠)"""
+    p = paques(y)
+    return {dt.date(y, 1, 1): "Nouvel An", p - dt.timedelta(days=2): "Vendredi saint", p + dt.timedelta(days=1): "lundi de Pâques",
+            p + dt.timedelta(days=39): "Ascension", p + dt.timedelta(days=50): "lundi de Pentecôte", dt.date(y, 8, 1): "fête nationale",
+            dt.date(y, 12, 25): "Noël"}
+
+def _non_ouvrable(d):
+    return d.weekday() >= 5 or d in feries_usuels(d.year)
+
+def echeance_detail(regle, declencheur):
+    """renvoie (échéance retenue, note). Toujours la date prudente : on n'allonge jamais un délai sur un jour férié incertain."""
+    d = dt.date.fromisoformat(declencheur)
+    brute = add_months(d, regle["duree"]) if regle["unite"] == "mois" else d + dt.timedelta(days=regle["duree"])
+    sens = regle.get("report") or REPORT.get(regle.get("type"), "suivant")
+    note = ""
+    if sens == "precedent":
+        e = brute
+        while _non_ouvrable(e):
+            e -= dt.timedelta(days=1)
+        if e != brute:
+            note = f"terme {brute} non ouvrable : avancé au {e} (obligation à remplir dans le délai)"
+        return e, note
+    e = brute
+    while e.weekday() >= 5:
+        e += dt.timedelta(days=1)
+    if e != brute:
+        note = f"terme {brute} un {['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'][brute.weekday()]} : reporté au {e}"
+    if e in feries_usuels(e.year):
+        nxt = e + dt.timedelta(days=1)
+        while _non_ouvrable(nxt):
+            nxt += dt.timedelta(days=1)
+        note += (" ; " if note else "") + f"le {e} est un jour férié usuel ({feries_usuels(e.year)[e]}) : report possible au {nxt} si le canton le reconnaît ⚠ — date prudente retenue : {e}"
+    return e, note
 
 def echeance(regle, declencheur):
-    d = dt.date.fromisoformat(declencheur)
-    if regle["unite"] == "mois":
-        e = add_months(d, regle["duree"])
-    else:
-        e = d + dt.timedelta(days=regle["duree"])
-    return report_jour_ouvrable(e)
+    return echeance_detail(regle, declencheur)[0]
 
 def clock_start(type_, declencheur_date, client=None, dossier=None, canton=None, objet=None, acteur="agent"):
     """démarre une horloge : délai daté + document à préparer + prochaine action datée (préavis)"""
@@ -75,10 +125,13 @@ def clock_start(type_, declencheur_date, client=None, dossier=None, canton=None,
     if not r:
         return {"erreur": f"type de délai inconnu: {type_}", "types": [x[0] for x in con.execute("SELECT type FROM regles_delais")]}
     r = dict(r)
-    ech = echeance(r, declencheur_date)
+    from .core import date_iso
+    declencheur_date = date_iso(declencheur_date)
+    ech, note_report = echeance_detail(r, declencheur_date)
     verifie = bool(r["verifie_le"])
     reserve = "" if verifie else f"⚠ règle non vérifiée contre le texte officiel ({r['source']} {r['article']})"
-    canton_note = "" if not canton else f" · jours fériés {canton} non pris en compte"
+    canton_note = f" · {note_report}" if note_report else ""
+    canton_note += f" · jours fériés propres au canton{(' ' + canton) if canton else ''} non vérifiés ⚠"
     nom = f"{r['libelle']}" + (f" — {objet}" if objet else "")
     pre = (ech - dt.timedelta(days=r["preavis_jours"] or 0)).isoformat()
     doc_id = create("document", f"Projet : {r['document_type'].replace('_', ' ')}" + (f" — {objet}" if objet else ""), client=client,

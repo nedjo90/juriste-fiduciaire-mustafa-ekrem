@@ -142,3 +142,25 @@ def ouvrir(chemin):
     except Exception as e:
         journal("erreurs-producteur", op="ouvrir", chemin=str(chemin), erreur=repr(e))
     return False
+
+
+MOIS = {
+    "fr": ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+    "de": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+    "it": ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"],
+    "en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+}
+
+
+def date_longue(d, langue="fr"):
+    """date ISO (ou date) → « 3 octobre 2026 » / « 3. Oktober 2026 » ; texte inchangé si non reconnu"""
+    try:
+        x = d if isinstance(d, dt.date) else dt.date.fromisoformat(str(d)[:10])
+    except Exception:
+        return str(d or "")
+    m = MOIS.get(langue, MOIS["fr"])[x.month - 1]
+    if langue == "fr":
+        return f"{'1er' if x.day == 1 else x.day} {m} {x.year}"
+    if langue == "de":
+        return f"{x.day}. {m} {x.year}"
+    return f"{x.day} {m} {x.year}"

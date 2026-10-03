@@ -1,0 +1,101 @@
+# Barèmes versionnés (§4.7) — UNIQUEMENT des valeurs lues dans le texte officiel ingéré (cerebro law article).
+# baremes.py relit l'article à chaque exécution : si l'extrait n'y figure plus (nouvelle version, abrogation), la valeur
+# n'est PAS inscrite et un incident est ouvert. Jamais de valeur sans extrait vérifiable.
+# Années inscrites : l'année en cours à la vérification + chaque année entière antérieure couverte par la version
+# consolidée (version en vigueur depuis un 1er janvier). Une année absente → les scripts de calcul affichent ⚠.
+# unite : pct (pour cent) ou chf.
+lu_le: '2026-10-03'
+baremes:
+  - nom: impot_anticipe
+    cle: taux_pct_capitaux_mobiliers
+    valeur: 35
+    unite: pct
+    rs: '642.21'
+    article: art. 13 al. 1 let. a
+    extrait: "à 35 % de la prestation imposable"
+  - nom: impot_anticipe
+    cle: taux_pct_rentes_pensions
+    valeur: 15
+    unite: pct
+    rs: '642.21'
+    article: art. 13 al. 1 let. b
+    extrait: "pour les rentes viagères et les pensions: à 15 % de la prestation imposable"
+  - nom: impot_anticipe
+    cle: taux_pct_autres_prestations_assurance
+    valeur: 8
+    unite: pct
+    rs: '642.21'
+    article: art. 13 al. 1 let. c
+    extrait: "à 8 % de la prestation imposable"
+  - nom: tva
+    cle: taux_pct_normal
+    valeur: 8.1
+    unite: pct
+    rs: '641.20'
+    article: art. 25 al. 1
+    extrait: "est de 8,1 % (taux normal)"
+  - nom: tva
+    cle: taux_pct_reduit
+    valeur: 2.6
+    unite: pct
+    rs: '641.20'
+    article: art. 25 al. 2
+    extrait: "Le taux réduit de 2,6 % est appliqué"
+  - nom: tva
+    cle: taux_pct_special_hebergement
+    valeur: 3.8
+    unite: pct
+    rs: '641.20'
+    article: art. 25 al. 4
+    extrait: "(taux spécial) est fixé à 3,8 %"
+    remarque: "appliqué jusqu'au 31 décembre 2027 au plus tard selon l'al. 4"
+  - nom: droit_emission
+    cle: taux_pct_droits_participation
+    valeur: 1
+    unite: pct
+    rs: '641.10'
+    article: art. 8 al. 1
+    extrait: "Le droit d’émission sur les droits de participation s’élève à 1 pour cent"
+  - nom: droit_emission
+    cle: franchise_chf_fondation_augmentation
+    valeur: 1000000
+    unite: chf
+    rs: '641.10'
+    article: art. 6 al. 1 let. h
+    extrait: "ne dépassent pas en tout la somme de un million de francs"
+    remarque: "SA, SCA, Sàrl : droits émis à titre onéreux lors de la fondation ou de l'augmentation ; versements totaux"
+  - nom: droit_emission
+    cle: franchise_chf_cooperatives
+    valeur: 1000000
+    unite: chf
+    rs: '641.10'
+    article: art. 6 al. 1 let. b
+    extrait: "un million de francs au total"
+  - nom: droit_emission
+    cle: plafond_chf_assainissement
+    valeur: 10000000
+    unite: chf
+    rs: '641.10'
+    article: art. 6 al. 1 let. k
+    extrait: "ne dépassent pas 10 millions de francs au total"
+  - nom: ifd_personnes_morales
+    cle: taux_pct_societes_capitaux_cooperatives
+    valeur: 8.5
+    unite: pct
+    rs: '642.11'
+    article: art. 68
+    extrait: "est de 8.5 % du bénéfice net"
+  - nom: ifd_personnes_morales
+    cle: taux_pct_associations_fondations
+    valeur: 4.25
+    unite: pct
+    rs: '642.11'
+    article: art. 71 al. 1
+    extrait: "est de 4,25 % du bénéfice net"
+  - nom: ifd_personnes_morales
+    cle: seuil_chf_non_imposition_associations
+    valeur: 5000
+    unite: chf
+    rs: '642.11'
+    article: art. 71 al. 2
+    extrait: "lorsqu’il n’atteint pas 5000 francs"

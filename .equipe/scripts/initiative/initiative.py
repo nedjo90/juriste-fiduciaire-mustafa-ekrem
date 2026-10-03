@@ -9,7 +9,9 @@ from pathlib import Path
 ROOT = Path(os.environ.get("CEREBRO_ROOT") or Path(__file__).resolve().parents[3])
 sys.path.insert(0, str(ROOT / ".equipe" / "cerebro"))
 os.environ.setdefault("CEREBRO_ROOT", str(ROOT))
+import shutil
 from cb import core, config as K, files as F, brief as B, cardinal as X
+core.utf8_io()
 from cb.core import db, iso, today, cut, journal
 from cb.sommaires import ligne
 from cb.objets import get
@@ -31,12 +33,13 @@ def collecter(maxi=8):
         o = get(j["arg"])
         if o:
             items.append(({"ingestion_commentaire": "document déposé à commenter", "lecture_modele": "document déposé à commenter",
-                           "alerte_changement": "changement de droit"}[j["tache"]], {**o, "_file": j["n"]}))
-    seen, out = set(), []
+                           "alerte_changement": "changement de droit"}[j["tache"]], {**o, "_files": [j["n"]]}))
+    seen, out = {}, []
     for k, o in items:
         if o["id"] in seen:
+            seen[o["id"]].setdefault("_files", []).extend(o.get("_files", []))
             continue
-        seen.add(o["id"]); out.append((k, o))
+        seen[o["id"]] = o; out.append((k, o))
     return out[:maxi]
 
 def prompt(items):
@@ -48,10 +51,15 @@ def prompt(items):
 def lancer(p):
     modele = K.get("modeles.intermediaire") or "sonnet"
     env = {**os.environ, "CEREBRO_BACKGROUND": "1", "CEREBRO_ROOT": str(ROOT)}
-    cmd = ["claude", "-p", p, "--model", modele, "--output-format", "json", "--permission-mode", "bypassPermissions",
+    exe = shutil.which("claude") or "claude"  # résout claude.exe / claude.cmd sous Windows, sans passer par cmd.exe
+    cmd = [exe, "-p", "--model", modele, "--output-format", "json", "--permission-mode", "bypassPermissions",
            "--allowedTools", "Read,Write,Edit,Bash(cerebro:*),Bash(.equipe/bin/cerebro:*),Bash(python:*),Bash(python3:*)"]
     t0 = time.time()
-    r = subprocess.run(cmd, cwd=str(ROOT), env=env, stdin=subprocess.DEVNULL, capture_output=True, timeout=1500, shell=(os.name == "nt"))
+    try:
+        r = subprocess.run(cmd, cwd=str(ROOT), env=env, input=p.encode("utf-8"), capture_output=True, timeout=1500)
+    except subprocess.TimeoutExpired:
+        F.incident_add("initiative", "boucle d'initiative trop longue (25 min)", "reprise au prochain cycle")
+        return {"is_error": True, "result": "timeout"}, 1500000, 0
     ms = int((time.time() - t0) * 1000)
     try:
         res = json.loads(r.stdout.decode("utf-8", "ignore"))
@@ -82,8 +90,8 @@ def main():
         ok = not res.get("is_error")
         if ok:
             for _, o in items:
-                if "_file" in o:
-                    B.queue_done(o["_file"])
+                for n in o.get("_files", []):
+                    B.queue_done(n)
         else:
             F.incident_add("initiative", "boucle d'initiative en échec", cut(str(res.get("result")), 200))
         journal("initiative", statut="fin", ok=ok, ms=ms, tokens=tok)

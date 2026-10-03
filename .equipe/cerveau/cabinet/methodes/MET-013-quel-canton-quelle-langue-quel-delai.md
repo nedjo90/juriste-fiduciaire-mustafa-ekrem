@@ -25,6 +25,10 @@ usage: réflexe d'entrée de toute question, de tout document déposé, de tout 
 
 format ligne : `CH-VD · Lausanne · fr (client fr, autorité fr) · PF 2025 · notif 2026-10-02 · DL-nnn 2026-11-02 non prolongeable ⚠art. · ACI VD · écrit motivé`
 
+## Étapes
+1 dès l'entrée d'une question ou d'un document, remplir les sept points ci-dessus (⚠ si inconnu)
+2 créer l'horloge du délai et lier le document à préparer · 3 écrire la ligne de tête dans le dossier · 4 point inconnu et décisif → défaut le plus prudent + question simple dans la file
+
 ## Contrôle
 [ ] 7 points renseignés ou ⚠ · [ ] horloge créée et document préparé lié · [ ] langue de sortie = langue du destinataire · [ ] canton hors suivi → « pratique cantonale à vérifier »
 

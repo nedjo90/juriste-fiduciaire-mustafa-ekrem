@@ -30,6 +30,9 @@ livrable (chemin) + table des autorités + résultats des portes + mission (dest
 {"voix":"juge","gravite":"majeur|important|mineur","lieu":"§3.2","constat":"…","correction":"…","source":"BIB-…|⚠"}
 + synthèse : nombre par gravité, niveau de confort recommandé, « présentable après corrections : oui/avec réserves ».
 
+## Étapes
+1 vérifier que les portes déterministes sont passées (résultats joints) · 2 un seul appel au sous-agent panel-adverse avec l'entrée minimale · 3 trier les constats par gravité · 4 l'auteur corrige les majeurs et importants · 5 relecteur · 6 constats non corrigés → réserves explicites dans le livrable
+
 ## Contrôle
 [ ] un seul appel · [ ] six voix présentes · [ ] chaque constat localisé et assorti d'une correction · [ ] aucun constat « de goût » classé majeur · [ ] rapport interne non montré à Mustafa sauf demande · [ ] constats non corrigés → réserves explicites dans le livrable
 

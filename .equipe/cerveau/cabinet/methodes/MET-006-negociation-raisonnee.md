@@ -27,6 +27,12 @@ usage: deal, convention d'actionnaires, contrat, transaction avec une partie, di
 ## Conduite
 1 ouvrir par les intérêts communs et le processus · 2 ancrer avec un critère objectif, pas un chiffre nu · 3 questions ouvertes, reformulation · 4 jamais de concession sans contrepartie · 5 recadrer toute attaque personnelle sur le problème · 6 récapituler par écrit (term sheet, PV, mail de récapitulation en brouillon)
 
+## Étapes
+1 remplir la fiche de préparation (ci-dessus) avant tout contact ; mandat identifié
+2 faire valider par les spécialistes les effets fiscaux, sociaux et LBA de chaque option
+3 conduire selon la séquence ci-dessous ; noter chaque concession et sa contrepartie
+4 récapituler par écrit (brouillon) et mettre à jour la fiche après chaque échange
+
 ## Contrôle
 [ ] mandat écrit identifié · [ ] MESORE des deux côtés · [ ] ≥ 3 options · [ ] critères objectifs sourcés · [ ] concessions toutes conditionnelles · [ ] récapitulatif écrit prévu · [ ] conséquences fiscales et LBA des options vérifiées par le spécialiste
 

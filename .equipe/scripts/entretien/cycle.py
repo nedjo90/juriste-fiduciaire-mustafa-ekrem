@@ -19,6 +19,7 @@ import fond
 from fond import ROOT, EQ, RUN, SCRIPTS, journal
 
 INCREMENT_S = 120
+MODELES = {"initiative", "greffier"}  # tâches qui appellent un modèle : sautées si CEREBRO_SANS_MODELE (tests)
 COMPLET_APRES_H = 20
 CADENCES = {  # tâche: (jours, priorité)
     "rappel": (7, 4), "cardinal": (7, 4), "revue_hebdomadaire": (7, 5),
@@ -297,6 +298,7 @@ def t_commit_push(arg, fin):
         if p.returncode != 0:
             fond.incident("envoi sur le dépôt privé en échec (réseau ou accès)", "git", "nouvel essai au prochain cycle")
             return {"commit": commit, "push": False}
+        C()[0].set_etat("dernier_push_ok", C()[0].stamp())
         return {"commit": commit, "push": True}
     finally:
         v.rendre()
@@ -335,16 +337,18 @@ TACHES = {"intendant": t_intendant, "regen": t_regen, "sommaires": t_sommaires, 
 
 # ------------------------------------------------------------------ exécution
 def increment(bilan, max_prio=6, budget=INCREMENT_S):
-    """exécute des tâches connues par priorité pendant ~budget secondes ; renvoie False si interrompu par Mustafa"""
+    """exécute des tâches connues par priorité pendant ~budget secondes ;
+    renvoie « pause » (Mustafa écrit), « vide » (plus rien d'exécutable) ou « budget » (temps écoulé, à reprendre)"""
     core = C()[0]
     fin = time.time() + budget
     vus = set()
     while time.time() < fin:
         if fond.mustafa_ecrit():
-            return False
-        todo = [t for t in en_attente(max_prio) if t["tache"] in TACHES and t["n"] not in vus]
+            return "pause"
+        todo = [t for t in en_attente(max_prio) if t["tache"] in TACHES and t["n"] not in vus
+                and not (os.environ.get("CEREBRO_SANS_MODELE") and t["tache"] in MODELES)]
         if not todo:
-            return True
+            return "vide" if not any(t["n"] in vus for t in en_attente(max_prio)) else "budget"
         t = todo[0]
         vus.add(t["n"])
         t0 = time.time()
@@ -368,7 +372,7 @@ def increment(bilan, max_prio=6, budget=INCREMENT_S):
             core.set_etat("echecs_entretien", echecs)
             if echecs[t["tache"]] >= 3:
                 fond.incident(f"tâche d'entretien « {t['tache']} » en échec répété", "entretien", repr(e)[:200])
-    return True
+    return "budget"
 
 
 def ligne_rattrapage(bilan):
@@ -409,12 +413,17 @@ def executer(mode, budget_min):
         increment(bilan, max_prio)
     else:
         limite = t0 + budget_min * 60
+        tours_partiels = 0
         while time.time() < limite:
-            fini = increment(bilan, max_prio)
-            if fini and not [t for t in en_attente(max_prio) if t["tache"] in TACHES]:
+            etat = increment(bilan, max_prio)
+            if etat == "vide":
                 break
-            if not fini:  # Mustafa écrit : pause
+            if etat == "pause":  # Mustafa écrit : on attend un temps mort
                 time.sleep(15)
+                continue
+            tours_partiels += 1
+            if tours_partiels > 40:  # garde-fou : une tâche qui ne finit jamais ne retient pas le processus
+                break
     if complet and not [t for t in en_attente(6) if t["tache"] in ("sauvegarde", "export", "commit_push")]:
         core.set_etat("dernier_cycle_complet", dt.datetime.now().replace(microsecond=0).isoformat())
     l = ligne_rattrapage(bilan)

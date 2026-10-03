@@ -38,15 +38,21 @@ def ingest(texte, juridiction, type_, identifiant, titre, langue="fr", version=N
                  typed=("bibliotheque", {"juridiction": juridiction, "type": type_, "identifiant": identifiant, "abreviation": abreviation, "titre": titre,
                                          "langue": langue, "version": version, "date_etat": date_etat or version, "url": url, "chemin": relpath(p),
                                          "licence": licence, "fiabilite": fiabilite, "ingere_le": iso()}))
+    # version antérieure ingérée après coup : elle cesse de valoir à la date de la version suivante déjà présente
+    nxt = con.execute("SELECT MIN(version) FROM bibliotheque WHERE identifiant=? AND langue=? AND version>?", (identifiant, langue, version)).fetchone()
+    if nxt and nxt[0]:
+        con.execute("UPDATE objets SET valide_au=? WHERE id=?", (nxt[0], bid))
     con.commit()
     audit("law_ingest", bid, f"{identifiant} {langue} {version}", acteur)
     return {"id": bid, "statut": "ingéré", "chemin": relpath(p)}
 
 def asof(identifiant, date=None, langue="fr"):
-    """version en vigueur à une date (état du droit)"""
+    """version en vigueur à une date (état du droit). valide_au est exclusif (date de la version suivante ou lendemain de la fin
+    d'applicabilité publiée) : une date non couverte par une version ingérée renvoie None (⚠) plutôt qu'un texte périmé."""
     date = date or iso()
-    r = db().execute("SELECT b.*, o.valide_au FROM bibliotheque b JOIN objets o ON o.id=b.id WHERE (b.identifiant=? OR b.abreviation=?) AND b.langue=? AND b.date_etat<=? ORDER BY b.date_etat DESC LIMIT 1",
-                     (identifiant, identifiant, langue, date)).fetchone()
+    r = db().execute("SELECT b.*, o.valide_au FROM bibliotheque b JOIN objets o ON o.id=b.id WHERE (b.identifiant=? OR b.abreviation=?) AND b.langue=? AND b.date_etat<=? "
+                     "AND (o.valide_au IS NULL OR o.valide_au='' OR o.valide_au>?) ORDER BY b.date_etat DESC LIMIT 1",
+                     (identifiant, identifiant, langue, date, date)).fetchone()
     return dict(r) if r else None
 
 def article(identifiant, art, date=None, langue="fr"):

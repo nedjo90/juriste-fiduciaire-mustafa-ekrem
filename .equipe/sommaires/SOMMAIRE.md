@@ -2,5 +2,5 @@
 entrer ici → niveau 1 (.equipe/sommaires/clients/<C>.md | domaines/<type>.md) → cerebro find/summary/open --section
 ## clients (0)
 ## domaines
-regle_delai:11
-## file · questions:0 · incidents:0
+role:46 · capacite:39 · skill:32 · source:28 · methode:16 · regle_delai:11 · question:11 · cabinet:9 · gabarit:6 · incident:2 · doctrine:1
+## file · questions:11 · incidents:0

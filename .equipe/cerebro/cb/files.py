@@ -2,6 +2,14 @@
 import json, datetime as dt
 from .core import db, new_id, iso, today, stamp, audit, get_etat, set_etat, cut
 
+def _indexer(oid):
+    """objets légers (sans fichier) : alias + index plein texte et trigrammes, pour qu'ils restent retrouvables"""
+    from .objets import index_fts, get, add_alias
+    o = get(oid)
+    if o:
+        add_alias(oid, o["nom"])
+        index_fts(o, body="")
+
 # ------------------------------------------------------------------ questions
 def question_add(formulation, besoin, defaut_applique="", type_="metier", priorite=3, cle_config=None, sujet=None):
     con = db()
@@ -13,12 +21,12 @@ def question_add(formulation, besoin, defaut_applique="", type_="metier", priori
     if r:
         return r[0]
     qid = new_id(con, "question")
-    con.execute("INSERT INTO compteurs(prefixe,n) VALUES('Q',0) ON CONFLICT DO NOTHING")
     con.execute("INSERT INTO questions_ouvertes(id,type,besoin,defaut_applique,priorite,formulation,cle_config,sujet,cree_le) VALUES(?,?,?,?,?,?,?,?,?)",
                 (qid, type_, besoin, defaut_applique, priorite, formulation, cle_config, sujet, iso()))
     # la question est aussi un objet léger (atteignable, sommaire du domaine « question »)
-    con.execute("INSERT OR IGNORE INTO objets(id,type,nom,statut,maj,prochaine_action,prochaine_date,resume,enregistre_le,valide_du,chemin) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-                (qid, "question", cut(formulation, 80), "ouverte", iso(), "poser au bon moment", iso(), f"{besoin} · défaut: {defaut_applique}", stamp(), iso(), ".equipe/cerebro/cerebro.db"))
+    con.execute("INSERT OR IGNORE INTO objets(id,type,nom,statut,maj,prochaine_action,prochaine_date,resume,enregistre_le,valide_du,chemin,a_regenerer) VALUES(?,?,?,?,?,?,?,?,?,?,NULL,0)",
+                (qid, "question", cut(formulation, 80), "ouverte", iso(), "poser au bon moment", iso(), f"{besoin} · défaut: {defaut_applique}", stamp(), iso()))
+    _indexer(qid)
     con.commit()
     return qid
 
@@ -29,8 +37,13 @@ def questions_autorisees():
     """aucune question pendant la première session ni pendant une session de construction"""
     if (get_etat("sessions", 0) or 0) < 2:
         return False
-    if get_etat("construction_en_cours_tour", False):
-        return False
+    from .core import SESSION
+    p = SESSION / "construction.md"
+    try:
+        if p.exists() and "construction: achevée" not in p.read_text(encoding="utf-8"):
+            return False
+    except Exception:
+        pass
     return True
 
 def question_next(sujet=None, canal="message"):
@@ -40,6 +53,10 @@ def question_next(sujet=None, canal="message"):
         return None
     con = db()
     t = iso()
+    if canal == "brief":
+        deja = con.execute("SELECT * FROM questions_ouvertes WHERE posee_le=? AND statut='ouverte' AND COALESCE(canal_pose,'brief')='brief' ORDER BY rowid LIMIT 1", (t,)).fetchone()
+        if deja:
+            return {"id": deja["id"], "formulation": deja["formulation"], "defaut": deja["defaut_applique"], "deja_posee": True}
     if con.execute("SELECT COUNT(*) FROM questions_ouvertes WHERE posee_le=?", (t,)).fetchone()[0] >= 3:
         return None
     if canal == "message" and get_etat("question_tour", None) == (get_etat("tour", "0")):
@@ -65,7 +82,7 @@ def question_next(sujet=None, canal="message"):
     con.commit()
     if not best:
         return None
-    con.execute("UPDATE questions_ouvertes SET posee_le=?, nb_posee=nb_posee+1 WHERE id=?", (t, best["id"]))
+    con.execute("UPDATE questions_ouvertes SET posee_le=?, nb_posee=nb_posee+1, canal_pose=? WHERE id=?", (t, canal, best["id"]))
     con.commit()
     set_etat("question_tour", get_etat("tour", "0"))
     return {"id": best["id"], "formulation": best["formulation"], "defaut": best["defaut_applique"]}
@@ -110,8 +127,9 @@ def conseil_next():
         return None
     con = db()
     t = iso()
-    if con.execute("SELECT 1 FROM conseils WHERE presente_le=?", (t,)).fetchone():
-        return None
+    r = con.execute("SELECT * FROM conseils WHERE presente_le=? AND statut='ouvert'", (t,)).fetchone()
+    if r:
+        return dict(r)  # le conseil du jour est réaffiché, jamais un second
     # un conseil présenté un autre jour et resté ouvert compte comme ignoré
     con.execute("UPDATE conseils SET nb_ignore=nb_ignore+1, presente_le=NULL WHERE statut='ouvert' AND presente_le IS NOT NULL AND presente_le<?", (t,))
     con.execute("UPDATE conseils SET statut='abandonne' WHERE nb_ignore>=2 AND statut='ouvert'")
@@ -133,8 +151,9 @@ def incident_add(categorie, description, repli="", phrase=""):
         return r[0]
     iid = new_id(con, "incident")
     con.execute("INSERT INTO incidents(id,le,categorie,description,repli,phrase) VALUES(?,?,?,?,?,?)", (iid, stamp(), categorie, description, repli, phrase))
-    con.execute("INSERT OR IGNORE INTO objets(id,type,nom,statut,maj,prochaine_action,prochaine_date,resume,enregistre_le,valide_du,chemin) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
-                (iid, "incident", cut(f"{categorie}: {description}", 80), "ouvert", iso(), "intendant : résoudre", iso(), cut(repli, 200), stamp(), iso(), ".equipe/cerebro/cerebro.db"))
+    con.execute("INSERT OR IGNORE INTO objets(id,type,nom,statut,maj,prochaine_action,prochaine_date,resume,enregistre_le,valide_du,chemin,a_regenerer) VALUES(?,?,?,?,?,?,?,?,?,?,NULL,0)",
+                (iid, "incident", cut(f"{categorie}: {description}", 80), "ouvert", iso(), "intendant : résoudre", iso(), cut(repli, 200), stamp(), iso()))
+    _indexer(iid)
     con.commit()
     _dossier_technique(f"- {iso()} · {categorie} · {cut(description, 160)}" + (f" → {cut(repli, 120)}" if repli else ""))
     audit("incident", iid, description, "intendant")
@@ -171,8 +190,9 @@ def capability_register(nom, categorie, localisation="LOCAL", sort_quoi="rien", 
     cid = r[0] if r else new_id(con, "capacite")
     con.execute("INSERT OR REPLACE INTO capacites(id,nom,categorie,localisation,sort_quoi,vers_qui,licence,version,statut,teste_le,source) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                 (cid, nom, categorie, localisation, sort_quoi, vers_qui, licence, version, statut, iso(), source))
-    con.execute("INSERT OR REPLACE INTO objets(id,type,nom,statut,maj,prochaine_action,prochaine_date,resume,enregistre_le,valide_du,chemin,source) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
-                (cid, "capacite", nom, statut, iso(), "réévaluer", (today() + dt.timedelta(days=90)).isoformat(), f"{categorie} · {localisation} · sort: {sort_quoi} → {vers_qui} · {licence}", stamp(), iso(), ".equipe/cerebro/cerebro.db", source))
+    con.execute("INSERT OR REPLACE INTO objets(id,type,nom,statut,maj,prochaine_action,prochaine_date,resume,enregistre_le,valide_du,chemin,source,a_regenerer) VALUES(?,?,?,?,?,?,?,?,?,?,NULL,?,0)",
+                (cid, "capacite", nom, statut, iso(), "réévaluer", (today() + dt.timedelta(days=90)).isoformat(), f"{categorie} · {localisation} · sort: {sort_quoi} → {vers_qui} · {licence}", stamp(), iso(), source))
+    _indexer(cid)
     con.commit()
     return cid
 

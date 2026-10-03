@@ -56,7 +56,7 @@ def journal(msg, **kw):
 
 def cerebro(*args, check=False):
     """appelle la CLI cerebro ; renvoie le JSON de sortie (ou {'erreur':…})"""
-    r = subprocess.run([sys.executable, str(CEREBRO), *[str(a) for a in args]], capture_output=True, text=True, encoding="utf-8", env=os.environ.copy())
+    r = subprocess.run([sys.executable, str(CEREBRO), *[str(a) for a in args]], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"})
     try:
         return json.loads(r.stdout or "{}")
     except Exception:
@@ -116,9 +116,13 @@ def consolidations(eli):
     return [{"uri": r["c"], "du": r["d"][:10], "au": (r.get("f") or "")[:10] or None} for r in sparql(q)]
 
 
+def aujourdhui():
+    return os.environ.get("CEREBRO_TODAY") or dt.date.today().isoformat()
+
+
 def consolidation_a(eli, date=None):
-    """dernière version consolidée en vigueur à la date (défaut : aujourd'hui)"""
-    date = date or dt.date.today().isoformat()
+    """dernière version consolidée en vigueur à la date (défaut : aujourd'hui, ou CEREBRO_TODAY)"""
+    date = date or aujourdhui()
     for c in consolidations(eli):
         if c["du"] <= date and (not c["au"] or c["au"] >= date):
             return c
@@ -162,6 +166,10 @@ def _txt(el, notes=None, skip=("authorialNote",)):
 
     def rec(e):
         t = _l(e)
+        if t == "placeholder":  # marqueurs techniques Fedlex ([tab]…)
+            if e.tail:
+                parts.append(e.tail)
+            return
         if t in skip:
             if notes is not None:
                 n = re.sub(r"\s+", " ", "".join(e.itertext())).strip()
@@ -216,7 +224,7 @@ def _bloc(el, notes, prof=0):
             n = _txt(num, notes) if num is not None else "-"
             sous = _bloc(c, notes, prof + 1)
             first = sous[0].strip() if sous else ""
-            out.append(f"{ind}- {n} {first}".rstrip())
+            out.append(f"{ind}- {n} {first}".rstrip() if n else f"{ind}- {first}".rstrip())
             out += sous[1:]
         elif t == "table":
             for tr in c.iter(AKN + "tr"):
@@ -393,6 +401,9 @@ def ingerer(rs, langue="fr", date=None, abrev=None, acte=None):
                       "--titre", m["titre"], "--langue", langue, "--version", m["version"], "--date-etat", date_etat, "--url", m["url"], "--abrev", m["abrev"])
         if "erreur" in res:
             raise RuntimeError(res["erreur"])
+        if m["fin"] and res.get("id"):  # fin d'applicabilité publiée → valide_au exclusif (lendemain)
+            fin = (dt.date.fromisoformat(m["fin"]) + dt.timedelta(days=1)).isoformat()
+            cerebro("update", res["id"], f"valide_au={fin}")
         m.update(res)
         m["duree_s"] = round(time.time() - t0, 1)
         journal("ingéré", **{k: m[k] for k in ("rs", "langue", "version", "articles", "duree_s")}, statut=res.get("statut"))
@@ -407,7 +418,17 @@ def charger_priorites():
     return yaml.safe_load((Path(__file__).parent / "priorites.yaml").read_text(encoding="utf-8"))
 
 
+def utf8_console():
+    """Windows : la console et les tubes ne sont pas en UTF-8 par défaut"""
+    for s in (sys.stdout, sys.stderr):
+        try:
+            s.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
+
+
 def main(argv=None):
+    utf8_console()
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("action", choices=["resolve", "versions", "ingest", "priorites", "preparer"])
     p.add_argument("rs", nargs="*")

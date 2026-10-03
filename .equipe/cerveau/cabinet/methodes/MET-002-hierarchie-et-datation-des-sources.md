@@ -30,6 +30,13 @@ id BIB- · abrév/RS · art. al. let. ch. · version (entrée en vigueur) · dat
 - versions linguistiques officielles : en cas de doute de sens, comparer fr/de/it et le signaler
 - source cantonale souvent en allemand : citer l'original, traduction de travail marquée [trad. de travail]
 
+## Étapes
+1 classer chaque source trouvée dans l'échelle de poids ci-dessus (une étiquette par source)
+2 dater : version applicable aux faits (`cerebro law asof <RS> --date <date des faits>`), date d'état, date de consultation
+3 remplir les 10 champs de citation ; champ manquant → documentaliste
+4 conflit entre deux sources → règle de conflit lue (lex superior, specialis, posterior, rang du traité) et citée
+5 inscrire la source dans la table des autorités (MET-003) et la lier au livrable (`cerebro link`)
+
 ## Contrôle
 [ ] chaque source a les 10 champs · [ ] version applicable aux faits vérifiée · [ ] pratique distinguée de la loi · [ ] doctrine jamais présentée comme règle · [ ] source sans texte primaire → ⚠ · [ ] date de consultation < 90 j pour un livrable (sinon re-vérifier : documentaliste)
 

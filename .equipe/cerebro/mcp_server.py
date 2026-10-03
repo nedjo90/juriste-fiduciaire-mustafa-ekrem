@@ -29,20 +29,31 @@ TOOLS = [
 ]
 
 def run(argv):
-    buf = io.StringIO()
+    """exécute une commande dans le processus ; transaction toujours close (jamais de verrou gardé après une erreur)"""
+    buf, err = io.StringIO(), io.StringIO()
     try:
-        with contextlib.redirect_stdout(buf):
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(err):
             CLI.main(argv)
+        CLI.core.db().commit()
     except SystemExit:
-        pass
+        try:
+            CLI.core.db().rollback()
+        except Exception:
+            pass
+        if not buf.getvalue().strip():
+            return json.dumps({"erreur": "commande invalide", "detail": err.getvalue()[-400:]}, ensure_ascii=False)
     except Exception as e:
-        return json.dumps({"erreur": repr(e)}, ensure_ascii=False)
+        try:
+            CLI.core.db().rollback()
+        except Exception:
+            pass
+        return json.dumps({"erreur": repr(e)[:300]}, ensure_ascii=False)
     return buf.getvalue().strip()
 
 def call(name, a):
     g = lambda k, d=None: a.get(k, d)
     if name == "cerebro":
-        return run(shlex.split(g("commande", "")))
+        return run(shlex.split(g("commande", ""), posix=(os.name != "nt")))
     if name == "find":
         return run(["find", g("q")] + (["--limit", str(g("limit"))] if g("limit") else []) + (["--asof", g("asof")] if g("asof") else []))
     if name == "summary":
@@ -73,6 +84,11 @@ def call(name, a):
     return json.dumps({"erreur": f"outil inconnu {name}"})
 
 def main():
+    for st in (sys.stdin, sys.stdout):
+        try:
+            st.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
     for line in sys.stdin:
         line = line.strip()
         if not line:
@@ -93,15 +109,15 @@ def main():
             elif meth == "tools/call":
                 p = msg.get("params", {})
                 txt = call(p.get("name"), p.get("arguments") or {})
-                res = {"content": [{"type": "text", "text": txt[:50000]}], "isError": False}
+                res = {"content": [{"type": "text", "text": txt[:50000]}], "isError": txt.startswith('{"erreur"')}
             elif meth == "ping":
                 res = {}
             else:
                 sys.stdout.write(json.dumps({"jsonrpc": "2.0", "id": mid, "error": {"code": -32601, "message": "méthode inconnue"}}) + "\n"); sys.stdout.flush()
                 continue
         except Exception as e:
-            res = {"content": [{"type": "text", "text": json.dumps({"erreur": repr(e)})}], "isError": True}
-        sys.stdout.write(json.dumps({"jsonrpc": "2.0", "id": mid, "result": res}, ensure_ascii=False) + "\n")
+            res = {"content": [{"type": "text", "text": json.dumps({"erreur": repr(e)[:300]})}], "isError": True}
+        sys.stdout.write(json.dumps({"jsonrpc": "2.0", "id": mid, "result": res}) + "\n")
         sys.stdout.flush()
 
 if __name__ == "__main__":
