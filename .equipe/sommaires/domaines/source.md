@@ -21,3 +21,6 @@
 [BIB-020] source · OBA (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
 [BIB-021] source · OBA-FINMA (fr, état 2023-01-01) · actif · 2027-01-01 vérifier mise à jour
 [BIB-022] source · OTPM (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-023] source · CC (fr, état 2026-07-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-024] source · LPGA (fr, état 2024-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-025] source · LAVS (fr, état 2026-01-01) · actif · 2027-01-01 vérifier mise à jour

@@ -93,9 +93,25 @@ def blocs(body):
     return out
 
 
+def normaliser_niveaux(bl):
+    """le niveau de titre le plus haut du corps devient 1 (« ## Résumé » → titre 1) ; un « # » unique en tête = titre du document"""
+    hs = [b for b in bl if b["t"] == "h"]
+    titre = None
+    if hs and hs[0]["niveau"] == 1 and sum(1 for b in hs if b["niveau"] == 1) == 1 and bl and bl[0] is hs[0]:
+        titre = hs[0]["texte"]; bl = bl[1:]; hs = hs[1:]
+    if hs:
+        m = min(b["niveau"] for b in hs)
+        for b in hs:
+            b["niveau"] = b["niveau"] - m + 1
+    return titre, bl
+
+
 def parse(text):
     meta, body = front_matter(text)
-    return meta, blocs(body)
+    titre, bl = normaliser_niveaux(blocs(body))
+    if titre and not meta.get("titre"):
+        meta["titre"] = titre
+    return meta, bl
 
 
 INLINE_RE = re.compile(r"(\*\*[^*]+\*\*|\*[^*\s][^*]*\*|`[^`]+`)")

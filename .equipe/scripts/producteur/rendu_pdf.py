@@ -30,6 +30,12 @@ def polices(d):
                 res[{"corps": "corps", "corps_gras": "gras", "corps_italique": "italique", "titres": "titres"}[cle]] = nom
             except Exception:
                 pass
+    sym = D.premier_fichier(d["typographie"]["ttf"].get("symboles", []))
+    if sym:
+        try:
+            pdfmetrics.registerFont(TTFont("MaisonSymboles", sym)); res["symboles"] = "MaisonSymboles"
+        except Exception:
+            pass
     try:
         from reportlab.lib.fonts import addMapping
         addMapping(res["corps"], 0, 0, res["corps"]); addMapping(res["corps"], 1, 0, res["gras"])
@@ -65,6 +71,8 @@ def _xml(t):
     t = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", t)
     t = re.sub(r"(?<!\*)\*([^*\s][^*]*)\*(?!\*)", r"<i>\1</i>", t)
     t = re.sub(r"`([^`]+)`", r"<font face='Courier'>\1</font>", t)
+    if _POLICES.get("symboles"):
+        t = re.sub(r"([\u2600-\u27BF])", r"<font face='MaisonSymboles'>\1</font>", t)
     return t
 
 

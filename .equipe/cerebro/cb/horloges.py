@@ -10,10 +10,10 @@ REGLES = [
     # type, libellé, durée, unité, depuis, préavis, RS, article, extrait attendu, document à préparer
     ("reclamation_ifd", "Réclamation contre une décision de taxation IFD", 30, "jours", "notification", 10, "642.11", "art. 132", "30 jours", "reclamation"),
     ("recours_ifd", "Recours contre une décision sur réclamation IFD", 30, "jours", "notification", 10, "642.11", "art. 140", "30 jours", "recours"),
-    ("impot_anticipe_dividende", "Déclaration et paiement de l'impôt anticipé sur dividende", 30, "jours", "echeance_dividende", 10, "642.21", "art. 16", "30 jours", "declaration_ia"),
+    ("impot_anticipe_dividende", "Déclaration et paiement de l'impôt anticipé sur dividende", 30, "jours", "echeance_dividende", 10, "642.21", "art. 16 al. 1 let. c", "trente jours après la naissance de la créance fiscale", "declaration_ia"),  # corrigé 2026-10-03 (texte LIA 2025-01-01 ; naissance : art. 12 al. 1)
     ("decompte_tva", "Décompte TVA de la période", 60, "jours", "fin_periode", 15, "641.20", "art. 71", "60 jours", "decompte_tva"),
     ("assemblee_generale", "Assemblée générale ordinaire", 6, "mois", "cloture_exercice", 45, "220", "art. 699", "six mois", "convocation_ag"),
-    ("annonce_ayant_droit", "Annonce de l'ayant droit économique à la société", 1, "mois", "acquisition", 10, "220", "art. 697j", "un mois", "annonce_adb"),
+    ("annonce_ayant_droit", "Annonce de l'ayant droit économique à la société", 1, "mois", "acquisition", 10, "955.3", "art. 13 al. 3", "un mois à compter de la création du contrôle", "annonce_adb"),  # corrigé 2026-10-03 : art. 697j CO abrogé au 1.10.2026 (LTPM)
     ("opposition_poursuite", "Opposition au commandement de payer", 10, "jours", "notification", 3, "281.1", "art. 74", "dix jours", "opposition"),
     ("recours_tf", "Recours au Tribunal fédéral", 30, "jours", "notification", 10, "173.110", "art. 100", "30 jours", "recours_tf"),
 ]

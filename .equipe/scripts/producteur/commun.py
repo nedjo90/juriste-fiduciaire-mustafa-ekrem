@@ -8,7 +8,7 @@ CODE_ROOT = HERE.parents[3]                       # dépôt contenant ce code
 ROOT = Path(os.environ.get("CEREBRO_ROOT") or CODE_ROOT)
 EQ = ROOT / ".equipe"
 BUREAU = ROOT / "Bureau"
-MODELES = BUREAU / "Modèles"
+MODELES = BUREAU / "Modeles"   # convention : aucun chemin avec accent ni espace
 LIVRABLES = BUREAU / "Livrables"
 DESIGN_YAML = EQ / "cerveau" / "cabinet" / "design" / "systeme.yaml"
 if not DESIGN_YAML.exists():                      # racine jetable sans copie du design : celui du code
@@ -32,9 +32,8 @@ def slug(s, n=50):
 
 
 def nom_dossier(s, n=60):
-    """nom lisible pour Mustafa, valide sous Windows"""
-    s = re.sub(r'[<>:"/\\|?*\x00-\x1f]', "-", str(s)).strip(" .")
-    return s[:n].strip(" .") or "Divers"
+    """nom de dossier : ASCII kebab-case (convention de la maison, aucun accent ni espace dans un chemin)"""
+    return slug(s, n) or "divers"
 
 
 def journal(nom, **rec):

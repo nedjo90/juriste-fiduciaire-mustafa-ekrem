@@ -1,0 +1,28 @@
+# Règles des questions et conseils à travers plusieurs sessions (§0 bis, §17 c36).
+# Session 1 : aucune question ni conseil. Sessions suivantes : au plus une question par message, jamais deux fois la même
+# dans la journée, au plus trois par jour, jamais de jargon ; au plus un conseil par jour, dans le brief.
+fictif: true
+scenarios:
+  - id: s1
+    messages:
+      - "Bonjour"
+      - "Rappelle-moi ce qu'on a de prévu cette semaine."
+      - "Et pour Lémantech, où en est-on ?"
+    attendu: "aucune question, aucun conseil"
+  - id: s2
+    messages:
+      - {texte: "Bonjour", nouvelle_session: true}
+      - "Prépare-moi la fiche du rendez-vous Rochat de demain."
+      - "Merci. Et le mail de Luca sur la convention ?"
+      - "OK, autre chose d'urgent ?"
+    attendu: "au plus une question par message, au plus trois sur la journée, aucune répétée, formulées simplement ; au plus un conseil (dans le brief)"
+  - id: s3
+    messages:
+      - {texte: "Re-bonjour", nouvelle_session: true}
+      - "Fais le point sur les délais."
+    attendu: "les questions déjà posées aujourd'hui ne reviennent pas ; total du jour ≤ 3"
+  - id: s4-lendemain
+    today: "2026-10-02"
+    messages:
+      - {texte: "Bonjour", nouvelle_session: true}
+    attendu: "nouvelle journée : une question possible, pas une déjà posée la veille sans réponse (au plus une fois par semaine)"

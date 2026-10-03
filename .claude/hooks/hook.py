@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Dispatcher unique des hooks Claude Code (constitution §5, §11 ; jamais bloquant).
-Usage (settings.json, forme exec) : python hook.py <SessionStart|UserPromptSubmit|Stop|PreCompact|SessionEnd|PostToolUse>
+Usage (settings.json, forme exec) : python .claude/hooks/hook.py <SessionStart|UserPromptSubmit|Stop|PreCompact|SessionEnd|PostToolUse>
 Garanties : sortie immédiate si CEREBRO_BACKGROUND ; try global ; toute erreur → journal + succès vide ;
 garde-fou de durée (1,7 s) ; aucune sortie de blocage, de refus ni de décision de permission."""
 import os, sys
@@ -13,9 +13,11 @@ from pathlib import Path
 
 T0 = time.time()
 LIMITE = float(os.environ.get("CEREBRO_HOOK_LIMITE", "1.7"))
-ICI = Path(__file__).resolve().parent
+ICI = Path(__file__).resolve().parent              # <racine>/.claude/hooks
+RACINE = ICI.parents[1]
+ENTRETIEN = RACINE / ".equipe" / "scripts" / "entretien"
 try:
-    sys.path.insert(0, str(ICI.parent / "entretien"))
+    sys.path.insert(0, str(ENTRETIEN))
     import fond  # noqa: E402
     from fond import RUN, INBOX, SESSION, journal  # noqa: E402
 except BaseException as _e:  # socle illisible : on journalise à la main et on sort en succès plus bas
@@ -24,7 +26,7 @@ except BaseException as _e:  # socle illisible : on journalise à la main et on 
 
     def journal(nom, **rec):
         try:
-            d = ICI.parents[1] / "cerveau" / "journal"
+            d = RACINE / ".equipe" / "cerveau" / "journal"
             d.mkdir(parents=True, exist_ok=True)
             with open(d / f"{nom}.jsonl", "a", encoding="utf-8") as fh:
                 fh.write(json.dumps({"le": time.strftime("%Y-%m-%dT%H:%M:%S"), **rec}, ensure_ascii=False, default=str) + "\n")
@@ -76,7 +78,7 @@ def session_start(data):
         pass
     ctx = B.session_start(src)
     if src != "compact":
-        fond.lancer_detache(ICI.parent / "entretien" / "cycle.py", "--rattrapage", nom="cycle-rattrapage")
+        fond.lancer_detache(ENTRETIEN / "cycle.py", "--rattrapage", nom="cycle-rattrapage")
     return sortie_contexte("SessionStart", ctx, DEBUT_MAX)
 
 
@@ -197,7 +199,7 @@ def stop(data):
     cp = RUN / "compteur-echanges.json"
     c = (fond.lire_json(cp, {}) or {}).get("n", 0) + 1
     if c >= GREFFIER_TOUS_LES:
-        fond.lancer_detache(ICI.parent / "entretien" / "greffier.py", nom="greffier")
+        fond.lancer_detache(ENTRETIEN / "greffier.py", nom="greffier")
         c = 0
     fond.ecrire_json(cp, {"n": c})
     return None
@@ -238,7 +240,7 @@ def pre_compact(data):
 
 
 def session_end(data):
-    fond.lancer_detache(ICI.parent / "entretien" / "fin_session.py", nom="fin-de-session")
+    fond.lancer_detache(ENTRETIEN / "fin_session.py", nom="fin-de-session")
     return None
 
 

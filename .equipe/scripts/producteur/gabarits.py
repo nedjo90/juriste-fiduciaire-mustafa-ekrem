@@ -1,5 +1,5 @@
 """Gabarits de la maison (§7.3), générés depuis le système de design : régénérables dès que la charte change.
-python gabarits.py                 → (ré)génère Bureau/Modèles/* (idempotent)
+python gabarits.py                 → (ré)génère Bureau/Modeles/* (idempotent)
 python gabarits.py --inscrire      → en plus, inscrit/actualise chaque gabarit dans cerebro (GAB-…)
 Sortie JSON : {gabarit: chemin}. Appelé aussi par produire.py quand un gabarit manque (racine neuve)."""
 import sys, json, argparse, io
@@ -229,7 +229,9 @@ def presentation(d):
             if sh.has_text_frame:
                 for p in sh.text_frame.paragraphs:
                     for r in p.runs:
-                        r.font.color.rgb = PRGB(*D.rgb(d, "primaire" if sh == sl.shapes.title else "encre"))
+                        est_titre = sh == sl.shapes.title
+                        r.font.color.rgb = PRGB(*D.rgb(d, "primaire" if est_titre else "encre"))
+                        r.font.size = PPt(30 if est_titre else 18)
     return prs
 
 

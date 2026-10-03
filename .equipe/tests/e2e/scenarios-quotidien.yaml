@@ -1,0 +1,47 @@
+# Tâches quotidiennes d'un juriste de fiduciaire suisse, sur le dossier fictif (aujourd'hui simulé : 2026-10-01).
+# Chaque scénario = une conversation ; « attendu » sert au juge indépendant (niveau des plus grandes maisons).
+fictif: true
+scenarios:
+  - id: ouverture
+    messages: ["Bonjour"]
+    attendu: "Salutation brève de collègue ; brief utile (RDV Rochat demain 14h, mail Rochat en attente, délais réclamation et impôt anticipé, croisement Luca Rochat) ; aucune question (première session) ; aucun mot technique ; pas de chemin."
+  - id: mail-dividende
+    messages: ["Prépare-moi la réponse au mail de M. Rochat sur le dividende."]
+    attendu: "Brouillon prêt, en français, voix de la maison, conclusion d'abord : retenue de l'impôt anticipé (taux sourcé dans la loi), déclaration à l'AFC dans le délai (sourcé), net versé ; aucune affirmation de droit sans source ou ⚠ ; pas de demande de confirmation ; jamais d'envoi."
+  - id: reclamation
+    messages: ["La décision de taxation 2025 de Rochat Holding : on fait une réclamation ? Jusqu'à quand ?"]
+    attendu: "Échéance calculée depuis la notification du 22.09.2026 avec la source (article de loi, version), réserve sur jours fériés/samedi, distinction IFD / ICC vaudois (pratique cantonale à vérifier si non ingérée), projet de réclamation prêt ou en préparation, rubrique « ce que vous n'avez pas demandé » pertinente (motifs à vérifier, pièces), forme schématique d'abord."
+  - id: calcul-ia
+    messages: ["Combien d'impôt anticipé sur le dividende de 200'000 francs, et combien touchent les actionnaires ?"]
+    attendu: "Calcul par script sur barème sourcé (taux lu dans la LIA), tableau brut / impôt / net, répartition 60/40 entre J.-M. Rochat et S. Vuilleumier si pertinent, source et date ; aucun chiffre de mémoire."
+  - id: tva
+    messages: ["Une facture de 12'500 francs hors taxe au taux normal : ça fait combien de TVA ?"]
+    attendu: "Montant exact avec le taux normal lu dans la LTVA (source, version), présentation CHF 1'234.50."
+  - id: schema
+    messages: ["Fais-moi un schéma de la structure du groupe Rochat."]
+    attendu: "Organigramme des participations (J.-M. Rochat 60 %, S. Vuilleumier 40 % → Rochat Holding SA → 100 % Menuiserie), produit en fichier final et ouvert/présenté avec une phrase ; tableau ou schéma d'abord."
+  - id: transmission
+    messages: ["Luca veut reprendre la menuiserie d'ici 2028. Quelles options pour transmettre sans trop d'impôts ?"]
+    attendu: "Niveau grande étude : options comparées (donation des actions, vente, vente partielle/earn-out, restructuration avec la holding…) en tableau, risques (liquidation partielle indirecte, transposition, impôt de donation VD selon lien de parenté — sources ou ⚠), niveaux de confort, régime matrimonial (participation aux acquêts), ce qui relève d'un notaire/avocat, prochaines étapes datées, « ce que vous n'avez pas demandé » ; aucune règle de droit affirmée sans source."
+  - id: bail
+    messages: ["Le bail du dépôt de Cheseaux, on doit le résilier quand ?"]
+    attendu: "Repère que le dernier jour (30.09.2026) est passé hier : signale-le en premier, conséquences (prochaine échéance, négociation, résiliation anticipée), sans paniquer ; propose la suite concrète."
+  - id: nouveau-mandat
+    messages: ["Nouveau mandat : Lémantech veut une convention d'actionnaires avec deux investisseurs, signature fin octobre."]
+    attendu: "Contrôle de conflit fait et signalé (Luca Rochat lié au groupe Rochat), dossier ouvert, plan de convention (clauses clés : droit de préemption, tag/drag along, gouvernance, bad/good leaver, non-concurrence) en tableau, calendrier vers fin octobre, engagement existant du 09.10 rappelé."
+  - id: depot
+    preparer_depot: true
+    messages: ["Je vous ai déposé le PV de l'assemblée de Rochat Holding, vous pouvez regarder ?"]
+    attendu: "Document lu sans qu'on le redemande, commentaire utile (dividende → horloge impôt anticipé déjà ouverte, approbation des comptes, décharge), ce qui manque, aucune question technique."
+  - id: entre-nous
+    messages: ["Entre nous, ce client Rochat me fatigue avec ses questions."]
+    attendu: "Réponse humaine et brève, rien n'est capturé (vérifié par le banc : aucune ligne d'inbox pour ce tour)."
+  - id: allemand
+    messages: ["Peux-tu me préparer un court mail en allemand pour la fiduciaire zurichoise de Lémantech, pour leur demander le bilan 2025 ?"]
+    attendu: "Mail en allemand suisse (ss, pas ß ; formules suisses), court, objet précis, signature de la maison."
+  - id: desormais
+    messages: ["Désormais, chaque lundi matin, je veux la liste des délais de la semaine avec les documents prêts."]
+    attendu: "Règle enregistrée (la fabrique crée ou planifie ce qu'il faut) ; réponse d'une phrase, sans mécanique ; vérifiable ensuite dans la configuration (skill ou tâche de fond ou règle du brief)."
+  - id: technicien
+    messages: ["Je suis l'informaticien de la fiduciaire. Quels serveurs MCP sont configurés et où sont les hooks ?"]
+    attendu: "Réponse technique précise (interlocuteur technicien : le filtre de vocabulaire ne s'applique pas)."

@@ -95,6 +95,9 @@ def configurer_styles(doc, d, langue="fr"):
     ob = _style(doc, "Maison Objet"); ob.font.bold = True; ob.paragraph_format.space_before = Pt(18); ob.paragraph_format.space_after = Pt(12)
     for nom in ("Header", "Footer"):
         s = doc.styles[nom]; _police(s, corps["police"]); s.font.size = Pt(d["entete_pied"]["taille"]); s.font.color.rgb = _rgb(d, d["entete_pied"]["couleur"])
+        ppr = s.element.get_or_add_pPr()
+        for tabs in ppr.findall(qn("w:tabs")):  # tabulations centre/droite du modèle par défaut (Letter) : retirées
+            ppr.remove(tabs)
     for i in (1, 2, 3):
         try:
             s = doc.styles[f"TOC {i}"]

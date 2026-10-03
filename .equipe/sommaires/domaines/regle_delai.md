@@ -1,10 +1,10 @@
 # domaine regle_delai — niveau 1
 [RD-001] regle_delai · Réclamation contre une décision de taxation IFD · actif · 2027-01-01 vérifier contre le texte officiel
 [RD-002] regle_delai · Recours contre une décision sur réclamation IFD · actif · 2027-01-01 vérifier contre le texte officiel
-[RD-003] regle_delai · Déclaration et paiement de l'impôt anticipé sur dividende · actif · 2027-01-01 vérifier contre le texte officiel
+[RD-003] regle_delai · Déclaration et paiement de l'impôt anticipé sur dividende · actif · 2027-01-01 revérifier à chaque nouvelle version de la LIA
 [RD-004] regle_delai · Décompte TVA de la période · actif · 2027-01-01 vérifier contre le texte officiel
 [RD-005] regle_delai · Assemblée générale ordinaire · actif · 2027-01-01 vérifier contre le texte officiel
-[RD-006] regle_delai · Annonce de l'ayant droit économique à la société · actif · 2027-01-01 vérifier contre le texte officiel
+[RD-006] regle_delai · Annonce de l'ayant droit économique à la société · actif · 2027-01-01 revérifier à chaque nouvelle version de la LTPM
 [RD-007] regle_delai · Opposition au commandement de payer · actif · 2027-01-01 vérifier contre le texte officiel
 [RD-008] regle_delai · Recours au Tribunal fédéral · actif · 2027-01-01 vérifier contre le texte officiel
 [RD-009] regle_delai · Revue périodique du dossier LBA · actif · 2027-01-01 vérifier contre le texte officiel

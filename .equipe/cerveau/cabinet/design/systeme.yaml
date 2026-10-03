@@ -54,6 +54,7 @@ typographie:         # polices présentes sur Windows (et macOS avec Office) san
     corps: ['C:/Windows/Fonts/calibri.ttf', '/Library/Fonts/Microsoft/Calibri.ttf', '/usr/share/fonts/truetype/crosextra/Carlito-Regular.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf']
     corps_gras: ['C:/Windows/Fonts/calibrib.ttf', '/Library/Fonts/Microsoft/Calibri Bold.ttf', '/usr/share/fonts/truetype/crosextra/Carlito-Bold.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf']
     corps_italique: ['C:/Windows/Fonts/calibrii.ttf', '/Library/Fonts/Microsoft/Calibri Italic.ttf', '/usr/share/fonts/truetype/crosextra/Carlito-Italic.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Italic.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf']
+    symboles: ['C:/Windows/Fonts/seguisym.ttf', '/System/Library/Fonts/Apple Symbols.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf']
     titres: ['C:/Windows/Fonts/cambria.ttc', 'C:/Windows/Fonts/cambriab.ttf', '/usr/share/fonts/truetype/crosextra/Caladea-Bold.ttf', '/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf']
   niveaux:           # styles de titres numérotés (1 / 1.1 / 1.1.1)
     - {style: Heading 1, taille: 15, gras: true, avant: 18, apres: 6, numero: '%1.'}
