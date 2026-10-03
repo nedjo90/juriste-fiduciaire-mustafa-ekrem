@@ -17,8 +17,36 @@ try { [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding $false } c
 
 $Depot   = if ($env:MON_EQUIPE_DEPOT)   { $env:MON_EQUIPE_DEPOT }   else { 'https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git' }
 $Branche = if ($env:MON_EQUIPE_BRANCHE) { $env:MON_EQUIPE_BRANCHE } else { 'ccr-e8f5838b-808ukj' }
-$Dossier = if ($env:MON_EQUIPE_DOSSIER) { $env:MON_EQUIPE_DOSSIER } else { Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'jurix' }
 $Jeton   = $env:MON_EQUIPE_JETON
+
+# Dossier : Documents\jurix, mais jamais dans un dossier synchronise (OneDrive, souvent active d'office avec Microsoft 365,
+# Dropbox, partage reseau d'une fiduciaire) : la synchronisation verrouille les fichiers que l'equipe reecrit et abime
+# l'historique. Dans ce cas : Documents local du profil (non synchronise), et un raccourci JURIX dans le Documents visible.
+function Dossier-Local([string]$d) {
+  if (-not $d) { return $false }
+  if ($d.StartsWith('\\')) { return $false }
+  foreach ($v in 'OneDrive', 'OneDriveCommercial', 'OneDriveConsumer') {
+    foreach ($o in @((Get-Item -LiteralPath ('Env:' + $v) -ErrorAction SilentlyContinue).Value, [Environment]::GetEnvironmentVariable($v, 'User'))) {
+      if ($o -and $d.TrimEnd('\').ToLower().StartsWith($o.TrimEnd('\').ToLower())) { return $false }
+    }
+  }
+  if ($d -match '(?i)onedrive|dropbox|icloud|google drive|nextcloud|owncloud') { return $false }
+  try { if ((New-Object IO.DriveInfo ([IO.Path]::GetPathRoot($d))).DriveType -ne [IO.DriveType]::Fixed) { return $false } } catch {}
+  return $true
+}
+$DocsVisibles = [Environment]::GetFolderPath('MyDocuments')
+$RaccourciDocs = $false
+if ($env:MON_EQUIPE_DOSSIER) {
+  $Dossier = $env:MON_EQUIPE_DOSSIER
+} else {
+  $cands = @()
+  if ($DocsVisibles) { $cands += (Join-Path $DocsVisibles 'jurix') }
+  $cands += (Join-Path (Join-Path $env:USERPROFILE 'Documents') 'jurix'), (Join-Path $env:LOCALAPPDATA 'jurix')
+  $Dossier = $cands | Where-Object { Test-Path -LiteralPath (Join-Path $_ '.git') } | Select-Object -First 1   # deja installe : on le garde
+  if (-not $Dossier) { $Dossier = $cands | Where-Object { Dossier-Local (Split-Path -Parent $_) } | Select-Object -First 1 }
+  if (-not $Dossier) { $Dossier = Join-Path $env:LOCALAPPDATA 'jurix' }
+  $RaccourciDocs = $DocsVisibles -and ((Split-Path -Parent $Dossier) -ne $DocsVisibles)
+}
 $Tmp = Join-Path $env:TEMP 'mon-equipe-amorcage'
 New-Item -ItemType Directory -Force -Path $Tmp | Out-Null
 $Journal = Join-Path $Tmp 'amorcage.log'
@@ -160,6 +188,17 @@ if (Test-Path -LiteralPath $cible) {
   $l2 = '   cabinet augment' + [char]0x00E9 + ' ' + [char]0x00B7 + ' droit suisse ' + [char]0x00B7 + ' en ligne'
   $corps = "if (`$args.Count -eq 0) { Write-Host ''; Write-Host '" + $l1 + "' -ForegroundColor Cyan; Write-Host '" + $l2 + "' -ForegroundColor DarkCyan; Write-Host '' }; & '" + ($cible -replace "'", "''") + "' @args"
   Set-Item -Path 'function:global:jurix' -Value ([ScriptBlock]::Create($corps))
+}
+if ($RaccourciDocs -and (Test-Path -LiteralPath $Dossier)) {
+  # dossier hors du Documents synchronise : Mustafa le retrouve quand meme dans Documents
+  try {
+    $ws = New-Object -ComObject WScript.Shell
+    $sc = $ws.CreateShortcut((Join-Path $DocsVisibles 'JURIX.lnk'))
+    $sc.TargetPath = $Dossier
+    $sc.Description = 'Dossier de JURIX (sur cet ordinateur)'
+    $sc.Save()
+    Noter ("raccourci dans Documents vers " + $Dossier)
+  } catch { Noter ("raccourci dans Documents impossible : " + $_) }
 }
 if (Test-Path -LiteralPath $Dossier) { Set-Location -LiteralPath $Dossier }
 Dire ''
