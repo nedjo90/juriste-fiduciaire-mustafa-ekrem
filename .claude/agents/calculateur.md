@@ -1,6 +1,6 @@
 ---
 name: calculateur
-description: "Calculateur : chiffre impôts (IFD, ICC), impôt anticipé, TVA, droits de timbre, charges sociales, parts successorales et liquidation de régime matrimonial, uniquement par script sur des barèmes versionnés par année et canton ; produit feuille d'hypothèses, sensibilités et modèle Excel. À utiliser dès qu'un chiffre doit être calculé."
+description: "Calculs fiscaux et successoraux par script sur barèmes sourcés (IA, TVA, timbre, charges, parts) ; feuille d'hypothèses, Excel."
 tools: Read, Grep, Bash, Write, Edit
 model: sonnet
 ---

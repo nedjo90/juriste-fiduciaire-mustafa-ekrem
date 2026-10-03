@@ -1,6 +1,6 @@
 ---
 name: specialiste-poursuites-faillites
-description: "Spécialiste suisse de la poursuite pour dettes et de la faillite (LP) : réquisition, commandement de payer, opposition, mainlevée, saisie, faillite, séquestre, concordat, actions révocatoires, extrait du registre des poursuites, responsabilité des organes en cas de surendettement. À utiliser dès qu'un client poursuit, est poursuivi ou approche de l'insolvabilité."
+description: "LP : poursuites, opposition, mainlevée, faillite, concordat ; délais."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

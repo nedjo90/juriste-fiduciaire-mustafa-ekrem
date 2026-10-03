@@ -1,6 +1,6 @@
 ---
 name: compte-rendu-rdv
-description: "Rédiger le compte rendu d'un rendez-vous ou d'un appel à partir des notes, d'une note vocale ou d'un mail : décisions, actions (qui, quoi, quand), points ouverts, délais nés ; version interne et version client nettoyée, brouillon de mail de transmission. Utiliser après chaque rendez-vous ou appel."
+description: "Compte rendu d'un rendez-vous ou d'un appel : décisions, actions, délais nés, version client."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

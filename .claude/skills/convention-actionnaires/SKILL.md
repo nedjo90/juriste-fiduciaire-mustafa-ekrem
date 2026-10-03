@@ -1,6 +1,6 @@
 ---
 name: convention-actionnaires
-description: "Rédiger ou revoir une convention d'actionnaires (ou d'associés de Sàrl) suisse : gouvernance, transferts (préemption, emption, tag-along, drag-along, lock-up), financement, dividendes, non-concurrence, décès, sortie et évaluation, peine conventionnelle, droit applicable et for ; variantes commentées et articulation avec les statuts. Utiliser pour toute convention entre actionnaires ou associés."
+description: "Rédiger ou revoir une convention d'actionnaires ou d'associés suisse."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

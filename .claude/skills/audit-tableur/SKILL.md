@@ -1,6 +1,6 @@
 ---
 name: audit-tableur
-description: "Auditer un classeur Excel (calcul fiscal, plan financier, tableau de parts successorales, modèle de la maison ou fichier reçu) : erreurs de formules, valeurs en dur, références cassées, incohérences de totaux, unités et arrondis, sources des barèmes. Utiliser avant de livrer un modèle Excel ou dès qu'un tableur reçu doit être fiabilisé."
+description: "Auditer un classeur Excel : formules, valeurs en dur, totaux, barèmes sourcés."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

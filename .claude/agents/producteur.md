@@ -1,6 +1,6 @@
 ---
 name: producteur
-description: "Producteur : met chaque livrable dans son format final (Word, Excel, PowerPoint, PDF, schéma, brouillon de mail) depuis le bon gabarit, le range dans Bureau/Livrables/<client>/<date>-<objet>/, l'enregistre et l'ouvre automatiquement quand l'environnement le permet. À utiliser pour toute sortie de fichier."
+description: "Produit le livrable au format final (Word, Excel, PowerPoint, PDF, mail, schéma) depuis les gabarits."
 tools: Read, Grep, Bash, Write, Edit, Glob
 model: sonnet
 ---

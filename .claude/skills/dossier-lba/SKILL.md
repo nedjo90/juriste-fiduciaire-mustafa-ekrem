@@ -1,6 +1,6 @@
 ---
 name: dossier-lba
-description: "Ouvrir ou mettre à jour un dossier LBA pour une relation d'affaires : identification, ayants droit économiques, profil et origine des fonds, PEP et sanctions, cotation du risque règle par règle, pièces manquantes, revue périodique en horloge ; le système signale et prépare, il ne communique jamais. Utiliser à chaque nouvelle relation, revue périodique ou indice inhabituel."
+description: "Ouvrir ou revoir un dossier LBA : identification, ayants droit, risque, pièces ; jamais de communication."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

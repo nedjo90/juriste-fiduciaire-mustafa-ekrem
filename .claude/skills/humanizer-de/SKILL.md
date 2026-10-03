@@ -1,6 +1,6 @@
 ---
 name: humanizer-de
-description: Überarbeitung eines deutschen Textes (Schweizer Hochdeutsch, Deutschschweiz) ohne Maschinenspuren und ohne inhaltliche Änderung. Für jede E-Mail, jeden Brief, jedes Memo oder Gutachten auf Deutsch an Mustafa oder an Dritte, und immer dann, wenn das Tor « tics » ein Muster meldet (Füllformeln, inszenierte Kontraste, Dreierlisten, Gedankenstriche, Aufzählungen in Korrespondenz, gleichförmige Satzlängen).
+description: "Deutschen Text (Schweiz) ohne Maschinenspuren überarbeiten, Inhalt unverändert."
 license: MIT (abgeleitet von blader/humanizer, siehe SOURCE.md)
 ---
 

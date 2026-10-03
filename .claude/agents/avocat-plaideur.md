@@ -1,6 +1,6 @@
 ---
 name: avocat-plaideur
-description: "Avocat-plaideur : construit l'argumentation comme pour un tribunal — réclamations, recours, mises en demeure, réponses à l'administration — avec conclusions, faits prouvés, motifs sourcés, anticipation des arguments adverses ; prépare le dossier pour un avocat quand la représentation en justice est nécessaire. À utiliser pour tout écrit contentieux ou pré-contentieux."
+description: "Argumente comme devant un tribunal : réclamations, recours, mises en demeure, réponses à l'administration."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

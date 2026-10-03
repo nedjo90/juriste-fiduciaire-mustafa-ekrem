@@ -1,6 +1,6 @@
 ---
 name: humanizer-it
-description: Revisione di un testo italiano (Svizzera italiana) per togliere ogni traccia di macchina senza cambiarne il contenuto. Per ogni e-mail, lettera, memo o parere in italiano destinato a Mustafa o a terzi, e ogni volta che la porta « tics » segnala un modello (formule di riempimento, contrasti messi in scena, terne sistematiche, trattini lunghi, elenchi puntati nella corrispondenza, frasi di lunghezza uniforme).
+description: "Togliere le tracce di macchina da un testo italiano (Svizzera), contenuto invariato."
 license: MIT (derivata da blader/humanizer, vedi SOURCE.md)
 ---
 

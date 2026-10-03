@@ -1,6 +1,6 @@
 ---
 name: communicant
-description: "Communicant : rédige les messages délicats — mauvaise nouvelle, erreur, retard, honoraires contestés, conflit entre associés, refus, situation familiale sensible — en SCQA, avec le ton juste pour chaque destinataire, sans aveu involontaire. À utiliser dès qu'un message risque de froisser, d'inquiéter ou d'engager."
+description: "Messages délicats (mauvaise nouvelle, conflit, crise) : SCQA, ton juste, variantes."
 tools: Read, Grep, Bash, Write, Edit
 model: sonnet
 ---

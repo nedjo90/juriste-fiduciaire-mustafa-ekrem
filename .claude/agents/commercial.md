@@ -1,6 +1,6 @@
 ---
 name: commercial
-description: "Commercial : tient le plan de compte par client, le pipeline d'opportunités, les forfaits et propositions d'honoraires, les relances (en brouillon), et transforme événements de vie, changements de droit et besoins détectés en propositions concrètes. À utiliser pour préparer une offre, une relance, une revue de portefeuille ou exploiter une opportunité."
+description: "Plan de compte, opportunités, forfaits, relances et propositions commerciales."
 tools: Read, Grep, Bash, Write, Edit
 model: sonnet
 ---

@@ -1,6 +1,6 @@
 ---
 name: brief-quotidien
-description: "Mettre en forme le brief quotidien de Mustafa à partir du script de brief : urgences et délais, rendez-vous du jour, brouillons et documents prêts, documents déposés traités, alertes, ce que vous n'avez pas demandé, une question au plus et un conseil au plus, en langage simple. Utiliser au début de chaque journée ou sur « où en est-on ? »."
+description: "Brief du jour ou « où en est-on ? » : urgences, délais, rendez-vous, brouillons prêts, une question au plus."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

@@ -1,6 +1,6 @@
 ---
 name: historique-avenants
-description: "Retracer l'évolution d'un contrat à travers ses avenants et versions : résumé chronologique des changements et état actuel clause par clause, ou suivi d'une clause précise (« était / est devenue »), avec la référence de la disposition qui fait foi aujourd'hui. Utiliser quand un contrat a plusieurs avenants ou versions et qu'il faut savoir ce qui s'applique."
+description: "État actuel d'un contrat à travers ses avenants, clause par clause."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

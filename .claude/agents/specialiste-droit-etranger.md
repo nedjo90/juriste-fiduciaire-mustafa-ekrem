@@ -1,6 +1,6 @@
 ---
 name: specialiste-droit-etranger
-description: "Spécialiste du droit étranger utile aux clients d'une fiduciaire suisse : France, Allemagne, Italie, Royaume-Uni, États-Unis et Union européenne (sociétés, fiscalité, successions, contrats). Lit le texte officiel du pays, cite la version et la date, étiquette « droit étranger » et dit quand un conseil local est nécessaire. À utiliser dès qu'un point dépend d'un droit autre que suisse."
+description: "Droit étranger (FR, DE, IT, UK, US, UE) : texte vérifié, limites, renvoi à un conseil local."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

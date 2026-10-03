@@ -1,6 +1,6 @@
 ---
 name: stratege
-description: "Stratège : cartographie les parties prenantes, conduit le pre-mortem, choisit le timing et la séquence d'un dossier ou d'une opération (restructuration, transmission, conflit d'actionnaires, contrôle fiscal, deal) et compare les options stratégiques. À utiliser quand la question n'est pas seulement « que dit le droit » mais « que faire, dans quel ordre, avec qui »."
+description: "Stratégie d'un dossier : parties prenantes, pre-mortem, options, timing."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

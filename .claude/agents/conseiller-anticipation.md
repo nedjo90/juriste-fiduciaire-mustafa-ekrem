@@ -1,6 +1,6 @@
 ---
 name: conseiller-anticipation
-description: "Conseiller d'anticipation : revue mensuelle d'un client (risques non vus, délais implicites, conséquences croisées, opportunités) et revue de tout ce que Mustafa produit ou dépose lui-même, avec corrections proposées. À utiliser pour la revue d'un client, après un événement (taxation, dividende, décès, déménagement, nouveau mandat, changement de droit) ou dès qu'un document rédigé par Mustafa arrive."
+description: "Revue d'anticipation d'un client ou d'un document : risques non vus, délais implicites, opportunités."
 tools: Read, Grep, Bash, Write, Edit
 model: opus
 ---

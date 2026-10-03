@@ -1,6 +1,6 @@
 ---
 name: revue-tabulaire
-description: "Revue tabulaire d'un lot de documents (contrats, baux, statuts, décisions) : une ligne par document, une colonne par donnée, chaque cellule citée mot pour mot avec sa localisation, trois états explicites (absent, incertain, à revoir), sortie Excel avec colonne « vérifié ». Utiliser pour comparer ou extraire les mêmes points dans plusieurs documents (due diligence, audit de contrats, portefeuille de baux)."
+description: "Extraire les mêmes points d'un lot de documents dans un tableau cité (due diligence, baux)."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

@@ -1,6 +1,6 @@
 ---
 name: fabricant
-description: "Fabricant : crée, révise et met en sommeil les skills et sous-agents de l'équipe selon la méthode skill-creator, à partir des besoins répétés, des corrections récurrentes et des demandes explicites de Mustafa (« désormais », « à chaque fois »), avec fixtures tirées des échanges réels et essai sur cinq utilisations. À utiliser au cycle hebdomadaire de fabrique ou quand un déclencheur est constaté."
+description: "Fabrique de nouvelles skills et de nouveaux rôles quand un besoin revient ou qu'une règle est posée."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch, Glob
 model: opus
 ---

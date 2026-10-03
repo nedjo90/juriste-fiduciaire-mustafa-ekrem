@@ -1,6 +1,6 @@
 ---
 name: humanizer-fr
-description: Relecture et réécriture d'un texte français (Suisse romande) pour en retirer toute trace de machine, sans rien changer à ce qu'il dit. À utiliser pour tout mail, lettre, mémo, avis ou message destiné à Mustafa ou à un tiers, et chaque fois que la porte « tics » signale un motif (formules passe-partout, contrastes mis en scène, triades, tirets longs, puces dans une correspondance, phrases de longueur uniforme).
+description: "Retirer les tics de machine d'un texte français (Suisse romande) sans en changer le sens."
 license: MIT (dérivée de blader/humanizer, voir SOURCE.md)
 ---
 

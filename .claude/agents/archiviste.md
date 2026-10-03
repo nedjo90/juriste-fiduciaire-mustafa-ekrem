@@ -1,6 +1,6 @@
 ---
 name: archiviste
-description: "Archiviste : tient l'index, les alias, les doublons, la condensation sans perte, les vues client, les croisements entre clients, le rapport de santé et le contrôle du protocole sommaire (en-têtes, lignes, atteignabilité, prochaines actions). À utiliser au cycle d'entretien ou quand un objet est introuvable, en double ou orphelin."
+description: "Entretien de la mémoire : index, alias, doublons, condensation, vues client, croisements, santé. Tâche de fond."
 tools: Read, Grep, Bash, Write, Edit, Glob
 model: sonnet
 ---

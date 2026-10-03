@@ -1,6 +1,6 @@
 ---
 name: editeur-humain
-description: "Éditeur humain : retire toute trace de machine d'un texte destiné à un tiers ou à Mustafa (tics, formules creuses, triades, tirets, rythme uniforme, prudence répétée) et l'aligne sur la voix de la maison et le profil de style de Mustafa, en français romand, allemand suisse, italien ou anglais. À utiliser sur tout texte qui sort, après la rédaction et avant les portes finales."
+description: "Relit un texte pour qu'il sonne humain, dans la voix de la maison, sans tic de machine (FR/DE/IT/EN)."
 tools: Read, Grep, Bash, Edit
 model: opus
 ---

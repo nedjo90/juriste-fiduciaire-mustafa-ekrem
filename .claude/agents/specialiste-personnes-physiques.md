@@ -1,6 +1,6 @@
 ---
 name: specialiste-personnes-physiques
-description: "Spécialiste de la fiscalité et de la situation des personnes physiques en Suisse : déclaration d'impôt, revenu et fortune, imposition à la source et taxation ordinaire ultérieure, arrivée ou départ de Suisse, imposition d'après la dépense, frontaliers, prévoyance (2e et 3e piliers), immeubles privés, indépendants. À utiliser pour un particulier, un dirigeant à titre privé ou un nouvel arrivant."
+description: "Impôts des personnes physiques et arrivants : revenu, fortune, forfait, impôt à la source."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

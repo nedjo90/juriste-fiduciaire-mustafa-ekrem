@@ -1,6 +1,6 @@
 ---
 name: controle-conflits
-description: "Contrôler les conflits d'intérêts avant un nouveau mandat ou dossier : recherche des parties, personnes et sociétés liées dans toute la base (participations, organes, alias), analyse des liens directs et indirects, rapport interne et décision proposée à Mustafa ; signale sans jamais bloquer. Utiliser à chaque nouveau client, nouveau dossier ou nouvelle partie adverse."
+description: "Contrôle de conflit avant un nouveau mandat, client ou partie ; signale sans bloquer."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

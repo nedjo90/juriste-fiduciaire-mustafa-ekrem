@@ -1,6 +1,6 @@
 ---
 name: fiche-rdv
-description: "Préparer la fiche de rendez-vous la veille : participants et leur rôle, objet, historique utile du client, délais et dossiers ouverts, documents à avoir, questions à poser, ce que vous n'avez pas demandé. Utiliser pour tout rendez-vous ou appel à venir dans les vingt-quatre heures."
+description: "Fiche de rendez-vous la veille : participants, historique, délais, documents, questions."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

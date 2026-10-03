@@ -1,6 +1,6 @@
 ---
 name: specialiste-tva
-description: "Spécialiste de la TVA suisse : assujettissement et inscription, méthodes de décompte (effective, taux de la dette fiscale nette, forfaitaire), taux, lieu des prestations, importations et impôt sur les acquisitions, option, corrections de l'impôt préalable, procédure de déclaration, groupe TVA, contrôles de l'AFC. À utiliser dès qu'une question, une facture, un décompte ou un délai touche la TVA."
+description: "TVA : assujettissement, taux, décomptes, méthodes, corrections, contrôles AFC."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

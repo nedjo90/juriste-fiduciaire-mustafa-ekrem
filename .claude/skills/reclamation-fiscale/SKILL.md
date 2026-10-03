@@ -1,6 +1,6 @@
 ---
 name: reclamation-fiscale
-description: "Préparer une réclamation contre une décision de taxation suisse (IFD, impôts cantonaux et communaux, impôt anticipé, TVA) : horloge du délai, analyse poste par poste, décision de contester, projet complet avec conclusions, faits, motifs sourcés et bordereau de pièces, prêt avant l'échéance et jamais déposé. Utiliser dès qu'une décision de taxation ou une décision sur réclamation arrive."
+description: "Décision de taxation reçue : délai, analyse, projet de réclamation complet, jamais déposé."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

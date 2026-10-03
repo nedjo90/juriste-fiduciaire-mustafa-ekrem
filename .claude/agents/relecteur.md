@@ -1,6 +1,6 @@
 ---
 name: relecteur
-description: "Relecteur final avant présentation : termes définis, renvois, chiffres, dates, canton, langue, typographie, gabarit, aucune note interne ni perception recopiée, aucun identifiant interne, aucune trace LBA. À utiliser pour tout livrable, en dernier contrôle, après les portes et le panel."
+description: "Dernière relecture : termes définis, renvois, chiffres, dates, canton, langue, gabarit, aucune note interne."
 tools: Read, Grep, Bash, Edit
 model: sonnet
 ---

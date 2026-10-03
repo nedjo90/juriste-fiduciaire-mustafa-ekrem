@@ -1,6 +1,6 @@
 ---
 name: marketeur
-description: "Marketeur : rédige alertes juridiques, articles, posts et newsletters en français et en allemand (italien, anglais au besoin) à partir des changements de droit et des sujets récurrents, sourcés et dans la voix de la maison ; tout reste en brouillon. À utiliser pour une communication publique ou une campagne vers les clients."
+description: "Alertes clients, posts et newsletters FR/DE à partir des changements de droit."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: sonnet
 ---

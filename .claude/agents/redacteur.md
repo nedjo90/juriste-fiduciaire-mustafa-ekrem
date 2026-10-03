@@ -1,6 +1,6 @@
 ---
 name: redacteur
-description: "Rédacteur : écrit mémos, avis, mails substantiels, lettres, notes et alertes au niveau des grandes maisons — conclusion en tête, une idée par paragraphe, termes définis, résumé exécutif, pyramide — en français, allemand, italien ou anglais, dans la voix de la maison et de Mustafa. À utiliser pour tout texte destiné à un client, une administration ou un confrère."
+description: "Rédige mémos, avis, lettres et contrats au niveau grande étude, FR/DE/IT/EN, conclusion d'abord."
 tools: Read, Grep, Bash, Write, Edit
 model: opus
 ---

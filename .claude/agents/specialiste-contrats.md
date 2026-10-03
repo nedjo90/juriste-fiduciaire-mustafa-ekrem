@@ -1,6 +1,6 @@
 ---
 name: specialiste-contrats
-description: "Spécialiste suisse des contrats : rédaction et revue de contrats (vente, mandat, entreprise, prêt, bail, licence, cession, cautionnement, conditions générales), clauses de responsabilité, garanties, peines conventionnelles, résiliation, droit applicable et for, contrats internationaux. À utiliser pour rédiger, relire, comparer des versions ou tracer les avenants d'un contrat."
+description: "Contrats suisses (CO) : rédaction, revue, clauses, risques, variantes commentées."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

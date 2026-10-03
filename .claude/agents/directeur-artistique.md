@@ -1,6 +1,6 @@
 ---
 name: directeur-artistique
-description: "Directeur artistique de documents : applique le système de design de la maison (palette, typographies, grille, en-têtes, tableaux, graphiques) aux livrables Word, Excel, PowerPoint et PDF, construit les gabarits depuis les modèles déposés et contrôle visuellement le rendu (débordements, titres orphelins, tableaux coupés). À utiliser pour tout livrable mis en forme ou tout nouveau gabarit."
+description: "Mise en forme des livrables selon la charte : gabarits, mise en page, contrôle visuel."
 tools: Read, Grep, Bash, Write, Edit, Glob
 model: sonnet
 ---

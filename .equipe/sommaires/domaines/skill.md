@@ -1,10 +1,10 @@
 # domaine skill — niveau 1
-[SK-017] skill · frontend-design · actif · 2027-01-01 réviser selon le tableau de bord des principes
-[SK-022] skill · canvas-design · actif · 2027-01-01 réviser selon le tableau de bord des principes
-[SK-023] skill · theme-factory · actif · 2027-01-01 réviser selon le tableau de bord des principes
-[SK-024] skill · brand-guidelines · actif · 2027-01-01 réviser selon le tableau de bord des principes
-[SK-025] skill · doc-coauthoring · actif · 2027-01-01 réviser selon le tableau de bord des principes
-[SK-026] skill · internal-comms · actif · 2027-01-01 réviser selon le tableau de bord des principes
+[SK-017] skill · frontend-design · dormant · 2027-01-01 réveil par la fabrique au premier besoin
+[SK-022] skill · canvas-design · dormant · 2027-01-01 réveil par la fabrique au premier besoin
+[SK-023] skill · theme-factory · dormant · 2027-01-01 réveil par la fabrique au premier besoin
+[SK-024] skill · brand-guidelines · dormant · 2027-01-01 réveil par la fabrique au premier besoin
+[SK-025] skill · doc-coauthoring · dormant · 2027-01-01 réveil par la fabrique au premier besoin
+[SK-026] skill · internal-comms · dormant · 2027-01-01 réveil par la fabrique au premier besoin
 [SK-027] skill · skill-creator · actif · 2027-01-01 réviser selon le tableau de bord des principes
 [SK-028] skill · humanizer · actif · 2027-01-01 réviser selon le tableau de bord des principes
 [SK-029] skill · humanizer-fr · actif · 2027-01-01 réviser selon le tableau de bord des principes

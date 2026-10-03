@@ -111,7 +111,8 @@ def session_start(source="startup"):
     if n == 1:
         set_etat("premiere_session_le", iso())
     set_etat("injectes", {})
-    parts = [f"Date réelle : {now().strftime('%Y-%m-%d %H:%M')} Europe/Zurich. Session n°{n}.",
+    jour = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"][today().weekday()]
+    parts = [f"Aujourd'hui : {jour} {iso()} {now().strftime('%H:%M')} (Europe/Zurich). Session n°{n}" + (" — toute première session de Mustafa : accueil bref, aucune question." if n == 1 else "."),
              niveau0(), brief(), etat_session(), construction_ligne(),
              "Rappel : protocole sommaire (entrer par .equipe/sommaires/SOMMAIRE.md, cibler par cerebro find/summary/open --section, sortir en régénérant). Jamais de jargon ni de chemin à Mustafa."]
     txt = "\n\n".join(p for p in parts if p)

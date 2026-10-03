@@ -1,6 +1,6 @@
 ---
 name: redaction-mail
-description: "Rédiger un brouillon de mail professionnel (réponse à un client, une administration, un confrère, une banque) dans la langue du destinataire et la voix de la maison : objet précis, réponse en tête, pièces nommées, signature ; jamais envoyé. Utiliser pour toute réponse à un mail reçu ou tout mail à préparer."
+description: "Brouillon de mail professionnel dans la langue du destinataire ; jamais envoyé."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

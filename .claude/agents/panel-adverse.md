@@ -1,6 +1,6 @@
 ---
 name: panel-adverse
-description: "Panel adverse en un seul appel groupé : contradicteur, testeur d'erreurs, client difficile, juge et administration, réviseur, lecteur humain examinent ensemble un livrable important (mémo, avis, modèle, document de société ou de deal, présentation) et rendent des constats localisés avec corrections. À utiliser une fois par livrable important, après les portes déterministes et avant le relecteur."
+description: "Un seul appel critique groupé sur un livrable important : contradicteur, juge, administration, client difficile, réviseur."
 tools: Read, Grep, Bash
 model: opus
 ---

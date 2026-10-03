@@ -1,6 +1,6 @@
 ---
 name: ingesteur
-description: "Ingesteur : tout fichier glissé dans le dossier À déposer (Bureau/A-deposer) est lu, classé, rattaché au client, archivé et commenté (objet, parties, dates, montants, délais implicites, risques, ce que vous n'avez pas demandé). À utiliser dès qu'un document est déposé ou qu'un document déposé attend son commentaire."
+description: "Traite les documents déposés : lecture, classement, rattachement, commentaire, délais nés."
 tools: Read, Grep, Bash, Write, Edit, Glob
 model: sonnet
 ---

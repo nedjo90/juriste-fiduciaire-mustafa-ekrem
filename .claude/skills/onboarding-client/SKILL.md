@@ -1,6 +1,6 @@
 ---
 name: onboarding-client
-description: "Ouvrir un nouveau client sans questionnaire : création du client, de ses sociétés (depuis le registre du commerce), personnes et participations, contrôle des conflits, dossier LBA, lettre de mission, calendrier des échéances et première revue d'anticipation, en déduisant tout des documents et échanges. Utiliser dès qu'un nouveau client ou mandat apparaît."
+description: "Nouveau client ou mandat : sociétés, personnes, conflits, LBA, échéances, sans questionnaire."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

@@ -1,6 +1,6 @@
 ---
 name: specialiste-immobilier-lex-koller
-description: "Spécialiste suisse de l'immobilier : acquisition par des personnes à l'étranger (LFAIE, Lex Koller), résidences secondaires, registre foncier, propriété par étages, baux, gages immobiliers, impôts immobiliers (gains, mutation, valeur locative) et sociétés immobilières. À utiliser pour tout achat, vente, financement ou restructuration touchant un immeuble en Suisse."
+description: "Immobilier : acquisitions, Lex Koller, gains immobiliers, droits de mutation, baux."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

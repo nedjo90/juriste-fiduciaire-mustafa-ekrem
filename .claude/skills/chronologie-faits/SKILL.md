@@ -1,6 +1,6 @@
 ---
 name: chronologie-faits
-description: "Construire ou mettre à jour la chronologie d'un dossier à partir des documents : événements datés extraits, dédoublonnés, chacun avec sa source, marqués par importance, lacunes signalées, sans jamais combler un trou de mémoire. Utiliser pour un litige, une réclamation, un contrôle fiscal, une succession ou tout dossier où « qui a fait quoi quand » compte."
+description: "Chronologie sourcée d'un dossier à partir des documents (litige, réclamation, contrôle, succession)."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

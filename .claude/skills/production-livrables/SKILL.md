@@ -1,6 +1,6 @@
 ---
 name: production-livrables
-description: Comment un rôle produit un livrable fini (mémo, avis de droit, note, lettre, PV, modèle de calcul Excel, présentation, rapport PDF, brouillon de mail, schéma, graphique) au format final depuis les gabarits de la maison, le fait passer par les portes déterministes, le corrige et le présente avec ses réserves. À utiliser dès qu'un document doit sortir dans Bureau/Livrables, quel que soit le type ou la langue.
+description: "Sortir un livrable fini (Word, Excel, PowerPoint, PDF, mail, schéma) depuis les gabarits, contrôlé."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

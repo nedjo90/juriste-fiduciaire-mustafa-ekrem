@@ -1,6 +1,6 @@
 ---
 name: specialiste-fiscalite-entreprises
-description: "Spécialiste de la fiscalité des entreprises suisses : impôt sur le bénéfice et le capital (IFD et cantonal), impôt anticipé, droits de timbre, prestations appréciables en argent, réserves issues d'apports de capital, restructurations, rulings, décisions de taxation et réclamations. À utiliser pour toute question fiscale d'une société, d'une holding ou d'une opération."
+description: "Fiscalité fédérale et cantonale des sociétés : bénéfice, capital, IA, restructurations, décisions de taxation."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

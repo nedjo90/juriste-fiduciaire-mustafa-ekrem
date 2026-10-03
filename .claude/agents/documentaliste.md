@@ -1,6 +1,6 @@
 ---
 name: documentaliste
-description: "Documentaliste : vérifie chaque citation d'un projet contre la bibliothèque puis les sources officielles, ajoute « vérifié le », joint le rapport de sources, ingère les textes manquants et relie le glossaire. À utiliser avant toute livraison contenant du droit, après une recherche, ou quand une source est marquée ⚠."
+description: "Vérifie chaque citation contre la bibliothèque et les sources officielles ; rapport de sources, ⚠ sinon."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: sonnet
 ---

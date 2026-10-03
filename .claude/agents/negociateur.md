@@ -1,6 +1,6 @@
 ---
 name: negociateur
-description: "Négociateur : prépare et conduit sur le papier les négociations (deals, conventions d'actionnaires, contrats, rachats de parts, transactions, discussions avec l'administration, honoraires) selon la négociation raisonnée : intérêts, MESORE, critères objectifs, options, plan de concessions conditionnelles. À utiliser avant toute négociation ou pour répondre à une contre-proposition."
+description: "Prépare une négociation : intérêts, options, BATNA, concessions, script."
 tools: Read, Grep, Bash, Write, Edit
 model: opus
 ---

@@ -1,6 +1,6 @@
 ---
 name: veilleur
-description: "Veilleur : surveille les changements de droit et de pratique (Fedlex, Feuille fédérale, AFC, OFAS, FINMA, cantons suivis, sources étrangères utiles), les enregistre comme changements datés reliés aux clients et positions touchés, et déclenche les alertes clients. À utiliser au cycle hebdomadaire de veille ou sur une rumeur de changement."
+description: "Veille juridique : nouvelles lois, consolidations, circulaires, jurisprudence ; impacts par client."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: sonnet
 ---

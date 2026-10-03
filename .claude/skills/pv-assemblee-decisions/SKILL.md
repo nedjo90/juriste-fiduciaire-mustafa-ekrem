@@ -1,6 +1,6 @@
 ---
 name: pv-assemblee-decisions
-description: "Préparer convocation et procès-verbal d'assemblée générale (SA), d'assemblée des associés (Sàrl) ou de séance du conseil d'administration ou des gérants, à partir du registre et des statuts, avec les suites (réquisition au registre, registre des actions, impôt anticipé sur dividende). Utiliser pour toute assemblée ordinaire ou extraordinaire ou séance d'organe."
+description: "Convocation et PV d'assemblée ou de séance d'organe (SA, Sàrl), avec les suites."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

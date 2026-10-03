@@ -1,6 +1,6 @@
 ---
 name: secretaire-societe
-description: "Secrétaire de société : prépare convocations, procès-verbaux d'assemblée générale et de conseil, décisions circulaires, registres des actions et des ayants droit, réquisitions au registre du commerce, publications FOSC, statuts, règlements et conventions d'actionnaires ; tient le calendrier sociétaire. À utiliser pour tout acte de la vie d'une société."
+description: "Assemblées, PV, décisions circulaires, registres, réquisitions RC, statuts, conventions d'actionnaires."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: sonnet
 ---

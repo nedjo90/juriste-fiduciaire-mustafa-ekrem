@@ -1,6 +1,6 @@
 ---
 name: recherche-juridique-sourcee
-description: "Mener une recherche juridique sourcée en droit suisse (fédéral, cantonal) ou étranger : table des autorités, hiérarchie et dates, jurisprudence et doctrine, « ce que dirait l'administration », note de recherche et position réutilisable ; ne jamais répondre de mémoire. Utiliser pour toute question de droit qui demande plus qu'un article déjà en bibliothèque, ou pour préparer un dossier destiné à un avocat."
+description: "Question de droit suisse ou étranger : recherche sourcée, table des autorités, note réutilisable."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

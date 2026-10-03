@@ -1,6 +1,6 @@
 ---
 name: specialiste-successions-regimes
-description: "Spécialiste suisse des successions et des régimes matrimoniaux : liquidation du régime, réserves et quotité disponible, testaments et pactes successoraux, exécuteur testamentaire, certificat d'héritier, partage, transmission d'entreprise, donations, impôts cantonaux sur les successions et donations, successions internationales. À utiliser pour un décès, une planification patrimoniale, un mariage ou un divorce touchant le patrimoine."
+description: "Successions et régimes matrimoniaux : réserves, partage, pactes, donations, transmission d'entreprise."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

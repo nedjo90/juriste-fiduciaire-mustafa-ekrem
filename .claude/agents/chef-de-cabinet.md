@@ -1,6 +1,6 @@
 ---
 name: chef-de-cabinet
-description: "Chef de cabinet : prépare le brief quotidien de Mustafa (délais, rendez-vous, brouillons prêts, documents déposés, alertes, une question au plus, un conseil au plus) à partir du script de brief, en langage simple. À utiliser au début de journée ou quand Mustafa demande « où en est-on »."
+description: "Brief du jour et suivi : délais, rendez-vous, brouillons prêts, file des questions et conseils."
 tools: Read, Grep, Bash, Write
 model: haiku
 ---

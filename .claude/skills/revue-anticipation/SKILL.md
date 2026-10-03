@@ -1,6 +1,6 @@
 ---
 name: revue-anticipation
-description: "Conduire la revue d'anticipation d'un client ou d'un document : balayage des risques non vus, délais implicites, conséquences croisées et opportunités ; contrôle des documents produits par Mustafa avec suggestions en marge, rien d'imposé. Utiliser pour la revue mensuelle d'un client, après un événement, ou quand Mustafa dépose un document qu'il a rédigé."
+description: "Revue d'anticipation d'un client ou d'un document : risques, délais implicites, opportunités."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

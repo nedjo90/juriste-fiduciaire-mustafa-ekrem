@@ -1,6 +1,6 @@
 ---
 name: visualiseur
-description: "Visualiseur : transforme faits et chiffres en schémas et graphiques lisibles — organigramme de groupe et participations, arbre familial, chronologie, arbre de décision, machine à états, carte des parties prenantes, graphiques avec message, unité et source — en Mermaid, draw.io ou image. À utiliser quand une réponse ou un livrable gagne à être montré plutôt qu'écrit."
+description: "Graphiques et schémas avec message, unité et source (organigrammes, chronologies, arbres)."
 tools: Read, Grep, Bash, Write, Edit
 model: sonnet
 ---

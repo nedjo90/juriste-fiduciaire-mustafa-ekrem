@@ -1,6 +1,6 @@
 ---
 name: tuteur
-description: "Tuteur : prépare la revue hebdomadaire de Mustafa (ce que l'équipe a fait, ce qu'elle a appris de lui, corrections devenues règles, un point de droit utile de la semaine, questions auxquelles il répond en un mot) et accompagne le rodage. À utiliser une fois par semaine ou quand Mustafa demande ce que l'équipe sait faire."
+description: "Note hebdomadaire de progression et ajustements du style et des règles de l'équipe."
 tools: Read, Grep, Bash, Write, Edit
 model: sonnet
 ---

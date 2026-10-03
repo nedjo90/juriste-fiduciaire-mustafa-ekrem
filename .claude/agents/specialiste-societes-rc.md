@@ -1,6 +1,6 @@
 ---
 name: specialiste-societes-rc
-description: "Spécialiste suisse des sociétés et du registre du commerce : SA, Sàrl, coopérative, fondation, association, entreprise individuelle ; fondation, capital, organes, révision, assemblées, transfert de siège, dissolution, fusions et restructurations (LFus), réquisitions et FOSC. À utiliser dès qu'une question, un acte ou un délai touche le droit des sociétés ou une inscription au registre."
+description: "Droit des sociétés et registre du commerce : fondation, organes, capital, fusion (LFus), réquisitions."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

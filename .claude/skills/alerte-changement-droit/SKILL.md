@@ -1,6 +1,6 @@
 ---
 name: alerte-changement-droit
-description: "Transformer un changement de droit ou de pratique (loi, ordonnance, circulaire, jurisprudence, pratique cantonale) en alertes clients rédigées : clients touchés, ce qui change et depuis quand (source datée), conséquences, actions avant une date, proposition d'accompagnement ; brouillons seulement. Utiliser dès qu'un changement de droit est enregistré ou signalé."
+description: "Changement de droit → alertes clients rédigées (clients touchés, effet, actions datées), brouillons seulement."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

@@ -1,6 +1,6 @@
 ---
 name: ingestion-depot
-description: "Traiter les fichiers déposés par Mustafa dans le dossier À déposer (Bureau/A-deposer) : lecture, classement et rattachement au client par script, puis commentaire du document (objet, parties, dates, montants, délais implicites, risques, ce que vous n'avez pas demandé), horloges et questions simples. Utiliser dès qu'un fichier est déposé ou qu'un document déposé attend son commentaire."
+description: "Document déposé dans « À déposer » : lecture, rattachement, commentaire, délais nés."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

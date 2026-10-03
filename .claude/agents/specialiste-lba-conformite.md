@@ -1,6 +1,6 @@
 ---
 name: specialiste-lba-conformite
-description: "Spécialiste du droit suisse de la lutte contre le blanchiment et de la conformité : assujettissement d'une activité à la LBA (intermédiaire financier, OAR), obligations de diligence, ayants droit économiques, PEP, sociétés de domicile, trusts, protection des données, EAR et FATCA. À utiliser pour une question de droit sur ces sujets ; le suivi opérationnel des dossiers relève de l'officier-conformite."
+description: "LBA et OAR : identification, ayants droit, profil de risque, revues périodiques."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

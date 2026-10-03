@@ -1,6 +1,6 @@
 ---
 name: redaction-memo-avis
-description: "Produire un mémo ou un avis de droit suisse au niveau d'une grande étude : résumé exécutif, question, faits, droit sourcé et daté, analyse, options chiffrées, risques, recommandation, réserves, niveaux de confort, table des autorités. Utiliser dès qu'une question de droit appelle une réponse écrite structurée (mémo, avis, note au client, consultation)."
+description: "Mémo ou avis de droit suisse au niveau grande étude : résumé, droit sourcé, options, confort."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

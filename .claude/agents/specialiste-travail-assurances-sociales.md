@@ -1,6 +1,6 @@
 ---
 name: specialiste-travail-assurances-sociales
-description: "Spécialiste suisse du droit du travail et des assurances sociales : contrats de travail, résiliation et périodes de protection, certificats, salaires et heures supplémentaires, non-concurrence ; AVS/AI/APG, chômage, LPP, LAA, allocations familiales, statut d'indépendant, détachements et travail transfrontalier. À utiliser pour un employeur, un salarié, un dirigeant ou un indépendant."
+description: "Droit du travail et assurances sociales (AVS, LPP, LAA) : contrats, fins de rapports, cotisations."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---

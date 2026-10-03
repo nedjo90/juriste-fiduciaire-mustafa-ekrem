@@ -1,6 +1,6 @@
 ---
 name: decisions-circulaires
-description: "Préparer une décision par voie de circulation (conseil d'administration, gérants, ou assemblée si les statuts le permettent) : texte des décisions, bulletins de signature, suivi des réponses, constatation du résultat et archivage. Utiliser quand un organe doit décider sans se réunir."
+description: "Décision d'un organe par voie de circulation : texte, bulletins, constatation."
 ---
 
 <!-- BLOC-CARDINAL vd2e193d9605b -->

@@ -1,6 +1,6 @@
 ---
 name: specialiste-fiscalite-internationale
-description: "Spécialiste de la fiscalité internationale vue de Suisse : conventions de double imposition, établissement stable, prix de transfert, remboursement de l'impôt anticipé et des retenues étrangères, imposition des dirigeants et frontaliers, expatriés, EAR et FATCA, imposition minimale des groupes (Pilier 2). À utiliser pour toute situation avec un pays étranger."
+description: "Fiscalité internationale : CDI, établissements stables, prix de transfert, retenues à la source."
 tools: Read, Grep, Bash, Write, Edit, WebFetch, WebSearch
 model: opus
 ---
