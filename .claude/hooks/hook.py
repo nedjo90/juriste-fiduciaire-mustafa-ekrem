@@ -327,7 +327,7 @@ def main():
     minuteur = threading.Timer(LIMITE, _garde_fou)
     minuteur.daemon = True
     minuteur.start()
-    raw = "" if sys.stdin is None or sys.stdin.isatty() else sys.stdin.buffer.read().decode("utf-8", "ignore")
+    raw = "" if sys.stdin is None or sys.stdin.isatty() else sys.stdin.buffer.read().decode("utf-8-sig", "ignore").lstrip("\ufeff")  # BOM ajouté par PowerShell
     data = json.loads(raw) if raw.strip() else {}
     if os.environ.get("CEREBRO_HOOK_TEST_ERREUR"):  # test : erreur interne simulée (critère 39)
         raise RuntimeError("erreur interne simulée")
