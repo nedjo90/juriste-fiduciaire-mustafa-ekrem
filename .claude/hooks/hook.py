@@ -248,7 +248,35 @@ def session_end(data):
 ID_LIGNE = re.compile(r"^id:\s*([A-Z]+-\d{3,5})\s*$", re.M)
 
 
+LECTURE_LARGE = re.compile(r"(^|[;&|]\s*)(cat|head|tail|sed|less|more|type)\b[^|;&]*(\.equipe|\.claude)[/\\]", re.I)
+
+def _lecture_hors_cli(data):
+    """protocole sommaire (§0 ter) : une lecture entière ou un listing de la mémoire hors cerebro est journalisé (jamais bloqué) ;
+    l'archiviste en tire la conformité par rôle et la fabrique révise le rôle en écart"""
+    outil, ti = data.get("tool_name"), data.get("tool_input") or {}
+    quoi = None
+    if outil == "Read":
+        f = str(ti.get("file_path") or "")
+        if re.search(r"[/\\]\.(equipe|claude)[/\\]", f) and not (ti.get("offset") or ti.get("limit")) and not re.search(r"(SKILL\.md|SOMMAIRE\.md|sommaires[/\\])", f):
+            quoi = f
+    elif outil == "Bash":
+        c = str(ti.get("command") or "")
+        if "cerebro" not in c and LECTURE_LARGE.search(c):
+            quoi = c[:200]
+    if quoi:
+        journal("lectures-hors-cli", outil=outil, quoi=quoi[-200:], session=sid(data))
+        try:
+            from cb import core
+            con = core.db()
+            con.execute("INSERT INTO ouvertures(le,tour,id,section,acteur) VALUES(datetime('now'),?,?,?,?)", (str(core.get_etat("tour", "0")), "hors-cli", quoi[-120:], "hors-cli"))
+            con.commit()
+        except Exception:
+            pass
+
 def post_tool_use(data):
+    if data.get("tool_name") in ("Read", "Bash"):
+        _lecture_hors_cli(data)
+        return None
     ti = data.get("tool_input") or {}
     chemin = ti.get("file_path") or ti.get("notebook_path") or ti.get("path")
     if not chemin:

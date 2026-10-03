@@ -28,10 +28,10 @@ def copie_jetable():
         if src.is_file():
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
-    env = {**os.environ, "CEREBRO_ROOT": str(racine)}
-    env.pop("CEREBRO_DB", None)
-    subprocess.run([sys.executable, str(racine / ".equipe/cerebro/cerebro.py"), "init"], env=env, capture_output=True)
+    env = env_propre(racine)
+    subprocess.run([sys.executable, str(racine / ".equipe/cerebro/cerebro.py"), "init", "--importer-si-vide"], env=env, capture_output=True)
     subprocess.run(["git", "init", "-q"], cwd=racine)
+    etat_final(racine)
     # confiance du dossier (comme l'installateur) — modifie ~/.claude.json du conteneur, pas le livrable
     cj = Path.home() / ".claude.json"
     try:
@@ -42,8 +42,26 @@ def copie_jetable():
         print("confiance non posée:", e, file=sys.stderr)
     return tmp, racine
 
+def env_propre(racine, today=None):
+    """environnement d'un poste neuf : aucune variable héritée de la session appelante (sessions indépendantes)"""
+    env = {k: v for k, v in os.environ.items() if not (k.startswith("CLAUDE_CODE_") or k in ("CLAUDECODE", "CEREBRO_BACKGROUND", "CEREBRO_DB"))}
+    env["CEREBRO_ROOT"] = str(racine)
+    if today:
+        env["CEREBRO_TODAY"] = today
+    return env
+
+def etat_final(racine):
+    """le dossier tel qu'il sera livré : construction achevée, sans consigne de reprise (constitution §3)"""
+    cm = racine / ".equipe/cerveau/session/construction.md"
+    if cm.exists() and "construction: achevée" not in cm.read_text(encoding="utf-8"):
+        cm.write_text(cm.read_text(encoding="utf-8") + "\nconstruction: achevée\n", encoding="utf-8")
+    c = racine / "CLAUDE.md"
+    t = c.read_text(encoding="utf-8")
+    if "CONSIGNE DE REPRISE" in t:
+        c.write_text(t.split("## CONSIGNE DE REPRISE")[0].rstrip() + "\n", encoding="utf-8")
+
 def charger_fictif(racine, today):
-    env = {**os.environ, "CEREBRO_ROOT": str(racine), "CEREBRO_TODAY": today}
+    env = env_propre(racine, today)
     r = subprocess.run([sys.executable, str(racine / ".equipe/tests/fixtures/dossier_fictif.py")], env=env, capture_output=True, text=True)
     return r.stdout
 
@@ -54,8 +72,7 @@ def tour(racine, message, nouvelle_session, modele, today, timeout=900):
         cmd += ["--model", modele]
     if not nouvelle_session:
         cmd.insert(1, "--continue")
-    env = {**os.environ, "CEREBRO_ROOT": str(racine), "CEREBRO_TODAY": today}
-    env.pop("CEREBRO_BACKGROUND", None)
+    env = env_propre(racine, today)
     t0 = time.time()
     r = subprocess.run(cmd, cwd=racine, env=env, stdin=subprocess.DEVNULL, capture_output=True, timeout=timeout)
     ms = int((time.time() - t0) * 1000)
@@ -92,7 +109,7 @@ def analyser(evs, message, ms, stderr):
             usage = e.get("usage") or {}
             refus = e.get("permission_denials") or []
     larges = [l for l in lectures if not l["cible"] and not re.search(r"(SOMMAIRE|sommaires/|SKILL\.md|\.claude/agents/)", l["fichier"])]
-    listing = [b for b in bash if re.match(r"\s*(ls|find|tree|dir|cat|grep -r|rg )", b)]
+    listing = [b for b in bash if re.search(r"(^|[;&|]\s*)(ls|find|tree|dir|cat|head|tail|sed|grep|rg|less|more)\b", b)]
     questions = [q.strip() for q in re.findall(r"[^.!?\n]*\?", texte) if len(q.strip()) > 12]
     tok_in = int(usage.get("input_tokens", 0)) + int(usage.get("cache_read_input_tokens", 0)) + int(usage.get("cache_creation_input_tokens", 0))
     return {
@@ -108,7 +125,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scenarios", required=True)
     ap.add_argument("--modele", default=None)
-    ap.add_argument("--today", default="2026-10-01")
+    import datetime as _dt
+    ap.add_argument("--today", default=_dt.date.today().isoformat(), help="jour simulé (défaut : aujourd'hui, cohérent avec la date que voit le modèle)")
     ap.add_argument("--garder", action="store_true")
     ap.add_argument("--seulement", default=None, help="ids de scénarios séparés par des virgules")
     a = ap.parse_args()

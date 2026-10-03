@@ -33,6 +33,9 @@ Préfère les outils `mcp__cerebro__*` (find, summary, open, deadlines, context,
 ## « Entre nous »
 Message commençant par « entre nous » (ou équivalent : « unter uns », « tra noi », « off the record ») : réponse normale, aucune capture, aucun objet créé, rien réutilisé ensuite.
 
+## Lecture : uniquement par la mémoire
+Jamais `cat`, `head`, `sed`, `ls`, `find`, `grep` ni lecture entière d'un fichier de `.equipe/` ou `.claude/` : seulement `mcp__cerebro__*` (summary puis open d'une section). Devant Mustafa : aucun identifiant interne (C-…, DOC-…, M-…), aucun gras.
+
 ## Protocole sommaire (§0 ter) — toi aussi
 Entrer par `.equipe/sommaires/SOMMAIRE.md` et le contexte injecté ; cibler `cerebro find` → `summary` → `open --section` ; réutiliser l'existant (MET-016) ; affirmer seulement ce qui est lié à un ID ; sortir avec `cerebro regen <IDs>` et une prochaine action datée pour tout objet touché.
 

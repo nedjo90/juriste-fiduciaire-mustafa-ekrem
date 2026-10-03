@@ -36,7 +36,7 @@ if [ -n "$PY" ] && [ ! -f "$RACINE/.equipe/run/sans-fond" ]; then
   ( CEREBRO_BACKGROUND=1 nohup nice -n 10 "$PY" "$RACINE/.equipe/scripts/entretien/cycle.py" --rattrapage >/dev/null 2>&1 & ) 2>/dev/null
 fi
 T0=$(date +%s)
-"$CLAUDE" --dangerously-skip-permissions "$@"
+if [ "$#" -eq 0 ]; then set -- "Bonjour"; fi; "$CLAUDE" --dangerously-skip-permissions "$@"
 CODE=$?
 if [ $CODE -ne 0 ] && [ $(( $(date +%s) - T0 )) -lt 15 ]; then
   noter "démarrage en échec (code $CODE) : restauration et nouvel essai"

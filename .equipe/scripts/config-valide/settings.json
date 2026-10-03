@@ -116,7 +116,7 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "matcher": "Write|Edit|MultiEdit|Read|Bash",
         "hooks": [
           {
             "type": "command",

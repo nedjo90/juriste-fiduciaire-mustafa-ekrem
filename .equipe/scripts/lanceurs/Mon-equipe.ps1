@@ -59,12 +59,12 @@ if ($Py -and -not (Test-Path -LiteralPath (Join-Path $Racine '.equipe\run\sans-f
 }
 
 $t0 = Get-Date
-& $Claude --dangerously-skip-permissions @args
+if ($args.Count -eq 0) { & $Claude --dangerously-skip-permissions 'Bonjour' } else { & $Claude --dangerously-skip-permissions @args }
 $code = $LASTEXITCODE
 if ($code -ne 0 -and ((Get-Date) - $t0).TotalSeconds -lt 15) {
   # démarrage raté : on revient à la dernière configuration valide et on relance une fois
   Noter ("démarrage en échec (code $code) : restauration et nouvel essai")
   if ($Py) { & $Py $Valider --restaurer | Out-Null; & $Py $Valider --lancement | Out-Null }
-  & $Claude --dangerously-skip-permissions @args
+  if ($args.Count -eq 0) { & $Claude --dangerously-skip-permissions 'Bonjour' } else { & $Claude --dangerously-skip-permissions @args }
 }
 exit 0
