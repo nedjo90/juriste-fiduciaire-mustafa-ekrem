@@ -50,7 +50,8 @@ def uk_recherche(q, n=5):
 
 
 def _txt(el):
-    return re.sub(r"\s+", " ", "".join(el.itertext())).strip()
+    t = re.sub(r"\s+", " ", " ".join(el.itertext())).strip()
+    return re.sub(r"\s+([,.;:)\]’”])", r"\1", t)
 
 
 def uk_texte(ref):
@@ -121,9 +122,10 @@ def eu_texte(celex, langue="fr"):
     for l in lignes:
         if not l:
             continue
-        m = re.match(r"^(Article|Artikel|Articolo)\s+(\d+[a-z]*)\s*$", l)
+        m = re.match(r"^(Article|Artikel|Articolo)\s+(\d+[a-z]*|premier|primo|1er)\s*$", l)
         if m:
-            cur = [f"## Art. {m.group(2)}"]
+            num = "1" if m.group(2) in ("premier", "primo", "1er") else m.group(2)
+            cur = [f"## Art. {num}"]
             md.append(cur)
             continue
         if cur is not None:

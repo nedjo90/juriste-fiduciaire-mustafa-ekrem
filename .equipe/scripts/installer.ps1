@@ -48,6 +48,7 @@ function Lancer([string]$fichier, [string[]]$arguments, [int]$secondes, [string]
   if ($dossier) { $o.WorkingDirectory = $dossier }
   if ($Visible) { $o.NoNewWindow = $true } else { $o.WindowStyle = 'Hidden' }
   try { $p = Start-Process @o } catch { Noter ("lancement impossible $fichier : " + $_); return -1 }
+  $null = $p.Handle  # sans cela, ExitCode reste vide une fois le processus terminé (particularité PowerShell)
   if (-not $p.WaitForExit($secondes * 1000)) { Noter ("délai dépassé ($secondes s) : $fichier"); try { $p.Kill() } catch {}; return -2 }
   return $p.ExitCode
 }

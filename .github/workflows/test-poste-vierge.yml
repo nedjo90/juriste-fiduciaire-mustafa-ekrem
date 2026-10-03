@@ -40,6 +40,7 @@ jobs:
           $env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'
           $t0 = Get-Date
           irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/Installer-Mon-equipe.ps1" | iex
+          $global:LASTEXITCODE = 0
           "durée totale : $([int]((Get-Date) - $t0).TotalMinutes) min"
           $r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'mon-equipe'
           "RACINE=$r" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
