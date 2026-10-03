@@ -1,0 +1,214 @@
+# Liste de priorités de la bibliothèque fédérale (§10). Versionnée dans git ; lue par fedlex.py et mise_a_jour.py.
+# Chaque numéro RS et chaque titre ont été vérifiés par requête SPARQL Fedlex (verifie_le). Ne pas compléter de mémoire :
+# un nouveau texte s'ajoute avec `python fedlex.py resolve <RS>` puis copie du titre officiel.
+# niveau 1 = ingéré dès la construction ; 2 = au fil des cycles d'entretien ; langues = langues à ingérer.
+verifie_le: '2026-10-03'
+source: https://fedlex.data.admin.ch/sparqlendpoint (JOLux, skos:notation de la taxonomie RS)
+textes:
+  - rs: '220'
+    abrev: "CO"
+    abrev_de: "OR"
+    titre: "Loi fédérale du 30 mars 1911 complétant le Code civil suisse (Livre cinquième: Droit des obligations)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/27/317_321_377
+    domaine: sociétés, contrats, registre
+    niveau: 1
+    langues: [fr, de]
+  - rs: '221.411'
+    abrev: "ORC"
+    abrev_de: "HRegV"
+    titre: "Ordonnance du 17 octobre 2007 sur le registre du commerce (ORC)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/2007/686
+    domaine: registre du commerce
+    niveau: 2
+    langues: [fr]
+  - rs: '221.301'
+    abrev: "LFus"
+    abrev_de: "FusG"
+    titre: "Loi fédérale du 3 octobre 2003 sur la fusion, la scission, la transformation et le transfert de patrimoine (Loi sur la fusion, LFus)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/2004/320
+    domaine: restructurations
+    niveau: 1
+    langues: [fr]
+  - rs: '642.11'
+    abrev: "LIFD"
+    abrev_de: "DBG"
+    titre: "Loi fédérale du 14 décembre 1990 sur l'impôt fédéral direct (LIFD)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/1991/1184_1184_1184
+    domaine: impôt fédéral direct
+    niveau: 1
+    langues: [fr, de]
+  - rs: '642.14'
+    abrev: "LHID"
+    abrev_de: "StHG"
+    titre: "Loi fédérale du 14 décembre 1990 sur l'harmonisation des impôts directs des cantons et des communes (LHID)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/1991/1256_1256_1256
+    domaine: impôts cantonaux (harmonisation)
+    niveau: 1
+    langues: [fr]
+  - rs: '642.21'
+    abrev: "LIA"
+    abrev_de: "VStG"
+    titre: "Loi fédérale du 13 octobre 1965 sur l'impôt anticipé (LIA)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/1966/371_385_384
+    domaine: impôt anticipé
+    niveau: 1
+    langues: [fr]
+  - rs: '642.211'
+    abrev: "OIA"
+    abrev_de: "VStV"
+    titre: "Ordonnance du 19 décembre 1966 sur l'impôt anticipé (OIA)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/1966/1585_1641_1624
+    domaine: impôt anticipé
+    niveau: 1
+    langues: [fr]
+  - rs: '641.10'
+    abrev: "LT"
+    abrev_de: "StG"
+    titre: "Loi fédérale du 27 juin 1973 sur les droits de timbre (LT)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/1974/11_11_11
+    domaine: droits de timbre
+    niveau: 1
+    langues: [fr]
+  - rs: '641.101'
+    abrev: "OT"
+    abrev_de: "StV"
+    titre: "Ordonnance du 3 décembre 1973 sur les droits de timbre (OT)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/1974/33_33_33
+    domaine: droits de timbre
+    niveau: 2
+    langues: [fr]
+  - rs: '641.20'
+    abrev: "LTVA"
+    abrev_de: "MWSTG"
+    titre: "Loi fédérale du 12 juin 2009 régissant la taxe sur la valeur ajoutée (Loi sur la TVA, LTVA)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/2009/615
+    domaine: TVA
+    niveau: 1
+    langues: [fr]
+  - rs: '641.201'
+    abrev: "OTVA"
+    abrev_de: "MWSTV"
+    titre: "Ordonnance du 27 novembre 2009 régissant la taxe sur la valeur ajoutée (OTVA)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/2009/828
+    domaine: TVA
+    niveau: 2
+    langues: [fr]
+  - rs: '955.0'
+    abrev: "LBA"
+    abrev_de: "GwG"
+    titre: "Loi fédérale du 10 octobre 1997 concernant la lutte contre le blanchiment d'argent et le financement du terrorisme (Loi sur le blanchiment d'argent, LBA)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/1998/892_892_892
+    domaine: LBA
+    niveau: 1
+    langues: [fr]
+  - rs: '955.01'
+    abrev: "OBA"
+    abrev_de: "GwV"
+    titre: "Ordonnance du 11 novembre 2015 sur la lutte contre le blanchiment d'argent et le financement du terrorisme (Ordonnance sur le blanchiment d'argent, OBA)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/2015/791
+    domaine: LBA
+    niveau: 2
+    langues: [fr]
+  - rs: '955.033.0'
+    abrev: "OBA-FINMA"
+    abrev_de: "GwV-FINMA"
+    titre: "Ordonnance du 3 juin 2015 de l'Autorité fédérale de surveillance des marchés financiers sur la lutte contre le blanchiment d'argent et le financement du terrorisme dans le secteur financier (Ordonnance de la FINMA sur le blanchiment d'argent, OBA-FINMA)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/2015/390
+    domaine: LBA (intermédiaires financiers, OAR)
+    niveau: 2
+    langues: [fr]
+  - rs: '955.3'
+    abrev: "LTPM"
+    abrev_de: "TJPG"
+    titre: "Loi fédérale du 26 septembre 2025 sur la transparence des personnes morales et l’identification des ayants droit économiques (Loi sur la transparence des personnes morales, LTPM)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/2026/323
+    domaine: ayants droit économiques (registre de transparence)
+    niveau: 1
+    langues: [fr]
+  - rs: '955.31'
+    abrev: "OTPM"
+    abrev_de: "TJPV"
+    titre: "Ordonnance du 12 juin 2026 sur la transparence des personnes morales et l’identification des ayants droit économiques (Ordonnance sur la transparence des personnes morales, OTPM)"
+    type: ordonnance
+    eli: https://fedlex.data.admin.ch/eli/cc/2026/364
+    domaine: ayants droit économiques
+    niveau: 2
+    langues: [fr]
+  - rs: '235.1'
+    abrev: "LPD"
+    abrev_de: "DSG"
+    titre: "Loi fédérale du 25 septembre 2020 sur la protection des données (LPD)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/2022/491
+    domaine: protection des données
+    niveau: 1
+    langues: [fr]
+  - rs: '210'
+    abrev: "CC"
+    abrev_de: "ZGB"
+    titre: "Code civil suisse du 10 décembre 1907"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/24/233_245_233
+    domaine: droit civil
+    niveau: 2
+    langues: [fr]
+  - rs: '281.1'
+    abrev: "LP"
+    abrev_de: "SchKG"
+    titre: "Loi fédérale du 11 avril 1889 sur la poursuite pour dettes et la faillite (LP)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/11/529_488_529
+    domaine: poursuites et faillite
+    niveau: 1
+    langues: [fr]
+  - rs: '173.110'
+    abrev: "LTF"
+    abrev_de: "BGG"
+    titre: "Loi du 17 juin 2005 sur le Tribunal fédéral (LTF)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/2006/218
+    domaine: recours au Tribunal fédéral
+    niveau: 1
+    langues: [fr]
+  - rs: '173.110.3'
+    abrev: ""
+    abrev_de: ""
+    titre: "Loi fédérale du 21 juin 1963 sur la supputation des délais comprenant un samedi"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/1963/819_815_843
+    domaine: computation des délais
+    niveau: 1
+    langues: [fr]
+  - rs: '830.1'
+    abrev: "LPGA"
+    abrev_de: "ATSG"
+    titre: "Loi fédérale du 6 octobre 2000 sur la partie générale du droit des assurances sociales (LPGA)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/2002/510
+    domaine: assurances sociales
+    niveau: 2
+    langues: [fr]
+  - rs: '831.10'
+    abrev: "LAVS"
+    abrev_de: "AHVG"
+    titre: "Loi fédérale du 20 décembre 1946 sur l'assurance-vieillesse et survivants (LAVS)"
+    type: loi
+    eli: https://fedlex.data.admin.ch/eli/cc/63/837_843_843
+    domaine: AVS
+    niveau: 2
+    langues: [fr]

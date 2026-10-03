@@ -1,0 +1,156 @@
+# Système de design de la maison (constitution §7.3). Lu par tous les générateurs (.equipe/scripts/producteur/).
+# Version sobre et neutre tant qu'aucun modèle de la maison n'est déposé. Quand la charte change :
+#   1) modifier ce fichier (ou cerebro config set cabinet.<clé> …) ; 2) python .equipe/scripts/producteur/gabarits.py
+# Les valeurs de .equipe/config/cabinet.yaml (raison_sociale, adresse, logo, signature, langues) remplacent
+# les défauts de la section `identite` dès qu'elles sont renseignées (lecture via cerebro config get).
+# Contrastes : ratio WCAG 2.x calculé par design.py (verifier_contrastes) ; texte ≥ 4.5, graphiques ≥ 3.0.
+version: 1.0.0
+statut: défaut sobre et neutre (aucun modèle de la maison déposé)
+maj: 2026-10-03
+
+identite:            # défauts ; remplacés par cabinet.yaml si renseigné
+  raison_sociale: '[fiduciaire de Mustafa]'
+  adresse: ''
+  logo: ''           # chemin d'une image PNG/JPG ; vide = pas de logo, la raison sociale en tient lieu
+  signature: 'Mustafa Ekrem, juriste'
+  langues: [fr]
+  mention_confidentialite:
+    fr: Confidentiel
+    de: Vertraulich
+    it: Confidenziale
+    en: Confidential
+
+palette:
+  encre:      {hex: '#1F2933', role: 'texte courant'}
+  primaire:   {hex: '#1F3A5F', role: 'titres, en-têtes de tableaux, filets forts'}
+  secondaire: {hex: '#4A5868', role: 'sous-titres, légendes'}
+  discret:    {hex: '#6B7785', role: 'pieds de page, notes'}
+  accent:     {hex: '#7A5C12', role: 'mise en évidence ponctuelle, chiffre clé'}
+  alerte:     {hex: '#9B2C2C', role: '⚠ et risques élevés'}
+  positif:    {hex: '#2E6F57', role: 'risque faible, recommandation retenue'}
+  fond_clair: {hex: '#EEF1F4', role: 'lignes alternées des tableaux, encadrés'}
+  filet:      {hex: '#D9DEE4', role: 'bordures fines'}
+  blanc:      {hex: '#FFFFFF', role: 'fond'}
+  graphiques: ['#1F3A5F', '#7A5C12', '#2E6F57', '#6B7785', '#9B2C2C', '#3E5C82']
+contrastes_minimaux: {texte: 4.5, graphique: 3.0}
+paires_a_verifier:   # [premier plan, fond, seuil]
+  - [encre, blanc, texte]
+  - [primaire, blanc, texte]
+  - [secondaire, blanc, texte]
+  - [discret, blanc, texte]
+  - [accent, blanc, texte]
+  - [alerte, blanc, texte]
+  - [positif, blanc, texte]
+  - [encre, fond_clair, texte]
+  - [blanc, primaire, texte]
+
+typographie:         # polices présentes sur Windows (et macOS avec Office) sans installation
+  corps:  {police: Calibri, taille: 11, interligne: 1.15, apres: 6}
+  titres: {police: Cambria, couleur: primaire}
+  mono:   {police: Consolas, taille: 9.5}
+  replis: {Calibri: [Carlito, Liberation Sans, Arial, DejaVu Sans], Cambria: [Caladea, Liberation Serif, Georgia, DejaVu Serif], Consolas: [Liberation Mono, Courier New, DejaVu Sans Mono]}
+  # fichiers TTF pour reportlab (premier trouvé) ; repli final : Helvetica/Times intégrées
+  ttf:
+    corps: ['C:/Windows/Fonts/calibri.ttf', '/Library/Fonts/Microsoft/Calibri.ttf', '/usr/share/fonts/truetype/crosextra/Carlito-Regular.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf']
+    corps_gras: ['C:/Windows/Fonts/calibrib.ttf', '/Library/Fonts/Microsoft/Calibri Bold.ttf', '/usr/share/fonts/truetype/crosextra/Carlito-Bold.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf']
+    corps_italique: ['C:/Windows/Fonts/calibrii.ttf', '/Library/Fonts/Microsoft/Calibri Italic.ttf', '/usr/share/fonts/truetype/crosextra/Carlito-Italic.ttf', '/usr/share/fonts/truetype/liberation/LiberationSans-Italic.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf']
+    titres: ['C:/Windows/Fonts/cambria.ttc', 'C:/Windows/Fonts/cambriab.ttf', '/usr/share/fonts/truetype/crosextra/Caladea-Bold.ttf', '/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf', '/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf']
+  niveaux:           # styles de titres numérotés (1 / 1.1 / 1.1.1)
+    - {style: Heading 1, taille: 15, gras: true, avant: 18, apres: 6, numero: '%1.'}
+    - {style: Heading 2, taille: 12.5, gras: true, avant: 12, apres: 4, numero: '%1.%2'}
+    - {style: Heading 3, taille: 11, gras: true, italique: false, avant: 10, apres: 3, numero: '%1.%2.%3'}
+  titre_document: {taille: 24, couleur: primaire}
+  sous_titre:     {taille: 13, couleur: secondaire}
+
+grille:              # A4 portrait, millimètres
+  page: A4
+  marges_mm: {haut: 25, bas: 22, gauche: 25, droite: 22}
+  entete_mm: 12
+  pied_mm: 10
+  gouttiere_mm: 5
+  colonnes: 12
+  presentation: {format: '16:9', largeur_cm: 33.867, hauteur_cm: 19.05, marge_cm: 1.6}
+
+entete_pied:
+  entete_gauche: '{raison_sociale}'
+  entete_droite: '{confidentialite}'
+  pied_gauche: 'Version {version} · État du droit au {date_etat}'
+  pied_droite: 'Page {page} / {pages}'
+  taille: 8.5
+  couleur: discret
+
+tableaux:
+  entete: {fond: primaire, texte: blanc, gras: true}
+  lignes_alternees: fond_clair
+  bordure: filet
+  taille: 9.5
+  repeter_entete: true
+  lignes_insecables: true
+  largeur_max: texte   # jamais plus large que la zone de texte (porte visuelle)
+
+legendes:
+  style: Caption
+  taille: 9
+  couleur: secondaire
+  format_figure: {fr: 'Figure {n} — {titre}. Source : {source}.', de: 'Abbildung {n} — {titre}. Quelle: {source}.', it: 'Figura {n} — {titre}. Fonte: {source}.', en: 'Figure {n} — {titre}. Source: {source}.'}
+  format_tableau: {fr: 'Tableau {n} — {titre}', de: 'Tabelle {n} — {titre}', it: 'Tabella {n} — {titre}', en: 'Table {n} — {titre}'}
+
+graphiques:          # thème matplotlib (graphiques.py) : message en titre, unité sur l'axe, source en pied
+  police: [Calibri, Carlito, Liberation Sans, Arial, DejaVu Sans]
+  taille_titre: 12
+  taille_texte: 9.5
+  couleur_texte: encre
+  couleur_axes: discret
+  grille: {axe: y, couleur: filet, epaisseur: 0.6}
+  epines_masquees: [top, right]
+  dpi: 200
+  format: [png, svg]
+  largeur_cm: 16
+  hauteur_cm: 9
+
+schemas:             # Mermaid / draw.io
+  noeud: {fond: '#FFFFFF', bordure: primaire, texte: encre}
+  noeud_decision: {fond: fond_clair, bordure: accent}
+  fleche: secondaire
+  police: Calibri
+
+typo:                # conventions vérifiées et corrigées par la porte typographique
+  fr: {espace_ponctuation: "\u00a0", guillemets: ['«', '»'], espace_guillemets: "\u00a0", separateur_milliers: "'", decimale: '.', date_longue: '{j} {mois} {a}'}
+  de: {guillemets: ['«', '»'], espace_guillemets: '', separateur_milliers: "'", decimale: '.', eszett: ss, date_longue: '{j}. {mois} {a}'}
+  it: {guillemets: ['«', '»'], espace_guillemets: '', separateur_milliers: "'", decimale: '.', date_longue: '{j} {mois} {a}'}
+  en: {guillemets: ['“', '”'], espace_guillemets: '', separateur_milliers: "'", decimale: '.', date_longue: '{j} {mois} {a}'}
+  monnaie: {code: CHF, espace: "\u00a0", decimales: 2}
+
+livrables:           # structure attendue par type (porte présentation) ; titres reconnus en FR/DE/IT/EN
+  memo:
+    gabarit: memo.docx
+    sections: [resume, question, faits, droit, analyse, options, risques, recommandation, reserves, confort, sources]
+    table_des_matieres_au_dela_pages: 10
+    budget_caracteres: 60000
+    resume_max_caracteres: 2600
+  lettre: {gabarit: lettre.docx, sections: [], budget_caracteres: 9000}
+  pv:     {gabarit: pv-assemblee.docx, sections: [ouverture, presences, quorum, ordre_du_jour, decisions, cloture], budget_caracteres: 30000}
+  calcul: {gabarit: modele-calcul.xlsx, onglets: [Hypothèses, Calculs, Sensibilités, Sources]}
+  presentation: {gabarit: presentation.pptx, puces_max: 5, mots_titre_min: 4, budget_caracteres: 20000}
+  rapport: {gabarit: gabarit-rapport.pdf, sections: [], budget_caracteres: 80000}
+  mail:   {sections: [], budget_caracteres: 3500}
+  note:   {gabarit: memo.docx, sections: [], budget_caracteres: 15000}
+
+alias_sections:
+  resume: [résumé exécutif, résumé, synthèse, en bref, zusammenfassung, management summary, sintesi, riassunto, executive summary, summary]
+  question: [question, questions posées, objet, fragestellung, frage, quesito, domanda, question presented, issue]
+  faits: [faits, état de fait, sachverhalt, fatti, fattispecie, facts, background]
+  droit: [droit, droit applicable, bases légales, cadre juridique, rechtliche grundlagen, rechtslage, diritto, basi legali, law, legal framework]
+  analyse: [analyse, appréciation, discussion, würdigung, analyse und würdigung, analisi, valutazione, analysis, discussion]
+  options: [options, variantes, scénarios, varianten, optionen, opzioni, varianti, options]
+  risques: [risques, risques et points d'attention, risiken, rischi, risks]
+  recommandation: [recommandation, recommandations, conclusion et recommandation, empfehlung, raccomandazione, recommendation]
+  reserves: [réserves, limites, vorbehalte, riserve, reservations, caveats, limitations]
+  confort: [niveau de confort, degré de certitude, confort, sicherheitsgrad, grado di certezza, livello di confidenza, level of comfort, confidence]
+  sources: [annexe des sources, sources, références, quellen, quellenverzeichnis, fonti, sources, references]
+  ouverture: [ouverture, ouverture de la séance, eröffnung, apertura, opening]
+  presences: [présences, présents, liste de présence, anwesenheit, presenze, attendance]
+  quorum: [quorum, constitution, beschlussfähigkeit, quorum costitutivo, quorum]
+  ordre_du_jour: [ordre du jour, traktanden, traktandenliste, ordine del giorno, agenda]
+  decisions: [décisions, délibérations, résolutions, beschlüsse, decisioni, delibere, resolutions]
+  cloture: [clôture, clôture de la séance, schluss, chiusura, closing]
