@@ -51,12 +51,12 @@ usage = {"input_tokens": 1000, "output_tokens": 200, "cache_creation_input_token
 if mode == "limite":
     print(json.dumps({"type": "result", "subtype": "error_during_execution", "is_error": True, "result": "Claude AI usage limit reached|1760000000", "usage": usage})); sys.exit(1)
 res = '{"ok": true}'
-if mode == "fabrique" and "Besoin unique" in entree:
+if mode == "fabrique" and "single need" in entree:
     d = pathlib.Path(os.environ["CEREBRO_ROOT"]) / ".claude" / "skills" / "liste-fictive"
     d.mkdir(parents=True, exist_ok=True)
     (d / "SKILL.md").write_text("---\nname: liste-fictive\ndescription: Liste fictive de test : délais de la semaine, déclenchée le lundi.\n---\n\n# liste-fictive (machine)\n\n## Quand l'utiliser\ntest.\n", encoding="utf-8")
     res = '{"forme": "skill", "fichiers": [".claude/skills/liste-fictive/SKILL.md"], "routine": null, "raison": "test"}'
-if mode == "fabrique-casse" and "Besoin unique" in entree:
+if mode == "fabrique-casse" and "single need" in entree:
     d = pathlib.Path(os.environ["CEREBRO_ROOT"]) / ".claude" / "skills" / "Mauvais Nom"
     d.mkdir(parents=True, exist_ok=True)
     (d / "SKILL.md").write_text("---\nname: Mauvais Nom\n---\n# x\n", encoding="utf-8")

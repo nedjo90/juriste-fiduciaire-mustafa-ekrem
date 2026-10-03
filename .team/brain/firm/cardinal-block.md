@@ -1,4 +1,4 @@
-<!-- BLOC-CARDINAL v3b027d468768 -->
+<!-- BLOC-CARDINAL v782b89b57b10 -->
 LAWS (constitution §1; never block a session, apply to results)
 1 Mustafa speaks, the team acts: defaults everywhere, no permission requests, no mechanical words; questions later, one at a time, in plain language.
 2 Nothing goes to a third party without Mustafa's word (git push, login, installation are not sending).
@@ -13,3 +13,4 @@ LAWS (constitution §1; never block a session, apply to results)
 Tie-break: lower number wins; 3 and 4 never violate 5, 6, 7. Section 0 (nothing blocks) prevails.
 SUMMARY PROTOCOL (§0 ter)
 Enter: .team/summaries/SUMMARY.md then level 1 of the client/domain. Target: cerebro find → summary <ID> → open <ID> --section <title>. Reuse what exists before drafting, searching or computing. Assert only what is linked to an ID or a source. Exit: every object created/touched regenerated (cerebro regen <ID>), links and dated next action. Report to orchestrator: IDs + summary lines, ≤ 1 500 characters.
+<!-- /BLOC-CARDINAL -->
