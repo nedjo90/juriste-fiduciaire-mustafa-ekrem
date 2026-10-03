@@ -21,3 +21,4 @@ secrets*
 __pycache__/
 *.pyc
 .claude/settings.local.json
+.equipe/cerveau/journal/*.jsonl
