@@ -1,0 +1,18 @@
+#!/bin/sh
+# « claude » tapé dans n'importe quel terminal : ouvre l'équipe (dossier du projet, sans demande d'autorisation).
+# Ce dossier est placé en tête du PATH par l'installateur ; le vrai Claude est cherché hors de ce dossier.
+ICI="$(cd "$(dirname "$0")" && pwd)"
+RACINE="$(cd "$ICI/../.." && pwd)"
+EXE=""
+for c in "$HOME/.local/bin/claude" "$HOME/.claude/local/claude" /opt/homebrew/bin/claude /usr/local/bin/claude; do
+  [ -x "$c" ] && [ "$(cd "$(dirname "$c")" && pwd)" != "$ICI" ] && EXE="$c" && break
+done
+if [ -z "$EXE" ]; then
+  OLDIFS="$IFS"; IFS=:
+  for d in $PATH; do [ "$d" != "$ICI" ] && [ -x "$d/claude" ] && EXE="$d/claude" && break; done
+  IFS="$OLDIFS"
+fi
+[ -z "$EXE" ] && { echo "Claude n'est pas encore installé : relancez l'installateur."; exit 1; }
+cd "$RACINE" || exit 1
+if [ "$#" -eq 0 ]; then exec "$EXE" --dangerously-skip-permissions "Bonjour"; fi
+exec "$EXE" --dangerously-skip-permissions "$@"
