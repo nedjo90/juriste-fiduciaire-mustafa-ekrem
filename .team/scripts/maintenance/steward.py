@@ -79,7 +79,7 @@ def desarmer(p):
 
 
 def echecs_hooks_recents():
-    p = EQ / "brain" / "journal" / "hooks-erreurs.jsonl"
+    p = EQ / "brain" / "log" / "hooks-erreurs.jsonl"
     if not p.exists():
         return {}
     lim = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=24))

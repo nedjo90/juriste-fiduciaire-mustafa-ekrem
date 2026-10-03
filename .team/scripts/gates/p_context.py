@@ -27,7 +27,7 @@ def taille_injection(ctx, tour):
         return inj, "mesure fournie"
     if isinstance(inj, str):
         return len(inj), "texte fourni"
-    j = C.EQ / "brain" / "journal" / "injections.jsonl"
+    j = C.EQ / "brain" / "log" / "injections.jsonl"
     if j.exists() and tour:
         try:
             der = None

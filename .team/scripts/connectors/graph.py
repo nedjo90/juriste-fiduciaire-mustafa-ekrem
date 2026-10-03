@@ -27,7 +27,7 @@ SELECT_RDV = "id,iCalUId,subject,start,end,location,attendees,organizer,bodyPrev
 
 def _journal(**rec):
     try:
-        d = ROOT / ".team" / "brain" / "journal"
+        d = ROOT / ".team" / "brain" / "log"
         d.mkdir(parents=True, exist_ok=True)
         with open(d / "m365.jsonl", "a", encoding="utf-8") as fh:
             fh.write(json.dumps({"le": time.strftime("%Y-%m-%dT%H:%M:%S"), **rec}, ensure_ascii=False) + "\n")

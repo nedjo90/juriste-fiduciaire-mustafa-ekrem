@@ -28,7 +28,7 @@ except BaseException as _e:  # socle illisible : on journalise à la main et on 
 
     def journal(nom, **rec):
         try:
-            d = RACINE / ".team" / "brain" / "journal"
+            d = RACINE / ".team" / "brain" / "log"
             d.mkdir(parents=True, exist_ok=True)
             with open(d / f"{nom}.jsonl", "a", encoding="utf-8") as fh:
                 fh.write(json.dumps({"le": time.strftime("%Y-%m-%dT%H:%M:%S"), **rec}, ensure_ascii=False, default=str) + "\n")

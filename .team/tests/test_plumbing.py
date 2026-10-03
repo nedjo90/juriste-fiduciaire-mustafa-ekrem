@@ -58,7 +58,7 @@ def preparer():
 
 TMP, R, ENV = preparer()
 HOOK = R / ".claude" / "hooks" / "hook.py"
-J = R / ".team" / "brain" / "journal"
+J = R / ".team" / "brain" / "log"
 INBOX = R / ".team" / "inbox"
 
 

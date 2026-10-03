@@ -25,7 +25,7 @@ CODE_EQ = Path(__file__).resolve().parents[2]
 
 def journal(msg, **kw):
     try:
-        d = EQ / "brain" / "journal"
+        d = EQ / "brain" / "log"
         d.mkdir(parents=True, exist_ok=True)
         with open(d / "recherche.jsonl", "a", encoding="utf-8") as f:
             f.write(json.dumps({"le": dt.datetime.now().isoformat(timespec="seconds"), "msg": msg, **kw}, ensure_ascii=False, default=str) + "\n")

@@ -38,7 +38,7 @@ def nom_dossier(s, n=60):
 
 def journal(nom, **rec):
     try:
-        d = EQ / "brain" / "journal"
+        d = EQ / "brain" / "log"
         d.mkdir(parents=True, exist_ok=True)
         rec = {"le": dt.datetime.now().isoformat(timespec="seconds"), **rec}
         with open(d / f"{nom}.jsonl", "a", encoding="utf-8") as fh:

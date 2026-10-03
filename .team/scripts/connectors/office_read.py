@@ -78,7 +78,7 @@ def vers_moderne(chemin, dossier=None, timeout=180):
         return dst
     try:
         import json, time
-        j = Path(os.environ.get("CEREBRO_ROOT") or Path(__file__).resolve().parents[3]) / ".team" / "brain" / "journal" / "office-lecture.jsonl"
+        j = Path(os.environ.get("CEREBRO_ROOT") or Path(__file__).resolve().parents[3]) / ".team" / "brain" / "log" / "office-lecture.jsonl"
         j.parent.mkdir(parents=True, exist_ok=True)
         with open(j, "a", encoding="utf-8") as fh:
             fh.write(json.dumps({"le": time.strftime("%Y-%m-%dT%H:%M:%S"), "fichier": p.name, "app": kind, "sortie": sortie[-300:]}, ensure_ascii=False) + "\n")

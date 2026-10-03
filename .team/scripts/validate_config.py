@@ -39,7 +39,7 @@ except Exception:  # socle absent : journal minimal
 
     def journal(nom, **rec):
         try:
-            d = EQ / "brain" / "journal"
+            d = EQ / "brain" / "log"
             d.mkdir(parents=True, exist_ok=True)
             with open(d / f"{nom}.jsonl", "a", encoding="utf-8") as fh:
                 fh.write(json.dumps({"le": time.strftime("%Y-%m-%dT%H:%M:%S"), **rec}, ensure_ascii=False) + "\n")
@@ -257,7 +257,7 @@ def session_controle(jeton, db_test, timeout=120):
     # preuve que les hooks ont tourné
     vus = set()
     try:
-        for l in (EQ / "brain" / "journal" / "controle.jsonl").read_text(encoding="utf-8").splitlines()[-200:]:
+        for l in (EQ / "brain" / "log" / "controle.jsonl").read_text(encoding="utf-8").splitlines()[-200:]:
             x = json.loads(l)
             if x.get("jeton") == jeton:
                 vus.add(x.get("evenement"))

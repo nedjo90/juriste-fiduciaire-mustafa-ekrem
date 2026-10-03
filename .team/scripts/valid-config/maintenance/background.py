@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(os.environ.get("CEREBRO_ROOT") or Path(__file__).resolve().parents[3])
 EQ = ROOT / ".team"
 RUN = EQ / "run"                      # verrous, drapeaux, compteurs (non suivi par git)
-JOURNAL = EQ / "brain" / "journal"
+JOURNAL = EQ / "brain" / "log"
 SESSION = EQ / "brain" / "session"
 INBOX = EQ / "inbox"
 SCRIPTS = EQ / "scripts"

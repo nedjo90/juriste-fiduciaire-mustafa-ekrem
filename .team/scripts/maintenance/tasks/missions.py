@@ -508,7 +508,7 @@ def t_experience_hebdo(arg, fin):
     gras = sum(1 for c in caps if "**" in c["reponse"])
     longues = sum(1 for c in caps if len(c.get("prompt") or "") < 120 and len(c["reponse"]) > 1500)
     voc = 0
-    pj = EQ / "brain" / "journal" / "vocabulaire.jsonl"
+    pj = EQ / "brain" / "log" / "vocabulaire.jsonl"
     if pj.exists():
         lim = _jours(7)
         for l in pj.read_text(encoding="utf-8", errors="replace").splitlines()[-2000:]:
