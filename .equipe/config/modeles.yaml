@@ -1,0 +1,37 @@
+# modeles.yaml — fichier à trous (§0 bis). Une clé vide applique `defaut`. Modifier via : cerebro config set modeles.<clé> <valeur>
+profil:
+  valeur: null
+  defaut: frugal
+  source: défaut
+  question: ''
+  effet: 3
+plus_capable:
+  valeur: null
+  defaut: opus
+  source: défaut
+  question: ''
+  effet: 3
+intermediaire:
+  valeur: null
+  defaut: sonnet
+  source: défaut
+  question: ''
+  effet: 2
+leger:
+  valeur: null
+  defaut: haiku
+  source: défaut
+  question: ''
+  effet: 2
+effort_associe:
+  valeur: null
+  defaut: high
+  source: défaut
+  question: ''
+  effet: 2
+budget_fond_quotidien_appels:
+  valeur: null
+  defaut: 3
+  source: défaut
+  question: ''
+  effet: 2

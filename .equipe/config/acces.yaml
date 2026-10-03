@@ -1,0 +1,31 @@
+# acces.yaml — fichier à trous (§0 bis). Une clé vide applique `defaut`. Modifier via : cerebro config set acces.<clé> <valeur>
+bases_recherche:
+  valeur: null
+  defaut: []
+  source: défaut
+  question: Avez-vous un abonnement Swisslex ou Weblaw au cabinet ?
+  effet: 4
+abonnement_claude:
+  valeur: null
+  defaut: petit abonnement (profil frugal)
+  source: défaut
+  question: ''
+  effet: 3
+connecteurs:
+  valeur: null
+  defaut: []
+  source: défaut
+  question: ''
+  effet: 2
+depot_git:
+  valeur: null
+  defaut: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem (privé)
+  source: défaut
+  question: ''
+  effet: 1
+deepl:
+  valeur: null
+  defaut: non
+  source: défaut
+  question: ''
+  effet: 1

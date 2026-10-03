@@ -1,0 +1,8 @@
+# clients.yaml — fichier à trous (§0 bis). Une clé vide applique `defaut`. Modifier via : cerebro config set clients.<clé> <valeur>
+principaux:
+  valeur: null
+  defaut: []
+  source: défaut
+  question: Quels sont vos trois ou quatre clients les plus importants en ce moment
+    ?
+  effet: 5

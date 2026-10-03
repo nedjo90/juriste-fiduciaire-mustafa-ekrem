@@ -1,0 +1,45 @@
+# mustafa.yaml — fichier à trous (§0 bis). Une clé vide applique `defaut`. Modifier via : cerebro config set mustafa.<clé> <valeur>
+prenom:
+  valeur: null
+  defaut: Mustafa
+  source: défaut
+  question: ''
+  effet: 1
+tutoiement:
+  valeur: null
+  defaut: vouvoiement
+  source: défaut
+  question: On se tutoie ?
+  effet: 2
+langues:
+  valeur: null
+  defaut:
+  - fr
+  - de
+  - en
+  source: défaut
+  question: Dans quelles langues travaillez-vous au quotidien ?
+  effet: 3
+cantons_suivis:
+  valeur: null
+  defaut:
+  - VD
+  - GE
+  source: défaut
+  question: Vos dossiers sont surtout dans quels cantons ?
+  effet: 5
+domaines:
+  valeur: null
+  defaut:
+  - sociétés
+  - fiscalité
+  - contrats
+  source: défaut
+  question: Sur quels sujets travaillez-vous le plus ?
+  effet: 4
+style:
+  valeur: null
+  defaut: direct, précis, courtois
+  source: défaut
+  question: ''
+  effet: 2
