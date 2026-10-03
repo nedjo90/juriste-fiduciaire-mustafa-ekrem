@@ -6,3 +6,9 @@ Un fichier `<nom>.py` par famille de tâches. Contrat (tout est optionnel) :
 - `def PLANIFIER(complet, mode, ajouter)` — ajoute des tâches à la file (`ajouter(tache, arg, priorité)`).
 Priorités : 1 sommaires · 2 délais, brouillons · 3 classement · 4 couverture, vues · 5 bibliothèque, veille, découverte, fabrique · 6 sauvegarde, export.
 Une extension en erreur est journalisée et ignorée ; elle n'arrête jamais le cycle.
+
+Modules du chantier autonomie : `_mission.py` (utilitaire, non chargé : lancement `claude -p` des rôles de fond, budget quotidien
+`modeles.budget_fond_quotidien_appels` avec rationnement 60 %/85 %, palier, mesure, limite d'usage → état `ralentir`) ·
+`routines.py` (routines posées par Mustafa) · `fabrique.py` (fabrique hebdomadaire) · `decouverte.py` (découverte mensuelle) ·
+`recalculs.py` (recalculs après `config set`) · `missions.py` (veille, tuteur, revue, anticipation, condensation, double lecture,
+enrichissement, expérience, réconciliation). Un rôle de fond appelle toujours `_mission.lancer(...)`, jamais `claude` directement.

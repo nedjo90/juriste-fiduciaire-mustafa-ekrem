@@ -1,16 +1,30 @@
 @echo off
 rem claude tape dans n importe quel terminal : ouvre l equipe (dossier du projet, sans demande d autorisation).
-rem Ce dossier est place en tete du PATH utilisateur par l installateur ; le vrai Claude est appele par son chemin.
+rem Ce dossier est place en tete du PATH utilisateur par l installateur ; le VRAI Claude est appele par son chemin,
+rem quelle que soit son installation (officielle, ancienne installation npm, winget), jamais ce fichier lui-meme.
 setlocal
-set "EXE=%USERPROFILE%\.local\bin\claude.exe"
-if not exist "%EXE%" for /f "delims=" %%i in ('where claude.exe 2^>nul') do if not defined TROUVE (set "EXE=%%i" & set "TROUVE=1")
+set "ICI=%~dp0"
+set "EXE="
+if defined CEREBRO_CLAUDE for %%i in ("%CEREBRO_CLAUDE%") do if exist "%%~fi" if /i not "%%~dpi"=="%ICI%" set "EXE=%%~fi"
+if not defined EXE if exist "%USERPROFILE%\.local\bin\claude.exe" set "EXE=%USERPROFILE%\.local\bin\claude.exe"
+if not defined EXE for /f "delims=" %%i in ('where claude.exe 2^>nul') do if not defined EXE set "EXE=%%i"
+if not defined EXE if exist "%APPDATA%\npm\claude.cmd" set "EXE=%APPDATA%\npm\claude.cmd"
+if not defined EXE if exist "%USERPROFILE%\.claude\local\claude.cmd" set "EXE=%USERPROFILE%\.claude\local\claude.cmd"
+if not defined EXE for /f "delims=" %%i in ('where claude.cmd 2^>nul') do if not defined EXE if /i not "%%~dpi"=="%ICI%" set "EXE=%%i"
+if not defined EXE (
+  echo Claude n'est pas encore installe sur cet ordinateur : relancez la commande d'installation.
+  exit /b 1
+)
+rem un claude.cmd (installation npm) doit etre appele par CALL pour rendre la main
+set "APPEL="
+if /i "%EXE:~-4%"==".cmd" set "APPEL=call"
 pushd "%~dp0..\.."
 rem pas encore connecte : la page de connexion s ouvre dans le navigateur (aucun /login a taper)
-"%EXE%" auth status --json 2>nul | findstr /c:"\"loggedIn\": true" >nul || "%EXE%" auth login --claudeai
+%APPEL% "%EXE%" auth status --json 2>nul | findstr /c:"\"loggedIn\": true" >nul || %APPEL% "%EXE%" auth login --claudeai
 if "%~1"=="" (
-  "%EXE%" --dangerously-skip-permissions "Bonjour"
+  %APPEL% "%EXE%" --dangerously-skip-permissions "Bonjour"
 ) else (
-  "%EXE%" --dangerously-skip-permissions %*
+  %APPEL% "%EXE%" --dangerously-skip-permissions %*
 )
 set "CODE=%ERRORLEVEL%"
 popd

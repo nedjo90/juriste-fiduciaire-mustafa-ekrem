@@ -34,7 +34,7 @@ if ($Py) { $r = & $Py $Valider --lancement 2>&1; Noter ('controle: ' + ($r -join
 
 if (-not $Claude) {
   Write-Host ''
-  Write-Host "Claude n'est pas encore installé sur cet ordinateur. Lancez d'abord l'installateur (Installer.bat), puis recommencez."
+  Write-Host "Claude n'est pas encore installé sur cet ordinateur. Relancez d'abord la commande d'installation, puis recommencez."
   Noter 'claude introuvable'
   Read-Host 'Appuyez sur Entrée pour fermer'
   exit 1

@@ -4,15 +4,15 @@
 ICI="$(cd "$(dirname "$0")" && pwd)"
 RACINE="$(cd "$ICI/../.." && pwd)"
 EXE=""
-for c in "$HOME/.local/bin/claude" "$HOME/.claude/local/claude" /opt/homebrew/bin/claude /usr/local/bin/claude; do
-  [ -x "$c" ] && [ "$(cd "$(dirname "$c")" && pwd)" != "$ICI" ] && EXE="$c" && break
+for c in "${CEREBRO_CLAUDE:-}" "$HOME/.local/bin/claude" "$HOME/.claude/local/claude" /opt/homebrew/bin/claude /usr/local/bin/claude; do
+  [ -n "$c" ] && [ -x "$c" ] && [ "$(cd "$(dirname "$c")" && pwd)" != "$ICI" ] && EXE="$c" && break
 done
 if [ -z "$EXE" ]; then
   OLDIFS="$IFS"; IFS=:
   for d in $PATH; do [ "$d" != "$ICI" ] && [ -x "$d/claude" ] && EXE="$d/claude" && break; done
   IFS="$OLDIFS"
 fi
-[ -z "$EXE" ] && { echo "Claude n'est pas encore installé : relancez l'installateur."; exit 1; }
+[ -z "$EXE" ] && { echo "Claude n'est pas encore installé : relancez la commande d'installation."; exit 1; }
 cd "$RACINE" || exit 1
 # pas encore connecté : la page de connexion s'ouvre dans le navigateur (aucun /login à taper)
 "$EXE" auth status --json 2>/dev/null | grep -q '"loggedIn": true' || "$EXE" auth login --claudeai

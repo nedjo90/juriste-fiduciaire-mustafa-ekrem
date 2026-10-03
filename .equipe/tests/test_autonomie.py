@@ -524,6 +524,8 @@ def _():
     core.db().execute("DELETE FROM file_entretien WHERE tache='fabrique'")
     core.db().execute("INSERT INTO file_entretien(priorite,tache,arg,cree_le) VALUES(2,'fabrique','tous les lundis : liste des délais de la semaine',?)", (core.stamp(),))
     core.db().commit()
+    for (rid,) in core.db().execute("SELECT id FROM objets WHERE type='routine' AND statut!='archive'").fetchall():
+        O.archive(rid)  # état neuf : le besoin n'est couvert par rien
     avant = {r[0] for r in core.db().execute("SELECT id FROM objets WHERE type IN ('routine','skill','role')")}
     r = cycle.TACHES["fabrique_hebdo"]("", time.time() + 1800)
     print("       fabrique réelle :", json.dumps(r, ensure_ascii=False)[:600])

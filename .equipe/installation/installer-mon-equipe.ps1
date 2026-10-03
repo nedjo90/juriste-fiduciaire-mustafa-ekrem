@@ -1,9 +1,10 @@
-# Installation complete de "Mon equipe" en UNE commande, sur un Windows sans rien (ni Git, ni Python, ni Claude).
+# Installation complete de "Mon equipe" en UNE commande, sur un Windows sans rien (ni Git, ni Python, ni Claude)
+# ou deja equipe : ce qui est present (Git, Python, Claude et son compte) est garde tel quel ("deja installe").
 # Ordre : 1. Git (portable officiel, mode utilisateur, sans droits administrateur)  2. clonage du depot  3. installateur du projet.
 # Aucune question. Relancable sans risque (met a jour au lieu de recloner).
 #
 # Commande a coller dans PowerShell (depot public) :
-#   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/Installer-Mon-equipe.ps1 | iex
+#   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-mon-equipe.ps1 | iex
 #
 # Reglages facultatifs (variables d'environnement) : MON_EQUIPE_JETON, MON_EQUIPE_DOSSIER (defaut : Documents\mon-equipe),
 # MON_EQUIPE_DEPOT, MON_EQUIPE_BRANCHE. Pas de bloc param ni de exit : le script doit pouvoir etre execute par "iex".
@@ -58,6 +59,7 @@ Dire 'Installation de votre equipe. Cela prend de 10 a 20 minutes ; laissez cett
 
 # ------------------------------------------------------------------ 1. Git (portable officiel de git-for-windows, mode utilisateur)
 $Git = Trouver-Git
+$GitDeja = [bool]$Git
 if (-not $Git) {
   Dire 'Etape 1/3 : installation de Git...'
   $arch = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'arm64' } else { '64-bit' }
@@ -91,7 +93,7 @@ $GitRacine = Split-Path -Parent (Split-Path -Parent $Git)
 Ajouter-Path (Join-Path $GitRacine 'cmd')
 $bash = Join-Path $GitRacine 'bin\bash.exe'
 if (Test-Path -LiteralPath $bash) { [Environment]::SetEnvironmentVariable('CLAUDE_CODE_GIT_BASH_PATH', $bash, 'User'); $env:CLAUDE_CODE_GIT_BASH_PATH = $bash }
-Dire 'Etape 1/3 : Git est pret.'
+if ($GitDeja) { Dire 'Etape 1/3 : Git est deja installe.' } else { Dire 'Etape 1/3 : Git est installe.' }
 
 # ------------------------------------------------------------------ 2. clonage (ou mise a jour) du depot
 Dire 'Etape 2/3 : recuperation du dossier de votre equipe...'
@@ -111,7 +113,7 @@ if (Test-Path -LiteralPath (Join-Path $Dossier '.git')) {
   New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Dossier) | Out-Null
   & $Git @auth clone --branch $Branche --single-branch $Depot $Dossier 2>&1 | ForEach-Object { Noter ("git clone : " + $_) }
 }
-if (-not (Test-Path -LiteralPath (Join-Path $Dossier 'Installer.bat'))) {
+if (-not (Test-Path -LiteralPath (Join-Path $Dossier '.equipe\installation\installer.ps1'))) {
   Dire "Le dossier n'a pas pu etre recupere. Verifiez la connexion Internet (ou l'acces au depot) puis relancez la meme commande."
   Dire ("Detail technique : " + $Journal)
   return
@@ -125,7 +127,7 @@ Dire 'Etape 2/3 : le dossier est pret.'
 
 # ------------------------------------------------------------------ 3. installateur du projet (Python, outils, Claude, reglages, raccourci)
 Dire 'Etape 3/3 : installation des outils de votre equipe...'
-$inst = Join-Path $Dossier '.equipe\scripts\installer.ps1'
+$inst = Join-Path $Dossier '.equipe\installation\installer.ps1'
 $code = Lancer 'powershell.exe' @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + $inst + '"')) 3600 $null -Visible
 Noter ("installateur : code " + $code)
 Dire ''

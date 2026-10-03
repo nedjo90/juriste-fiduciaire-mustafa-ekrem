@@ -6,12 +6,10 @@ on:
     branches: [ccr-e8f5838b-808ukj]
     paths:
       - '.github/workflows/test-poste-vierge.yml'
-      - 'Installer.bat'
-      - 'Installer-Mon-equipe.ps1'
+      - '.equipe/installation/**'
       - '.equipe/bin/**'
       - '.equipe/scripts/valider_config.py'
-      - '.equipe/scripts/installer.ps1'
-      - '.equipe/scripts/installer.sh'
+      - '.equipe/scripts/entretien/fond.py'
       - '.equipe/scripts/lanceurs/**'
   workflow_dispatch:
 
@@ -39,7 +37,7 @@ jobs:
         run: |
           $env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'
           $t0 = Get-Date
-          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/Installer-Mon-equipe.ps1" | iex
+          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.equipe/installation/installer-mon-equipe.ps1" | iex
           $global:LASTEXITCODE = 0
           "durée totale : $([int]((Get-Date) - $t0).TotalMinutes) min"
           $r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'mon-equipe'
@@ -106,9 +104,17 @@ jobs:
           MON_EQUIPE_BRANCHE: ${{ github.ref_name }}
         run: |
           $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
-          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/Installer-Mon-equipe.ps1" | iex
+          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.equipe/installation/installer-mon-equipe.ps1" | iex
           $global:LASTEXITCODE = 0
           Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+          $rap = Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Raw -Encoding UTF8
+          $cc = [Environment]::GetEnvironmentVariable('CEREBRO_CLAUDE', 'User')
+          "CEREBRO_CLAUDE = $cc"
+          $ko = @()
+          if ($rap -notmatch 'Claude : d.j. install') { $ko += 'rapport sans « Claude : déjà installé »' }
+          if ($rap -notmatch 'Python : d.j. install') { $ko += 'rapport sans « Python : déjà installé »' }
+          if (-not $cc -or $cc -like '*\.equipe\bin\*') { $ko += "vrai Claude mal résolu : $cc" }
+          if ($ko) { "ÉCHEC : $($ko -join ' | ')"; exit 1 } else { 'OK relance : tout est « déjà installé », vrai Claude hors de .equipe\bin' }
 
       - name: Journaux
         if: always()
@@ -119,6 +125,57 @@ jobs:
             ${{ env.RACINE }}/.equipe/run/installation.log
             ${{ env.RACINE }}/.equipe/run/rapport-installation.txt
           if-no-files-found: warn
+
+  windows-deja-equipe:
+    # le poste de Mustafa a déjà Claude (ici par une ancienne installation npm) : rien n'est réinstallé, la commande de l'équipe l'utilise
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - name: Claude déjà présent (npm), avant l'équipe
+        shell: powershell
+        run: |
+          npm install -g @anthropic-ai/claude-code 2>&1 | Select-Object -Last 3
+          $c = (Get-Command claude.cmd -ErrorAction SilentlyContinue).Source
+          "Claude existant : $c"
+          & claude --version
+          if (Test-Path (Join-Path $env:USERPROFILE '.local\bin\claude.exe')) { 'claude.exe natif déjà là : test non significatif'; exit 1 }
+      - name: La même commande unique
+        shell: powershell
+        env:
+          MON_EQUIPE_JETON: ${{ github.token }}
+          MON_EQUIPE_BRANCHE: ${{ github.ref_name }}
+        run: |
+          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.equipe/installation/installer-mon-equipe.ps1" | iex
+          $global:LASTEXITCODE = 0
+          $r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'mon-equipe'
+          "RACINE=$r" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Get-Content -LiteralPath (Join-Path $r '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+      - name: Vérifier (nouvelle fenêtre)
+        shell: powershell
+        run: |
+          $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
+          $env:CEREBRO_CLAUDE = [Environment]::GetEnvironmentVariable('CEREBRO_CLAUDE', 'User')
+          $ko = @()
+          $rap = Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Raw -Encoding UTF8
+          if ($rap -notmatch 'Claude : d.j. install') { $ko += 'rapport sans « Claude : déjà installé »' }
+          if (Test-Path (Join-Path $env:USERPROFILE '.local\bin\claude.exe')) { $ko += 'Claude réinstallé (claude.exe natif ajouté)' }
+          "CEREBRO_CLAUDE = $env:CEREBRO_CLAUDE"
+          if ($env:CEREBRO_CLAUDE -notlike '*claude.cmd' -or $env:CEREBRO_CLAUDE -like '*\.equipe\bin\*') { $ko += "vrai Claude mal résolu : $env:CEREBRO_CLAUDE" }
+          Set-Location $env:USERPROFILE
+          $c = Get-Command claude -ErrorAction SilentlyContinue
+          if (-not ($c -and $c.Source -like '*\.equipe\bin\claude.cmd')) { $ko += "« claude » n'est pas la commande de l'équipe : $($c.Source)" }
+          $v = (& claude --version 2>&1 | Out-String); "claude --version : $v"
+          if ($v -notmatch 'Claude Code') { $ko += 'la commande de l''équipe ne lance pas le Claude existant' }
+          $m = (& claude mcp list 2>&1 | Out-String); $m
+          if ($m -notmatch 'cerebro[^\r\n]*(✓|Connected|connect)') { $ko += 'MCP cerebro' }
+          $py = (Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\poste.json') -Raw -Encoding UTF8 | ConvertFrom-Json).python
+          $fc = & $py -c "import sys; sys.path.insert(0, r'$env:RACINE\.equipe\scripts\entretien'); import fond; print(fond.claude_exe())" 2>&1
+          "tâches de fond -> $fc"
+          if ("$fc" -like '*\.equipe\bin\*' -or -not "$fc") { $ko += "tâches de fond : mauvais Claude ($fc)" }
+          $racine = Get-ChildItem -LiteralPath $env:RACINE -Name
+          "racine visible : $($racine -join ', ')"
+          if ($racine | Where-Object { $_ -match '(?i)install' }) { $ko += 'script d''installation visible à la racine' }
+          if ($ko) { "BILAN : ÉCHEC $($ko -join ' | ')"; exit 1 } else { 'BILAN : poste déjà équipé, rien réinstallé, tout fonctionne' }
 
   macos:
     runs-on: macos-latest
@@ -136,7 +193,7 @@ jobs:
           export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
           echo "HOME_TEST=$HOME" >> "$GITHUB_ENV"
           echo "RACINE=$RACINE" >> "$GITHUB_ENV"
-          /bin/bash "$RACINE/.equipe/scripts/installer.sh" 2>&1 | tail -40
+          /bin/bash "$RACINE/.equipe/installation/installer.sh" 2>&1 | tail -40
       - name: Vérifier
         shell: bash
         run: |

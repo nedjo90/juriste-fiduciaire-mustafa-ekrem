@@ -60,13 +60,26 @@ def python_exe():
 
 
 def claude_exe():
-    w = shutil.which("claude")
-    if w:
+    """le VRAI programme Claude, jamais la commande de l'équipe (.equipe/bin/claude, placée en tête du PATH,
+    qui ouvre une session) : variable CEREBRO_CLAUDE posée par l'installateur, puis PATH sans .equipe/bin,
+    puis emplacements usuels (installateur officiel, ancienne installation npm)"""
+    bin_equipe = os.path.normcase(os.path.abspath(str(EQ / "bin")))
+    def _hors_equipe(c):
+        return c and Path(c).exists() and os.path.normcase(os.path.abspath(os.path.dirname(str(c)))) != bin_equipe
+    e = os.environ.get("CEREBRO_CLAUDE")
+    if _hors_equipe(e):
+        return e
+    chemins = [d for d in os.environ.get("PATH", "").split(os.pathsep)
+               if d and os.path.normcase(os.path.abspath(d)) != bin_equipe]
+    w = shutil.which("claude", path=os.pathsep.join(chemins))
+    if _hors_equipe(w):
         return w
     home = Path.home()
-    for c in [home / ".local" / "bin" / ("claude.exe" if WINDOWS else "claude"), home / ".claude" / "local" / "claude",
-              Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "claude" / "claude.exe"]:
-        if c.exists():
+    appdata = Path(os.environ.get("APPDATA") or (home / "AppData" / "Roaming"))
+    for c in [home / ".local" / "bin" / ("claude.exe" if WINDOWS else "claude"), home / ".claude" / "local" / ("claude.cmd" if WINDOWS else "claude"),
+              Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "claude" / "claude.exe", appdata / "npm" / "claude.cmd",
+              Path("/opt/homebrew/bin/claude"), Path("/usr/local/bin/claude")]:
+        if _hors_equipe(c):
             return str(c)
     return None
 

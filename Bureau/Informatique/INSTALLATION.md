@@ -4,24 +4,24 @@ Pour la personne qui installe (pas pour Mustafa). Tout est déjà construit et r
 
 ## Une seule commande (Windows)
 
-Sur le poste de Mustafa, même s'il n'a rien d'installé (ni Git, ni Python, ni Claude) :
+Sur le poste de Mustafa, qu'il ait déjà des outils (Claude, Git, Python) ou rien du tout :
 
 1. Ouvrir **PowerShell** : touche Windows, taper `PowerShell`, Entrée.
 2. Coller cette ligne, puis Entrée :
 
    ```
-   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/Installer-Mon-equipe.ps1 | iex
+   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-mon-equipe.ps1 | iex
    ```
 
-3. Attendre la fin (quelques minutes). Une page de connexion à Claude s'ouvre à la fin : se connecter avec le compte de Mustafa.
+3. Attendre la fin (quelques minutes). Si Claude n'est pas encore connecté, une page de connexion s'ouvre à la fin : se connecter avec le compte de Mustafa.
 
-La commande fait tout, sans droits d'administrateur et sans aucune question : elle installe Git (version portable officielle, dans le profil de l'utilisateur), récupère le dossier de l'équipe dans `Documents\mon-equipe`, puis installe Python, les outils de documents, Claude et ses extensions, déclare le dossier de confiance, supprime les demandes d'autorisation, crée le raccourci « Mon équipe » sur le bureau et programme l'entretien automatique. Elle peut être relancée sans risque : elle met à jour au lieu de tout refaire.
+La commande fait tout, sans droits d'administrateur et sans aucune question : elle installe Git (version portable officielle, dans le profil de l'utilisateur), récupère le dossier de l'équipe dans `Documents\mon-equipe`, puis installe Python, les outils de documents, Claude et ses extensions, déclare le dossier de confiance, supprime les demandes d'autorisation, crée le raccourci « Mon équipe » sur le bureau et programme l'entretien automatique. Ce qui est déjà installé n'est ni réinstallé ni modifié : le rapport final l'indique (« Claude : déjà installé sur cet ordinateur, gardé tel quel »), et le compte Claude déjà connecté reste connecté. Elle peut être relancée sans risque : elle met à jour au lieu de tout refaire. Les scripts d'installation sont rangés dans la partie cachée du dossier (`.equipe/installation`) : Mustafa ne les voit pas.
 
 ## Ensuite
 
 Ouvrir une **nouvelle** fenêtre PowerShell et taper `claude`, ou double-cliquer sur « Mon équipe » sur le bureau. L'équipe s'ouvre directement, avec son brief du jour ; Mustafa n'a plus qu'à parler. Microsoft 365 (Word, Excel, PowerPoint) est utilisé pour les PDF ; aucun autre logiciel n'est nécessaire.
 
-**Mac** : ouvrir Terminal et lancer `sh ~/Documents/mon-equipe/.equipe/scripts/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/mon-equipe`), puis taper `claude` dans un nouveau Terminal.
+**Mac** : ouvrir Terminal et lancer `sh ~/Documents/mon-equipe/.equipe/installation/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/mon-equipe`), puis taper `claude` dans un nouveau Terminal.
 
 **Confidentialité** : le dépôt de l'équipe est public et ne reçoit jamais le travail de Mustafa ; ses dossiers restent sur son poste (versions locales et sauvegarde chiffrée).
 
@@ -64,6 +64,6 @@ Si une **stratégie d'accès conditionnel** bloque le flux par code d'appareil, 
 
 ## En cas de souci
 
-- Le raccourci a disparu ou ne s'ouvre plus : relancer l'installateur.
-- Changement d'ordinateur : copier tout le dossier `mon-equipe` et, pour pouvoir relire les anciennes sauvegardes, le fichier `cle-sauvegarde.key` du dossier `.cerebro` de l'utilisateur ; puis lancer l'installateur sur le nouveau poste.
+- Le raccourci a disparu ou ne s'ouvre plus : relancer la commande d'installation ci-dessus.
+- Changement d'ordinateur : copier tout le dossier `mon-equipe` et, pour pouvoir relire les anciennes sauvegardes, le fichier `cle-sauvegarde.key` du dossier `.cerebro` de l'utilisateur ; puis lancer la commande d'installation sur le nouveau poste.
 - Le détail technique (journal d'installation, réglages, incidents) se trouve dans `.equipe/run/installation.log` et dans `DOSSIER-TECHNIQUE.md`.

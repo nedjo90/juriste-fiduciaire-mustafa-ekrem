@@ -30,7 +30,11 @@ ETRANGERS = ("cyprus", "brazil", "korea", "india", "u.s.", "united states", "chi
 
 
 def _base():
-    e = os.environ.get("CEREBRO_CLAUDE") or shutil.which("claude")
+    e = os.environ.get("CEREBRO_CLAUDE")
+    if not e:
+        sys.path.insert(0, str(ROOT / ".equipe" / "scripts" / "entretien"))
+        import fond  # vrai programme Claude, jamais la commande de l'équipe (.equipe/bin)
+        e = fond.claude_exe()
     if not e:
         return None
     return [os.environ.get("CEREBRO_PYTHON") or sys.executable, e] if e.lower().endswith(".py") else [e]

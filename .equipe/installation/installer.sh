@@ -24,9 +24,9 @@ noter "racine: $RACINE ; système: $SYS"
 
 # ------------------------------------------------------------- 1. Python ≥ 3.10
 python_ok() { [ -n "$1" ] && "$1" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' >/dev/null 2>&1; }
-PY=""
+PY=""; PY_DEJA=""
 for c in "${CEREBRO_PYTHON:-}" "$(command -v python3)" /opt/homebrew/bin/python3 /usr/local/bin/python3 "$(command -v python)"; do
-  if python_ok "$c"; then PY="$c"; break; fi
+  if python_ok "$c"; then PY="$c"; PY_DEJA=1; break; fi
 done
 if [ -z "$PY" ] && reseau; then
   dire "Installation de Python…"
@@ -37,7 +37,7 @@ if [ -z "$PY" ] && reseau; then
     python_ok "$c" && PY="$c"
   fi
 fi
-if [ -n "$PY" ]; then bilan "Python : prêt ($PY)"; else bilan "Python : non installé (pas d'accès à Internet ?). Relancez l'installateur plus tard."; fi
+if [ -n "$PY_DEJA" ]; then bilan "Python : déjà installé ($PY)."; elif [ -n "$PY" ]; then bilan "Python : installé ($PY)."; else bilan "Python : non installé (pas d'accès à Internet ?). Relancez l'installateur plus tard."; fi
 
 # ------------------------------------------------------------- 2. bibliothèques (mode utilisateur)
 if [ -n "$PY" ]; then
@@ -86,13 +86,29 @@ else
 fi
 
 # ------------------------------------------------------------- 4. Claude Code
-CLAUDE="$(command -v claude)"
-if [ -z "$CLAUDE" ] && reseau; then
+# le VRAI Claude, quelle que soit son installation (officielle, npm, Homebrew) ; jamais la commande de l'équipe
+# (.equipe/bin/claude, en tête du PATH après une première installation, qui ouvre une session)
+trouver_claude() {
+  for c in "${CEREBRO_CLAUDE:-}" "$HOME/.local/bin/claude" "$HOME/.claude/local/claude" /opt/homebrew/bin/claude /usr/local/bin/claude; do
+    [ -n "$c" ] && [ -x "$c" ] && [ "$(cd "$(dirname "$c")" && pwd)" != "$RACINE/.equipe/bin" ] && { echo "$c"; return; }
+  done
+  OLDIFS="$IFS"; IFS=:
+  for d in $PATH; do
+    [ -n "$d" ] && [ -x "$d/claude" ] && [ "$(cd "$d" 2>/dev/null && pwd)" != "$RACINE/.equipe/bin" ] && { IFS="$OLDIFS"; echo "$d/claude"; return; }
+  done
+  IFS="$OLDIFS"
+}
+CLAUDE="$(trouver_claude)"; CLAUDE_DEJA=""
+if [ -n "$CLAUDE" ]; then
+  CLAUDE_DEJA=1  # déjà présent : rien n'est réinstallé ni modifié, son compte et ses réglages restent
+  noter "Claude déjà installé : $CLAUDE $("$CLAUDE" --version 2>/dev/null)"
+elif reseau; then
   dire "Installation de Claude…"
   curl -fsSL https://claude.ai/install.sh | bash >>"$LOG" 2>&1
-  CLAUDE="$(command -v claude || ls "$HOME/.local/bin/claude" 2>/dev/null)"
+  CLAUDE="$(trouver_claude)"
 fi
-if [ -n "$CLAUDE" ]; then bilan "Claude : prêt."; else bilan "Claude : non installé (nouvel essai au prochain lancement de l'installateur)."; fi
+if [ -n "$CLAUDE_DEJA" ]; then bilan "Claude : déjà installé sur cet ordinateur, gardé tel quel."
+elif [ -n "$CLAUDE" ]; then bilan "Claude : installé."; else bilan "Claude : non installé (nouvel essai au prochain lancement de l'installateur)."; fi
 
 # ------------------------------------------------------------- 4 bis. modèles de documents officiels d'Anthropic (plugin)
 if [ -n "$CLAUDE" ] && reseau; then
@@ -143,13 +159,16 @@ BLOC_DEBUT="# >>> mon-equipe >>>"; BLOC_FIN="# <<< mon-equipe <<<"
 for rc in "$HOME/.zprofile" "$HOME/.bash_profile" "$HOME/.profile"; do
   [ -f "$rc" ] || [ "$rc" = "$HOME/.zprofile" ] || [ "$rc" = "$HOME/.profile" ] || continue
   touch "$rc"
-  "$PY" - "$rc" "$RACINE" <<'PYEOF'
+  "$PY" - "$rc" "$RACINE" "$CLAUDE" <<'PYEOF'
 import sys, re
-rc, racine = sys.argv[1], sys.argv[2]
+rc, racine, claude = sys.argv[1], sys.argv[2], sys.argv[3]
 t = open(rc, encoding="utf-8", errors="ignore").read()
 t = re.sub(r"(?s)# >>> mon-equipe >>>.*?# <<< mon-equipe <<<\n?", "", t)
 q = racine.replace("'", "'\\''")
-bloc = f"# >>> mon-equipe >>>\nexport PATH='{q}/.equipe/bin':\"$HOME/.local/bin:$HOME/.local/node/bin:$PATH\"\n# <<< mon-equipe <<<\n"
+bloc = f"# >>> mon-equipe >>>\nexport PATH='{q}/.equipe/bin':\"$HOME/.local/bin:$HOME/.local/node/bin:$PATH\"\n"
+if claude:  # chemin du vrai Claude, lu par la commande de l'équipe et par les tâches de fond
+    bloc += "export CEREBRO_CLAUDE='" + claude.replace("'", "'\\''") + "'\n"
+bloc += "# <<< mon-equipe <<<\n"
 open(rc, "w", encoding="utf-8").write(t.rstrip() + ("\n\n" if t.strip() else "") + bloc)
 PYEOF
 done
@@ -248,7 +267,7 @@ fi
 
 # ------------------------------------------------------------- 10. zone machine cachée, zone humaine prête
 if [ "$SYS" = "Darwin" ]; then
-  for n in CLAUDE.md constitution.md Installer.bat; do [ -e "$RACINE/$n" ] && chflags hidden "$RACINE/$n" 2>/dev/null; done
+  for n in CLAUDE.md constitution.md; do [ -e "$RACINE/$n" ] && chflags hidden "$RACINE/$n" 2>/dev/null; done
 fi
 for d in A-deposer Deposes Livrables Modeles Informatique; do mkdir -p "$RACINE/Bureau/$d"; done
 bilan "Dossier « Bureau » : prêt (A-deposer pour vos documents, Livrables pour les documents produits)."

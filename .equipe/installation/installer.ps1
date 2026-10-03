@@ -1,6 +1,7 @@
 ﻿# Installateur « Mon équipe » pour Windows (constitution §2, §5). Fichier UTF-8 avec BOM, compatible PowerShell 5.1.
 # Sans droits d'administrateur, sans aucune question, idempotent (peut être relancé autant de fois que nécessaire).
-# Lancement : double-clic sur Installer.bat à la racine du projet (ou : powershell -ExecutionPolicy Bypass -File installer.ps1).
+# Lancement : la commande unique (installer-mon-equipe.ps1, qui clone puis appelle ce script), ou double-clic sur
+# .equipe\installation\installer.bat. Ce qui est déjà installé (Python, Git, Claude) est gardé tel quel : « déjà installé ».
 # Étapes : Python (utilisateur) · bibliothèques · Git (utilisateur ou portable) · Claude Code · Node (optionnel)
 #          · confiance du dossier · mode sans demande · réglages adaptés au poste · base cerebro · raccourci bureau
 #          · tâche planifiée d'entretien · zone machine cachée · validation · rapport en français simple.
@@ -109,6 +110,7 @@ Noter "racine: $Racine"
 
 # ---------------------------------------------------------------- 1. Python (mode utilisateur)
 $Py = Trouver-Python
+$PyDeja = [bool]$Py
 if (-not $Py) {
   Dire 'Installation de Python…'
   if (Winget-Utilisateur 'Python.Python.3.12') { $Py = Trouver-Python }
@@ -123,7 +125,7 @@ if (-not $Py) {
   }
 }
 if ($Py) {
-  Bilan "Python : prêt ($Py)"
+  if ($PyDeja) { Bilan "Python : déjà installé ($Py)." } else { Bilan "Python : installé ($Py)." }
   Ajouter-PathUtilisateur (Split-Path -Parent $Py)
   [Environment]::SetEnvironmentVariable('CEREBRO_PYTHON', $Py, 'User')
   $env:CEREBRO_PYTHON = $Py
@@ -174,6 +176,7 @@ function Trouver-GitBash {
   return $null
 }
 $GitBash = Trouver-GitBash
+$GitDeja = [bool]$GitBash
 if (-not $GitBash) {
   Dire 'Installation de Git…'
   if (Winget-Utilisateur 'Git.Git') { $GitBash = Trouver-GitBash }
@@ -203,7 +206,7 @@ if ($GitBash) {
   Ajouter-PathUtilisateur (Join-Path $gitRoot 'cmd')
   [Environment]::SetEnvironmentVariable('CLAUDE_CODE_GIT_BASH_PATH', $GitBash, 'User')
   $env:CLAUDE_CODE_GIT_BASH_PATH = $GitBash
-  Bilan 'Git : prêt.'
+  if ($GitDeja) { Bilan 'Git : déjà installé.' } else { Bilan 'Git : installé.' }
   $git = Join-Path $gitRoot 'cmd\git.exe'
   if (Test-Path -LiteralPath (Join-Path $Racine '.git')) {
     $nom = & $git -C $Racine config user.name 2>$null
@@ -215,14 +218,31 @@ if ($GitBash) {
 
 # ---------------------------------------------------------------- 4. Claude Code (installateur officiel, mode utilisateur)
 function Trouver-Claude {
-  $c = Get-Command claude -ErrorAction SilentlyContinue | Select-Object -First 1
-  if ($c) { return $c.Source }
-  $x = Join-Path $env:USERPROFILE '.local\bin\claude.exe'
-  if (Test-Path -LiteralPath $x) { return $x }
+  # le VRAI Claude, quelle que soit la façon dont il a été installé (installateur officiel, ancienne installation npm,
+  # winget) ; jamais la commande de l'équipe (.equipe\bin\claude.cmd), placée en tête du PATH, qui ouvre une session
+  $binEq = Join-Path $Racine '.equipe\bin'
+  $c = @()
+  if ($env:CEREBRO_CLAUDE) { $c += $env:CEREBRO_CLAUDE }
+  $u = [Environment]::GetEnvironmentVariable('CEREBRO_CLAUDE', 'User'); if ($u) { $c += $u }
+  $c += (Join-Path $env:USERPROFILE '.local\bin\claude.exe')
+  $c += @(Get-Command claude.exe -All -ErrorAction SilentlyContinue | ForEach-Object { $_.Source })
+  $c += @((Join-Path $env:APPDATA 'npm\claude.cmd'), (Join-Path $env:USERPROFILE '.claude\local\claude.cmd'),
+          (Join-Path $env:LOCALAPPDATA 'Programs\claude\claude.exe'))
+  $c += @(Get-Command claude.cmd, claude.ps1 -All -ErrorAction SilentlyContinue | ForEach-Object { $_.Source })
+  foreach ($x in $c) {
+    if (-not $x -or -not (Test-Path -LiteralPath $x)) { continue }
+    if ((Split-Path -Parent $x).TrimEnd('\') -ieq $binEq.TrimEnd('\')) { continue }
+    if ($x -like '*.ps1') { $cmd = [IO.Path]::ChangeExtension($x, '.cmd'); if (Test-Path -LiteralPath $cmd) { $x = $cmd } else { continue } }
+    return $x
+  }
   return $null
 }
 $Claude = Trouver-Claude
-if (-not $Claude -and -not $SansReseau) {
+$ClaudeDeja = [bool]$Claude
+if ($ClaudeDeja) {
+  # déjà présent (et peut-être déjà connecté) : rien n'est réinstallé ni modifié, son compte et ses réglages restent
+  Noter ("Claude déjà installé : $Claude " + (Executer $Claude @('--version') 60).Trim())
+} elseif (-not $SansReseau) {
   Dire 'Installation de Claude…'
   try {
     # commande officielle : irm https://claude.ai/install.ps1 | iex (dans un processus séparé, fenêtre cachée)
@@ -231,15 +251,21 @@ if (-not $Claude -and -not $SansReseau) {
   Ajouter-PathUtilisateur (Join-Path $env:USERPROFILE '.local\bin')
   $Claude = Trouver-Claude
 }
-if ($Claude) { Ajouter-PathUtilisateur (Split-Path -Parent $Claude); Bilan 'Claude : prêt.' }
+if ($Claude) {
+  Ajouter-PathUtilisateur (Split-Path -Parent $Claude)
+  # chemin du vrai Claude, lu par la commande de l'équipe et par les tâches de fond
+  [Environment]::SetEnvironmentVariable('CEREBRO_CLAUDE', $Claude, 'User')
+  $env:CEREBRO_CLAUDE = $Claude
+  if ($ClaudeDeja) { Bilan 'Claude : déjà installé sur cet ordinateur, gardé tel quel.' } else { Bilan 'Claude : installé.' }
+}
 # « claude » tapé dans n'importe quel terminal ouvre l'équipe : la commande du projet (.equipe\bin\claude.cmd) passe en tête du PATH
 $binEquipe = Join-Path $Racine '.equipe\bin'
 $u = [Environment]::GetEnvironmentVariable('Path', 'User'); if (-not $u) { $u = '' }
 $parts = @($u.Split(';') | Where-Object { $_ -ne '' -and $_ -ne $binEquipe })
 [Environment]::SetEnvironmentVariable('Path', ((@($binEquipe) + $parts) -join ';'), 'User')
 $env:Path = $binEquipe + ';' + (($env:Path.Split(';') | Where-Object { $_ -ne $binEquipe }) -join ';')
-if (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Commande « claude » : ouvre votre équipe depuis n''importe quelle fenêtre.' }
-else { Bilan "Claude : non installé (nouvel essai au prochain lancement de l'installateur)." }
+if (-not $Claude) { Bilan "Claude : non installé (connexion Internet ?) ; nouvel essai en relançant la même commande." }
+elseif (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Commande « claude » : ouvre votre équipe depuis n''importe quelle fenêtre.' }
 
 # ---------------------------------------------------------------- 4 bis. modèles de documents officiels d'Anthropic (plugin)
 if ($Claude -and -not $SansReseau) {

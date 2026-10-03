@@ -177,7 +177,7 @@ def declarer_confiance(root=ROOT, serveurs=None):
     d.setdefault("theme", "light")
     d["bypassPermissionsModeAccepted"] = True
     try:
-        exe = shutil.which("claude") or str(Path.home() / ".local" / "bin" / ("claude.exe" if os.name == "nt" else "claude"))
+        exe = (fond.claude_exe() if fond else None) or str(Path.home() / ".local" / "bin" / ("claude.exe" if os.name == "nt" else "claude"))
         v = subprocess.run([exe, "--version"], capture_output=True, text=True, timeout=20).stdout.split()[0]
         if v[:1].isdigit():
             d.setdefault("lastOnboardingVersion", v)

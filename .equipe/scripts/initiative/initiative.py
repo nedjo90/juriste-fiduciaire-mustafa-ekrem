@@ -51,7 +51,9 @@ def prompt(items):
 def lancer(p):
     modele = K.get("modeles.intermediaire") or "sonnet"
     env = {**os.environ, "CEREBRO_BACKGROUND": "1", "CEREBRO_ROOT": str(ROOT)}
-    exe = shutil.which("claude") or "claude"  # résout claude.exe / claude.cmd sous Windows, sans passer par cmd.exe
+    sys.path.insert(0, str(ROOT / ".equipe" / "scripts" / "entretien"))
+    import fond  # vrai programme Claude, jamais la commande de l'équipe (.equipe/bin, qui ouvrirait une session)
+    exe = os.environ.get("CEREBRO_CLAUDE") or fond.claude_exe() or "claude"
     cmd = [exe, "-p", "--model", modele, "--output-format", "json", "--permission-mode", "bypassPermissions",
            "--allowedTools", "Read,Write,Edit,Bash(cerebro:*),Bash(.equipe/bin/cerebro:*),Bash(python:*),Bash(python3:*)"]
     t0 = time.time()

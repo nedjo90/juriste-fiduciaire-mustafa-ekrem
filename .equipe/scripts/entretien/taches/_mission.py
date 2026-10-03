@@ -88,7 +88,7 @@ def modele_pour(palier, memo=False):
 
 
 def claude_exe():
-    return os.environ.get("CEREBRO_CLAUDE") or shutil.which("claude") or fond.claude_exe()
+    return os.environ.get("CEREBRO_CLAUDE") or fond.claude_exe()  # jamais la commande de l'équipe (.equipe/bin)
 
 
 def claude_cmd():
