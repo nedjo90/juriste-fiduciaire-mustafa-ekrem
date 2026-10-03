@@ -281,6 +281,23 @@ def git(*args, timeout=60):
                           timeout=timeout, stdin=subprocess.DEVNULL)
 
 
+def _visibilite_github(url):
+    """« prive » | « public » | « inconnu » | « hors_github ». Un dépôt GitHub privé répond 404 à une requête sans identifiant ;
+    un dépôt public répond 200. Dans le doute (réseau, limite de requêtes), on n'envoie pas : le travail reste local."""
+    import re as _re, urllib.request, urllib.error
+    m = _re.search(r"github\.com[:/]+([^/]+)/([^/\s]+?)(?:\.git)?/?$", url or "")
+    if not m:
+        return "hors_github"
+    try:
+        urllib.request.urlopen(urllib.request.Request(f"https://api.github.com/repos/{m.group(1)}/{m.group(2)}",
+                                                      headers={"User-Agent": "mon-equipe"}), timeout=15)
+        return "public"
+    except urllib.error.HTTPError as e:
+        return "prive" if e.code == 404 else "inconnu"
+    except Exception:
+        return "inconnu"
+
+
 def t_commit_push(arg, fin):
     if not (ROOT / ".git").exists() or not shutil.which("git"):
         return {"git": "absent"}
@@ -302,6 +319,13 @@ def t_commit_push(arg, fin):
         # Envoi uniquement vers un dépôt PRIVÉ explicitement configuré sous le nom « sauvegarde ».
         if "sauvegarde" not in git("remote").stdout.split():
             return {"commit": commit, "push": "local seulement (aucun dépôt privé de sauvegarde configuré)"}
+        vis = _visibilite_github(git("remote", "get-url", "sauvegarde").stdout.strip())
+        if vis == "public":
+            fond.incident("dépôt de sauvegarde visible du public : envoi suspendu (secret professionnel)", "securite",
+                          "le repasser en privé ; l'envoi reprend seul au cycle suivant")
+            return {"commit": commit, "push": "suspendu (dépôt public)"}
+        if vis == "inconnu":
+            return {"commit": commit, "push": "différé (visibilité non vérifiable)"}
         p = git("push", "-q", "sauvegarde", br, timeout=120)
         if p.returncode != 0:
             fond.incident("envoi sur le dépôt privé en échec (réseau ou accès)", "git", "nouvel essai au prochain cycle")

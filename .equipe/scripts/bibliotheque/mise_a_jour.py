@@ -39,6 +39,35 @@ def textes_ingeres():
     return out
 
 
+def textes_absents():
+    """versions connues de la base dont le texte manque sur ce poste : la base est rechargée depuis les exports livrés par git,
+    mais la bibliothèque (textes) n'est pas dans git → premier cycle d'un poste neuf, ou dossier copié sans la bibliothèque"""
+    p = chemin_db()
+    if not p.exists():
+        return []
+    con = sqlite3.connect(f"file:{p}?mode=ro", uri=True)
+    con.row_factory = sqlite3.Row
+    out = []
+    for r in con.execute("SELECT b.identifiant, b.langue, b.version, b.chemin FROM bibliotheque b WHERE b.juridiction='CH' ORDER BY b.version DESC"):
+        ch = Path(r["chemin"] or "")
+        if not ch.is_absolute():
+            ch = fedlex.EQ.parent / ch
+        if not r["chemin"] or not ch.exists():
+            out.append(dict(r))
+    con.close()
+    return out
+
+
+def restaurer(langues, maximum):
+    faits = []
+    for r in textes_absents()[:maximum]:
+        if langues and r["langue"] not in langues:
+            continue
+        res = fedlex.ingerer(r["identifiant"], r["langue"], date=r["version"])
+        faits.append({"rs": r["identifiant"], "langue": r["langue"], "version": r["version"], "ok": "erreur" not in res})
+    return faits
+
+
 def objets_citant(bid):
     l = cerebro("links", bid)
     inc = l.get("entrants", []) if isinstance(l, dict) else []
@@ -86,6 +115,7 @@ def main(argv=None):
     bilan = {"examines": 0, "a_jour": 0, "nouvelles_versions": [], "nouveaux_textes": [], "erreurs": [], "rattrapage": []}
     try:
         bilan["rattrapage"] = rattrapage(a.langues or ["fr"])
+        bilan["restaures"] = restaurer(a.langues, a.max)
         ing = textes_ingeres()
         cibles = list(ing.items())
         if not a.sans_priorites:
@@ -116,7 +146,7 @@ def main(argv=None):
             except Exception as e:  # source injoignable : incident + rattrapage, on continue
                 fedlex.incident(rs, lg, e)
                 bilan["erreurs"].append({"rs": rs, "langue": lg, "erreur": str(e)[:200]})
-        if bilan["nouvelles_versions"] or bilan["nouveaux_textes"]:
+        if bilan["nouvelles_versions"] or bilan["nouveaux_textes"] or any(r["ok"] for r in bilan["restaures"]):
             v = cerebro("law", "verify")
             bilan["regles_non_confirmees"] = [r["id"] for r in v if isinstance(r, dict) and not r.get("verifie")] if isinstance(v, list) else v
             b = subprocess.run([sys.executable, str(Path(__file__).parent / "baremes.py")], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"})

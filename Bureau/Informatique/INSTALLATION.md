@@ -57,6 +57,12 @@ Par défaut, l'équipe se connecte avec l'application publique de Microsoft « M
 
 Si une **stratégie d'accès conditionnel** bloque le flux par code d'appareil, l'équipe essaie d'elle-même une connexion par le navigateur (même application, mêmes permissions) ; à défaut, exclure cette application de la stratégie. Le jeton est conservé chiffré dans le profil Windows de Mustafa (`%LOCALAPPDATA%\MonEquipe\m365`, protection DPAPI), jamais dans le dossier du projet ; « Déconnecter » : `connecter_messagerie.py --deconnecter`, ou révoquer l'application dans Entra.
 
+## Copie en ligne sur le compte GitHub de Mustafa (facultatif, plus tard)
+
+Rien à faire à l'installation. Après trois semaines d'usage, l'équipe propose une seule fois, dans le brief, une copie privée de son travail sur **son propre** compte GitHub. S'il accepte, elle le guide pas à pas : créer le compte si besoin, créer un dépôt **privé** (page pré-remplie), cliquer « Authorize » dans la fenêtre GitHub. L'équipe fait le reste et vérifie que le dépôt est bien privé avant tout envoi ; s'il devenait public, les envois s'arrêtent d'eux-mêmes. S'il ignore la proposition deux fois, elle n'est plus présentée ; il peut toujours dire « copie en ligne » plus tard.
+
+Les mises à jour de l'équipe continuent d'arriver de ce dépôt-ci : relancer la commande d'installation les applique sans toucher à son travail (en cas de passage modifié des deux côtés, sa version l'emporte).
+
 ## Optionnel (l'équipe s'en passe ; un administrateur peut l'ajouter)
 
 - **Node.js** : permet à l'équipe de piloter un navigateur pour consulter certains sites. L'installateur essaie de l'installer en mode utilisateur ; sinon l'équipe consulte les sites autrement.

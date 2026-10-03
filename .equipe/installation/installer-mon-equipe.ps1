@@ -103,7 +103,19 @@ if ($Jeton) {
   $auth = @('-c', ('http.extraHeader=Authorization: Basic ' + $b64))
 }
 if (Test-Path -LiteralPath (Join-Path $Dossier '.git')) {
-  & $Git @auth -C $Dossier pull --ff-only 2>&1 | ForEach-Object { Noter ("git pull : " + $_) }
+  # Mise a jour sans jamais perdre le travail de Mustafa : l'entretien commite son travail en local sur la meme branche,
+  # donc un simple "pull --ff-only" echouerait des le premier commit local. On enregistre d'abord ce qui ne l'est pas,
+  # puis on fusionne la nouvelle version de l'equipe ; en cas de conflit sur un meme passage, la version du poste l'emporte.
+  $ident = @('-c', 'user.name=Mon equipe', '-c', 'user.email=equipe@poste.local')
+  & $Git -C $Dossier add -A 2>&1 | Out-Null
+  & $Git @ident -C $Dossier commit -q -m 'avant mise a jour : travail du poste enregistre' 2>&1 | ForEach-Object { Noter ("git commit : " + $_) }
+  & $Git @auth -C $Dossier fetch -q origin $Branche 2>&1 | ForEach-Object { Noter ("git fetch : " + $_) }
+  & $Git @ident -C $Dossier merge --no-edit -X ours ('origin/' + $Branche) 2>&1 | ForEach-Object { Noter ("git merge : " + $_) }
+  if ($LASTEXITCODE -ne 0) {
+    & $Git -C $Dossier merge --abort 2>&1 | Out-Null
+    Noter 'mise a jour non appliquee (fusion impossible) : version actuelle conservee, aucun travail perdu'
+  }
+  $global:LASTEXITCODE = 0
 } else {
   if ((Test-Path -LiteralPath $Dossier) -and (Get-ChildItem -LiteralPath $Dossier -Force -ErrorAction SilentlyContinue)) {
     $ancien = $Dossier + '-ancien-' + (Get-Date -Format 'yyyyMMdd-HHmmss')

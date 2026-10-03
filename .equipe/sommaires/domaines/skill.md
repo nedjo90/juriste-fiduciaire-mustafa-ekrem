@@ -11,6 +11,7 @@
 [SK-030] skill · humanizer-de · actif · 2027-01-01 réviser selon le tableau de bord des principes
 [SK-031] skill · humanizer-it · actif · 2027-01-01 réviser selon le tableau de bord des principes
 [SK-032] skill · production-livrables · actif · 2027-01-01 réviser selon le tableau de bord des principes
+[SK-033] skill · sauvegarde-github · actif · 2027-01-01 réévaluer (fabrique)
 [SK-001] skill · alerte-changement-droit · actif · 2027-01-04 réviser selon le tableau de bord des principes (fabrique)
 [SK-002] skill · audit-tableur · actif · 2027-01-04 réviser selon le tableau de bord des principes (fabrique)
 [SK-003] skill · brief-quotidien · actif · 2027-01-04 réviser selon le tableau de bord des principes (fabrique)

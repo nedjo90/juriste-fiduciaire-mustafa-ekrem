@@ -80,12 +80,15 @@ def main(argv=None):
     if c == "init":
         for d in ("A-deposer", "Deposes", "Livrables", "Modeles", "Informatique"):
             (core.BUREAU / d).mkdir(parents=True, exist_ok=True)
-        H.seed()
+        core.db()
         r = {"db": str(core.DB_PATH), "fts": core.has_fts()}
-        if args.import_provisoire:
-            r["importes"] = S.importer_provisoire(core.ROOT / "SOMMAIRE.md")
+        # poste neuf : la mémoire livrée est rechargée AVANT les règles par défaut, sinon les règles vérifiées livrées
+        # seraient réécrites en « non vérifiées » et dupliquées sous de nouveaux identifiants
         if args.importer_si_vide and core.db().execute("SELECT COUNT(*) FROM objets WHERE type IN ('role','skill','methode')").fetchone()[0] == 0:
             r["import"] = B.importer_exports()
+        H.seed()
+        if args.import_provisoire:
+            r["importes"] = S.importer_provisoire(core.ROOT / "SOMMAIRE.md")
         r["niveau0"] = len(S.tout())
         out(r)
     elif c == "find":
