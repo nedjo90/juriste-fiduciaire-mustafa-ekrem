@@ -19,7 +19,7 @@ connecteurs:
   effet: 2
 depot_git:
   valeur: null
-  defaut: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem (privé)
+  defaut: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem (public, installation et mises à jour seulement)
   source: défaut
   question: ''
   effet: 1

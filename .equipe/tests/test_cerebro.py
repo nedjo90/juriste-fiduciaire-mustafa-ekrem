@@ -81,8 +81,9 @@ core.set_etat("sessions", 1)
 F.questions_depuis_gaps()
 test("c36 aucune question pendant la première session", F.question_next() is None)
 core.set_etat("sessions", 2)
-test("c36 aucune question tant que la construction n'est pas achevée", F.question_next() is None)
 cm = core.SESSION / "construction.md"
+cm.write_text("# construction (copie de test)\nconstruction: en cours\n", encoding="utf-8")  # indépendant de l'état livré
+test("c36 aucune question tant que la construction n'est pas achevée", F.question_next() is None)
 cm.write_text(cm.read_text(encoding="utf-8") + "\nconstruction: achevée\n", encoding="utf-8")
 poses = []
 for t in range(6):

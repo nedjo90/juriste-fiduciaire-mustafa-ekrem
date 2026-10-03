@@ -107,9 +107,6 @@ GAB-003,gabarit,gabarit pv-assemblee.docx,actif,,2026-10-03,2027-01-01,régéné
 GAB-004,gabarit,gabarit modele-calcul.xlsx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python gabarits.py),.equipe/scripts/producteur/gabarits.py
 GAB-005,gabarit,gabarit presentation.pptx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python gabarits.py),.equipe/scripts/producteur/gabarits.py
 GAB-006,gabarit,gabarit gabarit-rapport.pdf,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python gabarits.py),.equipe/scripts/producteur/gabarits.py
-INC-001,incident,configuration: configuration refusée par la validation : session de contrôle :…,resolu,,2026-10-03,2026-10-03,intendant : résoudre,
-INC-002,incident,configuration: configuration refusée par la validation : hooks non exécutés pen…,resolu,,2026-10-03,2026-10-03,intendant : résoudre,
-INC-003,incident,connecteurs: messagerie et agenda Microsoft 365 pas encore reliés (autorisation…,ouvert,,2026-10-03,2026-10-03,intendant : résoudre,
 MET-001,methode,Analyse juridique structurée,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
 MET-002,methode,Hiérarchie et datation des sources,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
 MET-003,methode,Table des autorités,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires

@@ -122,10 +122,17 @@ def niveau0():
 
 def tout():
     con = db()
-    for (cid,) in con.execute("SELECT id FROM objets WHERE type='client'").fetchall():
+    clients = [r[0] for r in con.execute("SELECT id FROM objets WHERE type='client'").fetchall()]
+    for cid in clients:
         client_n1(cid)
-    for (t,) in con.execute("SELECT DISTINCT type FROM objets WHERE client IS NULL AND type!='client'").fetchall():
+    types = [r[0] for r in con.execute("SELECT DISTINCT type FROM objets WHERE client IS NULL AND type!='client'").fetchall()]
+    for t in types:
         domaine_n1(t)
+    # sommaires d'un client ou d'un domaine qui n'a plus aucun objet : retirés (jamais de ligne vers un objet disparu)
+    for dossier, gardes in ((SOMMAIRES / "clients", set(clients)), (SOMMAIRES / "domaines", set(types))):
+        for f in dossier.glob("*.md") if dossier.exists() else []:
+            if f.stem.split("--")[0] not in gardes:
+                f.unlink(missing_ok=True)
     return niveau0()
 
 def importer_provisoire(path):

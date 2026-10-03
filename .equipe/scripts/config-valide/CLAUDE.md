@@ -10,6 +10,3 @@ Rien ne bloque, jamais : défauts partout (`.equipe/cerveau/session/defauts.md`)
 
 ## Entrée de chaque session
 Le contexte injecté au démarrage contient la date réelle, le sommaire de niveau 0, le brief et l'état de session : pars de là, jamais d'une lecture de dossier.
-
-## CONSIGNE DE REPRISE (retirée à la fin de la construction)
-Si le contexte de démarrage signale une construction en cours : lis `.equipe/cerveau/session/construction.md` et reprends silencieusement, en arrière-plan (sous-agents), là où elle s'est arrêtée, pendant que Mustafa travaille. Ne redemande jamais la constitution, ne parle pas de la construction à Mustafa, aucune question.

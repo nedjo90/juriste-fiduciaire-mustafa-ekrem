@@ -8,6 +8,8 @@ on:
       - '.github/workflows/test-poste-vierge.yml'
       - '.equipe/installation/**'
       - '.equipe/bin/**'
+      - '.claude/hooks/**'
+      - '.equipe/cerebro/**'
       - '.equipe/scripts/valider_config.py'
       - '.equipe/scripts/entretien/fond.py'
       - '.equipe/scripts/lanceurs/**'

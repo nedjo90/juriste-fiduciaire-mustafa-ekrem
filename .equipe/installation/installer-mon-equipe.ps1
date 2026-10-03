@@ -123,7 +123,7 @@ if (Test-Path -LiteralPath (Join-Path $Dossier '.git')) {
     Noter "dossier existant non vide deplace vers $ancien"
   }
   New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Dossier) | Out-Null
-  & $Git @auth clone --branch $Branche --single-branch $Depot $Dossier 2>&1 | ForEach-Object { Noter ("git clone : " + $_) }
+  & $Git @auth clone --depth 1 --branch $Branche --single-branch $Depot $Dossier 2>&1 | ForEach-Object { Noter ("git clone : " + $_) }
 }
 if (-not (Test-Path -LiteralPath (Join-Path $Dossier '.equipe\installation\installer.ps1'))) {
   Dire "Le dossier n'a pas pu etre recupere. Verifiez la connexion Internet (ou l'acces au depot) puis relancez la meme commande."

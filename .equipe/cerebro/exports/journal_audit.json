@@ -792,14 +792,6 @@
 "detail": ""
 },
 {
-"n": 100,
-"le": "2026-10-03T18:47:52+02:00",
-"acteur": "intendant",
-"action": "incident",
-"objet": "INC-001",
-"detail": "configuration refusée par la validation : session de contrôle : délai dépassé"
-},
-{
 "n": 101,
 "le": "2026-10-03T18:48:53+02:00",
 "acteur": "cerebro",
@@ -2288,14 +2280,6 @@
 "detail": "chemin"
 },
 {
-"n": 287,
-"le": "2026-10-03T19:02:14+02:00",
-"acteur": "intendant",
-"action": "incident",
-"objet": "INC-002",
-"detail": "configuration refusée par la validation : hooks non exécutés pendant la session de contrôle : ['SessionStart', 'UserPromptSubmit']"
-},
-{
 "n": 288,
 "le": "2026-10-03T19:13:38+02:00",
 "acteur": "cerebro",
@@ -2342,14 +2326,6 @@
 "action": "reviser",
 "objet": "SK-024",
 "detail": "chemin,statut,prochaine_action"
-},
-{
-"n": 294,
-"le": "2026-10-03T19:45:54+02:00",
-"acteur": "intendant",
-"action": "incident",
-"objet": "INC-003",
-"detail": "messagerie et agenda Microsoft 365 pas encore reliés (autorisation de Mustafa à venir ; non testé avec un vrai compte sur la machine de construction)"
 },
 {
 "n": 295,
