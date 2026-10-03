@@ -1,8 +1,9 @@
 # domaine role — niveau 1
+[ROLE-047] role · responsable-experience · actif · 2026-10-10 revue hebdomadaire (experience_hebdo)
+[ROLE-048] role · conseiller-anticipation (fond) · actif · 2026-10-10 premier cycle venu (cadence 30 j)
 [ROLE-044] role · greffier (rôle de fond) · actif · 2027-01-01 réviser selon le tableau de bord des principes (fabrique)
 [ROLE-045] role · intendant (rôle de fond) · actif · 2027-01-01 réviser selon le tableau de bord des principes (fabrique)
 [ROLE-046] role · entretien (rôle de fond) · actif · 2027-01-01 réviser selon le tableau de bord des principes (fabrique)
-[ROLE-047] role · responsable-experience · actif · 2027-01-01 réévaluer (fabrique)
 [ROLE-001] role · archiviste · actif · 2027-01-04 réviser selon le tableau de bord des principes (fabrique)
 [ROLE-002] role · avocat-plaideur · actif · 2027-01-04 réviser selon le tableau de bord des principes (fabrique)
 [ROLE-003] role · calculateur · actif · 2027-01-04 réviser selon le tableau de bord des principes (fabrique)

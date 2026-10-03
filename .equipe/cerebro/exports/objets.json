@@ -5823,5 +5823,30 @@
 "enregistre_le": "2026-10-03T19:56:01+02:00",
 "data": "{}",
 "a_regenerer": 0
+},
+{
+"id": "SK-033",
+"type": "skill",
+"nom": "sauvegarde-github",
+"statut": "actif",
+"client": null,
+"maj": "2026-10-03",
+"prochaine_action": "réévaluer (fabrique)",
+"prochaine_date": "2027-01-01",
+"proprietaire": "equipe",
+"risque": null,
+"chiffre_cle": null,
+"resume": "Mustafa accepte la copie en ligne : la mettre en place pas à pas sur son propre compte GitHub, en privé.",
+"mots_cles": null,
+"source": ".claude/skills/sauvegarde-github/SKILL.md",
+"chemin": ".claude/skills/sauvegarde-github/SKILL.md",
+"domaine": null,
+"canton": null,
+"langue": null,
+"valide_du": "2026-10-03",
+"valide_au": null,
+"enregistre_le": "2026-10-03T20:28:06+02:00",
+"data": "{}",
+"a_regenerer": 0
 }
 ]
