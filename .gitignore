@@ -12,8 +12,8 @@
 # Bureau/ (zone humaine) n'est pas suivi, sauf les deux dossiers techniques et les gabarits de la maison
 Bureau/*
 !Bureau/Informatique/
-!Bureau/Modèles/
-Bureau/Modèles/*.tmp
+!Bureau/Modeles/
+Bureau/Modeles/*.tmp
 # secrets
 .env
 *.key

@@ -207,7 +207,7 @@ def zombies():
             z["dossiers_vides"].append(str(d.relative_to(ROOT)))
     for r in con.execute("SELECT type, nom, client, GROUP_CONCAT(id) ids, COUNT(*) n FROM objets WHERE statut!='archive' GROUP BY type, lower(nom), client HAVING n>1"):
         z["doublons"].append(r["ids"])
-    permis = {"À déposer", "Déposés", "Livrables", "Modèles", "Informatique"}
+    permis = {"A-deposer", "Deposes", "Livrables", "Modeles", "Informatique"}
     if BUREAU.exists():
         for p in BUREAU.iterdir():
             if p.name not in permis and not p.name.startswith("."):

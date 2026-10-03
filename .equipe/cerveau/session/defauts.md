@@ -15,5 +15,5 @@ donnees_clients: transit sans anonymisation vers les fournisseurs [constitution 
 outils_communaute: installation autonome après lecture du code et test en isolation [constitution §6.4]
 depot: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem, privé [détecté le 2026-10-03] ; branche de livraison ccr-e8f5838b-808ukj (imposée par l'environnement de construction)
 branches_par_chantier: non — une seule branche autorisée dans l'environnement de construction ; chantiers = commits + tags [défaut]
-bureau_git: Bureau/ ignoré sauf Bureau/Informatique/ et Bureau/Modèles/ (§2 livraison vs §9.4) [défaut]
+bureau_git: Bureau/ ignoré sauf Bureau/Informatique/ et Bureau/Modeles/ (§2 livraison vs §9.4) [défaut]
 fuseau: Europe/Zurich [défaut §11]

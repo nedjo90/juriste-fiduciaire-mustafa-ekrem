@@ -7,7 +7,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 TMP = Path(tempfile.mkdtemp(prefix="cerebro-test-"))
 shutil.copytree(REPO / ".equipe", TMP / ".equipe", ignore=shutil.ignore_patterns("cerebro.db*", "clients", "bibliotheque", "archives", "inbox", "run", "sommaires", "exports", "journal"))
-(TMP / "Bureau" / "À déposer").mkdir(parents=True)
+(TMP / "Bureau" / "A-deposer").mkdir(parents=True)
 (TMP / "Bureau" / "Informatique").mkdir(parents=True)
 os.environ.update(CEREBRO_ROOT=str(TMP), CEREBRO_TODAY="2026-10-01")
 os.environ.pop("CEREBRO_DB", None)

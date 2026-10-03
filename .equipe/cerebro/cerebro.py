@@ -72,6 +72,8 @@ def main(argv=None):
         build().print_help(); return
     from cb import objets as O, recherche as R, sommaires as S, config as K, files as F, horloges as H, metier as M, brief as B, juridique as L, cardinal as X
     if c == "init":
+        for d in ("A-deposer", "Deposes", "Livrables", "Modeles", "Informatique"):
+            (core.BUREAU / d).mkdir(parents=True, exist_ok=True)
         H.seed()
         r = {"db": str(core.DB_PATH), "fts": core.has_fts()}
         if args.import_provisoire:

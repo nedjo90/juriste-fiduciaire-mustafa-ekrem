@@ -39,7 +39,7 @@ def build(today="2026-10-01"):
                 resume=FICTIF + "J.-M. Rochat demande si le dividende de CHF 200'000 voté le 30.09 peut être versé avant la fin octobre et ce qu'il faut annoncer.",
                 body="# Re: dividende 2026 et impôt anticipé\n\n## Message\nBonjour Monsieur Ekrem,\nL'assemblée a voté hier un dividende de 200'000 francs. Pouvons-nous le verser avant fin octobre ? Faut-il annoncer quelque chose ?\nMeilleures salutations\nJean-Marc Rochat\n\n## Métadonnées\nde: jm.rochat@exemple.ch · reçu le 2026-10-01 · langue fr\n")
     doc1 = create("document", "PV assemblée générale 2026 Rochat Holding", client=c1, liens=[h1], prochaine_action="classer", prochaine_date="2026-10-15",
-                  resume=FICTIF + "PV de l'AG ordinaire du 30.09.2026 : approbation des comptes 2025, dividende CHF 200'000, décharge.", source="Bureau/À déposer (fictif)")
+                  resume=FICTIF + "PV de l'AG ordinaire du 30.09.2026 : approbation des comptes 2025, dividende CHF 200'000, décharge.", source="Bureau/A-deposer (fictif)")
     nv = create("note", "Note vocale — appel J.-M. Rochat sur la succession", client=c1, liens=[d1, pA, pC], prochaine_action="compte rendu", prochaine_date="2026-10-03",
                 resume=FICTIF + "Transcription : souhaite transmettre la menuiserie à Luca d'ici 2028, se demande si une donation des actions de la holding est possible sans impôt.")
     rdv = create("rdv", "Rendez-vous Rochat — planification successorale", client=c1, liens=[d1, pA, pB], prochaine_action="fiche la veille", prochaine_date="2026-10-02", statut="fiche à préparer",

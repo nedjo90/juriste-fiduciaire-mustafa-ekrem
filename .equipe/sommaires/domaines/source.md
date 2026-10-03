@@ -15,3 +15,9 @@
 [BIB-014] source · 173.110.3 (fr, état 1963-10-03) · actif · 2027-01-01 vérifier mise à jour
 [BIB-015] source · OR (de, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
 [BIB-016] source · DBG (de, état 2026-09-02) · actif · 2027-01-01 vérifier mise à jour
+[BIB-017] source · ORC (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-018] source · OT (fr, état 2023-09-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-019] source · OTVA (fr, état 2025-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-020] source · OBA (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-021] source · OBA-FINMA (fr, état 2023-01-01) · actif · 2027-01-01 vérifier mise à jour
+[BIB-022] source · OTPM (fr, état 2026-10-01) · actif · 2027-01-01 vérifier mise à jour

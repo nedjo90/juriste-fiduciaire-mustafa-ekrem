@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Ingesteur (§6.3, §4.2, §15) : tout ce que Mustafa glisse dans « Bureau/À déposer » est lu, classé, rattaché, archivé.
+"""Ingesteur (§6.3, §4.2, §15) : tout ce que Mustafa glisse dans « Bureau/A-deposer » est lu, classé, rattaché, archivé.
 Par script : extraction du texte, empreinte (doublons), rattachement par alias, objet `document` avec en-tête et ligne de
-sommaire, original déplacé dans « Bureau/Déposés/<date>/ » (nom d'origine conservé), texte intégral dans .equipe/archives
+sommaire, original déplacé dans « Bureau/Deposes/<date>/ » (nom d'origine conservé), texte intégral dans .equipe/archives
 (non suivi par git). Le commentaire et l'exploitation (« document déposé relu sans demande ») sont mis en file pour le
 modèle (tâche `ingestion_commentaire`). Ne bloque jamais : un fichier illisible devient une tâche « lire par le modèle »."""
 import sys, os, json, hashlib, shutil, subprocess, zipfile, email, re
@@ -17,8 +17,8 @@ from cb.objets import create, get
 from cb.recherche import find
 from cb import files as F, brief as B
 
-DEPOT = ROOT / "Bureau" / "À déposer"
-DEPOSES = ROOT / "Bureau" / "Déposés"
+DEPOT = ROOT / "Bureau" / "A-deposer"
+DEPOSES = ROOT / "Bureau" / "Deposes"
 ARCH = ROOT / ".equipe" / "archives" / "depots"
 AUDIO = {".m4a", ".mp3", ".wav", ".ogg", ".aac", ".opus", ".amr"}
 IMAGES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".heic", ".bmp", ".gif", ".webp"}
@@ -199,7 +199,7 @@ def main():
                 res.append(ingerer_fichier(p))
             except Exception as e:
                 journal("ingesteur", fichier=p.name, erreur=repr(e))
-                F.incident_add("ingestion", f"fichier illisible : {p.name}", "laissé dans À déposer, nouvel essai au prochain cycle")
+                F.incident_add("ingestion", f"fichier illisible : {p.name}", "laissé dans A-deposer, nouvel essai au prochain cycle")
     for d in sorted([d for d in DEPOT.rglob("*") if d.is_dir()], reverse=True):
         try:
             d.rmdir()
