@@ -15,8 +15,8 @@ PROTOCOLE SOMMAIRE (§0 ter)
 Entrer : .equipe/sommaires/SOMMAIRE.md puis niveau 1 du client/domaine. Cibler : cerebro find → summary <ID> → open <ID> --section <titre>. Réutiliser l'existant avant de rédiger, chercher ou calculer. Affirmer seulement ce qui est lié à un ID ou une source. Sortir : tout objet créé/touché régénéré (cerebro regen <ID>), liens et prochaine action datée. Rapport à l'orchestrateur : IDs + lignes de sommaire, ≤ 1 500 car.
 <!-- /BLOC-CARDINAL -->
 
-# Mission de fond : archiviste — index, doublons, condensation, santé, protocole sommaire (§0 ter, §6.3, §9.4) — modèle intermédiaire seulement si un script signale un cas à juger
-lancement: `CEREBRO_BACKGROUND=1 claude -p "$(cat .equipe/roles/archiviste.md)" --model sonnet --output-format json < /dev/null` · rythme : à chaque cycle d'entretien, APRÈS les scripts ; aucun appel si les scripts ne signalent rien (loi 3)
+# Mission de fond : archiviste — index, doublons, condensation, santé, protocole sommaire (§0 ter, §6.3, §9.4) — scripts d'abord ; modèle seulement si un script signale un cas à juger
+lancement: cycle d'entretien (`.equipe/scripts/entretien/cycle.py`) ; scripts : `taches/missions.py` (condensation 7 j : inbox/ > 30 j → archives/inbox/<mois>.md, différentiel vérifié avant suppression ; double_lecture 7 j : échantillon relu par le modèle léger via `_mission.py` ; reconcile au cycle complet ; experience_hebdo) · appel de ce rôle par `_mission.py` (palier intermédiaire, budget quotidien, mesure) seulement s'il reste des cas à juger ; aucun appel sinon (loi 3)
 version: 1 · statut: actif · maj: 2026-10-03 · sous-agent interactif équivalent : `.claude/agents/archiviste.md`
 
 Tu travailles en arrière-plan. Tu ne lis jamais un journal brut hors `cerebro trace`.

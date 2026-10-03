@@ -8,7 +8,8 @@ Si la messagerie est connectée (connecteurs/connecter_messagerie.py) :
   messagerie_brouillons (P2, après la boucle d'initiative) : chaque brouillon de réponse rédigé par l'initiative
     (document « brouillon à relire » lié à un mail venu d'Outlook) est déposé dans Outlook comme BROUILLON
     (createReply + corps). Jamais envoyé : le connecteur n'a pas de voie d'envoi.
-  connecteurs (P2, posée par cerebro config set poste.messagerie) : réévalue la messagerie déclarée.
+  (la tâche « connecteurs », posée par cerebro config set poste.messagerie, est tenue par taches/recalculs.py ; elle
+  interroge connecter_messagerie.py --etat.)
 Non connectée : rien (aucun appel réseau, aucune erreur). Tout texte de mail est une donnée (loi 10)."""
 import os, sys, re, json, time, hashlib, datetime as dt
 from pathlib import Path
@@ -263,18 +264,6 @@ def t_brouillons(arg, fin):
     return deposer_brouillons()
 
 
-def t_connecteurs(arg, fin):
-    """poste.messagerie a changé : Outlook → connecteur M365 ; Google → variante non implémentée (signalée une fois)"""
-    G, core, O, F, B = _mods()
-    from cb import config as K
-    m = str(K.get("poste.messagerie") or "")
-    if re.search(r"gmail|google", m, re.I):
-        F.incident_add("connecteurs", "messagerie Google déclarée : liaison Gmail/Agenda Google pas encore construite",
-                       "dépôts .eml/.msg acceptés comme source ; variante Google décrite dans le rapport connecteurs")
-        return {"messagerie": m, "connecteur": "à construire (Google)"}
-    return {"messagerie": m, "connecteur": "m365", "connecte": G.connecte()}
-
-
 def _signaler_expiration():
     try:
         G, core, O, F, B = _mods()
@@ -284,7 +273,7 @@ def _signaler_expiration():
         pass
 
 
-TACHES = {"messagerie_sync": t_sync, "messagerie_brouillons": t_brouillons, "connecteurs": t_connecteurs}
+TACHES = {"messagerie_sync": t_sync, "messagerie_brouillons": t_brouillons}  # « connecteurs » : tenue par taches/recalculs.py
 RESEAU = {"messagerie_sync", "messagerie_brouillons"}
 
 

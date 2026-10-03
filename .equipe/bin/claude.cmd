@@ -5,6 +5,8 @@ setlocal
 set "EXE=%USERPROFILE%\.local\bin\claude.exe"
 if not exist "%EXE%" for /f "delims=" %%i in ('where claude.exe 2^>nul') do if not defined TROUVE (set "EXE=%%i" & set "TROUVE=1")
 pushd "%~dp0..\.."
+rem pas encore connecte : la page de connexion s ouvre dans le navigateur (aucun /login a taper)
+"%EXE%" auth status --json 2>nul | findstr /c:"\"loggedIn\": true" >nul || "%EXE%" auth login --claudeai
 if "%~1"=="" (
   "%EXE%" --dangerously-skip-permissions "Bonjour"
 ) else (

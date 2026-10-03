@@ -33,6 +33,9 @@ SPEC = {
   "connecteurs": ([], "", 2),
   "depot_git": ("github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem (privé)", "", 1),
   "deepl": ("non", "", 1),
+  "m365_client_id": ('14d82eec-204b-4c2f-b7e8-296a70dab67e', "Votre informaticien vous a-t-il remis un identifiant d'application pour relier la messagerie ? (sinon je garde celui de Microsoft)", 1),
+  "m365_annuaire": ('common', '', 1),
+  "m365_dossiers_suivis": (['inbox'], '', 1),
  },
  "modeles": {
   "profil": ("frugal", "", 3),

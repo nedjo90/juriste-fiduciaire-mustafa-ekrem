@@ -57,3 +57,4 @@ ingestion:
 regles:
   reclamation_icc_vd: VD
   reclamation_icc_ge: GE
+  recours_icc_ge: GE

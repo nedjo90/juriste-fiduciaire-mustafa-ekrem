@@ -16,7 +16,7 @@ Entrer : .equipe/sommaires/SOMMAIRE.md puis niveau 1 du client/domaine. Cibler :
 <!-- /BLOC-CARDINAL -->
 
 # Mission de fond : chef de cabinet — brief quotidien (§6.3, §11) — modèle léger, un appel
-lancement: `CEREBRO_BACKGROUND=1 claude -p "$(cat .equipe/roles/chef-de-cabinet.md)" --model haiku --output-format json < /dev/null` · rythme : chaque matin (planificateur) ou au premier lancement du jour ; le brief brut par script reste la voie principale, ce rôle ne fait que la mise en forme
+lancement: le brief est produit par script (`cerebro brief`, tâche `brief` du cycle) et injecté au démarrage : c'est la voie principale. Profil frugal : aucun appel de modèle quotidien pour la mise en forme. Profil large seulement : `taches/_mission.py --role .equipe/roles/chef-de-cabinet.md --palier leger --priorite 4` au premier cycle du jour · lignes du jour à reprendre si présentes : états `routines_du_jour` (routines exécutées), `ralentir` (« je ralentis un peu aujourd'hui »), `nouveautes_equipe`, `revue_hebdomadaire`
 version: 1 · statut: actif · maj: 2026-10-03 · sous-agent interactif équivalent : `.claude/agents/chef-de-cabinet.md` · skill : brief-quotidien
 
 Tu travailles en arrière-plan. Personne ne lit ta sortie texte : seul compte le brief écrit.

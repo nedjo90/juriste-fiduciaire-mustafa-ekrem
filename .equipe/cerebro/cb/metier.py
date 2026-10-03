@@ -141,7 +141,7 @@ def event_taxation(client, contribuable, autorite, canton, periode, notifiee_le,
                                                  "notifiee_le": notifiee_le, "montant": montant, "impot": impot}))
     hs = []
     for type_, imp, c in _taxation_regles(autorite, canton, impot):
-        h = horloges.clock_start(type_, notifiee_le, client=client, canton=c or canton, objet=f"décision {periode} ({imp})")
+        h = horloges.clock_start(type_, notifiee_le, client=client, canton=c or canton, objet=f"décision {periode} ({imp}" + (", cadre LHID : pratique cantonale à vérifier ⚠)" if type_ == "reclamation_icc" else ")"))
         if "delai" not in h:
             continue
         link(h["delai"], dt_id, "declencheur")

@@ -219,11 +219,12 @@ def silgeneve_html_vers_markdown(h):
 def preparer_ge(t):
     brut = http(t["url"])
     h = brut.decode("cp1252", "replace")
-    m = re.search(r"Derni[èe]res modifications au\s*(?:<[^>]+>|\s)*(\d{1,2})\s*(?:<sup>)?(?:er)?(?:</sup>)?\s*([a-zéû]+)\s+(\d{4})", h, re.I)
+    m = re.search(r"Derni[èe]res\s+modifications\s+au\s*(?:<[^>]+>|\s)*(\d{1,2})\s*(?:<sup>)?(?:er)?(?:</sup>)?\s*([a-zéû]+)\s+(\d{4})", h, re.I)
     if m:
         date_etat = dt.date(int(m.group(3)), MOIS[m.group(2).lower()], int(m.group(1))).isoformat()
-    else:
+    else:  # état introuvable : date de lecture, signalée
         date_etat = dt.date.today().isoformat()
+        journal("cantons", msg="état du droit introuvable dans la page : date de lecture retenue", url=t["url"])
     _cache(f"GE-{t['cote'].replace(' ', '_')}-{date_etat}.htm", brut)
     titre = t.get("titre") or _texte_p((re.search(r"<title>(.*?)</title>", h, re.S) or [None, t["cote"]])[1])
     return silgeneve_html_vers_markdown(h), {"date_etat": date_etat, "url": t["url"], "titre": titre}
@@ -281,6 +282,14 @@ def ingerer(canton=None, texte=None):
 def verifier():
     """cerebro law verify (fédéral + cantonal), puis juridiction réelle des règles cantonales (cantons.yaml : regles)"""
     regles = charger_yaml().get("regles") or {}
+    try:  # les règles du code (horloges.REGLES) entrent en base avant la vérification
+        from fedlex import EQ as _EQ
+        cb_dir = _EQ / "cerebro" if (_EQ / "cerebro" / "cb").exists() else Path(__file__).resolve().parents[2] / "cerebro"
+        sys.path.insert(0, str(cb_dir))
+        from cb import horloges
+        horloges.seed()
+    except Exception as e:
+        journal("cantons", msg="horloges.seed impossible", erreur=repr(e)[:200])
     v = cerebro("law", "verify")
     out = []
     import sqlite3, os

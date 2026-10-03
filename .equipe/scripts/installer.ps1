@@ -435,6 +435,18 @@ if ($Py) {
   } catch {} finally { Remove-Item Env:\CEREBRO_BACKGROUND -ErrorAction SilentlyContinue }
 }
 
+# ---------------------------------------------------------------- connexion au compte Claude (une fois, dans le navigateur)
+if ($Claude -and -not $env:CI -and [Environment]::UserInteractive) {
+  $st = Executer $Claude @('auth', 'status', '--json') 60
+  if ($st -notmatch '"loggedIn":\s*true') {
+    Dire ''
+    Dire 'Dernière étape : connectez-vous à votre compte Claude dans la page qui va s''ouvrir.'
+    $null = Lancer $Claude @('auth', 'login', '--claudeai') 900 $Racine -Visible
+    $st = Executer $Claude @('auth', 'status', '--json') 60
+  }
+  if ($st -match '"loggedIn":\s*true') { Bilan 'Compte Claude : connecté.' } else { Bilan 'Compte Claude : la connexion sera proposée à la première ouverture.' }
+}
+
 # ---------------------------------------------------------------- rapport final
 Dire ''
 Dire '==================== Installation terminée ===================='

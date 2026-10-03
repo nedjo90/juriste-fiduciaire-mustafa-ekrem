@@ -28,6 +28,7 @@ AGENTS = {
     "panel-adverse": "Un seul appel critique groupé sur un livrable important : contradicteur, juge, administration, client difficile, réviseur.",
     "producteur": "Produit le livrable au format final (Word, Excel, PowerPoint, PDF, mail, schéma) depuis les gabarits.",
     "redacteur": "Rédige mémos, avis, lettres et contrats au niveau grande étude, FR/DE/IT/EN, conclusion d'abord.",
+    "responsable-experience": "Veille à ce que Mustafa vive l'équipe simplement : réponses claires, sans jargon ni identifiant, une question à la fois ; propose les corrections.",
     "relecteur": "Dernière relecture : termes définis, renvois, chiffres, dates, canton, langue, gabarit, aucune note interne.",
     "secretaire-societe": "Assemblées, PV, décisions circulaires, registres, réquisitions RC, statuts, conventions d'actionnaires.",
     "specialiste-contrats": "Contrats suisses (CO) : rédaction, revue, clauses, risques, variantes commentées.",

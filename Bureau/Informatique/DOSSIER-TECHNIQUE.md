@@ -60,6 +60,7 @@ Utilisés : `SessionStart`, `UserPromptSubmit`, `Stop`, `PreCompact`, `SessionEn
 - 2026-10-03 · construction · OpenAlex renvoie 429 (limite d'accès automatisés) → repli CrossRef / Semantic Scholar, puis navigateur.
 - 2026-10-03 · configuration · configuration refusée par la validation : session de contrôle : délai dépassé → aucune copie valide disponible
 - 2026-10-03 · configuration · configuration refusée par la validation : hooks non exécutés pendant la session de contrôle : ['SessionStart', 'UserPromptSubmit'] → aucune copie valide disponible
+- 2026-10-03 · connecteurs · messagerie et agenda Microsoft 365 pas encore reliés (autorisation de Mustafa à venir ; non testé avec un vrai compte sur la machine de construction) → mails déposés (.eml/.msg) comme source de la boucle d'initiative ; connexion proposée plus tard (un clic « autoriser »)
 
 ## 4. Coût de la construction
 (tokens par chantier et par palier, complété à chaque étape)

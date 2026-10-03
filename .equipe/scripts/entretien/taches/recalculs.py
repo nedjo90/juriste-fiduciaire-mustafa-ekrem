@@ -1,6 +1,7 @@
 """Extension du cycle : recalculs posés par `cerebro config set` (file d'entretien, priorité 2 ; arg = clé modifiée).
 Script d'abord (§7.6) ; aucun appel de modèle ici. Une valeur réelle remplace le défaut et tout ce qui en dépend est
-recalculé (§0 bis) : horloges, doctrine et bibliothèque cantonales, profil, environnement, connecteurs, spécialistes,
+recalculé (§0 bis) : horloges, doctrine cantonale (+ entrée de cantons.yaml ; l'ingestion `bibliotheque_cantons`
+appartient au chantier bibliothèque), profil, environnement, connecteurs, spécialistes,
 modèles des sous-agents, clients principaux, lanceurs, design."""
 import os, re, sys, json, subprocess, datetime as dt
 from pathlib import Path
@@ -171,11 +172,12 @@ def t_doctrine_cantons(arg, fin):
                        prochaine_action="alimenter (veille, recherches sourcées)", prochaine_date=(core.today() + dt.timedelta(days=30)).isoformat(),
                        source=f"config mustafa.cantons_suivis ({arg})", acteur="recalcul")
         cr.append(oid)
-    return {"doctrines_creees": cr}
+    return {"doctrines_creees": cr, "cantons_yaml": cantons_yaml(arg)}
 
 
-def t_bibliotheque_cantons(arg, fin):
-    """ajoute à cantons.yaml les cantons suivis absents (insertion de texte : commentaires préservés) et met l'ingestion en file"""
+def cantons_yaml(arg=""):
+    """ajoute à cantons.yaml les cantons suivis absents (insertion de texte : commentaires préservés). L'ingestion elle-même
+    est la tâche `bibliotheque_cantons` (cantons.py, chantier bibliothèque), déjà mise en file par `config set`."""
     core, O, F, K, B = _cb()[:5]
     import yaml
     suivis = [str(x).upper() for x in (K.get("mustafa.cantons_suivis") or [])]
@@ -205,9 +207,7 @@ def t_bibliotheque_cantons(arg, fin):
     if ajoutes:
         yaml.safe_load(t)  # contrôle : jamais un YAML cassé
         CANTONS_YAML.write_text(t, encoding="utf-8")
-    for c in suivis:
-        B.queue_add("bibliotheque_canton", c, 5)
-    return {"ajoutes": ajoutes, "ingestion_en_file": suivis}
+    return {"ajoutes": ajoutes}
 
 
 def t_connecteurs(arg, fin):
@@ -330,6 +330,6 @@ def t_design(arg, fin):
 
 
 TACHES = {"profil": t_profil, "environnement": t_environnement, "horloges_recalcul": t_horloges_recalcul,
-          "doctrine_cantons": t_doctrine_cantons, "bibliotheque_cantons": t_bibliotheque_cantons, "connecteurs": t_connecteurs,
+          "doctrine_cantons": t_doctrine_cantons, "connecteurs": t_connecteurs,
           "specialistes": t_specialistes, "modeles_roles": t_modeles_roles, "clients_import": t_clients_import,
           "lanceurs": t_lanceurs, "design": t_design}

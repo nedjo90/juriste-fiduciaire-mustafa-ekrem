@@ -59,6 +59,8 @@ if ($Py -and -not (Test-Path -LiteralPath (Join-Path $Racine '.equipe\run\sans-f
 }
 
 $t0 = Get-Date
+# pas encore connecté : la page de connexion s'ouvre dans le navigateur (aucun /login à taper)
+try { if ((& $Claude auth status --json 2>$null | Out-String) -notmatch '"loggedIn":\s*true') { & $Claude auth login --claudeai } } catch {}
 if ($args.Count -eq 0) { & $Claude --dangerously-skip-permissions 'Bonjour' } else { & $Claude --dangerously-skip-permissions @args }
 $code = $LASTEXITCODE
 if ($code -ne 0 -and ((Get-Date) - $t0).TotalSeconds -lt 15) {

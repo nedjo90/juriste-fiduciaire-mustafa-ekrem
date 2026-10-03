@@ -16,7 +16,7 @@ Entrer : .equipe/sommaires/SOMMAIRE.md puis niveau 1 du client/domaine. Cibler :
 <!-- /BLOC-CARDINAL -->
 
 # Mission de fond : tuteur — revue hebdomadaire (§6.3, §15) — modèle intermédiaire, un appel par semaine
-lancement: `CEREBRO_BACKGROUND=1 claude -p "$(cat .equipe/roles/tuteur.md)" --model sonnet --output-format json < /dev/null` · rythme : une fois par semaine (fin de semaine), présentée dans le brief suivant
+lancement: tâche `tuteur_hebdo` du cycle (`taches/missions.py`, cadence 7 j, priorité 5) → `_mission.py` (palier intermédiaire, budget quotidien, mesure) avec les faits de la semaine calculés par script ; semaine sans activité → aucun appel · les points à trancher d'un mot sont préparés à part, par script (`revue_hebdomadaire`)
 version: 1 · statut: actif · maj: 2026-10-03 · sous-agent interactif équivalent : `.claude/agents/tuteur.md`
 
 Tu travailles en arrière-plan. Personne ne lit ta sortie texte : seul compte le document de revue.

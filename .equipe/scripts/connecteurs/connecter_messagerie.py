@@ -48,7 +48,7 @@ def presse_papiers(txt):
         exe = "clip" if os.name == "nt" else ("pbcopy" if sys.platform == "darwin" else "xclip")
         if shutil.which(exe):
             args = [exe] if exe != "xclip" else [exe, "-selection", "clipboard"]
-            subprocess.run(args, input=txt.encode("utf-16-le" if os.name == "nt" else "utf-8"), timeout=5)
+            subprocess.run(args, input=txt.encode("ascii", "ignore"), timeout=5)
             return True
     except Exception:
         pass
@@ -102,7 +102,7 @@ def inscrire_mcp(confiance=True):
     val = ROOT / ".equipe" / "scripts" / "valider_config.py"
     ok, detail = True, "validateur absent"
     if val.exists():
-        r = subprocess.run([sys.executable, str(val), "--sans-session", "--json"], cwd=str(ROOT), capture_output=True,
+        r = subprocess.run([sys.executable, str(val), "--sans-session"], cwd=str(ROOT), capture_output=True,
                            timeout=300, encoding="utf-8", errors="ignore")
         try:
             d = json.loads((r.stdout or "").strip().splitlines()[-1])

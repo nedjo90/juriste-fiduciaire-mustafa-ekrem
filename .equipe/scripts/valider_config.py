@@ -172,6 +172,17 @@ def declarer_confiance(root=ROOT, serveurs=None):
     except Exception:
         shutil.copy2(p, p.with_name(p.name + ".illisible-" + time.strftime("%Y%m%d%H%M%S")))
         d = {}
+    # premier lancement sans écrans d'accueil (thème, présentation, mode sans demande) : seule la connexion reste
+    d.setdefault("hasCompletedOnboarding", True)
+    d.setdefault("theme", "light")
+    d["bypassPermissionsModeAccepted"] = True
+    try:
+        exe = shutil.which("claude") or str(Path.home() / ".local" / "bin" / ("claude.exe" if os.name == "nt" else "claude"))
+        v = subprocess.run([exe, "--version"], capture_output=True, text=True, timeout=20).stdout.split()[0]
+        if v[:1].isdigit():
+            d.setdefault("lastOnboardingVersion", v)
+    except Exception:
+        pass
     projets = d.setdefault("projects", {})
     cles = {str(root)}
     if os.name == "nt":
@@ -179,6 +190,7 @@ def declarer_confiance(root=ROOT, serveurs=None):
     for k in cles:
         e = projets.setdefault(k, {})
         e["hasTrustDialogAccepted"] = True
+        e["hasCompletedProjectOnboarding"] = True
         e.setdefault("allowedTools", [])
         if serveurs:
             e["enabledMcpjsonServers"] = sorted(set(e.get("enabledMcpjsonServers") or []) | set(serveurs))
