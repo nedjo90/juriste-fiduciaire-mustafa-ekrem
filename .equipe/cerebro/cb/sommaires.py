@@ -51,19 +51,30 @@ def _write_n1(path, titre, rows):
 ORDER = "CASE WHEN statut='archive' THEN 1 ELSE 0 END, COALESCE(prochaine_date,'9999'), id"
 
 # lecture ET écriture d'un sommaire sous le verrou d'écriture de la base : deux processus qui créent en même temps ne
-# peuvent plus écrire chacun une liste incomplète (le plus lent écrasait le plus récent)
+# peuvent plus écrire chacun une liste incomplète (le plus lent écrasait le plus récent). Verrou tenu ailleurs (entretien
+# de fond) au-delà du délai d'attente : le sommaire s'écrit quand même, sans verrou (jamais d'échec pour un sommaire).
+def _sous_verrou(fn):
+    import sqlite3
+    try:
+        with ecriture() as con:
+            return fn(con)
+    except sqlite3.OperationalError:
+        return fn(db())
+
 def client_n1(cid):
-    with ecriture() as con:
+    def f(con):
         c = con.execute("SELECT * FROM objets WHERE id=?", (cid,)).fetchone()
         if not c:
             return
         rows = con.execute(f"SELECT * FROM objets WHERE (client=? OR id=?) AND statut!='archive' ORDER BY {ORDER}", (cid, cid)).fetchall()
         _write_n1(SOMMAIRES / "clients" / f"{cid}.md", f"{cid} {c['nom']} — niveau 1", rows)
+    _sous_verrou(f)
 
 def domaine_n1(typ):
-    with ecriture() as con:
+    def f(con):
         rows = con.execute(f"SELECT * FROM objets WHERE type=? AND client IS NULL AND statut!='archive' ORDER BY {ORDER}", (typ,)).fetchall()
         _write_n1(SOMMAIRES / "domaines" / f"{typ}.md", f"domaine {typ} — niveau 1", rows)
+    _sous_verrou(f)
 
 def touch(o):
     """régénération incrémentale des sommaires concernés"""

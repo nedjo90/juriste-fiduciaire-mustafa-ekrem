@@ -52,6 +52,10 @@ if [ -n "$PY" ]; then
   if ! command -v uvx >/dev/null 2>&1 && reseau; then
     "$PY" -m pip install --user uv >>"$LOG" 2>&1 || "$PY" -m pip install --user --break-system-packages uv >>"$LOG" 2>&1
   fi
+  # lecture de documents (markitdown) installée d'avance : sinon son premier démarrage dépasse le délai de connexion (30 s)
+  if reseau; then
+    { command -v uv >/dev/null 2>&1 && uv tool install markitdown-mcp; } >>"$LOG" 2>&1 || "$PY" -m uv tool install markitdown-mcp >>"$LOG" 2>&1 || true
+  fi
   M="$(manque)"
   if [ -n "$M" ]; then bilan "Outils de documents : il manque $M (nouvel essai au prochain lancement)."; else bilan "Outils de documents : prêts."; fi
   # [connecteurs] courrier Outlook (.msg) et liaison Microsoft 365 : installation séparée (un échec n'empêche pas les outils de documents)

@@ -333,6 +333,7 @@ def main():
         raise RuntimeError("erreur interne simulée")
     f = EVENEMENTS.get(EVT or data.get("hook_event_name", ""))
     if not f or fond is None:
+        journal("hooks-erreurs", evenement=EVT, erreur="événement inconnu" if not f else "socle absent")
         return None
     if CONTROLE:  # session de contrôle (valider_config) : preuve que le hook a tourné
         journal("controle", jeton=os.environ.get("CEREBRO_CONTROLE"), evenement=EVT)
@@ -346,7 +347,8 @@ if __name__ == "__main__":
         res = main()
     except BaseException as e:  # try global : erreur journalisée, succès vide
         if not isinstance(e, SystemExit):
-            journal("hooks-erreurs", evenement=EVT, erreur=repr(e)[:500])
+            import traceback
+            journal("hooks-erreurs", evenement=EVT, erreur=repr(e)[:500], trace=traceback.format_exc()[-1500:])
         res = None
     try:
         if res:

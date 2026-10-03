@@ -62,9 +62,9 @@ jobs:
           Verif 'claude --version' ($v -match 'Claude Code') $v
           $m = (& claude mcp list 2>&1 | Out-String)
           "--- claude mcp list ---"; $m
-          Verif 'MCP cerebro connecté' ($m -match 'cerebro[^\r\n]*(✓|Connected|connect)') ''
-          Verif 'MCP navigateur (playwright) connecté' ($m -match 'playwright[^\r\n]*(✓|Connected|connect)') ''
-          Verif 'MCP lecture de documents (markitdown) connecté' ($m -match 'markitdown[^\r\n]*(✓|Connected|connect)') ''
+          Verif 'MCP cerebro connecté' ($m -match 'cerebro[^\r\n]*(✓|√|Connected)') ''
+          Verif 'MCP navigateur (playwright) connecté' ($m -match 'playwright[^\r\n]*(✓|√|Connected)') ''
+          Verif 'MCP lecture de documents (markitdown) connecté' ($m -match 'markitdown[^\r\n]*(✓|√|Connected)') ''
           $pl = (& claude plugin list 2>&1 | Out-String)
           "--- claude plugin list ---"; $pl
           Verif 'Plugin des documents officiels' ($pl -match 'document-skills') ''
@@ -82,6 +82,7 @@ jobs:
           Verif 'Recherche accentuée' ($f -match 'RD-') ''
           $hk = '{"source":"startup","session_id":"ci"}' | & $py (Join-Path $env:RACINE '.claude\hooks\hook.py') SessionStart 2>&1 | Out-String
           Verif 'Hook de démarrage' ($hk -match 'additionalContext') ''
+          if ($hk -notmatch 'additionalContext') { "sortie du hook : $hk"; Get-ChildItem (Join-Path $env:RACINE '.equipe\cerveau\journal') -Filter 'hooks*.jsonl' | ForEach-Object { "--- $($_.Name)"; Get-Content $_.FullName -Encoding UTF8 | Select-Object -Last 5 } }
           $nAgents = (Get-ChildItem (Join-Path $env:RACINE '.claude\agents') -Filter *.md).Count
           $nSkills = (Get-ChildItem (Join-Path $env:RACINE '.claude\skills') -Directory).Count
           Verif "Agents ($nAgents) et skills ($nSkills) présents" ($nAgents -ge 30 -and $nSkills -ge 20)
@@ -169,7 +170,7 @@ jobs:
           $v = (& claude --version 2>&1 | Out-String); "claude --version : $v"
           if ($v -notmatch 'Claude Code') { $ko += 'la commande de l''équipe ne lance pas le Claude existant' }
           $m = (& claude mcp list 2>&1 | Out-String); $m
-          if ($m -notmatch 'cerebro[^\r\n]*(✓|Connected|connect)') { $ko += 'MCP cerebro' }
+          if ($m -notmatch 'cerebro[^\r\n]*(✓|√|Connected)') { $ko += 'MCP cerebro' }
           $py = (Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\poste.json') -Raw -Encoding UTF8 | ConvertFrom-Json).python
           $fc = & $py -c "import sys; sys.path.insert(0, r'$env:RACINE\.equipe\scripts\entretien'); import fond; print(fond.claude_exe())" 2>&1
           "tâches de fond -> $fc"

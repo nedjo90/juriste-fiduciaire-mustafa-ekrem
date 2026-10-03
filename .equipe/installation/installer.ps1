@@ -163,6 +163,11 @@ if ($Py) {
   else { Bilan "Notes vocales : transcription non disponible sur ce poste ; l'équipe vous demandera un court résumé à la place." }
   $scripts = & $Py -c "import sysconfig, os; print(sysconfig.get_path('scripts', os.name + '_user'))" 2>$null
   if ($scripts) { Ajouter-PathUtilisateur (("$scripts").Trim()) }
+  # lecture de documents (markitdown) installée d'avance : sinon son premier démarrage télécharge ses composants et
+  # dépasse le délai de connexion de Claude (30 s) ; uvx réutilise ensuite l'outil installé
+  if (-not $SansReseau) {
+    $null = Executer $Py @('-m', 'uv', 'tool', 'install', 'markitdown-mcp') 900
+  }
 }
 
 # ---------------------------------------------------------------- 3. Git (nécessaire à Claude Code sous Windows et aux sauvegardes)
