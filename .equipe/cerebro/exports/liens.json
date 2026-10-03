@@ -154,5 +154,29 @@
 "dst": "CAP-008",
 "type": "lie",
 "cree_le": "2026-10-03"
+},
+{
+"src": "RD-012",
+"dst": "BIB-029",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-013",
+"dst": "BIB-030",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-014",
+"dst": "BIB-030",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-015",
+"dst": "BIB-004",
+"type": "source",
+"cree_le": "2026-10-03"
 }
 ]

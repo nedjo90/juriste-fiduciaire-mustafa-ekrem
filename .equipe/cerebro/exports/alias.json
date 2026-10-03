@@ -1468,5 +1468,257 @@
 "id": "ROLE-046",
 "langue": null,
 "confiance": 1.0
+},
+{
+"alias": "extract-msg (lecture des .msg Outlook)",
+"alias_fold": "extract-msg (lecture des .msg outlook)",
+"id": "CAP-040",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "faster-whisper + modèle Whisper small (transcription des notes vocales)",
+"alias_fold": "faster-whisper + modele whisper small (transcription des notes vocales)",
+"id": "CAP-041",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "msal + msal-extensions (autorisation Microsoft, jeton chiffré)",
+"alias_fold": "msal + msal-extensions (autorisation microsoft, jeton chiffre)",
+"id": "CAP-042",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "MCP m365 (Outlook et agenda, lecture et brouillons, sans envoi)",
+"alias_fold": "mcp m365 (outlook et agenda, lecture et brouillons, sans envoi)",
+"id": "CAP-043",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Synchronisation messagerie et agenda (extension du cycle)",
+"alias_fold": "synchronisation messagerie et agenda (extension du cycle)",
+"id": "CAP-044",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Lecture des anciens formats Office par Microsoft Office (COM)",
+"alias_fold": "lecture des anciens formats office par microsoft office (com)",
+"id": "CAP-045",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "connecteurs: messagerie et agenda Microsoft 365 pas encore reliés (autorisation…",
+"alias_fold": "connecteurs: messagerie et agenda microsoft 365 pas encore relies (autorisation...",
+"id": "INC-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "responsable-experience",
+"alias_fold": "responsable-experience",
+"id": "ROLE-047",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "conseiller-anticipation (fond)",
+"alias_fold": "conseiller-anticipation (fond)",
+"id": "ROLE-048",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Registre MCP officiel (registry.modelcontextprotocol.io/v0.1)",
+"alias_fold": "registre mcp officiel (registry.modelcontextprotocol.io/v0.1)",
+"id": "CAP-046",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Découverte continue (catalogue.py + extension decouverte du cycle)",
+"alias_fold": "decouverte continue (catalogue.py + extension decouverte du cycle)",
+"id": "CAP-047",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Missions de fond par claude -p (_mission.py : budget, palier, mesure)",
+"alias_fold": "missions de fond par claude -p (_mission.py : budget, palier, mesure)",
+"id": "CAP-048",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "marketplace anthropic-agent-skills (anthropics/skills)",
+"alias_fold": "marketplace anthropic-agent-skills (anthropics/skills)",
+"id": "CAP-049",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "marketplace anthropic-plugin-directory (intégrée)",
+"alias_fold": "marketplace anthropic-plugin-directory (integree)",
+"id": "CAP-050",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Routines posées par Mustafa (cerebro routine, recettes.py, extension du cycle)",
+"alias_fold": "routines posees par mustafa (cerebro routine, recettes.py, extension du cycle)",
+"id": "CAP-051",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Opération dédiée de changement des règles (cerebro regle appliquer) et réconciliation (cerebro reconcile)",
+"alias_fold": "operation dediee de changement des regles (cerebro regle appliquer) et reconciliation (cerebro reconcile)",
+"id": "CAP-052",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LI-VD (fr, état 2026-05-01)",
+"alias_fold": "li-vd (fr, etat 2026-05-01)",
+"id": "BIB-029",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LI-VD",
+"alias_fold": "li-vd",
+"id": "BIB-029",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LPFisc-GE (fr, état 2026-01-01)",
+"alias_fold": "lpfisc-ge (fr, etat 2026-01-01)",
+"id": "BIB-030",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LPFisc-GE",
+"alias_fold": "lpfisc-ge",
+"id": "BIB-030",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIPP-GE (fr, état 2026-01-01)",
+"alias_fold": "lipp-ge (fr, etat 2026-01-01)",
+"id": "BIB-031",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIPP-GE",
+"alias_fold": "lipp-ge",
+"id": "BIB-031",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIPM-GE (fr, état 2025-01-01)",
+"alias_fold": "lipm-ge (fr, etat 2025-01-01)",
+"id": "BIB-032",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIPM-GE",
+"alias_fold": "lipm-ge",
+"id": "BIB-032",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Réclamation contre une décision de taxation ICC (VD)",
+"alias_fold": "reclamation contre une decision de taxation icc (vd)",
+"id": "RD-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Réclamation contre une décision de taxation ICC (GE)",
+"alias_fold": "reclamation contre une decision de taxation icc (ge)",
+"id": "RD-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Recours contre une décision sur réclamation ICC (GE)",
+"alias_fold": "recours contre une decision sur reclamation icc (ge)",
+"id": "RD-014",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Réclamation contre une décision de taxation ICC (cadre LHID, canton non suivi)",
+"alias_fold": "reclamation contre une decision de taxation icc (cadre lhid, canton non suivi)",
+"id": "RD-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "cantons.py (bibliothèque cantonale : BLV VD, recueil genevois)",
+"alias_fold": "cantons.py (bibliotheque cantonale : blv vd, recueil genevois)",
+"id": "CAP-053",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Contrôle avant livraison (panel.py : appel adverse groupé, rédacteur, relecteur.py)",
+"alias_fold": "controle avant livraison (panel.py : appel adverse groupe, redacteur, relecteur.py)",
+"id": "CAP-054",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "office.py (PDF par Microsoft 365 : COM Word/PowerPoint/Excel, osascript macOS)",
+"alias_fold": "office.py (pdf par microsoft 365 : com word/powerpoint/excel, osascript macos)",
+"id": "CAP-055",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Recherche académique (CrossRef, Semantic Scholar, OpenAlex)",
+"alias_fold": "recherche academique (crossref, semantic scholar, openalex)",
+"id": "CAP-056",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Sources étrangères (legislation.gov.uk, CourtListener, EUR-Lex CELLAR)",
+"alias_fold": "sources etrangeres (legislation.gov.uk, courtlistener, eur-lex cellar)",
+"id": "CAP-057",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "web_officiel.py (page officielle en liste blanche, ingérée le jour même)",
+"alias_fold": "web_officiel.py (page officielle en liste blanche, ingeree le jour meme)",
+"id": "CAP-058",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OCR local (tesseract + PyMuPDF ; repli RapidOCR)",
+"alias_fold": "ocr local (tesseract + pymupdf ; repli rapidocr)",
+"id": "CAP-059",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Extension qualité du cycle (tableau de bord des principes, bibliothèque cantonale)",
+"alias_fold": "extension qualite du cycle (tableau de bord des principes, bibliotheque cantonale)",
+"id": "CAP-060",
+"langue": null,
+"confiance": 1.0
 }
 ]

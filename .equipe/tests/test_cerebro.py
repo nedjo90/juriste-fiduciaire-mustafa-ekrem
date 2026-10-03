@@ -107,7 +107,10 @@ test("c28 zéro lien mort après ramasse-miettes", not z["liens_morts"], z["lien
 qid = F.question_add("Votre canton ?", "test B1")
 iid = F.incident_add("test", "incident B1")
 o_q = O.regen(qid); o_i = O.regen(iid)
-test("B1 regen d'une question/incident ne lit ni n'écrit la base", core.DB_PATH.exists() and core.DB_PATH.read_bytes()[:15] == b"SQLite format 3")
+# en-tête lu dans un AUTRE processus : ouvrir/fermer le fichier de la base ici libérerait les verrous POSIX de ce
+# processus sur la base (un autre processus supprimerait alors le journal sous nos connexions)
+_ent = subprocess.run([sys.executable, "-c", "import sys; print(open(sys.argv[1], 'rb').read(15))", str(core.DB_PATH)], capture_output=True, text=True).stdout
+test("B1 regen d'une question/incident ne lit ni n'écrit la base", core.DB_PATH.exists() and "SQLite format 3" in _ent, _ent)
 
 import concurrent.futures as cf
 cmd = [sys.executable, str(TMP / ".equipe/cerebro/cerebro.py"), "new", "note"]
@@ -116,10 +119,12 @@ def _new(i):
     try:
         return json.loads(r.stdout).get("id")
     except Exception:
+        _err.append((r.stdout + r.stderr).strip()[-400:])  # cause affichée si le test échoue
         return None
+_err = []
 with cf.ThreadPoolExecutor(20) as ex:
     ids = list(ex.map(_new, range(20)))
-test("B2 vingt créations simultanées → vingt identifiants distincts", len([i for i in ids if i]) == 20 and len(set(ids)) == 20, ids)
+test("B2 vingt créations simultanées → vingt identifiants distincts", len([i for i in ids if i]) == 20 and len(set(ids)) == 20, [ids, _err])
 
 r = subprocess.run([sys.executable, str(TMP / ".equipe/cerebro/cerebro.py"), "find", "Rochat"], capture_output=True, env={**os.environ, "PYTHONIOENCODING": "cp1252"})
 test("B4 sortie correcte avec un terminal cp1252 (Windows)", r.returncode == 0 and "Rochat" in r.stdout.decode("utf-8", "replace"), r.stderr[-200:])

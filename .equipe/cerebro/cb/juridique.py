@@ -4,7 +4,7 @@ délais contre le texte, barèmes versionnés. Aucun contenu juridique n'est éc
 import json, re, hashlib
 from pathlib import Path
 from .core import db, iso, today, fold, cut, EQ, audit, journal, new_id, slug
-from .objets import create, update, get, link, abspath, relpath
+from .objets import create, update, get, link, abspath, relpath, write_file
 from .recherche import sections
 
 BIB = EQ / "bibliotheque"
@@ -22,6 +22,11 @@ def ingest(texte, juridiction, type_, identifiant, titre, langue="fr", version=N
     if ex:
         old = get(ex[0])
         if old and old.get("data", {}).get("empreinte") == h:
+            if old.get("chemin") and not abspath(old["chemin"]).exists():
+                # mémoire importée sur un nouveau poste : l'objet existe, le texte (hors git, §9.4) manque → réécrit
+                write_file(old, body)
+                index_articles(ex[0])
+                return {"id": ex[0], "statut": "texte réécrit sur ce poste"}
             return {"id": ex[0], "statut": "inchangé"}
         update(ex[0], body=body, empreinte=h, acteur=acteur)
         index_articles(ex[0])

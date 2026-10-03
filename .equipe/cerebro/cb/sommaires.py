@@ -1,7 +1,7 @@
 """Sommaires générés (§9.3) : niveau 0 (carte, 2 000 car.), niveau 1 (par client / par domaine, 160 car. par ligne,
 subdivision au-delà de 150 lignes), niveau 2 = en-têtes des fichiers."""
-import json
-from .core import db, SOMMAIRES, cut, iso, today, get_etat, set_etat
+import json, os, time
+from .core import db, SOMMAIRES, cut, iso, today, get_etat, set_etat, ecriture
 
 N0_MAX, LIGNE_MAX, N1_MAX = 2000, 160, 150
 
@@ -14,39 +14,56 @@ def ligne(o):
         parts.append(o["risque"] if str(o["risque"]).startswith("⚠") else "⚠" + o["risque"])
     return cut(" · ".join(p for p in parts if p), LIGNE_MAX)
 
+def _ecrire(path, texte):
+    """écriture atomique (fichier temporaire propre au processus puis remplacement) : un lecteur ne voit jamais un sommaire
+    à moitié écrit ; sous Windows, un fichier ouvert ailleurs retarde le remplacement de quelques instants"""
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    tmp.write_text(texte, encoding="utf-8")
+    for essai in range(10):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            time.sleep(0.05 * (essai + 1))
+    path.write_text(texte, encoding="utf-8")
+    tmp.unlink(missing_ok=True)
+
 def _write_n1(path, titre, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [ligne(dict(r)) for r in rows]
     if len(lines) <= N1_MAX:
-        path.write_text(f"# {titre}\n" + "\n".join(lines) + "\n", encoding="utf-8")
+        _ecrire(path, f"# {titre}\n" + "\n".join(lines) + "\n")
         for old in path.parent.glob(path.stem + "--*.md"):
-            old.unlink()
+            old.unlink(missing_ok=True)
         return [path]
     parts = [lines[i:i + N1_MAX] for i in range(0, len(lines), N1_MAX)]
     files = []
-    for old in path.parent.glob(path.stem + "--*.md"):
-        old.unlink()
     for i, chunk in enumerate(parts, 1):
         p = path.with_name(f"{path.stem}--{i}.md")
-        p.write_text(f"# {titre} (partie {i}/{len(parts)})\n" + "\n".join(chunk) + "\n", encoding="utf-8")
+        _ecrire(p, f"# {titre} (partie {i}/{len(parts)})\n" + "\n".join(chunk) + "\n")
         files.append(p)
-    path.write_text(f"# {titre} — {len(lines)} lignes, subdivisé\n" + "\n".join(f"- {f.name}" for f in files) + "\n", encoding="utf-8")
+    for old in path.parent.glob(path.stem + "--*.md"):
+        if old not in files:
+            old.unlink(missing_ok=True)
+    _ecrire(path, f"# {titre} — {len(lines)} lignes, subdivisé\n" + "\n".join(f"- {f.name}" for f in files) + "\n")
     return files
 
 ORDER = "CASE WHEN statut='archive' THEN 1 ELSE 0 END, COALESCE(prochaine_date,'9999'), id"
 
+# lecture ET écriture d'un sommaire sous le verrou d'écriture de la base : deux processus qui créent en même temps ne
+# peuvent plus écrire chacun une liste incomplète (le plus lent écrasait le plus récent)
 def client_n1(cid):
-    con = db()
-    c = con.execute("SELECT * FROM objets WHERE id=?", (cid,)).fetchone()
-    if not c:
-        return
-    rows = con.execute(f"SELECT * FROM objets WHERE (client=? OR id=?) AND statut!='archive' ORDER BY {ORDER}", (cid, cid)).fetchall()
-    _write_n1(SOMMAIRES / "clients" / f"{cid}.md", f"{cid} {c['nom']} — niveau 1", rows)
+    with ecriture() as con:
+        c = con.execute("SELECT * FROM objets WHERE id=?", (cid,)).fetchone()
+        if not c:
+            return
+        rows = con.execute(f"SELECT * FROM objets WHERE (client=? OR id=?) AND statut!='archive' ORDER BY {ORDER}", (cid, cid)).fetchall()
+        _write_n1(SOMMAIRES / "clients" / f"{cid}.md", f"{cid} {c['nom']} — niveau 1", rows)
 
 def domaine_n1(typ):
-    con = db()
-    rows = con.execute(f"SELECT * FROM objets WHERE type=? AND client IS NULL AND statut!='archive' ORDER BY {ORDER}", (typ,)).fetchall()
-    _write_n1(SOMMAIRES / "domaines" / f"{typ}.md", f"domaine {typ} — niveau 1", rows)
+    with ecriture() as con:
+        rows = con.execute(f"SELECT * FROM objets WHERE type=? AND client IS NULL AND statut!='archive' ORDER BY {ORDER}", (typ,)).fetchall()
+        _write_n1(SOMMAIRES / "domaines" / f"{typ}.md", f"domaine {typ} — niveau 1", rows)
 
 def touch(o):
     """régénération incrémentale des sommaires concernés"""
@@ -85,7 +102,7 @@ def niveau0():
     if len(txt) > N0_MAX:
         txt = txt[: N0_MAX - 2].rsplit("\n", 1)[0] + "\n…"
     SOMMAIRES.mkdir(parents=True, exist_ok=True)
-    (SOMMAIRES / "SOMMAIRE.md").write_text(txt + "\n", encoding="utf-8")
+    _ecrire(SOMMAIRES / "SOMMAIRE.md", txt + "\n")
     try:
         set_etat("n0_sale", [])
     except Exception:

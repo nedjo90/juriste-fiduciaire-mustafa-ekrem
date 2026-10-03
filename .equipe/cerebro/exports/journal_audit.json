@@ -2342,5 +2342,149 @@
 "action": "reviser",
 "objet": "SK-024",
 "detail": "chemin,statut,prochaine_action"
+},
+{
+"n": 294,
+"le": "2026-10-03T19:45:54+02:00",
+"acteur": "intendant",
+"action": "incident",
+"objet": "INC-003",
+"detail": "messagerie et agenda Microsoft 365 pas encore reliés (autorisation de Mustafa à venir ; non testé avec un vrai compte sur la machine de construction)"
+},
+{
+"n": 295,
+"le": "2026-10-03T19:47:23+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-047",
+"detail": "responsable-experience"
+},
+{
+"n": 296,
+"le": "2026-10-03T19:48:05+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-048",
+"detail": "conseiller-anticipation (fond)"
+},
+{
+"n": 297,
+"le": "2026-10-03T19:55:32+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-029",
+"detail": "LI-VD (fr, état 2026-05-01)"
+},
+{
+"n": 298,
+"le": "2026-10-03T19:55:32+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-029",
+"detail": "BLV 642.11 fr 2026-05-01"
+},
+{
+"n": 299,
+"le": "2026-10-03T19:55:33+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-030",
+"detail": "LPFisc-GE (fr, état 2026-01-01)"
+},
+{
+"n": 300,
+"le": "2026-10-03T19:55:33+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-030",
+"detail": "rsGE D 3 17 fr 2026-01-01"
+},
+{
+"n": 301,
+"le": "2026-10-03T19:55:35+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-031",
+"detail": "LIPP-GE (fr, état 2026-01-01)"
+},
+{
+"n": 302,
+"le": "2026-10-03T19:55:35+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-031",
+"detail": "rsGE D 3 08 fr 2026-01-01"
+},
+{
+"n": 303,
+"le": "2026-10-03T19:55:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-032",
+"detail": "LIPM-GE (fr, état 2025-01-01)"
+},
+{
+"n": 304,
+"le": "2026-10-03T19:55:36+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-032",
+"detail": "rsGE D 3 15 fr 2025-01-01"
+},
+{
+"n": 305,
+"le": "2026-10-03T19:55:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-012",
+"detail": "Réclamation contre une décision de taxation ICC (VD)"
+},
+{
+"n": 306,
+"le": "2026-10-03T19:55:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-013",
+"detail": "Réclamation contre une décision de taxation ICC (GE)"
+},
+{
+"n": 307,
+"le": "2026-10-03T19:55:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-014",
+"detail": "Recours contre une décision sur réclamation ICC (GE)"
+},
+{
+"n": 308,
+"le": "2026-10-03T19:55:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-015",
+"detail": "Réclamation contre une décision de taxation ICC (cadre LHID, canton non suivi)"
+},
+{
+"n": 309,
+"le": "2026-10-03T19:56:02+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAP-005",
+"detail": "statut,resume"
+},
+{
+"n": 310,
+"le": "2026-10-03T19:56:02+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAP-006",
+"detail": "statut,resume"
+},
+{
+"n": 311,
+"le": "2026-10-03T19:56:02+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAP-021",
+"detail": "statut,resume,prochaine_action"
 }
 ]

@@ -57,7 +57,10 @@ def _langues_dispo(exe, voulu):
 def pages_en_images(pdf, dest, dpi=DPI):
     """PNG par page : PyMuPDF d'abord (pip, Windows sans poppler), sinon pdftoppm"""
     try:
-        import fitz
+        try:
+            import pymupdf as fitz
+        except ImportError:
+            import fitz
         out = []
         with fitz.open(str(pdf)) as d:
             for i, pg in enumerate(d, 1):

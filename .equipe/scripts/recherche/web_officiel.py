@@ -81,7 +81,10 @@ def pdf_vers_texte(p):
     except Exception:
         pass
     try:
-        import fitz
+        try:
+            import pymupdf as fitz
+        except ImportError:
+            import fitz
         with fitz.open(str(p)) as d:
             return "\n".join(pg.get_text() for pg in d)
     except Exception:

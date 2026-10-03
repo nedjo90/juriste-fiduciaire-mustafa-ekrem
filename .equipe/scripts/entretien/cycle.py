@@ -350,11 +350,24 @@ def bibliotheque_vide():
     return not r or not r.get("chemin") or not abspath(r["chemin"]).exists()
 
 
+def cantons_absents():
+    """lois cantonales connues de la mémoire mais dont le texte manque sur ce poste (nouveau poste : textes hors git)"""
+    from cb.core import db
+    from cb.objets import abspath
+    try:
+        rows = db().execute("SELECT o.chemin FROM bibliotheque b JOIN objets o ON o.id=b.id WHERE b.juridiction!='CH'").fetchall()
+    except Exception:
+        return False
+    return any(r[0] and not abspath(r[0]).exists() for r in rows)
+
+
 def t_bibliotheque_mise_a_jour(arg, fin):
     C()
     r = {}
     if bibliotheque_vide():
         r["ingestion"] = _script(SCRIPTS / "bibliotheque" / "fedlex.py", "priorites", timeout=3600)
+    if cantons_absents():
+        r["cantons"] = _script(SCRIPTS / "bibliotheque" / "cantons.py", "ingerer", timeout=1800)
     r["mise_a_jour"] = _script(SCRIPTS / "bibliotheque" / "mise_a_jour.py", timeout=3600)
     return r
 

@@ -270,7 +270,8 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         pass
     except Exception as e:  # jamais de trace brute : une erreur est un incident journalisé
-        core.journal("erreurs-cli", argv=[a[:200] for a in sys.argv[1:]], erreur=repr(e)[:300])
+        import traceback
+        core.journal("erreurs-cli", argv=[a[:200] for a in sys.argv[1:]], erreur=repr(e)[:300], trace=traceback.format_exc()[-1500:])
         try:
             core.db().rollback()
         except Exception:

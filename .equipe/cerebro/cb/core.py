@@ -80,8 +80,15 @@ def date_iso(s):
     except ValueError:
         raise ValueError(f"date impossible : {t}")
 
+BASES = (".db", ".db-wal", ".db-shm", ".db-journal", ".sqlite", ".sqlite3")
+
 def lire(p):
-    """lecture tolérante : BOM, UTF-8, puis cp1252 (fichiers réenregistrés sous Windows), sinon remplacement"""
+    """lecture tolérante : BOM, UTF-8, puis cp1252 (fichiers réenregistrés sous Windows), sinon remplacement.
+    Jamais une base SQLite : ouvrir puis fermer son fichier comme un fichier ordinaire libère, sous macOS et Linux, tous
+    les verrous que le processus tient sur la base ; un autre processus se croit alors seul, range le journal et le
+    supprime sous les connexions encore ouvertes (base abîmée)."""
+    if str(p).lower().endswith(BASES):
+        raise ValueError(f"base de données, jamais lue comme un fichier : {Path(p).name}")
     b = Path(p).read_bytes()
     for enc in ("utf-8-sig", "cp1252"):
         try:
@@ -186,40 +193,78 @@ def _fts(con):
     except sqlite3.OperationalError:
         return False
 
-_CON = None
-_DV = None  # PRAGMA data_version vu en dernier : change quand UN AUTRE processus a validé une écriture
+class _Connexion:
+    """connexion stable vue par tout le code : `con = db()` gardé dans une variable reste valable même quand la connexion
+    réelle est renouvelée (une autre fonction appelée entre-temps a vu data_version changer). Sans cela, `con` désignait
+    une connexion fermée (« Cannot operate on a closed database ») dès qu'un autre processus écrivait au même moment."""
+    __slots__ = ("_c",)
+
+    def __init__(self, c):
+        self._c = c
+
+    def __getattr__(self, nom):
+        return getattr(self._c, nom)
+
+    def __enter__(self):
+        return self._c.__enter__()
+
+    def __exit__(self, *a):
+        return self._c.__exit__(*a)
+
+
+_CON = None          # mandataire _Connexion
+_DV = None           # PRAGMA data_version vu en dernier : change quand UN AUTRE processus a validé une écriture
+_ANCIENNES = []      # connexions remplacées : un curseur en cours de lecture peut encore s'en servir ; fermées plus tard
 
 def _ouvrir():
     ms = int(os.environ.get("CEREBRO_BUSY_MS", "20000"))
-    con = sqlite3.connect(str(DB_PATH), timeout=ms / 1000)
+    # validation automatique (isolation_level=None) : une écriture hors de ecriture() est validée aussitôt. Le mode
+    # implicite de Python ouvrait sinon une transaction que personne ne refermait (ex. alias ajouté avant une mise à jour) :
+    # verrou gardé, écritures invisibles aux autres processus, vue figée de la base. Les groupes d'écritures passent par
+    # ecriture() (BEGIN IMMEDIATE … COMMIT).
+    con = sqlite3.connect(str(DB_PATH), timeout=ms / 1000, isolation_level=None)
     con.row_factory = sqlite3.Row
     try:
         con.execute("PRAGMA journal_mode=WAL")
     except sqlite3.OperationalError:
         pass  # base momentanément verrouillée : le mode WAL est déjà actif depuis la création
     con.execute(f"PRAGMA busy_timeout={ms}")
+    con.execute("PRAGMA synchronous=NORMAL")  # sûr en WAL (jamais de corruption), bien plus rapide en validation automatique
     return con
+
+def _renouveler():
+    """remplace la connexion réelle derrière le mandataire, sans fermer tout de suite l'ancienne (lecture en cours possible)"""
+    _ANCIENNES.append(_CON._c)
+    _CON._c = _ouvrir()
+    while len(_ANCIENNES) > 2:
+        try:
+            _ANCIENNES.pop(0).close()
+        except Exception:
+            pass
 
 def db():
     """connexion unique du processus. Une connexion longue (serveur MCP, entretien, tests) garde sinon une vue périmée de
-    l'index FTS5 quand d'autres processus écrivent ; écrire avec cette vue corrompt l'index. On rouvre donc la connexion
-    dès que data_version a changé (hors transaction en cours)."""
+    l'index FTS5 quand d'autres processus écrivent ; écrire avec cette vue corrompt l'index. On renouvelle donc la connexion
+    dès que data_version a changé (hors transaction en cours), derrière un mandataire stable."""
     global _CON, _DV
     global DB_PATH
     if _CON is not None and not _CON.in_transaction:
         try:
             dv = _CON.execute("PRAGMA data_version").fetchone()[0]
             if _DV is not None and dv != _DV:
-                _CON.close()
-                _CON = _ouvrir()
+                _renouveler()
                 dv = _CON.execute("PRAGMA data_version").fetchone()[0]
             _DV = dv
         except sqlite3.Error:
-            _CON = None
+            try:
+                _CON._c = _ouvrir()
+                _DV = _CON.execute("PRAGMA data_version").fetchone()[0]
+            except sqlite3.Error:
+                _CON = None
     if _CON is None:
         DB_PATH = Path(os.environ.get("CEREBRO_DB") or _db_defaut())
         DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-        _CON = _ouvrir()
+        _CON = _Connexion(_ouvrir())
         _CON.executescript(SCHEMA)
         _fts(_CON)
         for t, col in (("questions_ouvertes", "canal_pose TEXT"), ("regles_delais", "report TEXT DEFAULT 'suivant'")):

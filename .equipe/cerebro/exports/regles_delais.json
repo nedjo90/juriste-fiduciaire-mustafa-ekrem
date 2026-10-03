@@ -45,7 +45,7 @@
 "verifie_le": "2026-10-03",
 "document_type": "declaration_ia",
 "juridiction": "CH",
-"report": "suivant"
+"report": "precedent"
 },
 {
 "id": "RD-004",
@@ -61,7 +61,7 @@
 "verifie_le": "2026-10-03",
 "document_type": "decompte_tva",
 "juridiction": "CH",
-"report": "suivant"
+"report": "precedent"
 },
 {
 "id": "RD-005",
@@ -77,7 +77,7 @@
 "verifie_le": "2026-10-03",
 "document_type": "convocation_ag",
 "juridiction": "CH",
-"report": "suivant"
+"report": "precedent"
 },
 {
 "id": "RD-006",
@@ -93,7 +93,7 @@
 "verifie_le": "2026-10-03",
 "document_type": "annonce_adb",
 "juridiction": "CH",
-"report": "suivant"
+"report": "precedent"
 },
 {
 "id": "RD-007",
@@ -173,6 +173,70 @@
 "verifie_le": "pratique maison",
 "document_type": "relance_pipeline",
 "juridiction": "maison",
+"report": "suivant"
+},
+{
+"id": "RD-012",
+"type": "reclamation_icc_vd",
+"libelle": "Réclamation contre une décision de taxation ICC (VD)",
+"duree": 30,
+"unite": "jours",
+"depuis": "notification",
+"preavis_jours": 10,
+"source": "LI-VD (BIB-029, version 2026-05-01)",
+"article": "art. 186",
+"extrait_attendu": "dans les trente jours dès la notification",
+"verifie_le": "2026-10-03",
+"document_type": "reclamation",
+"juridiction": "VD",
+"report": "suivant"
+},
+{
+"id": "RD-013",
+"type": "reclamation_icc_ge",
+"libelle": "Réclamation contre une décision de taxation ICC (GE)",
+"duree": 30,
+"unite": "jours",
+"depuis": "notification",
+"preavis_jours": 10,
+"source": "LPFisc-GE (BIB-030, version 2026-01-01)",
+"article": "art. 39",
+"extrait_attendu": "dans les 30 jours qui suivent sa notification",
+"verifie_le": "2026-10-03",
+"document_type": "reclamation",
+"juridiction": "GE",
+"report": "suivant"
+},
+{
+"id": "RD-014",
+"type": "recours_icc_ge",
+"libelle": "Recours contre une décision sur réclamation ICC (GE)",
+"duree": 30,
+"unite": "jours",
+"depuis": "notification",
+"preavis_jours": 10,
+"source": "LPFisc-GE (BIB-030, version 2026-01-01)",
+"article": "art. 49",
+"extrait_attendu": "dans les 30 jours à compter de la notification",
+"verifie_le": "2026-10-03",
+"document_type": "recours",
+"juridiction": "GE",
+"report": "suivant"
+},
+{
+"id": "RD-015",
+"type": "reclamation_icc",
+"libelle": "Réclamation contre une décision de taxation ICC (cadre LHID, canton non suivi)",
+"duree": 30,
+"unite": "jours",
+"depuis": "notification",
+"preavis_jours": 10,
+"source": "RS 642.14 (BIB-004, version 2025-01-01)",
+"article": "art. 48",
+"extrait_attendu": "dans les 30 jours qui suivent sa notification",
+"verifie_le": "2026-10-03",
+"document_type": "reclamation",
+"juridiction": "CH",
 "report": "suivant"
 }
 ]

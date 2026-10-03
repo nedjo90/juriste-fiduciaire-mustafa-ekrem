@@ -1,0 +1,61 @@
+# Rapport du chantier qualité (écarts 14, 15, 16, 17, 19 ; critères 5, 6, 15, 17, 23, 34)
+date : 2026-10-03 · machine de construction Linux · tests : `python .equipe/tests/test_qualite.py` → 27/27 ; `test_production.py` 45/45 (avec et sans moteur de rendu) ; `test_cerebro.py` 50/50.
+
+## 1. Portes manquantes (écart 14, critère 34)
+- `portes/p_sommaires.py` : objets cités (texte, client, dossier), livrable et objets touchés → `a_regenerer = 0` et ligne présente au sommaire de niveau 1 (client ou domaine, subdivisions comprises). KO → `cerebro regen <ID>` ; `reparer(ids)` = correction déterministe (utilisée par le producteur avant la porte).
+- `portes/p_contexte.py` : injection du tour ≤ 6 000 car. (mesure fournie, sinon journal `injections.jsonl`, sinon simulation de `brief.context` avec restauration de l'état) ; ouvertures ≤ 5 par question (table `ouvertures`, dont « hors-cli »).
+- `portes/p_panel.py` : mémo, avis, calcul, présentation, PV, convention, contrat → registre `panels` (nouvelle table, créée à la volée) ou note « Panel — » liée au livrable ; sinon KO renvoyé au producteur.
+- `portes.py` : trois portes ajoutées (responsables : archiviste, chef-de-cabinet, producteur), options `--livrable`, `--tour`, paramètre `contexte`.
+- Tâche `principes` (extension `entretien/taches/qualite.py`, chaque cycle complet, priorité 4) : `tableau.tableau(30)` → `set_etat("principes", {ligne, ecarts, portes_faibles, revisions_demandees…})` ; un rôle/une skill en écart deux cycles complets de suite → `queue add fabrique "réviser <nom>"` (format lu par `taches/fabrique.py`). Testé.
+
+## 2. Appel adverse groupé orchestré (écart 15, §6.2, critère 5)
+- `producteur/panel.py` (orchestration) appelé par `produire.py` : livrable important → production sans inscription → UN `claude -p` (palier le plus capable via `_mission.modele_pour(…, memo=True)`, rôle `.claude/agents/panel-adverse.md`, texte corrigé + images des pages `run/rendus/…` à ouvrir par Read + portes déjà passées) → constats majeurs/importants : rédacteur (`redacteur.md`, palier intermédiaire, un appel, écrit la source corrigée) → nouvelle production, même version → inscription → note « Panel — <objet> » liée au livrable et au dossier + registre `panels` + mesure (`mesures`, rôle `panel-adverse`) → relecteur → portes finales (sommaires après régénération déterministe, contexte, panel). Le livrable demandé n'est jamais rationné ; échec d'appel → livrable présenté avec la réserve « appel adverse non tenu ».
+- `producteur/relecteur.py` : relecteur par script (termes définis, renvois internes, montants du résumé présents dans le corps, dates valides, canton nommé si droit cantonal, langue, notes internes et identifiants internes recopiés).
+- `produire.py` : `--sans-panel` / `--panel` ; `PRODUCTEUR_SANS_PANEL`, `CEREBRO_SANS_MODELE` ; une source sous `.equipe/tests/fixtures/` est produite sans panel sauf `--panel` (évite tout appel de modèle dans `test_production.py`) ; types `avis`, `convention`, `contrat` rendus par le gabarit mémo ; paramètre `version` ; sortie enrichie (type, cle, client_id…).
+- Test réel une fois (racine jetable, mémo de démonstration, `claude -p` opus) : voir § 7.
+
+## 3. Horloges cantonales (écart 16, critères 6 et 15)
+- `bibliotheque/cantons.py` : VD par l'API publique de la BLV (`api/recueil-systematique?code=6` → atelierId ; `api/actes/CONSOLIDE?id=&cote=` → version ACTUELLE ; `api/actes/<htmlId>/html` → Akoma Ntoso rendu, analyseur stdlib) ; GE par silgeneve.ch (HTML Word, cp1252, « Dernières modifications au … » = état). Markdown « ## Art. N » → `cerebro law ingest … --juridiction VD|GE --abrev …`. Échec → incident + file `bibliotheque_cantons`. `cantons.yaml` : sections `ingestion` (textes) et `regles` (juridiction des règles) ; cantons suivis lus dans `mustafa.cantons_suivis`.
+- Base réelle : BIB-029 LI-VD (BLV 642.11, état 2026-05-01, 328 art.), BIB-030 LPFisc-GE (rsGE D 3 17, état 2026-01-01, 99 art.), BIB-031 LIPP-GE (2026-01-01, 86 art.), BIB-032 LIPM-GE (2025-01-01, 55 art.).
+- `horloges.REGLES` (changement signalé) : RD-012 `reclamation_icc_vd` LI-VD art. 186 « dans les trente jours dès la notification » ; RD-013 `reclamation_icc_ge` LPFisc art. 39 « dans les 30 jours qui suivent sa notification » ; RD-014 `recours_icc_ge` LPFisc art. 49 « dans les 30 jours à compter de la notification » ; RD-015 `reclamation_icc` LHID art. 48 (cadre pour un canton non suivi, « pratique cantonale à vérifier »). `cerebro law verify` : 12/12 vérifiées dans la base réelle.
+- `metier.event_taxation` (changement signalé) : règle choisie selon autorité, canton et impôt ; décision cantonale IFD/ICC → deux horloges (cantonale d'abord, IFD en parallèle) ; ICC seul → une ; canton non suivi → LHID + ⚠ ; retour compatible (`delai`, `echeance`, `document` = première horloge) + `horloges`.
+- Tâche `bibliotheque_cantons` (extension qualité, 30 j, réseau ; planifiée aussi dès qu'un canton suivi n'a aucun texte).
+- HORS PÉRIMÈTRE, modifié car exigé par « law verify doit confirmer » : `cerebro/cb/juridique.py` `verify_rules` (3 retouches) : toutes les règles sauf `maison` ; identifiant lu comme premier jeton de la source (numéro RS ou abréviation cantonale) ; « RS » seulement devant un numéro. Sans cela, l'identifiant BLV 642.11 entrerait en collision avec la LIFD (RS 642.11).
+
+## 4. Données de répétition (écart 17, critères 18 et 23)
+- `tests/fixtures/depot/generer.py` (régénérable) + fichiers : `mail-rochat-taxation-2025.eml` (pièce jointe PDF), `mail-lemantech-convention.msg` (fichier composé OLE écrit sans Outlook par un petit écrivain MS-CFB/MS-OXMSG ; relu par extract-msg : objet, expéditeur, destinataire, date, pièce jointe), `decision-taxation-2025-rochat-holding.pdf` (texte), `pv-ag-2026-rochat-holding-scan.pdf` (image, sans couche texte ; OCR tesseract : texte reconnu), `convention-lemantech-suivi-modifications.docx` (w:ins / w:del réels, auteur, date), `decompte-tva-t3-2026-lemantech.xlsx` (formules, taux laissé à lire dans la loi), `note-vocale-rochat-succession.wav` (espeak-ng hors ligne, 600 Ko).
+- `tests/e2e/demonstration.yaml` : démonstration §16.8 (mail → brouillon ; droit cantonal VD/GE → tableau puis texte, sources datées ; réclamation : deux horloges + projet ; schéma ; dépôt de tous les formats). Non rejouée au banc (coût) : à rejouer par l'orchestrateur.
+
+## 5. Recherche (écart 19)
+- `recherche/reseau.py` (pause par hôte, Retry-After plafonné, repli, journal `recherche.jsonl`).
+- `recherche/academique.py` : CrossRef (OK), Semantic Scholar et OpenAlex (429 ici → repli propre, sans attente longue) ; `--enregistrer` → objets `doctrine` (références seulement).
+- `recherche/etranger.py` : legislation.gov.uk (recherche Atom + texte CLML, OK), CourtListener v4 (429 « 125/jour » anonyme ici → repli ; jeton `COURTLISTENER_TOKEN` facultatif), EUR-Lex par le CELLAR (SPARQL titre + XHTML par négociation, RGPD : 99 articles ; eur-lex.europa.eu renvoie 202 anti-robot). `--ingerer` → `law ingest` UK/EU.
+- `recherche/web_officiel.py` + `liste_blanche.yaml` : contrôle du domaine (hors liste → jamais ingéré), copie archivée datée, conversion, `law ingest` le jour même ; `ajouter <domaine>` (liste qui s'enrichit).
+- `recherche/ocr.py` : ocrmypdf → tesseract (PyMuPDF ou pdftoppm pour les pages ; fra/deu/eng ici) → RapidOCR (pip utilisateur, disponible sur PyPI 1.4.4) → None.
+- Capacités inscrites : CAP-053 à CAP-060 ; CAP-005 (BLV) et CAP-006 (SIL GE) passées actives ; CAP-021 LibreOffice retirée.
+
+## 6. Exigences reçues en cours de chantier
+- LibreOffice retiré : `producteur/office.py` (`vers_pdf`, `disponible`) : PowerShell + COM Word `SaveAs2(pdf,17)`, PowerPoint `SaveAs(pdf,32)`, Excel `ExportAsFixedFormat(0,pdf)`, invisible, try/finally + `Quit()` + libération COM, délai puis `taskkill` ; macOS par osascript si l'application est installée ; sinon None → PDF reportlab de la maison + réserve. `commun.soffice()` supprimé, `commun.vers_pdf` délègue à office.py ; p_visuel, produire, inscrire, rendu_pdf mis à jour.
+- Contrôle visuel sans convertisseur : `p_visuel.rendre_png` essaie pdftoppm, puis PyMuPDF, puis pypdfium2 ; sans moteur, réserve explicite « contrôle visuel limité … » en tête, porte non bloquante. `test_production.py` (modifié avec l'accord de l'orchestrateur) : images OU repli explicite ; vérifié sous Linux normal et Linux sans poppler ni PyMuPDF (PATH minimal) → 45/45.
+
+## 7. Test réel du panel (mémo de démonstration, racine jetable)
+Racine jetable (copie de la base + dossier fictif), `produire.py fixtures/memo_demo.md --panel`, vrai `claude -p` :
+- panel : opus, 78 s, 49 590 tokens (≈ 0,51 USD équivalent), 15 constats dont 3 majeurs et 9 importants, confort « faible », « présentable avec réserves ». Constats pertinents : exigibilité du dividende non traitée, option « janvier » trompeuse (naissance de la créance d'impôt anticipé), et surtout la seule source citée (BIB-001 = Code des obligations dans la base) ne fonde ni le taux de 35 % ni la retenue → citation erronée détectée.
+- rédacteur : sonnet, 31 s, 24 926 tokens ; source corrigée (`…-v1-apres-panel.md`), nouvelle production en v1 ; affirmations de droit non fondées marquées ⚠ (11).
+- inscription LIV-001, note N-002 « Panel — dividende 2026 et impot anticipe » liée au livrable, registre `panels`, deux mesures ; portes finales : sommaires ok, panel ok, relecteur ok, contexte na (injection non journalisée, voir § 8.1) ; 112 s au total.
+
+## 8. Changements hors périmètre à faire (décrits, non faits)
+1. `.claude/hooks/hook.py` `user_prompt_submit` : après `ctx = B.context(prompt)`, `journal("injections", tour=core.get_etat("tour"), caracteres=len(ctx))` (mesure lue par p_contexte ; sans elle, simulation).
+2. `cerebro/cb/brief.py` `health()` : ajouter `"principes": get_etat("principes", None)` (la tâche écrit déjà l'état).
+3. `tests/e2e/banc.py` : avant les messages d'un scénario, `for f in s.get("depot", []): shutil.copy(racine/".equipe/tests/fixtures/depot"/f, racine/"Bureau"/"A-deposer"/f)` ; retirer `CLAUDE_CODE_SESSION_ID` de l'environnement de `tour()` (défaut relevé par l'audit).
+4. `scripts/ingesteur/ingerer.py` l. 139-141 (branchement OCR) : si `_pdf(p)` < 40 car., `sys.path.insert(0, SCRIPTS/"recherche"); from ocr import ocr; t = ocr(p)` ; texte reconnu (> 40 car.) → nature « texte » préfixée « [texte reconnu par OCR local] » ; sinon « pdf_scanne » (lecture par le modèle, inchangé). Même chose pour les images (.png/.jpg).
+5. Installateurs : retirer la vérification `soffice` (installer.sh l. 95, installer.ps1 l. 254-255) ; ajouter `pymupdf` (rendu des pages, OCR) et, en option, `rapidocr-onnxruntime` aux bibliothèques pip utilisateur. `ingerer.py` l. 113-115 appelle encore `soffice` (anciens formats) : à remplacer par `connecteurs/office_lecture.py` (déjà présent).
+6. `cerebro/cb/juridique.py` `ingest` : quand l'empreinte est inchangée mais que le fichier du texte manque sur le poste (clone, base importée), réécrire le fichier et réindexer au lieu de répondre « inchangé » (constaté : sans cela `law article LI-VD` reste « pas encore disponible » après un nouvel essai de cantons.py).
+7. Skill `production-livrables` : préciser que l'appel adverse est automatique pour les livrables importants et que `--sans-panel` est réservé aux tests.
+
+## 9. Dette et poste Windows
+- Windows : office.py non exécuté sur un vrai Word ici (Linux) ; à vérifier une fois (`python .equipe/scripts/producteur/office.py memo.docx`). OCR : tesseract n'est pas installable sans droits par l'installateur officiel ; RapidOCR (pip utilisateur) est le repli recommandé, puis lecture par le modèle.
+- Le rendu des images de contrôle sous Windows suppose PyMuPDF (pip) : sans lui, réserve « contrôle visuel limité ».
+- VD : recours ICC (LI art. 199 renvoie à la LPA-VD) non couvert : LPA-VD à ingérer (BLV 173.36) puis règle à ajouter. Délais de déclaration et prolongations par canton, FOSC : non faits.
+- Le .msg n'a pas de propriétés nommées ni de RTF compressé : suffisant pour extract-msg ; Outlook l'ouvrirait probablement mais non vérifié.
+- La démonstration §16.8 n'a pas été rejouée au banc (coût en tokens) ; le relecteur est un script (aucun appel), conforme au « tout ce qui est vérifiable par script ».

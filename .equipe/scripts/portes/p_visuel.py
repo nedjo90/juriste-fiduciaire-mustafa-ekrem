@@ -99,7 +99,10 @@ def rendre_png(pdf, dest):
             pass
     if not list(dest.glob("page-*.png")):
         try:
-            import fitz  # PyMuPDF
+            try:
+                import pymupdf as fitz  # PyMuPDF
+            except ImportError:
+                import fitz
             with fitz.open(str(pdf)) as d:
                 for i, pg in enumerate(d, 1):
                     pg.get_pixmap(dpi=DPI).save(str(dest / f"page-{i:02d}.png"))

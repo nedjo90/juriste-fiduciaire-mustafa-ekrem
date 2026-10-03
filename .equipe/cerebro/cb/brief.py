@@ -3,7 +3,7 @@ Budgets (§9.4) : début de session ≤ 8 000 caractères ; injection par tour e
 import json, os, re, csv, shutil, hashlib, unicodedata, datetime as dt
 from pathlib import Path
 from .core import (db, iso, today, now, cut, fold, ROOT, EQ, CERVEAU, SESSION, SOMMAIRES, BUREAU, EXPORTS, JOURNAL,
-                   get_etat, set_etat, stamp, journal, ID_RE)
+                   get_etat, set_etat, stamp, journal, ID_RE, ecriture)
 from .objets import get, resolve, links_of, abspath
 from .sommaires import ligne, niveau0
 from . import horloges, files
@@ -336,25 +336,25 @@ def importer_exports():
     con = db()
     n, erreurs = 0, []
     cols_ok = {}
-    for p in sorted(EXPORTS.glob("*.json")):
-        t = p.stem
-        rows = json.loads(p.read_text(encoding="utf-8"))
-        if t not in cols_ok:
-            cols_ok[t] = {c[1] for c in con.execute(f"PRAGMA table_info({t})")} if re.fullmatch(r"\w+", t) else set()
-        for r in rows:
-            cols = [c for c in r if c in cols_ok[t]]
-            if not cols:
-                continue
-            try:
-                con.execute(f"INSERT OR REPLACE INTO {t}({','.join(cols)}) VALUES({','.join('?' * len(cols))})", [r[c] for c in cols])
-                n += 1
-            except Exception as e:
-                erreurs.append(f"{t}: {repr(e)[:80]}")
-    con.commit()
+    with ecriture():  # une seule transaction : import rapide et une ligne en échec n'arrête pas les autres
+        for p in sorted(EXPORTS.glob("*.json")):
+            t = p.stem
+            rows = json.loads(p.read_text(encoding="utf-8"))
+            if t not in cols_ok:
+                cols_ok[t] = {c[1] for c in con.execute(f"PRAGMA table_info({t})")} if re.fullmatch(r"\w+", t) else set()
+            for r in rows:
+                cols = [c for c in r if c in cols_ok[t]]
+                if not cols:
+                    continue
+                try:
+                    con.execute(f"INSERT OR REPLACE INTO {t}({','.join(cols)}) VALUES({','.join('?' * len(cols))})", [r[c] for c in cols])
+                    n += 1
+                except Exception as e:
+                    erreurs.append(f"{t}: {repr(e)[:80]}")
     from .objets import index_fts
-    for (oid,) in con.execute("SELECT id FROM objets").fetchall():
-        index_fts(get(oid))
-    con.commit()
+    with ecriture():
+        for (oid,) in con.execute("SELECT id FROM objets").fetchall():
+            index_fts(get(oid))
     from .sommaires import tout
     tout()
     try:

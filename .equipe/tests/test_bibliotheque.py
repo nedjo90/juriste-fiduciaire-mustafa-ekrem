@@ -42,7 +42,9 @@ def racine_jetable(avec_bibliotheque=False):
             shutil.copytree(EQ / d, t / ".equipe" / d, ignore=shutil.ignore_patterns("*.db-*", "__pycache__"))
     (t / "Bureau" / "Informatique").mkdir(parents=True)
     if avec_bibliotheque:
-        shutil.copytree(EQ / "bibliotheque" / "ch", t / ".equipe" / "bibliotheque" / "ch")
+        for j in ("ch", "vd", "ge"):  # textes fédéraux et cantonaux (sans le cache de téléchargement)
+            if (EQ / "bibliotheque" / j).exists():
+                shutil.copytree(EQ / "bibliotheque" / j, t / ".equipe" / "bibliotheque" / j)
     else:
         (t / ".equipe" / "cerebro" / "cerebro.db").unlink(missing_ok=True)
     return t

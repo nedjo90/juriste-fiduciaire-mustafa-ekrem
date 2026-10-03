@@ -18,5 +18,15 @@
 "statut": "resolu",
 "resolu_le": "2026-10-03T19:03:31+02:00",
 "phrase": ""
+},
+{
+"id": "INC-003",
+"le": "2026-10-03T19:45:54+02:00",
+"categorie": "connecteurs",
+"description": "messagerie et agenda Microsoft 365 pas encore reliés (autorisation de Mustafa à venir ; non testé avec un vrai compte sur la machine de construction)",
+"repli": "mails déposés (.eml/.msg) comme source de la boucle d'initiative ; connexion proposée plus tard (un clic « autoriser »)",
+"statut": "ouvert",
+"resolu_le": null,
+"phrase": ""
 }
 ]

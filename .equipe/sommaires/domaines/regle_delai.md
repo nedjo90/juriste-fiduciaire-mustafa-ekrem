@@ -10,3 +10,7 @@
 [RD-009] regle_delai · Revue périodique du dossier LBA · actif · 2027-01-01 vérifier contre le texte officiel
 [RD-010] regle_delai · Dernier jour pour résilier · actif · 2027-01-01 vérifier contre le texte officiel
 [RD-011] regle_delai · Relance commerciale · actif · 2027-01-01 vérifier contre le texte officiel
+[RD-012] regle_delai · Réclamation contre une décision de taxation ICC (VD) · actif · 2027-01-01 vérifier contre le texte officiel
+[RD-013] regle_delai · Réclamation contre une décision de taxation ICC (GE) · actif · 2027-01-01 vérifier contre le texte officiel
+[RD-014] regle_delai · Recours contre une décision sur réclamation ICC (GE) · actif · 2027-01-01 vérifier contre le texte officiel
+[RD-015] regle_delai · Réclamation contre une décision de taxation ICC (cadre LHID, canton non suivi) · actif · 2027-01-01 vérifier contre le texte officiel
