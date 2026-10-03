@@ -75,7 +75,7 @@ jobs:
           "--- claude plugin list ---"; $pl
           Verif 'Plugin des documents officiels' ($pl -match 'document-skills') ''
           $poste = Get-Content -LiteralPath (Join-Path $env:RACINE '.team\run\workstation.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-          $py = $workstation.python
+          $py = $poste.python
           Verif 'Python en mode utilisateur' ($py -and ($py -like "$env:LOCALAPPDATA*")) "$py"
           $libs = & $py -c "import yaml, docx, openpyxl, pptx, reportlab, matplotlib, pypdf; print('ok')" 2>&1
           Verif 'Bibliothèques de documents' ("$libs" -match 'ok') "$libs"
