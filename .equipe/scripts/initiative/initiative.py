@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""Boucle d'initiative (§11) : à chaque ouverture et à chaque cycle complet, UN appel groupé sur le modèle intermédiaire,
+limité aux mails qui attendent une réponse sous 48 h, aux rendez-vous des prochaines 24 h, aux documents de délais
+entrés dans leur préavis, aux dépôts à commenter et aux changements de droit récents. Rien à faire → aucun appel (loi 3).
+Usage : initiative.py [--simuler] [--max 8]"""
+import sys, os, json, subprocess, time, datetime as dt, tempfile
+from pathlib import Path
+
+ROOT = Path(os.environ.get("CEREBRO_ROOT") or Path(__file__).resolve().parents[3])
+sys.path.insert(0, str(ROOT / ".equipe" / "cerebro"))
+os.environ.setdefault("CEREBRO_ROOT", str(ROOT))
+from cb import core, config as K, files as F, brief as B, cardinal as X
+from cb.core import db, iso, today, cut, journal
+from cb.sommaires import ligne
+from cb.objets import get
+
+VERROU = ROOT / ".equipe" / "run" / "initiative.lock"
+
+def collecter(maxi=8):
+    con = db()
+    t, d1, d2, d3 = iso(), (today() + dt.timedelta(days=1)).isoformat(), (today() + dt.timedelta(days=2)).isoformat(), (today() + dt.timedelta(days=3)).isoformat()
+    items = []
+    for r in con.execute("SELECT * FROM objets WHERE type='mail' AND statut='attente' AND COALESCE(prochaine_date,?)<=? ORDER BY prochaine_date", (t, d2)):
+        items.append(("mail en attente", dict(r)))
+    for r in con.execute("SELECT * FROM objets WHERE type='rdv' AND statut IN ('fiche à préparer','actif') AND prochaine_date BETWEEN ? AND ?", (t, d1)):
+        items.append(("rendez-vous dans les 24 h", dict(r)))
+    for r in con.execute("SELECT * FROM objets WHERE type='document' AND statut='à préparer' AND prochaine_date<=? ORDER BY prochaine_date", (d3,)):
+        items.append(("document à préparer pour un délai", dict(r)))
+    q = [dict(r) for r in con.execute("SELECT * FROM file_entretien WHERE statut='attente' AND tache IN ('ingestion_commentaire','lecture_modele','alerte_changement') ORDER BY priorite, n LIMIT 10")]
+    for j in q:
+        o = get(j["arg"])
+        if o:
+            items.append(({"ingestion_commentaire": "document déposé à commenter", "lecture_modele": "document déposé à commenter",
+                           "alerte_changement": "changement de droit"}[j["tache"]], {**o, "_file": j["n"]}))
+    seen, out = set(), []
+    for k, o in items:
+        if o["id"] in seen:
+            continue
+        seen.add(o["id"]); out.append((k, o))
+    return out[:maxi]
+
+def prompt(items):
+    mission = (Path(__file__).parent / "mission.md").read_text(encoding="utf-8")
+    lignes = [f"- {k} : {ligne(o)}" + (f" · client {o['client']}" if o.get("client") else "") for k, o in items]
+    return (X.bloc() + "\n\n" + mission + f"\n\nAujourd'hui : {iso()} (Europe/Zurich). Éléments à traiter ({len(items)}) :\n" + "\n".join(lignes)
+            + "\n\nLa CLI s'appelle par : " + ("python .equipe/cerebro/cerebro.py" if os.name == "nt" else ".equipe/bin/cerebro") + " <commande>.")
+
+def lancer(p):
+    modele = K.get("modeles.intermediaire") or "sonnet"
+    env = {**os.environ, "CEREBRO_BACKGROUND": "1", "CEREBRO_ROOT": str(ROOT)}
+    cmd = ["claude", "-p", p, "--model", modele, "--output-format", "json", "--permission-mode", "bypassPermissions",
+           "--allowedTools", "Read,Write,Edit,Bash(cerebro:*),Bash(.equipe/bin/cerebro:*),Bash(python:*),Bash(python3:*)"]
+    t0 = time.time()
+    r = subprocess.run(cmd, cwd=str(ROOT), env=env, stdin=subprocess.DEVNULL, capture_output=True, timeout=1500, shell=(os.name == "nt"))
+    ms = int((time.time() - t0) * 1000)
+    try:
+        res = json.loads(r.stdout.decode("utf-8", "ignore"))
+    except Exception:
+        res = {"is_error": True, "result": r.stdout.decode("utf-8", "ignore")[-500:], "stderr": r.stderr.decode("utf-8", "ignore")[-500:]}
+    u = res.get("usage") or {}
+    tok = int(u.get("input_tokens", 0)) + int(u.get("output_tokens", 0)) + int(u.get("cache_creation_input_tokens", 0))
+    F.mesure("initiative", "boucle", modele, tok, ms, 0 if res.get("is_error") else 1)
+    return res, ms, tok
+
+def main():
+    simuler = "--simuler" in sys.argv
+    maxi = int(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 8
+    VERROU.parent.mkdir(parents=True, exist_ok=True)
+    if VERROU.exists() and time.time() - VERROU.stat().st_mtime < 1800:
+        print(json.dumps({"statut": "déjà en cours"})); return
+    items = collecter(maxi)
+    if not items:
+        journal("initiative", statut="rien à faire")
+        print(json.dumps({"statut": "rien à faire"})); return
+    p = prompt(items)
+    if simuler:
+        print(json.dumps({"statut": "simulé", "elements": [o["id"] for _, o in items], "prompt_car": len(p)}, ensure_ascii=False)); return
+    VERROU.write_text(str(os.getpid()))
+    try:
+        journal("initiative", statut="début", elements=[o["id"] for _, o in items])
+        res, ms, tok = lancer(p)
+        ok = not res.get("is_error")
+        if ok:
+            for _, o in items:
+                if "_file" in o:
+                    B.queue_done(o["_file"])
+        else:
+            F.incident_add("initiative", "boucle d'initiative en échec", cut(str(res.get("result")), 200))
+        journal("initiative", statut="fin", ok=ok, ms=ms, tokens=tok)
+        print(json.dumps({"statut": "fait" if ok else "échec", "elements": len(items), "ms": ms, "tokens": tok}, ensure_ascii=False))
+    finally:
+        VERROU.unlink(missing_ok=True)
+
+if __name__ == "__main__":
+    if os.environ.get("CEREBRO_BACKGROUND") and "--force" not in sys.argv and "--simuler" not in sys.argv:
+        pass  # lancé par un rôle de fond : on reste permis (le verrou empêche la récursion)
+    try:
+        main()
+    except Exception as e:
+        journal("initiative", erreur=repr(e))
+        print(json.dumps({"erreur": repr(e)}))
