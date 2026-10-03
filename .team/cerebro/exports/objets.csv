@@ -1,0 +1,232 @@
+id,type,nom,statut,client,maj,prochaine_date,prochaine_action,source
+BIB-001,source,"CO (fr, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/27/317_321_377/20261001/fr/xml/fedlex-data-admin-ch-eli-cc-27-317_321_377-20261001-fr-xml-2.xml
+BIB-002,source,"LFus (fr, état 2023-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2004/320/20230101/fr/xml/fedlex-data-admin-ch-eli-cc-2004-320-20230101-fr-xml-9.xml
+BIB-003,source,"LIFD (fr, état 2026-09-02)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1991/1184_1184_1184/20260902/fr/xml/fedlex-data-admin-ch-eli-cc-1991-1184_1184_1184-20260902-fr-xml-1.xml
+BIB-004,source,"LHID (fr, état 2025-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1991/1256_1256_1256/20250101/fr/xml/fedlex-data-admin-ch-eli-cc-1991-1256_1256_1256-20250101-fr-xml-11.xml
+BIB-005,source,"LIA (fr, état 2025-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1966/371_385_384/20250101/fr/xml/fedlex-data-admin-ch-eli-cc-1966-371_385_384-20250101-fr-xml-11.xml
+BIB-006,source,"OIA (fr, état 2025-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1966/1585_1641_1624/20250101/fr/xml/fedlex-data-admin-ch-eli-cc-1966-1585_1641_1624-20250101-fr-xml-6.xml
+BIB-007,source,"LT (fr, état 2024-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1974/11_11_11/20240101/fr/xml/fedlex-data-admin-ch-eli-cc-1974-11_11_11-20240101-fr-xml-3.xml
+BIB-008,source,"LTVA (fr, état 2025-03-31)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2009/615/20250331/fr/xml/fedlex-data-admin-ch-eli-cc-2009-615-20250331-fr-xml-4.xml
+BIB-009,source,"LBA (fr, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1998/892_892_892/20261001/fr/xml/fedlex-data-admin-ch-eli-cc-1998-892_892_892-20261001-fr-xml-2.xml
+BIB-010,source,"LTPM (fr, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2026/323/20261001/fr/xml/fedlex-data-admin-ch-eli-cc-2026-323-20261001-fr-xml.xml
+BIB-011,source,"LPD (fr, état 2025-07-07)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2022/491/20250707/fr/xml/fedlex-data-admin-ch-eli-cc-2022-491-20250707-fr-xml-1.xml
+BIB-012,source,"LP (fr, état 2026-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/11/529_488_529/20260101/fr/xml/fedlex-data-admin-ch-eli-cc-11-529_488_529-20260101-fr-xml-3.xml
+BIB-013,source,"LTF (fr, état 2026-04-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2006/218/20260401/fr/xml/fedlex-data-admin-ch-eli-cc-2006-218-20260401-fr-xml-2.xml
+BIB-014,source,"173.110.3 (fr, état 1963-10-03)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1963/819_815_843/19631003/fr/xml/fedlex-data-admin-ch-eli-cc-1963-819_815_843-19631003-fr-xml-5.xml
+BIB-015,source,"OR (de, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/27/317_321_377/20261001/de/xml/fedlex-data-admin-ch-eli-cc-27-317_321_377-20261001-de-xml-2.xml
+BIB-016,source,"DBG (de, état 2026-09-02)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1991/1184_1184_1184/20260902/de/xml/fedlex-data-admin-ch-eli-cc-1991-1184_1184_1184-20260902-de-xml-1.xml
+BIB-017,source,"ORC (fr, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2007/686/20261001/fr/xml/fedlex-data-admin-ch-eli-cc-2007-686-20261001-fr-xml.xml
+BIB-018,source,"OT (fr, état 2023-09-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1974/33_33_33/20230901/fr/xml/fedlex-data-admin-ch-eli-cc-1974-33_33_33-20230901-fr-xml-9.xml
+BIB-019,source,"OTVA (fr, état 2025-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2009/828/20250101/fr/xml/fedlex-data-admin-ch-eli-cc-2009-828-20250101-fr-xml-11.xml
+BIB-020,source,"OBA (fr, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2015/791/20261001/fr/xml/fedlex-data-admin-ch-eli-cc-2015-791-20261001-fr-xml.xml
+BIB-021,source,"OBA-FINMA (fr, état 2023-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2015/390/20230101/fr/xml/fedlex-data-admin-ch-eli-cc-2015-390-20230101-fr-xml-10.xml
+BIB-022,source,"OTPM (fr, état 2026-10-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2026/364/20261001/fr/xml/fedlex-data-admin-ch-eli-cc-2026-364-20261001-fr-xml.xml
+BIB-023,source,"CC (fr, état 2026-07-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/24/233_245_233/20260701/fr/xml/fedlex-data-admin-ch-eli-cc-24-233_245_233-20260701-fr-xml-2.xml
+BIB-024,source,"LPGA (fr, état 2024-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2002/510/20240101/fr/xml/fedlex-data-admin-ch-eli-cc-2002-510-20240101-fr-xml-4.xml
+BIB-025,source,"LAVS (fr, état 2026-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/63/837_843_843/20260101/fr/xml/fedlex-data-admin-ch-eli-cc-63-837_843_843-20260101-fr-xml-1.xml
+BIB-026,source,"LIA (fr, état 2024-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1966/371_385_384/20240101/fr/xml/fedlex-data-admin-ch-eli-cc-1966-371_385_384-20240101-fr-xml-9.xml
+BIB-027,source,"LIFD (fr, état 2024-05-16)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1991/1184_1184_1184/20240516/fr/xml/fedlex-data-admin-ch-eli-cc-1991-1184_1184_1184-20240516-fr-xml-2.xml
+BIB-028,source,"LTVA (fr, état 2024-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2009/615/20240101/fr/xml/fedlex-data-admin-ch-eli-cc-2009-615-20240101-fr-xml-7.xml
+BIB-029,source,"LI-VD (fr, état 2026-05-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://prestations.vd.ch/pub/blv-publication/actes/consolide/642.11?id=8df99d51-8df8-49ed-9ef5-2fa4817d0004
+BIB-030,source,"LPFisc-GE (fr, état 2026-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_17.htm
+BIB-031,source,"LIPP-GE (fr, état 2026-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_08.htm
+BIB-032,source,"LIPM-GE (fr, état 2025-01-01)",actif,,2026-10-03,2027-01-01,vérifier mise à jour,https://silgeneve.ch/legis/program/books/rsg/htm/rsg_d3_15.htm
+CAB-001,cabinet,Profil de Mustafa Ekrem,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/mustafa-profile.md
+CAB-002,cabinet,Environnement de travail de Mustafa,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/environment.md
+CAB-003,cabinet,Identité et posture de la maison,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/identity.md
+CAB-004,cabinet,Échelle des niveaux de confort,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/comfort-levels.md
+CAB-005,cabinet,Styles par langue et destinataire,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/styles.md
+CAB-006,cabinet,Modèles de livrables (structure par type),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/deliverable-models.md
+CAB-007,cabinet,Glossaire FR/DE/IT/EN,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/glossary.md
+CAB-008,cabinet,Lexique interne des abréviations machine,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/lexicon.md
+CAB-009,cabinet,Instructions de l'associé,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/brain/firm/partner.md
+CAP-001,capacite,Fedlex SPARQL,actif,,2026-10-03,2027-01-01,réévaluer,https://fedlex.data.admin.ch/sparqlendpoint
+CAP-002,capacite,Fedlex filestore (textes consolidés XML/HTML),actif,,2026-10-03,2027-01-01,réévaluer,https://fedlex.data.admin.ch/filestore/
+CAP-003,capacite,LINDAS SPARQL — Zefix,actif,,2026-10-03,2027-01-01,réévaluer,https://lindas.admin.ch/query
+CAP-004,capacite,Zefix application web (recherche publique),actif,,2026-10-03,2027-01-01,réévaluer,https://www.zefix.ch
+CAP-005,capacite,Base législative vaudoise (BLV),actif,,2026-10-03,2027-01-01,réévaluer,https://prestations.vd.ch/pub/blv-publication/
+CAP-006,capacite,"Législation genevoise (SIL, rs/GE)",actif,,2026-10-03,2027-01-01,réévaluer,https://silgeneve.ch/legis/
+CAP-007,capacite,LexFind,repéré,,2026-10-03,2027-01-01,réévaluer,https://www.lexfind.ch
+CAP-008,capacite,fedlex.py (ingestion bibliothèque fédérale),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/library/fedlex.py
+CAP-009,capacite,update.py (veille des consolidations),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/library/update.py
+CAP-010,capacite,rates.py (barèmes vérifiés contre le texte),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/library/rates.py
+CAP-011,capacite,zefix.py (recherche registre du commerce),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/library/zefix.py
+CAP-012,capacite,"Calculs fiscaux (impôt anticipé, TVA, droit d'émission)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/calc/
+CAP-013,capacite,producteur-livrables (produce.py),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/producer/produce.py
+CAP-014,capacite,portes-deterministes (gates.py),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/gates/gates.py
+CAP-015,capacite,gabarits-maison (templates.py),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/producer/templates.py
+CAP-016,capacite,python-docx,actif,,2026-10-03,2027-01-01,réévaluer,pypi:python-docx
+CAP-017,capacite,openpyxl,actif,,2026-10-03,2027-01-01,réévaluer,pypi:openpyxl
+CAP-018,capacite,python-pptx,actif,,2026-10-03,2027-01-01,réévaluer,pypi:python-pptx
+CAP-019,capacite,reportlab,actif,,2026-10-03,2027-01-01,réévaluer,pypi:reportlab
+CAP-020,capacite,matplotlib,actif,,2026-10-03,2027-01-01,réévaluer,pypi:matplotlib
+CAP-021,capacite,LibreOffice sans affichage (soffice --convert-to pdf),retire,,2026-10-03,2027-01-01,aucune,soffice
+CAP-022,capacite,"poppler (pdftoppm, pdftotext)",actif,,2026-10-03,2027-01-01,réévaluer,pdftoppm
+CAP-023,capacite,Mermaid CLI (npx @mermaid-js/mermaid-cli),indisponible-ici,,2026-10-03,2027-01-01,réévaluer,npx -y @mermaid-js/mermaid-cli
+CAP-024,capacite,"anthropics document-skills (docx, pptx, xlsx, pdf)",a-installer,,2026-10-03,2027-01-01,réévaluer,plugin document-skills@anthropic-agent-skills
+CAP-025,capacite,marketplace claude-for-legal,declaree-machine-construction,,2026-10-03,2027-01-01,réévaluer,"claude plugin marketplace add anthropics/claude-for-legal (portée utilisateur, machine de construction) ; aucun plugin installé : entretiens de démarrage interactifs ; skills utiles copiées dans .claude/skills"
+CAP-026,capacite,marketplace claude-for-financial-services,declaree-machine-construction,,2026-10-03,2027-01-01,réévaluer,"claude plugin marketplace add anthropics/financial-services (portée utilisateur, machine de construction) ; aucun plugin installé ; méthodes KYC et audit-xls reprises"
+CAP-027,capacite,skill tabular-review,actif,,2026-10-03,2027-01-01,réévaluer,.claude/skills/tabular-review (SOURCE.md)
+CAP-028,capacite,skill fact-chronology,actif,,2026-10-03,2027-01-01,réévaluer,.claude/skills/fact-chronology (SOURCE.md)
+CAP-029,capacite,skill amendment-history,actif,,2026-10-03,2027-01-01,réévaluer,.claude/skills/amendment-history (SOURCE.md)
+CAP-030,capacite,skill spreadsheet-audit,actif,,2026-10-03,2027-01-01,réévaluer,.claude/skills/spreadsheet-audit (SOURCE.md)
+CAP-031,capacite,skill aml-file (méthode KYC),actif,,2026-10-03,2027-01-01,réévaluer,.claude/skills/aml-file (SOURCE.md)
+CAP-032,capacite,skills métier de l'équipe (16),actif,,2026-10-03,2027-01-01,réévaluer,.claude/skills/* (hors production)
+CAP-033,capacite,sous-agents de l'équipe (37),actif,,2026-10-03,2027-01-01,réévaluer,.claude/agents/*.md
+CAP-034,capacite,MCP playwright (@playwright/mcp),actif,,2026-10-03,2027-01-01,réévaluer,npx -y @playwright/mcp@latest (démarrage vérifié le 2026-10-03)
+CAP-035,capacite,MCP markitdown (markitdown-mcp),actif,,2026-10-03,2027-01-01,réévaluer,uvx markitdown-mcp (démarrage vérifié le 2026-10-03)
+CAP-036,capacite,MCP cerebro (serveur local stdio),actif,,2026-10-03,2027-01-01,réévaluer,.team/cerebro/mcp_server.py
+CAP-037,capacite,hooks non bloquants (.claude/hooks/hook.py),actif,,2026-10-03,2027-01-01,réévaluer,.claude/hooks/hook.py ; validés par .team/scripts/validate_config.py
+CAP-038,capacite,cryptography (sauvegarde chiffrée Fernet),actif,,2026-10-03,2027-01-01,réévaluer,pip --user (installateur)
+CAP-039,capacite,uv / uvx,actif,,2026-10-03,2027-01-01,réévaluer,pip --user uv (installateur)
+CAP-040,capacite,extract-msg (lecture des .msg Outlook),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/connectors/outlook_msg.py
+CAP-041,capacite,faster-whisper + modèle Whisper small (transcription des notes vocales),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/connectors/transcription.py
+CAP-042,capacite,"msal + msal-extensions (autorisation Microsoft, jeton chiffré)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/connectors/graph.py
+CAP-043,capacite,"MCP m365 (Outlook et agenda, lecture et brouillons, sans envoi)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/connectors/m365_mcp.py
+CAP-044,capacite,Synchronisation messagerie et agenda (extension du cycle),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/maintenance/tasks/mail_sync.py
+CAP-045,capacite,Lecture des anciens formats Office par Microsoft Office (COM),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/connectors/office_read.py
+CAP-046,capacite,Registre MCP officiel (registry.modelcontextprotocol.io/v0.1),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/discovery/catalog.py
+CAP-047,capacite,Découverte continue (catalog.py + extension decouverte du cycle),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/maintenance/tasks/discovery.py
+CAP-048,capacite,"Missions de fond par claude -p (_mission.py : budget, palier, mesure)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/maintenance/tasks/_mission.py
+CAP-049,capacite,marketplace anthropic-agent-skills (anthropics/skills),actif,,2026-10-03,2027-01-01,réévaluer,claude plugin marketplace list
+CAP-050,capacite,marketplace anthropic-plugin-directory (intégrée),actif,,2026-10-03,2027-01-01,réévaluer,claude plugin marketplace list
+CAP-051,capacite,"Routines posées par Mustafa (cerebro routine, recipes.py, extension du cycle)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/routines/recipes.py
+CAP-052,capacite,Opération dédiée de changement des règles (cerebro regle appliquer) et réconciliation (cerebro reconcile),actif,,2026-10-03,2027-01-01,réévaluer,.team/cerebro/cb/routines.py
+CAP-053,capacite,"cantons.py (bibliothèque cantonale : BLV VD, recueil genevois)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/library/cantons.py
+CAP-054,capacite,"Contrôle avant livraison (panel.py : appel adverse groupé, rédacteur, proofread.py)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/producer/panel.py
+CAP-055,capacite,"office.py (PDF par Microsoft 365 : COM Word/PowerPoint/Excel, osascript macOS)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/producer/office.py
+CAP-056,capacite,"Recherche académique (CrossRef, Semantic Scholar, OpenAlex)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/research/academic.py
+CAP-057,capacite,"Sources étrangères (legislation.gov.uk, CourtListener, EUR-Lex CELLAR)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/research/foreign.py
+CAP-058,capacite,"official_web.py (page officielle en liste blanche, ingérée le jour même)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/research/official_web.py
+CAP-059,capacite,OCR local (tesseract + PyMuPDF ; repli RapidOCR),actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/research/ocr.py
+CAP-060,capacite,"Extension qualité du cycle (tableau de bord des principes, bibliothèque cantonale)",actif,,2026-10-03,2027-01-01,réévaluer,.team/scripts/maintenance/tasks/quality.py
+DOCT-001,doctrine,Bibliothèque fédérale : état et mode d'emploi,actif,,2026-10-03,2026-10-10,mettre à jour après chaque cycle bibliotheque_maj,https://fedlex.data.admin.ch
+GAB-001,gabarit,gabarit memo.docx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python templates.py),.team/scripts/producer/templates.py
+GAB-002,gabarit,gabarit lettre.docx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python templates.py),.team/scripts/producer/templates.py
+GAB-003,gabarit,gabarit pv-assemblee.docx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python templates.py),.team/scripts/producer/templates.py
+GAB-004,gabarit,gabarit modele-calcul.xlsx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python templates.py),.team/scripts/producer/templates.py
+GAB-005,gabarit,gabarit presentation.pptx,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python templates.py),.team/scripts/producer/templates.py
+GAB-006,gabarit,gabarit gabarit-rapport.pdf,actif,,2026-10-03,2027-01-01,régénérer si la charte change (python templates.py),.team/scripts/producer/templates.py
+MET-001,methode,Analyse juridique structurée,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-002,methode,Hiérarchie et datation des sources,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-003,methode,Table des autorités,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-004,methode,Pyramide et SCQA,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-005,methode,Rédaction claire,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-006,methode,Négociation raisonnée,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-007,methode,Parties prenantes,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-008,methode,Pre-mortem,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-009,methode,Contradiction en deux temps,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-010,methode,Panel adverse,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-011,methode,Niveaux de confort,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-012,methode,Ce qu'on n'écrit pas,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-013,methode,"Quel canton, quelle langue, quel délai",actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-014,methode,Réponse schématique d'abord,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-015,methode,Lire sans tout relire,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+MET-016,methode,Réutiliser avant de refaire,actif,,2026-10-03,2027-01-04,réviser avec les leçons des livrables (fabrique),constitution §10 ; méthodes des grandes études et fiduciaires
+Q-001,question,Quels sont vos trois ou quatre clients les plus importants en ce moment ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-002,question,Vos dossiers sont surtout dans quels cantons ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-003,question,"Votre messagerie, c'est Outlook ?",ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-004,question,Avez-vous un abonnement Swisslex ou Weblaw au cabinet ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-005,question,"Comment s'appelle exactement la fiduciaire, telle qu'elle figure sur vos lettre…",ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-006,question,Avez-vous un modèle de lettre de la maison à me donner ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-007,question,Sur quels sujets travaillez-vous le plus ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-008,question,Comment signez-vous vos mails d'habitude ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-009,question,"Vos clients écrivent surtout en français, ou aussi en allemand et en italien ?",ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-010,question,Dans quelles langues travaillez-vous au quotidien ?,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+Q-011,question,Je peux me brancher sur votre messagerie pour préparer vos réponses. Vous voule…,ouverte,,2026-10-03,2026-10-03,poser au bon moment,
+RD-001,regle_delai,Réclamation contre une décision de taxation IFD,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle consolidation (bibliotheque_maj),RS 642.11 art. 132 al. 1
+RD-002,regle_delai,Recours contre une décision sur réclamation IFD,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle consolidation (bibliotheque_maj),RS 642.11 art. 140 al. 1
+RD-003,regle_delai,Déclaration et paiement de l'impôt anticipé sur dividende,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle version de la LIA,RS 642.21 art. 16 al. 1 let. c (avec art. 12 al. 1)
+RD-004,regle_delai,Décompte TVA de la période,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle consolidation (bibliotheque_maj),RS 641.20 art. 71 al. 1
+RD-005,regle_delai,Assemblée générale ordinaire,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle consolidation (bibliotheque_maj),RS 220 art. 699 al. 2
+RD-006,regle_delai,Annonce de l'ayant droit économique à la société,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle version de la LTPM,RS 955.3 art. 13 al. 3
+RD-007,regle_delai,Opposition au commandement de payer,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle consolidation (bibliotheque_maj),RS 281.1 art. 74 al. 1
+RD-008,regle_delai,Recours au Tribunal fédéral,actif,,2026-10-03,2027-01-01,revérifier à chaque nouvelle consolidation (bibliotheque_maj),RS 173.110 art. 100 al. 1
+RD-009,regle_delai,Revue périodique du dossier LBA,actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,politique interne (OAR à préciser)
+RD-010,regle_delai,Dernier jour pour résilier,actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,contrat
+RD-011,regle_delai,Relance commerciale,actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,pratique maison
+RD-012,regle_delai,Réclamation contre une décision de taxation ICC (VD),actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,RS LI-VD art. 186
+RD-013,regle_delai,Réclamation contre une décision de taxation ICC (GE),actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,RS LPFisc-GE art. 39
+RD-014,regle_delai,Recours contre une décision sur réclamation ICC (GE),actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,RS LPFisc-GE art. 49
+RD-015,regle_delai,"Réclamation contre une décision de taxation ICC (cadre LHID, canton non suivi)",actif,,2026-10-03,2027-01-01,vérifier contre le texte officiel,RS 642.14 art. 48
+ROLE-001,role,archivist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/archivist.md
+ROLE-002,role,litigator,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/litigator.md
+ROLE-003,role,calculator,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/calculator.md
+ROLE-004,role,chief-of-staff,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/chief-of-staff.md
+ROLE-005,role,researcher,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/researcher.md
+ROLE-006,role,business-developer,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/business-developer.md
+ROLE-007,role,communicator,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/communicator.md
+ROLE-008,role,foresight-advisor,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/foresight-advisor.md
+ROLE-009,role,art-director,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/art-director.md
+ROLE-010,role,source-checker,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/source-checker.md
+ROLE-011,role,human-editor,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/human-editor.md
+ROLE-012,role,builder,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/builder.md
+ROLE-013,role,ingester,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/ingester.md
+ROLE-014,role,marketer,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/marketer.md
+ROLE-015,role,negotiator,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/negotiator.md
+ROLE-016,role,compliance-officer,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/compliance-officer.md
+ROLE-017,role,adversarial-panel,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/adversarial-panel.md
+ROLE-018,role,producer,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/producer.md
+ROLE-019,role,drafter,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/drafter.md
+ROLE-020,role,proofreader,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/proofreader.md
+ROLE-021,role,corporate-secretary,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/corporate-secretary.md
+ROLE-022,role,contracts-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/contracts-specialist.md
+ROLE-023,role,foreign-law-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/foreign-law-specialist.md
+ROLE-024,role,corporate-tax-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/corporate-tax-specialist.md
+ROLE-025,role,international-tax-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/international-tax-specialist.md
+ROLE-026,role,real-estate-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/real-estate-specialist.md
+ROLE-027,role,aml-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/aml-specialist.md
+ROLE-028,role,individual-tax-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/individual-tax-specialist.md
+ROLE-029,role,debt-enforcement-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/debt-enforcement-specialist.md
+ROLE-030,role,company-law-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/company-law-specialist.md
+ROLE-031,role,estates-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/estates-specialist.md
+ROLE-032,role,employment-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/employment-specialist.md
+ROLE-033,role,vat-specialist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/vat-specialist.md
+ROLE-034,role,strategist,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/strategist.md
+ROLE-035,role,coach,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/coach.md
+ROLE-036,role,legal-watch,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/legal-watch.md
+ROLE-037,role,visualizer,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/agents/visualizer.md
+ROLE-038,role,archiviste (mission de fond),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/roles/archivist.md
+ROLE-039,role,chief-of-staff (mission de fond),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/roles/chief-of-staff.md
+ROLE-040,role,fabricant (mission de fond),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/roles/builder.md
+ROLE-041,role,ingesteur (mission de fond),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/roles/ingester.md
+ROLE-042,role,tuteur (mission de fond),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/roles/coach.md
+ROLE-043,role,veilleur (mission de fond),actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.team/roles/legal-watch.md
+ROLE-044,role,greffier (rôle de fond),actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes (fabrique),.team/roles/clerk.md
+ROLE-045,role,intendant (rôle de fond),actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes (fabrique),.team/roles/steward.md
+ROLE-046,role,entretien (rôle de fond),actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes (fabrique),.team/roles/maintenance.md
+ROLE-047,role,experience-lead,actif,,2026-10-03,2026-10-10,revue hebdomadaire (experience_hebdo),.claude/agents/experience-lead.md
+ROLE-048,role,foresight-advisor (fond),actif,,2026-10-03,2026-10-10,premier cycle venu (cadence 30 j),.team/roles/foresight-advisor.md
+SK-001,skill,law-change-alert,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/law-change-alert/SKILL.md
+SK-002,skill,spreadsheet-audit,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/spreadsheet-audit/SKILL.md
+SK-003,skill,daily-brief,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/daily-brief/SKILL.md
+SK-004,skill,fact-chronology,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/fact-chronology/SKILL.md
+SK-005,skill,meeting-report,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/meeting-report/SKILL.md
+SK-006,skill,conflict-check,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/conflict-check/SKILL.md
+SK-007,skill,shareholders-agreement,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/shareholders-agreement/SKILL.md
+SK-008,skill,circular-resolutions,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/circular-resolutions/SKILL.md
+SK-009,skill,aml-file,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/aml-file/SKILL.md
+SK-010,skill,meeting-prep,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/meeting-prep/SKILL.md
+SK-011,skill,amendment-history,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/amendment-history/SKILL.md
+SK-012,skill,inbox-ingestion,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/inbox-ingestion/SKILL.md
+SK-013,skill,client-onboarding,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/client-onboarding/SKILL.md
+SK-014,skill,general-meeting-minutes,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/general-meeting-minutes/SKILL.md
+SK-015,skill,sourced-legal-research,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/sourced-legal-research/SKILL.md
+SK-016,skill,tax-objection,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/tax-objection/SKILL.md
+SK-017,skill,frontend-design,dormant,,2026-10-03,2027-01-01,réveil par la fabrique au premier besoin,.claude/skills/frontend-design/SKILL.md
+SK-018,skill,email-drafting,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/email-drafting/SKILL.md
+SK-019,skill,legal-memo,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/legal-memo/SKILL.md
+SK-020,skill,foresight-review,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/foresight-review/SKILL.md
+SK-021,skill,tabular-review,actif,,2026-10-03,2027-01-04,réviser selon le tableau de bord des principes (fabrique),.claude/skills/tabular-review/SKILL.md
+SK-022,skill,canvas-design,dormant,,2026-10-03,2027-01-01,réveil par la fabrique au premier besoin,.claude/skills/canvas-design/SKILL.md
+SK-023,skill,theme-factory,dormant,,2026-10-03,2027-01-01,réveil par la fabrique au premier besoin,.claude/skills/theme-factory/SKILL.md
+SK-024,skill,brand-guidelines,dormant,,2026-10-03,2027-01-01,réveil par la fabrique au premier besoin,.claude/skills/brand-guidelines/SKILL.md
+SK-025,skill,doc-coauthoring,dormant,,2026-10-03,2027-01-01,réveil par la fabrique au premier besoin,.claude/skills/doc-coauthoring/SKILL.md
+SK-026,skill,internal-comms,dormant,,2026-10-03,2027-01-01,réveil par la fabrique au premier besoin,.claude/skills/internal-comms/SKILL.md
+SK-027,skill,skill-creator,actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes,.claude/skills/skill-creator/SKILL.md
+SK-028,skill,humanizer,actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes,.claude/skills/humanizer/SKILL.md
+SK-029,skill,humanizer-fr,actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes,.claude/skills/humanizer-fr/SKILL.md
+SK-030,skill,humanizer-de,actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes,.claude/skills/humanizer-de/SKILL.md
+SK-031,skill,humanizer-it,actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes,.claude/skills/humanizer-it/SKILL.md
+SK-032,skill,deliverable-production,actif,,2026-10-03,2027-01-01,réviser selon le tableau de bord des principes,.claude/skills/deliverable-production/SKILL.md
+SK-033,skill,github-backup,actif,,2026-10-03,2027-01-01,réévaluer (fabrique),.claude/skills/github-backup/SKILL.md

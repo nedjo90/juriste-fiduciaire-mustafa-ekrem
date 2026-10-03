@@ -6,4 +6,4 @@
 - Licence : MIT (Copyright (c) 2025 Siqi Chen), fichier LICENSE conservé
 - Code lu avant copie : oui ; la skill est une consigne (aucun code exécutable) ; source des motifs : Wikipédia « Signs of AI writing » (WikiProject AI Cleanup)
 - Modifications locales : insertion du bloc cardinal en tête de SKILL.md.
-- Dérivés de la maison : `humanizer-fr`, `humanizer-de`, `humanizer-it` et la porte déterministe `.equipe/scripts/portes/p_tics.py`.
+- Dérivés de la maison : `humanizer-fr`, `humanizer-de`, `humanizer-it` et la porte déterministe `.team/scripts/gates/p_tics.py`.

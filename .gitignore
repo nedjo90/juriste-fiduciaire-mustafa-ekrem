@@ -1,14 +1,14 @@
 # §9.4 : git ne suit que config, constitution, rôles, skills, tests, scripts, exports structurés, narratif
-.equipe/bibliotheque/
-.equipe/archives/
-.equipe/inbox/
-.equipe/cerebro/*.db
-.equipe/cerebro/*.db-*
-.equipe/cerebro/index/
-.equipe/cerebro/embeddings/
-.equipe/cerebro/sauvegardes/
-.equipe/journal-local/
-.equipe/run/
+.team/library/
+.team/archives/
+.team/inbox/
+.team/cerebro/*.db
+.team/cerebro/*.db-*
+.team/cerebro/index/
+.team/cerebro/embeddings/
+.team/cerebro/backups/
+.team/local-log/
+.team/run/
 # Bureau/ (zone humaine) n'est pas suivi, sauf les deux dossiers techniques et les gabarits de la maison
 Bureau/*
 !Bureau/Informatique/
@@ -21,6 +21,6 @@ secrets*
 __pycache__/
 *.pyc
 .claude/settings.local.json
-.equipe/cerveau/journal/*.jsonl
+.team/brain/log/*.jsonl
 # modèles de transcription vocale (téléchargés au premier usage, volumineux) — chantier connecteurs
-.equipe/outils/whisper/
+.team/tools/whisper/

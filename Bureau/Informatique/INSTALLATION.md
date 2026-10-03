@@ -10,18 +10,18 @@ Sur le poste de Mustafa, qu'il ait déjà des outils (Claude, Git, Python) ou ri
 2. Coller cette ligne, puis Entrée :
 
    ```
-   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.equipe/installation/installer-jurix.ps1 | iex
+   irm https://raw.githubusercontent.com/nedjo90/juriste-fiduciaire-mustafa-ekrem/ccr-e8f5838b-808ukj/.team/install/installer-jurix.ps1 | iex
    ```
 
 3. Attendre la fin (quelques minutes). Si Claude n'est pas encore connecté, une page de connexion s'ouvre à la fin : se connecter avec le compte de Mustafa.
 
-La commande fait tout, sans droits d'administrateur et sans aucune question : elle installe Git (version portable officielle, dans le profil de l'utilisateur), récupère JURIX dans `Documents\jurix`, puis installe Python, les outils de documents, Claude et ses extensions, déclare le dossier de confiance, supprime les demandes d'autorisation, crée le raccourci « JURIX » sur le bureau et programme l'entretien automatique. Ce qui est déjà installé n'est ni réinstallé ni modifié : le rapport final l'indique (« Claude : déjà installé sur cet ordinateur, gardé tel quel »), et le compte Claude déjà connecté reste connecté. Elle peut être relancée sans risque : elle met à jour au lieu de tout refaire. Les scripts d'installation sont rangés dans la partie cachée du dossier (`.equipe/installation`) : Mustafa ne les voit pas.
+La commande fait tout, sans droits d'administrateur et sans aucune question : elle installe Git (version portable officielle, dans le profil de l'utilisateur), récupère JURIX dans `Documents\jurix`, puis installe Python, les outils de documents, Claude et ses extensions, déclare le dossier de confiance, supprime les demandes d'autorisation, crée le raccourci « JURIX » sur le bureau et programme l'entretien automatique. Ce qui est déjà installé n'est ni réinstallé ni modifié : le rapport final l'indique (« Claude : déjà installé sur cet ordinateur, gardé tel quel »), et le compte Claude déjà connecté reste connecté. Elle peut être relancée sans risque : elle met à jour au lieu de tout refaire. Les scripts d'installation sont rangés dans la partie cachée du dossier (`.team/install`) : Mustafa ne les voit pas.
 
 ## Ensuite
 
 Dans la même fenêtre, taper `jurix` : à la fin de la commande, la fenêtre est déjà placée dans le dossier `Documents\jurix` et la commande est active. Plus tard : double-cliquer sur « JURIX » sur le bureau, ou taper `jurix` (ou `claude`) dans n'importe quelle fenêtre PowerShell : elle se place toujours d'elle-même dans le bon dossier. L'équipe s'ouvre directement, avec son brief du jour ; Mustafa n'a plus qu'à parler. Microsoft 365 (Word, Excel, PowerPoint) est utilisé pour les PDF ; aucun autre logiciel n'est nécessaire.
 
-**Mac** : ouvrir Terminal et lancer `sh ~/Documents/jurix/.equipe/installation/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/jurix`), puis taper `jurix` dans un nouveau Terminal.
+**Mac** : ouvrir Terminal et lancer `sh ~/Documents/jurix/.team/install/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/jurix`), puis taper `jurix` dans un nouveau Terminal.
 
 **Confidentialité** : le dépôt de l'équipe est public et ne reçoit jamais le travail de Mustafa ; ses dossiers restent sur son poste (versions locales et sauvegarde chiffrée).
 
@@ -50,12 +50,12 @@ Par défaut, l'équipe se connecte avec l'application publique de Microsoft « M
    `https://login.microsoftonline.com/<ID-annuaire>/adminconsent?client_id=<ID-application>`
 5. Sur le poste de Mustafa, dans un terminal ouvert dans le dossier `jurix`, inscrire l'application (ou les donner à l'équipe en conversation) :
    ```
-   python .equipe\cerebro\cerebro.py config set acces.m365_client_id <ID-application> --source "informaticien"
-   python .equipe\cerebro\cerebro.py config set acces.m365_annuaire <ID-annuaire> --source "informaticien"
+   python .team\cerebro\cerebro.py config set access.m365_client_id <ID-application> --source "informaticien"
+   python .team\cerebro\cerebro.py config set access.m365_annuaire <ID-annuaire> --source "informaticien"
    ```
-6. Relancer la connexion (ou laisser l'équipe la reproposer) : `python .equipe\scripts\connecteurs\connecter_messagerie.py`. Mustafa n'a plus qu'à cliquer « Autoriser ».
+6. Relancer la connexion (ou laisser l'équipe la reproposer) : `python .team\scripts\connectors\connect_mail.py`. Mustafa n'a plus qu'à cliquer « Autoriser ».
 
-Si une **stratégie d'accès conditionnel** bloque le flux par code d'appareil, l'équipe essaie d'elle-même une connexion par le navigateur (même application, mêmes permissions) ; à défaut, exclure cette application de la stratégie. Le jeton est conservé chiffré dans le profil Windows de Mustafa (`%LOCALAPPDATA%\MonEquipe\m365`, protection DPAPI), jamais dans le dossier du projet ; « Déconnecter » : `connecter_messagerie.py --deconnecter`, ou révoquer l'application dans Entra.
+Si une **stratégie d'accès conditionnel** bloque le flux par code d'appareil, l'équipe essaie d'elle-même une connexion par le navigateur (même application, mêmes permissions) ; à défaut, exclure cette application de la stratégie. Le jeton est conservé chiffré dans le profil Windows de Mustafa (`%LOCALAPPDATA%\MonEquipe\m365`, protection DPAPI), jamais dans le dossier du projet ; « Déconnecter » : `connect_mail.py --deconnecter`, ou révoquer l'application dans Entra.
 
 ## Copie en ligne sur le compte GitHub de Mustafa (facultatif, plus tard)
 
@@ -72,4 +72,4 @@ Les mises à jour de l'équipe continuent d'arriver de ce dépôt-ci : relancer 
 
 - Le raccourci a disparu ou ne s'ouvre plus : relancer la commande d'installation ci-dessus.
 - Changement d'ordinateur : copier tout le dossier `jurix` et, pour pouvoir relire les anciennes sauvegardes, le fichier `cle-sauvegarde.key` du dossier `.cerebro` de l'utilisateur ; puis lancer la commande d'installation sur le nouveau poste.
-- Le détail technique (journal d'installation, réglages, incidents) se trouve dans `.equipe/run/installation.log` et dans `DOSSIER-TECHNIQUE.md`.
+- Le détail technique (journal d'installation, réglages, incidents) se trouve dans `.team/run/installation.log` et dans `DOSSIER-TECHNIQUE.md`.

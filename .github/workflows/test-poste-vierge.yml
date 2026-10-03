@@ -6,13 +6,13 @@ on:
     branches: [ccr-e8f5838b-808ukj]
     paths:
       - '.github/workflows/test-poste-vierge.yml'
-      - '.equipe/installation/**'
-      - '.equipe/bin/**'
+      - '.team/install/**'
+      - '.team/bin/**'
       - '.claude/hooks/**'
-      - '.equipe/cerebro/**'
-      - '.equipe/scripts/valider_config.py'
-      - '.equipe/scripts/entretien/fond.py'
-      - '.equipe/scripts/lanceurs/**'
+      - '.team/cerebro/**'
+      - '.team/scripts/validate_config.py'
+      - '.team/scripts/maintenance/background.py'
+      - '.team/scripts/launchers/**'
   workflow_dispatch:
 
 jobs:
@@ -39,12 +39,12 @@ jobs:
         run: |
           $env:Path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0'
           $t0 = Get-Date
-          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.equipe/installation/installer-jurix.ps1" | iex
+          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.team/install/installer-jurix.ps1" | iex
           $global:LASTEXITCODE = 0
           "durée totale : $([int]((Get-Date) - $t0).TotalMinutes) min"
           $r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'jurix'
           "RACINE=$r" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
-          Get-Content -LiteralPath (Join-Path $r '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+          Get-Content -LiteralPath (Join-Path $r '.team\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
           Get-Content -LiteralPath (Join-Path $env:TEMP 'mon-equipe-amorcage\amorcage.log') -Encoding UTF8 -ErrorAction SilentlyContinue | Select-Object -Last 30
 
       - name: Nouvelle fenêtre, comme Mustafa (PATH relu depuis le registre)
@@ -58,10 +58,10 @@ jobs:
           $env:PYTHONIOENCODING = 'utf-8'
           Set-Location $env:USERPROFILE
           $c = Get-Command claude -ErrorAction SilentlyContinue
-          $equipe = $c -and (($c.CommandType -eq 'Function' -and $c.Definition -like '*\.equipe\bin\claude.cmd*') -or $c.Source -like '*\.equipe\bin\claude.cmd')
+          $equipe = $c -and (($c.CommandType -eq 'Function' -and $c.Definition -like '*\.team\bin\claude.cmd*') -or $c.Source -like '*\.team\bin\claude.cmd')
           Verif '« claude » désigne la commande de l''équipe' $equipe "$($c.CommandType) $($c.Source) $($c.Definition)"
           $j = Get-Command jurix -ErrorAction SilentlyContinue
-          Verif '« jurix » ouvre JURIX' ($j -and $j.CommandType -eq 'Function' -and $j.Definition -like '*\.equipe\bin\claude.cmd*') "$($j.CommandType) $($j.Definition)"
+          Verif '« jurix » ouvre JURIX' ($j -and $j.CommandType -eq 'Function' -and $j.Definition -like '*\.team\bin\claude.cmd*') "$($j.CommandType) $($j.Definition)"
           $jv = (& jurix --version 2>&1 | Out-String)
           Verif 'jurix --version' ($jv -match 'Claude Code') $jv
           $v = (& claude --version 2>&1 | Out-String)
@@ -74,37 +74,37 @@ jobs:
           $pl = (& claude plugin list 2>&1 | Out-String)
           "--- claude plugin list ---"; $pl
           Verif 'Plugin des documents officiels' ($pl -match 'document-skills') ''
-          $poste = Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\poste.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-          $py = $poste.python
+          $poste = Get-Content -LiteralPath (Join-Path $env:RACINE '.team\run\workstation.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+          $py = $workstation.python
           Verif 'Python en mode utilisateur' ($py -and ($py -like "$env:LOCALAPPDATA*")) "$py"
           $libs = & $py -c "import yaml, docx, openpyxl, pptx, reportlab, matplotlib, pypdf; print('ok')" 2>&1
           Verif 'Bibliothèques de documents' ("$libs" -match 'ok') "$libs"
           Verif 'Raccourci sur le bureau' (Test-Path -LiteralPath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'JURIX.lnk'))
           Verif 'Entretien planifié' ($null -ne (Get-ScheduledTask -TaskName 'JURIX-Entretien' -ErrorAction SilentlyContinue))
-          $cb = Join-Path $env:RACINE '.equipe\cerebro\cerebro.py'
+          $cb = Join-Path $env:RACINE '.team\cerebro\cerebro.py'
           $s = & $py $cb summary MET-001 2>&1 | Out-String
           Verif 'Mémoire livrée rechargée' ($s -match '"methode"') ''
           $f = & $py $cb find "réclamation taxation" 2>&1 | Out-String
           Verif 'Recherche accentuée' ($f -match 'RD-') ''
           $hk = '{"source":"startup","session_id":"ci"}' | & $py (Join-Path $env:RACINE '.claude\hooks\hook.py') SessionStart 2>&1 | Out-String
           Verif 'Hook de démarrage' ($hk -match 'additionalContext') ''
-          if ($hk -notmatch 'additionalContext') { "sortie du hook : $hk"; Get-ChildItem (Join-Path $env:RACINE '.equipe\cerveau\journal') -Filter 'hooks*.jsonl' | ForEach-Object { "--- $($_.Name)"; Get-Content $_.FullName -Encoding UTF8 | Select-Object -Last 5 } }
+          if ($hk -notmatch 'additionalContext') { "sortie du hook : $hk"; Get-ChildItem (Join-Path $env:RACINE '.team\brain\log') -Filter 'hooks*.jsonl' | ForEach-Object { "--- $($_.Name)"; Get-Content $_.FullName -Encoding UTF8 | Select-Object -Last 5 } }
           $nAgents = (Get-ChildItem (Join-Path $env:RACINE '.claude\agents') -Filter *.md).Count
           $nSkills = (Get-ChildItem (Join-Path $env:RACINE '.claude\skills') -Directory).Count
           Verif "Agents ($nAgents) et skills ($nSkills) présents" ($nAgents -ge 30 -and $nSkills -ge 20)
-          $vc = & $py (Join-Path $env:RACINE '.equipe\scripts\valider_config.py') --sans-session 2>&1 | Select-Object -Last 1
+          $vc = & $py (Join-Path $env:RACINE '.team\scripts\validate_config.py') --sans-session 2>&1 | Select-Object -Last 1
           Verif 'Configuration valide' ("$vc" -match '"ok": true') "$vc"
           "=== tests du noyau sous Windows ==="
-          & $py (Join-Path $env:RACINE '.equipe\tests\test_cerebro.py') 2>&1 | Select-Object -Last 8
+          & $py (Join-Path $env:RACINE '.team\tests\test_cerebro.py') 2>&1 | Select-Object -Last 8
           Verif 'Tests du noyau sous Windows' ($LASTEXITCODE -eq 0)
           "=== garde-fou de la réserve sous Windows (appel surveillé, arrêt si Mustafa écrit) ==="
-          $g = & $py -c "import sys, os, time, threading; sys.path.insert(0, r'$env:RACINE\.equipe\scripts\entretien'); import fond; os.environ['CEREBRO_CALME_MIN']='20'; c=fond.claude_exe(); fond.noter_activite(); p1=fond.modele_permis()[0]; os.utime(fond.ACTIVITE,(time.time()-3600,time.time()-3600)); r=fond.appeler_claude([c,'--version'],'', r'$env:RACINE', dict(os.environ), 60); print('permis_pendant_activite', p1, 'appel', r[2], r[3])" 2>&1 | Out-String
+          $g = & $py -c "import sys, os, time, threading; sys.path.insert(0, r'$env:RACINE\.team\scripts\maintenance'); import fond; os.environ['CEREBRO_CALME_MIN']='20'; c=fond.claude_exe(); fond.noter_activite(); p1=fond.modele_permis()[0]; os.utime(fond.ACTIVITE,(time.time()-3600,time.time()-3600)); r=fond.appeler_claude([c,'--version'],'', r'$env:RACINE', dict(os.environ), 60); print('permis_pendant_activite', p1, 'appel', r[2], r[3])" 2>&1 | Out-String
           $g
           Verif 'Garde-fou de la réserve sous Windows' ($g -match 'permis_pendant_activite False appel 0 None') "$g"
-          $s2 = & $py (Join-Path $env:RACINE '.equipe\cerebro\cerebro.py') source officielle https://www.estv.admin.ch/x 2>&1 | Out-String
+          $s2 = & $py (Join-Path $env:RACINE '.team\cerebro\cerebro.py') source officielle https://www.estv.admin.ch/x 2>&1 | Out-String
           Verif 'Sources officielles (liste vivante)' ($s2 -match 'AFC') "$s2"
           "=== tests de plomberie sous Windows ==="
-          & $py (Join-Path $env:RACINE '.equipe\tests\test_plomberie.py') 2>&1 | Select-Object -Last 8
+          & $py (Join-Path $env:RACINE '.team\tests\test_plumbing.py') 2>&1 | Select-Object -Last 8
           Verif 'Tests de plomberie sous Windows' ($LASTEXITCODE -eq 0)
           ""
           "BILAN : $($ko.Count) échec(s) : $($ko -join ' | ')"
@@ -118,17 +118,17 @@ jobs:
           MON_EQUIPE_BRANCHE: ${{ github.ref_name }}
         run: |
           $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
-          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.equipe/installation/installer-jurix.ps1" | iex
+          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.team/install/installer-jurix.ps1" | iex
           $global:LASTEXITCODE = 0
-          Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
-          $rap = Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Raw -Encoding UTF8
+          Get-Content -LiteralPath (Join-Path $env:RACINE '.team\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+          $rap = Get-Content -LiteralPath (Join-Path $env:RACINE '.team\run\rapport-installation.txt') -Raw -Encoding UTF8
           $cc = [Environment]::GetEnvironmentVariable('CEREBRO_CLAUDE', 'User')
           "CEREBRO_CLAUDE = $cc"
           $ko = @()
           if ($rap -notmatch 'Claude : d.j. install') { $ko += 'rapport sans « Claude : déjà installé »' }
           if ($rap -notmatch 'Python : d.j. install') { $ko += 'rapport sans « Python : déjà installé »' }
-          if (-not $cc -or $cc -like '*\.equipe\bin\*') { $ko += "vrai Claude mal résolu : $cc" }
-          if ($ko) { "ÉCHEC : $($ko -join ' | ')"; exit 1 } else { 'OK relance : tout est « déjà installé », vrai Claude hors de .equipe\bin' }
+          if (-not $cc -or $cc -like '*\.team\bin\*') { $ko += "vrai Claude mal résolu : $cc" }
+          if ($ko) { "ÉCHEC : $($ko -join ' | ')"; exit 1 } else { 'OK relance : tout est « déjà installé », vrai Claude hors de .team\bin' }
 
       - name: Journaux
         if: always()
@@ -136,8 +136,8 @@ jobs:
         with:
           name: journaux-windows
           path: |
-            ${{ env.RACINE }}/.equipe/run/installation.log
-            ${{ env.RACINE }}/.equipe/run/rapport-installation.txt
+            ${{ env.RACINE }}/.team/run/installation.log
+            ${{ env.RACINE }}/.team/run/rapport-installation.txt
           if-no-files-found: warn
 
   windows-deja-equipe:
@@ -159,34 +159,34 @@ jobs:
           MON_EQUIPE_JETON: ${{ github.token }}
           MON_EQUIPE_BRANCHE: ${{ github.ref_name }}
         run: |
-          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.equipe/installation/installer-jurix.ps1" | iex
+          irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/.team/install/installer-jurix.ps1" | iex
           $global:LASTEXITCODE = 0
           $r = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'jurix'
           "RACINE=$r" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
-          Get-Content -LiteralPath (Join-Path $r '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
+          Get-Content -LiteralPath (Join-Path $r '.team\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
       - name: Vérifier (nouvelle fenêtre)
         shell: powershell
         run: |
           $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
           $env:CEREBRO_CLAUDE = [Environment]::GetEnvironmentVariable('CEREBRO_CLAUDE', 'User')
           $ko = @()
-          $rap = Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Raw -Encoding UTF8
+          $rap = Get-Content -LiteralPath (Join-Path $env:RACINE '.team\run\rapport-installation.txt') -Raw -Encoding UTF8
           if ($rap -notmatch 'Claude : d.j. install') { $ko += 'rapport sans « Claude : déjà installé »' }
           if (Test-Path (Join-Path $env:USERPROFILE '.local\bin\claude.exe')) { $ko += 'Claude réinstallé (claude.exe natif ajouté)' }
           "CEREBRO_CLAUDE = $env:CEREBRO_CLAUDE"
-          if ($env:CEREBRO_CLAUDE -notlike '*claude.cmd' -or $env:CEREBRO_CLAUDE -like '*\.equipe\bin\*') { $ko += "vrai Claude mal résolu : $env:CEREBRO_CLAUDE" }
+          if ($env:CEREBRO_CLAUDE -notlike '*claude.cmd' -or $env:CEREBRO_CLAUDE -like '*\.team\bin\*') { $ko += "vrai Claude mal résolu : $env:CEREBRO_CLAUDE" }
           Set-Location $env:USERPROFILE
           $c = Get-Command claude -ErrorAction SilentlyContinue
           "claude -> $($c.CommandType) $($c.Source) $($c.Definition)"
-          if (-not ($c -and (($c.CommandType -eq 'Function' -and $c.Definition -like '*\.equipe\bin\claude.cmd*') -or $c.Source -like '*\.equipe\bin\claude.cmd'))) { $ko += "« claude » n'est pas la commande de l'équipe : $($c.CommandType) $($c.Source)" }
+          if (-not ($c -and (($c.CommandType -eq 'Function' -and $c.Definition -like '*\.team\bin\claude.cmd*') -or $c.Source -like '*\.team\bin\claude.cmd'))) { $ko += "« claude » n'est pas la commande de l'équipe : $($c.CommandType) $($c.Source)" }
           $v = (& claude --version 2>&1 | Out-String); "claude --version : $v"
           if ($v -notmatch 'Claude Code') { $ko += 'la commande de l''équipe ne lance pas le Claude existant' }
           $m = (& claude mcp list 2>&1 | Out-String); $m
           if ($m -notmatch 'cerebro[^\r\n]*(✓|√|Connected)') { $ko += 'MCP cerebro' }
-          $py = (Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\poste.json') -Raw -Encoding UTF8 | ConvertFrom-Json).python
-          $fc = & $py -c "import sys; sys.path.insert(0, r'$env:RACINE\.equipe\scripts\entretien'); import fond; print(fond.claude_exe())" 2>&1
+          $py = (Get-Content -LiteralPath (Join-Path $env:RACINE '.team\run\workstation.json') -Raw -Encoding UTF8 | ConvertFrom-Json).python
+          $fc = & $py -c "import sys; sys.path.insert(0, r'$env:RACINE\.team\scripts\maintenance'); import fond; print(fond.claude_exe())" 2>&1
           "tâches de fond -> $fc"
-          if ("$fc" -like '*\.equipe\bin\*' -or -not "$fc") { $ko += "tâches de fond : mauvais Claude ($fc)" }
+          if ("$fc" -like '*\.team\bin\*' -or -not "$fc") { $ko += "tâches de fond : mauvais Claude ($fc)" }
           $racine = Get-ChildItem -LiteralPath $env:RACINE -Name
           "racine visible : $($racine -join ', ')"
           if ($racine | Where-Object { $_ -match '(?i)install' }) { $ko += 'script d''installation visible à la racine' }
@@ -208,25 +208,25 @@ jobs:
           export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
           echo "HOME_TEST=$HOME" >> "$GITHUB_ENV"
           echo "RACINE=$RACINE" >> "$GITHUB_ENV"
-          /bin/bash "$RACINE/.equipe/installation/installer.sh" 2>&1 | tail -40
+          /bin/bash "$RACINE/.team/install/installer.sh" 2>&1 | tail -40
       - name: Vérifier
         shell: bash
         run: |
           export HOME="$HOME_TEST"
           export PATH="$HOME/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-          PY="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["python"])' "$RACINE/.equipe/run/poste.json" 2>/dev/null || echo python3)"
+          PY="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["python"])' "$RACINE/.team/run/poste.json" 2>/dev/null || echo python3)"
           echo "python : $PY"
           "$PY" -c "import yaml, docx, openpyxl, pptx, reportlab; print('libs ok')"
           command -v claude && claude --version || echo "claude absent"
-          "$PY" "$RACINE/.equipe/cerebro/cerebro.py" summary MET-001 | head -c 200; echo
-          "$PY" "$RACINE/.equipe/tests/test_cerebro.py" | tail -5
+          "$PY" "$RACINE/.team/cerebro/cerebro.py" summary MET-001 | head -c 200; echo
+          "$PY" "$RACINE/.team/tests/test_cerebro.py" | tail -5
           echo "=== nouveau Terminal (zsh de connexion, comme Mustafa) ==="
           env -i HOME="$HOME" TERM=xterm /bin/zsh -l -c 'cd "$HOME"; echo "claude -> $(command -v claude)"; claude --version; claude mcp list; claude plugin list' 2>&1 | tail -30
-          env -i HOME="$HOME" TERM=xterm /bin/zsh -l -c 'command -v claude' | grep -q '.equipe/bin/claude' && echo "OK claude = commande de l'équipe" || { echo "ÉCHEC claude n'est pas la commande de l'équipe"; exit 1; }
+          env -i HOME="$HOME" TERM=xterm /bin/zsh -l -c 'command -v claude' | grep -q '.team/bin/claude' && echo "OK claude = commande de l'équipe" || { echo "ÉCHEC claude n'est pas la commande de l'équipe"; exit 1; }
       - name: Journaux
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: journaux-macos
-          path: ${{ env.RACINE }}/.equipe/run/
+          path: ${{ env.RACINE }}/.team/run/
           if-no-files-found: warn

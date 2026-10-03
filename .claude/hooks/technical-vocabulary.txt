@@ -1,0 +1,54 @@
+# Vocabulaire de mécanique (constitution §4.1) — détecté dans les réponses à Mustafa, JOURNALISÉ seulement.
+# Une expression par ligne, sans accents ni majuscules nécessaires (comparaison repliée). Ligne « re: » = expression régulière.
+# Modifier librement : aucune conséquence bloquante.
+fichier
+fichiers
+chemin
+chemins
+format de fichier
+hook
+hooks
+mcp
+connecteur
+connecteurs
+api
+cle api
+token
+tokens
+script
+scripts
+terminal
+ligne de commande
+base de donnees
+sqlite
+git
+commit
+push
+json
+yaml
+markdown
+plugin
+plugins
+skill
+skills
+sous-agent
+permission
+permissions
+configuration
+settings
+fenetre de contexte
+contexte injecte
+modele de langage
+log
+logs
+journal d'erreurs
+cerebro
+claude code
+python
+powershell
+bash
+sommaire de niveau
+re: \.team\b
+re: \b[a-z0-9_-]+\.(py|json|md|yaml|yml|jsonl|ps1|sh|db)\b
+re: [a-z]:\\
+re: (^|\s)/(home|users|tmp|opt)/

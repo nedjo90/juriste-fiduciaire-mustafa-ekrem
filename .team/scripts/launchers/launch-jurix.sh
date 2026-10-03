@@ -1,0 +1,47 @@
+#!/bin/bash
+# Lanceur de JURIX (Linux ; appelé aussi par launch-jurix.command sous macOS).
+# Dossier du projet, PATH += .team/bin, contrôle rapide de la configuration (restauration si cassée),
+# vérification que Claude Code démarre, entretien en arrière-plan, puis Claude Code en mode automatique.
+ICI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+RACINE="$(cd "$ICI/../../.." && pwd)"
+cd "$RACINE" || exit 0
+export PATH="$RACINE/.team/bin:$HOME/.local/bin:$PATH"
+mkdir -p "$RACINE/.team/run"
+JOURNAL="$RACINE/.team/run/lanceur.log"
+noter() { echo "$(date '+%Y-%m-%dT%H:%M:%S') $*" >> "$JOURNAL" 2>/dev/null; }
+
+PY="${CEREBRO_PYTHON:-}"
+if [ -z "$PY" ] && [ -f "$RACINE/.team/run/poste.json" ]; then
+  PY="$(sed -n 's/.*"python": *"\([^"]*\)".*/\1/p' "$RACINE/.team/run/poste.json" | head -1)"
+fi
+[ -n "$PY" ] && [ -x "$PY" ] || PY="$(command -v python3 || command -v python)"
+export CEREBRO_PYTHON="$PY"
+VALIDER="$RACINE/.team/scripts/validate_config.py"
+[ -n "$PY" ] && noter "controle: $("$PY" "$VALIDER" --lancement 2>&1 | tail -1)"
+
+CLAUDE="$(command -v claude)"
+if [ -z "$CLAUDE" ]; then
+  echo ""
+  echo "Claude n'est pas encore installé sur cet ordinateur. Lancez d'abord l'installateur, puis recommencez."
+  noter "claude introuvable"
+  read -r -p "Appuyez sur Entrée pour fermer " _
+  exit 1
+fi
+if ! "$CLAUDE" --version >/dev/null 2>&1; then
+  noter "claude --version en échec : restauration de la configuration valide"
+  [ -n "$PY" ] && "$PY" "$VALIDER" --restaurer >/dev/null 2>&1 && "$PY" "$VALIDER" --lancement >/dev/null 2>&1
+fi
+# entretien de fond (rattrapage), priorité basse, détaché ; le verrou évite les doublons avec le hook de début
+if [ -n "$PY" ] && [ ! -f "$RACINE/.team/run/sans-fond" ]; then
+  ( CEREBRO_BACKGROUND=1 nohup nice -n 10 "$PY" "$RACINE/.team/scripts/maintenance/cycle.py" --rattrapage >/dev/null 2>&1 & ) 2>/dev/null
+fi
+T0=$(date +%s)
+"$CLAUDE" auth status --json 2>/dev/null | grep -q '"loggedIn": true' || "$CLAUDE" auth login --claudeai
+if [ "$#" -eq 0 ]; then set -- "Bonjour"; fi; "$CLAUDE" --dangerously-skip-permissions "$@"
+CODE=$?
+if [ $CODE -ne 0 ] && [ $(( $(date +%s) - T0 )) -lt 15 ]; then
+  noter "démarrage en échec (code $CODE) : restauration et nouvel essai"
+  [ -n "$PY" ] && "$PY" "$VALIDER" --restaurer >/dev/null 2>&1 && "$PY" "$VALIDER" --lancement >/dev/null 2>&1
+  "$CLAUDE" --dangerously-skip-permissions "$@"
+fi
+exit 0

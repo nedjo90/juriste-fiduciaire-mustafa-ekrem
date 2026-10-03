@@ -1,0 +1,52 @@
+# access.yaml — fichier à trous (§0 bis). Une clé vide applique `defaut`. Modifier via : cerebro config set acces.<clé> <valeur>
+bases_recherche:
+  valeur: null
+  defaut: []
+  source: défaut
+  question: Avez-vous un abonnement Swisslex ou Weblaw au cabinet ?
+  effet: 4
+abonnement_claude:
+  valeur: null
+  defaut: petit abonnement (profil frugal)
+  source: défaut
+  question: ''
+  effet: 3
+connecteurs:
+  valeur: null
+  defaut: []
+  source: défaut
+  question: ''
+  effet: 2
+depot_git:
+  valeur: null
+  defaut: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem (public, installation et mises à jour seulement)
+  source: défaut
+  question: ''
+  effet: 1
+deepl:
+  valeur: null
+  defaut: non
+  source: défaut
+  question: ''
+  effet: 1
+m365_client_id:
+  valeur: null
+  defaut: 14d82eec-204b-4c2f-b7e8-296a70dab67e
+  source: défaut (application Microsoft « Microsoft Graph Command Line Tools », client
+    public délégué)
+  question: Votre informaticien vous a-t-il remis un identifiant d'application pour
+    relier la messagerie ? (sinon je garde celui de Microsoft)
+  effet: 1
+m365_annuaire:
+  valeur: null
+  defaut: common
+  source: défaut
+  question: ''
+  effet: 1
+m365_dossiers_suivis:
+  valeur: null
+  defaut:
+  - inbox
+  source: défaut
+  question: ''
+  effet: 1

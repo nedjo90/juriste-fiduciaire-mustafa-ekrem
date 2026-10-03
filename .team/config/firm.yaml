@@ -1,0 +1,41 @@
+# firm.yaml — fichier à trous (§0 bis). Une clé vide applique `defaut`. Modifier via : cerebro config set cabinet.<clé> <valeur>
+raison_sociale:
+  valeur: null
+  defaut: '[fiduciaire de Mustafa]'
+  source: défaut
+  question: Comment s'appelle exactement la fiduciaire, telle qu'elle figure sur vos
+    lettres ?
+  effet: 4
+adresse:
+  valeur: null
+  defaut: ''
+  source: défaut
+  question: Quelle adresse doit figurer en pied de page de vos documents ?
+  effet: 2
+logo:
+  valeur: null
+  defaut: ''
+  source: défaut
+  question: Pouvez-vous glisser le logo de la fiduciaire dans le dossier que je vous
+    montre ?
+  effet: 2
+charte:
+  valeur: null
+  defaut: sobre et neutre
+  source: défaut
+  question: Avez-vous un modèle de lettre de la maison à me donner ?
+  effet: 4
+signature:
+  valeur: null
+  defaut: Mustafa Ekrem, juriste
+  source: défaut
+  question: Comment signez-vous vos mails d'habitude ?
+  effet: 3
+langues:
+  valeur: null
+  defaut:
+  - fr
+  source: défaut
+  question: Vos clients écrivent surtout en français, ou aussi en allemand et en italien
+    ?
+  effet: 3
