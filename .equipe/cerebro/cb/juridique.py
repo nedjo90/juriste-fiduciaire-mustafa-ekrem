@@ -24,6 +24,7 @@ def ingest(texte, juridiction, type_, identifiant, titre, langue="fr", version=N
         if old and old.get("data", {}).get("empreinte") == h:
             return {"id": ex[0], "statut": "inchangé"}
         update(ex[0], body=body, empreinte=h, acteur=acteur)
+        index_articles(ex[0])
         return {"id": ex[0], "statut": "mis à jour"}
     # versions antérieures : valide_au = veille de la nouvelle version
     for r in con.execute("SELECT id FROM bibliotheque WHERE identifiant=? AND langue=? AND version<? ", (identifiant, langue, version)).fetchall():
@@ -43,8 +44,52 @@ def ingest(texte, juridiction, type_, identifiant, titre, langue="fr", version=N
     if nxt and nxt[0]:
         con.execute("UPDATE objets SET valide_au=? WHERE id=?", (nxt[0], bid))
     con.commit()
+    index_articles(bid)
     audit("law_ingest", bid, f"{identifiant} {langue} {version}", acteur)
     return {"id": bid, "statut": "ingéré", "chemin": relpath(p)}
+
+def _table_articles():
+    db().execute("CREATE VIRTUAL TABLE IF NOT EXISTS articles_fts USING fts5(source UNINDEXED, abrev UNINDEXED, langue UNINDEXED, version UNINDEXED, "
+                 "article, texte, tokenize='unicode61 remove_diacritics 2')")
+
+def index_articles(bid):
+    """index article par article : l'agent trouve l'article pertinent sans lire la loi (loi 4, économie de tokens)"""
+    from .core import ecriture
+    _table_articles()
+    r = db().execute("SELECT * FROM bibliotheque WHERE id=?", (bid,)).fetchone()
+    if not r:
+        return 0
+    p = abspath(r["chemin"])
+    if not p.exists():
+        return 0
+    from .core import lire
+    secs = [(t, c) for t, c in sections(lire(p)) if re.match(r"art\.?\s*\d", fold(t))]
+    with ecriture() as con:
+        con.execute("DELETE FROM articles_fts WHERE source=?", (bid,))
+        con.executemany("INSERT INTO articles_fts(source,abrev,langue,version,article,texte) VALUES(?,?,?,?,?,?)",
+                        [(bid, r["abreviation"] or r["identifiant"], r["langue"], r["version"], t, c[:8000]) for t, c in secs])
+    return len(secs)
+
+def reindex_articles():
+    n = 0
+    for (bid,) in db().execute("SELECT id FROM bibliotheque").fetchall():
+        n += index_articles(bid)
+    return {"articles": n}
+
+def search_articles(q, langue="fr", limit=8, date=None):
+    """articles en vigueur (version courante ou à la date donnée) qui répondent à la question ; extraits courts"""
+    _table_articles()
+    from .recherche import _tokens
+    toks = _tokens(q)[:20]
+    if not toks:
+        return []
+    m = " OR ".join(f'"{t}"*' if len(t) > 3 else f'"{t}"' for t in toks)
+    date = date or iso()
+    rows = db().execute("""SELECT a.source, a.abrev, a.version, a.article, snippet(articles_fts, 5, '«', '»', ' … ', 24) extrait, bm25(articles_fts, 0, 0, 0, 0, 4.0, 1.0) b
+                           FROM articles_fts a JOIN objets o ON o.id=a.source JOIN bibliotheque bb ON bb.id=a.source
+                           WHERE articles_fts MATCH ? AND a.langue=? AND bb.date_etat<=? AND (o.valide_au IS NULL OR o.valide_au='' OR o.valide_au>?)
+                           ORDER BY b LIMIT ?""", (m, langue, date, date, limit)).fetchall()
+    return [{"source": r["source"], "loi": r["abrev"], "version": r["version"], "article": r["article"], "extrait": r["extrait"]} for r in rows]
 
 def asof(identifiant, date=None, langue="fr"):
     """version en vigueur à une date (état du droit). valide_au est exclusif (date de la version suivante ou lendemain de la fin
@@ -70,7 +115,11 @@ def article(identifiant, art, date=None, langue="fr"):
                     "article": t, "texte": c, "verifie_le": iso()}
     return {"source": v["id"], "erreur": f"{art} introuvable dans {v['identifiant']} version {v['version']}"}
 
-def search(q, juridiction=None, limit=10):
+def search(q, juridiction=None, limit=10, langue="fr"):
+    """articles pertinents d'abord (index article par article), puis textes entiers correspondants"""
+    arts = search_articles(q, langue, limit)
+    if arts:
+        return {"articles": arts, "suite": "cerebro law article <loi> \"art. N\" pour le texte exact, version et URL"}
     from .recherche import find
     res = [r for r in find(q, limit=limit * 3, types=["source"])]
     if juridiction:

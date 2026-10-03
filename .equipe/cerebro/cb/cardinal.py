@@ -53,10 +53,15 @@ def _inserer(texte, b):
             return texte[:end] + "\n\n" + b + "\n" + texte[end:]
     return b + "\n\n" + texte
 
+FICHIER = EQ / "cerveau" / "cabinet" / "bloc-cardinal.md"  # importé par CLAUDE.md pour la session principale
+
 def injecter():
     b = bloc()
     v = b.split(" -->")[0]
     maj = []
+    if not FICHIER.exists() or v not in FICHIER.read_text(encoding="utf-8"):
+        FICHIER.write_text(b + "\n", encoding="utf-8")
+        maj.append(str(FICHIER.relative_to(ROOT)))
     for p in cibles():
         t = p.read_text(encoding="utf-8")
         if v in t:
@@ -67,4 +72,7 @@ def injecter():
 
 def verifier():
     v = bloc().split(" -->")[0]
-    return [str(p.relative_to(ROOT)) for p in cibles() if v not in p.read_text(encoding="utf-8")]
+    perimes = [str(p.relative_to(ROOT)) for p in cibles() if v not in p.read_text(encoding="utf-8")]
+    if not FICHIER.exists() or v not in FICHIER.read_text(encoding="utf-8"):
+        perimes.append(str(FICHIER.relative_to(ROOT)))
+    return perimes

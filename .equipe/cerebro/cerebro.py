@@ -50,7 +50,7 @@ def build():
     a = s.add_parser("time"); a.add_argument("action", choices=["add"]); a.add_argument("client"); a.add_argument("minutes", type=int); a.add_argument("libelle"); a.add_argument("--dossier")
     a = s.add_parser("pipeline"); a.add_argument("action", nargs="?", choices=["list", "add"], default="list"); a.add_argument("client", nargs="?"); a.add_argument("opportunite", nargs="?"); a.add_argument("--valeur", type=float)
     a = s.add_parser("engagement"); a.add_argument("client"); a.add_argument("envers"); a.add_argument("objet"); a.add_argument("du_le")
-    a = s.add_parser("law"); a.add_argument("action", choices=["ingest", "search", "asof", "article", "verify"]); a.add_argument("arg", nargs="*"); a.add_argument("--fichier"); a.add_argument("--juridiction", default="CH"); a.add_argument("--type", default="loi"); a.add_argument("--titre", default=""); a.add_argument("--langue", default="fr"); a.add_argument("--version"); a.add_argument("--date-etat"); a.add_argument("--url", default=""); a.add_argument("--abrev", default=""); a.add_argument("--date")
+    a = s.add_parser("law"); a.add_argument("action", choices=["ingest", "search", "asof", "article", "verify", "reindex"]); a.add_argument("arg", nargs="*"); a.add_argument("--fichier"); a.add_argument("--juridiction", default="CH"); a.add_argument("--type", default="loi"); a.add_argument("--titre", default=""); a.add_argument("--langue", default="fr"); a.add_argument("--version"); a.add_argument("--date-etat"); a.add_argument("--url", default=""); a.add_argument("--abrev", default=""); a.add_argument("--date")
     a = s.add_parser("rates"); a.add_argument("action", choices=["get", "set"]); a.add_argument("nom"); a.add_argument("--juridiction", default="CH"); a.add_argument("--annee"); a.add_argument("--cle"); a.add_argument("--valeur"); a.add_argument("--source", default="")
     a = s.add_parser("capability"); a.add_argument("action", choices=["list", "propose", "register"]); a.add_argument("arg", nargs="?"); a.add_argument("--categorie", default="outil"); a.add_argument("--localisation", default="LOCAL"); a.add_argument("--sort", default="rien"); a.add_argument("--vers", default="-"); a.add_argument("--licence", default=""); a.add_argument("--version", default=""); a.add_argument("--statut", default="actif"); a.add_argument("--source", default="")
     a = s.add_parser("incident"); a.add_argument("action", choices=["add", "resolve", "list"]); a.add_argument("arg", nargs="?"); a.add_argument("--categorie", default="technique"); a.add_argument("--repli", default=""); a.add_argument("--phrase", default="")
@@ -202,9 +202,10 @@ def main(argv=None):
         if args.action == "ingest":
             txt = open(args.fichier, encoding="utf-8").read()
             out(L.ingest(txt, args.juridiction, args.type, args.arg[0], args.titre or args.arg[0], args.langue, args.version, args.date_etat, args.url, args.abrev))
-        elif args.action == "search": out(L.search(" ".join(args.arg), args.juridiction if args.juridiction != "CH" else None))
+        elif args.action == "search": out(L.search(" ".join(args.arg), args.juridiction if args.juridiction != "CH" else None, langue=args.langue))
         elif args.action == "asof": out(L.asof(args.arg[0], args.date, args.langue))
         elif args.action == "article": out(L.article(args.arg[0], " ".join(args.arg[1:]), args.date, args.langue))
+        elif args.action == "reindex": out(L.reindex_articles())
         else: out(L.verify_rules())
     elif c == "rates":
         out(L.rates_get(args.nom, args.juridiction, args.annee, args.cle) if args.action == "get" else {"id": L.rates_set(args.nom, args.juridiction, args.annee, args.cle, args.valeur, args.source)})
