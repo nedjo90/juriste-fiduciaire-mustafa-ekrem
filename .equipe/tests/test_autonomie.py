@@ -98,6 +98,7 @@ os.environ.clear()
 os.environ.update(ENV)
 sys.path.insert(0, str(R / ".equipe" / "scripts" / "entretien"))
 sys.path.insert(0, str(R / ".equipe" / "scripts" / "entretien" / "taches"))
+sys.path.insert(0, str(R / ".equipe" / "cerebro"))
 import cycle  # noqa: E402  (charge les extensions de la racine jetable)
 from cb import core, objets as O, routines as RT, config as K, files as F  # noqa: E402
 import _mission as MI  # noqa: E402

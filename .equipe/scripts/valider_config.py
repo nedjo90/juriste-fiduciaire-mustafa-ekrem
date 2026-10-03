@@ -344,8 +344,10 @@ def adapter_poste(python=None):
                 # Windows : npx est un .cmd que Claude Code ne peut pas lancer directement → cmd /c npx …
                 if os.name == "nt":
                     srv["command"], srv["args"] = "cmd", ["/c", "npx"] + args
-            elif base in ("uvx", "uvx.exe") and _resolu(exe):
-                srv["command"] = _resolu(exe)  # chemin exact : indépendant du PATH du terminal
+            elif base in ("uvx", "uvx.exe"):
+                u = _resolu(exe) or _trouver_uvx(python)
+                if u:
+                    srv["command"] = u  # chemin exact : indépendant du PATH du terminal
             # navigateur du poste pour Playwright : Edge sous Windows (toujours présent), Chrome sous macOS s'il existe
             if "@playwright/mcp" in " ".join(srv.get("args", [])) and "--browser" not in srv["args"]:
                 if os.name == "nt":
@@ -356,6 +358,24 @@ def adapter_poste(python=None):
             ecrire_json(pm, m)
             change = True
     return change
+
+
+def _trouver_uvx(python=None):
+    """uvx installé par « pip --user uv » vit dans le dossier des scripts utilisateur de Python, souvent hors du PATH"""
+    nom = "uvx.exe" if os.name == "nt" else "uvx"
+    cands = [Path.home() / ".local" / "bin" / nom, Path.home() / ".cargo" / "bin" / nom]
+    try:
+        r = subprocess.run([python or sys.executable, "-c",
+                            "import sysconfig;print(sysconfig.get_path('scripts', sysconfig.get_preferred_scheme('user')))"],
+                           capture_output=True, text=True, timeout=20)
+        if r.stdout.strip():
+            cands.insert(0, Path(r.stdout.strip()) / nom)
+    except Exception:
+        pass
+    for c in cands:
+        if c.exists():
+            return str(c)
+    return None
 
 
 def _resolu(exe):
