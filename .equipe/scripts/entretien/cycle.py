@@ -350,12 +350,20 @@ def t_ingesteur(arg, fin):
     return _script(SCRIPTS / "ingesteur" / "ingerer.py", timeout=600)
 
 
+def _reporte(r):
+    """appel au modèle reporté (Mustafa travaille, réserve d'usage) : la tâche reste en file, reprise plus tard"""
+    s = (r or {}).get("sortie", "") if isinstance(r, dict) else ""
+    if isinstance(r, dict) and ('"statut": "reporté"' in s or '"reporte"' in s):
+        r["_partiel"] = True
+    return r
+
+
 def t_initiative(arg, fin):
-    return _script(SCRIPTS / "initiative" / "initiative.py", timeout=1200)
+    return _reporte(_script(SCRIPTS / "initiative" / "initiative.py", timeout=1200))
 
 
 def t_greffier(arg, fin):
-    return _script(Path(__file__).resolve().parent / "greffier.py", timeout=1200)
+    return _reporte(_script(Path(__file__).resolve().parent / "greffier.py", timeout=1200))
 
 
 def t_gabarits(arg, fin):
@@ -473,7 +481,7 @@ def increment(bilan, max_prio=6, budget=INCREMENT_S):
             partiel = isinstance(r, dict) and r.pop("_partiel", False)
             if not partiel:
                 terminer(t["n"], "fait")
-            if t["tache"] in CADENCES:
+            if t["tache"] in CADENCES and not partiel:  # reportée (Mustafa travaille, réserve d'usage) : retentée, pas sautée
                 cad = core.get_etat("cadences", {}) or {}
                 cad[t["tache"]] = core.iso()
                 core.set_etat("cadences", cad)

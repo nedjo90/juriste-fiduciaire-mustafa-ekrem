@@ -81,16 +81,23 @@ def lancer(maxi=40, simuler=False, modele=None):
     if not claude:
         fond.incident("greffier : programme claude introuvable, captures laissées en attente", "technique", "reprise au prochain cycle")
         return {"erreur": "claude introuvable"}
+    ok_m, raison = fond.modele_permis()  # réserve d'usage de Mustafa et activité en cours : jamais sacrifiées au fond
+    if not ok_m:
+        journal("greffier", statut="reporté", raison=raison, captures=len(lignes))
+        return {"captures": len(lignes), "reporte": raison}
     cmd = [claude, "-p", "--model", modele, "--allowedTools", "Read,Bash(cerebro:*),Bash(python:*),Bash(python3:*)",
-           "--permission-mode", "bypassPermissions", "--output-format", "json", "--strict-mcp-config", "--no-session-persistence"]
+           "--permission-mode", "bypassPermissions", "--output-format", "json", "--strict-mcp-config", "--no-session-persistence",
+           "--max-budget-usd", str(fond._reglage("fond.plafond_greffier", 0.15))]
     journal("greffier", statut="début", captures=len(lignes), modele=modele)
+    class _R:  # compatibilité avec la suite (stderr)
+        stderr = ""
+    r = _R()
     try:
-        r = subprocess.run(cmd, input=prompt, capture_output=True,  # invite par l'entrée standard (limite de ligne de commande Windows)
-                           cwd=str(ROOT), env=fond.env_fond(),
-                           timeout=900, encoding="utf-8", errors="ignore")
-        res = json.loads((r.stdout or "").strip().splitlines()[-1]) if (r.stdout or "").strip() else {}
+        # invite par l'entrée standard (limite de ligne de commande Windows) ; arrêt si Mustafa écrit ou si la réserve baisse
+        sortie, r.stderr, code, arret = fond.appeler_claude(cmd, prompt, str(ROOT), fond.env_fond(), 900)
+        res = {"is_error": True, "erreur": arret} if arret else (json.loads(sortie) if sortie else {})
     except Exception as e:
-        res, r = {"is_error": True, "erreur": repr(e)}, None
+        res = {"is_error": True, "erreur": repr(e)}
     ms = int((time.time() - t0) * 1000)
     u = res.get("usage") or {}
     tokens = sum(int(u.get(k) or 0) for k in ("input_tokens", "output_tokens", "cache_creation_input_tokens"))

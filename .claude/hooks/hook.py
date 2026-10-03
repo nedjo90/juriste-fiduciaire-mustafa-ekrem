@@ -102,6 +102,7 @@ def user_prompt_submit(data):
         RUN.mkdir(parents=True, exist_ok=True)
         fond.ecrire_json(tour_path(data), {"entre_nous": entre_nous, "prompt": "" if entre_nous else prompt, "le": fond.stamp()})
         (RUN / "mustafa-ecrit").write_text(fond.stamp(), encoding="utf-8")  # pause du cycle d'entretien
+        fond.noter_activite()  # aucun appel de fond au modèle tant qu'il travaille
     return sortie_contexte("UserPromptSubmit", ctx, TOUR_MAX)
 
 
@@ -182,6 +183,7 @@ def stop(data):
         (RUN / "mustafa-ecrit").unlink()
     except Exception:
         pass
+    fond.noter_activite()
     tp = tour_path(data)
     tour = fond.lire_json(tp, {}) or {}
     try:

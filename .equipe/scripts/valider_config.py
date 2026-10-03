@@ -417,6 +417,10 @@ def valider(session=True, copier=True):
         rapport["etapes"]["b_hooks"] = err or mesures
         if err:
             return conclure(rapport, err, [".claude/settings.json", ".claude/hooks/hook.py", ".claude/hooks/vocabulaire-technique.txt", ".equipe/scripts/entretien/fond.py"], t0)
+        permis, raison = fond.modele_permis() if (session and fond and hasattr(fond, "modele_permis")) else (True, "")
+        if session and not permis:  # la session de contrôle consomme la réserve de Mustafa : jamais pendant son travail
+            rapport["etapes"]["c_session"] = f"reportée ({raison})"
+            session = False
         if session:
             try:
                 declarer_confiance(ROOT, serveurs_mcp())
@@ -426,7 +430,7 @@ def valider(session=True, copier=True):
             rapport["etapes"]["c_session"] = err or info
             if err:
                 return conclure(rapport, err, None, t0)
-        else:
+        elif "c_session" not in rapport["etapes"]:
             rapport["etapes"]["c_session"] = "sautée (--sans-session)"
     if copier:
         rapport["etapes"]["d_copie"] = copier_valide()["le"]

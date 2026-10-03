@@ -17,3 +17,4 @@ depot: github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem, PUBLIC (installation
 branches_par_chantier: non — une seule branche autorisée dans l'environnement de construction ; chantiers = commits + tags [défaut]
 bureau_git: Bureau/ ignoré sauf Bureau/Informatique/ et Bureau/Modeles/ (§2 livraison vs §9.4) [défaut]
 fuseau: Europe/Zurich [défaut §11]
+reserve_mustafa: appels de fond au modèle seulement après 20 min sans activité (fond.calme_minutes), réserve 5 h < 50 % (fond.seuil_5h) et semaine < 75 % (fond.seuil_semaine), chiffres réels relevés par Claude ; arrêt immédiat si Mustafa écrit ; plafond par appel (fond.plafond_<palier>) ; tâche reportée, jamais sautée

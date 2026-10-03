@@ -54,19 +54,24 @@ def lancer(p):
     sys.path.insert(0, str(ROOT / ".equipe" / "scripts" / "entretien"))
     import fond  # vrai programme Claude, jamais la commande de l'équipe (.equipe/bin, qui ouvrirait une session)
     exe = os.environ.get("CEREBRO_CLAUDE") or fond.claude_exe() or "claude"
+    ok_m, raison = fond.modele_permis()  # réserve d'usage de Mustafa et activité en cours : jamais sacrifiées au fond
+    if not ok_m:
+        journal("initiative", statut="reportée", raison=raison)
+        return {"is_error": True, "reporte": raison, "result": raison}, 0, 0
     cmd = [exe, "-p", "--model", modele, "--output-format", "json", "--permission-mode", "bypassPermissions",
+           "--max-budget-usd", str(fond._reglage("fond.plafond_initiative", 1.0)),
            "--allowedTools", "Read,Write,Edit,Bash(cerebro:*),Bash(.equipe/bin/cerebro:*),Bash(python:*),Bash(python3:*)"]
     t0 = time.time()
-    try:
-        r = subprocess.run(cmd, cwd=str(ROOT), env=env, input=p.encode("utf-8"), capture_output=True, timeout=1500)
-    except subprocess.TimeoutExpired:
-        F.incident_add("initiative", "boucle d'initiative trop longue (25 min)", "reprise au prochain cycle")
-        return {"is_error": True, "result": "timeout"}, 1500000, 0
+    sortie, err, code, arret = fond.appeler_claude(cmd, p, str(ROOT), env, 1500)
     ms = int((time.time() - t0) * 1000)
+    if arret:
+        if "délai" in arret:
+            F.incident_add("initiative", "boucle d'initiative trop longue (25 min)", "reprise au prochain cycle")
+        return {"is_error": True, "reporte": arret, "result": arret}, ms, 0
     try:
-        res = json.loads(r.stdout.decode("utf-8", "ignore"))
+        res = json.loads(sortie)
     except Exception:
-        res = {"is_error": True, "result": r.stdout.decode("utf-8", "ignore")[-500:], "stderr": r.stderr.decode("utf-8", "ignore")[-500:]}
+        res = {"is_error": True, "result": (sortie or "")[-500:], "stderr": (err or "")[-500:]}
     u = res.get("usage") or {}
     tok = int(u.get("input_tokens", 0)) + int(u.get("output_tokens", 0)) + int(u.get("cache_creation_input_tokens", 0))
     F.mesure("initiative", "boucle", modele, tok, ms, 0 if res.get("is_error") else 1)
@@ -89,6 +94,10 @@ def main():
     try:
         journal("initiative", statut="début", elements=[o["id"] for _, o in items])
         res, ms, tok = lancer(p)
+        if res.get("reporte"):  # Mustafa travaille ou sa réserve baisse : rien n'est perdu, reprise au prochain temps mort
+            journal("initiative", statut="reportée", raison=res["reporte"])
+            print(json.dumps({"statut": "reporté", "raison": res["reporte"]}, ensure_ascii=False))
+            return
         ok = not res.get("is_error")
         if ok:
             for _, o in items:

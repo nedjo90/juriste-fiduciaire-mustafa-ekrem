@@ -87,7 +87,7 @@ def preparer():
     faux.write_text(FAUX_CLAUDE, encoding="utf-8")
     env = {k: v for k, v in os.environ.items() if not k.startswith(("CEREBRO_", "CLAUDE_CODE_"))}
     env.update({"CEREBRO_ROOT": str(R), "CEREBRO_SANS_MODELE": "1", "CEREBRO_SANS_RESEAU": "1", "CEREBRO_TODAY": LUNDI,
-                "CEREBRO_CLE_SAUVEGARDE": str(tmp / "cle.key"), "CEREBRO_CLAUDE": str(faux), "FAUX_CLAUDE_LOG": str(tmp / "appels.jsonl"),
+                "CEREBRO_CLE_SAUVEGARDE": str(tmp / "cle.key"), "CEREBRO_CLAUDE": str(faux), "FAUX_CLAUDE_LOG": str(tmp / "appels.jsonl"), "CEREBRO_CALME_MIN": "0",
                 "PYTHONIOENCODING": "utf-8", "HOME": str(tmp / "home"), "USERPROFILE": str(tmp / "home")})
     r = subprocess.run([PY, str(R / ".equipe/tests/fixtures/dossier_fictif.py")], env=env, capture_output=True, text=True, timeout=180)
     assert r.returncode == 0, r.stderr[-300:]
@@ -458,6 +458,29 @@ def _():
     r = cycle.TACHES["revue_hebdomadaire"]("", FIN())
     assert r.get("document") and r["points"] >= 1 and len(appels()) == n0, r
     assert "(oui / non)" in (R / O.get(r["document"])["chemin"]).read_text(encoding="utf-8")
+
+
+@test("réserve de Mustafa : aucun appel de fond pendant son travail ni réserve entamée ; tâche reportée, jamais sautée")
+def _():
+    import time as _t
+    fond = cycle.fond
+    n0 = len(appels())
+    os.environ["CEREBRO_CALME_MIN"] = "20"
+    fond.noter_activite()
+    try:
+        r = cycle.TACHES["veille_hebdo"]("", FIN())
+        assert r.get("_partiel") and "Mustafa" in str(r.get("attente")), r
+    finally:
+        os.environ["CEREBRO_CALME_MIN"] = "0"
+    fond.noter_jauge({"status": "allowed", "unifiedWindows": {"five_hour": {"utilization": 0.8, "resetsAt": _t.time() + 3600}}})
+    try:
+        ok, raison = fond.modele_permis()
+        assert not ok and "80 %" in raison, raison
+        r = cycle.TACHES["veille_hebdo"]("", FIN())
+        assert r.get("_partiel"), r
+    finally:
+        fond.JAUGE.unlink(missing_ok=True)
+    assert len(appels()) == n0, "aucun appel ne doit partir"
 
 
 @test("missions de fond sans matière → aucun appel (tuteur, anticipation) ; veille sans candidat : seule la recherche active hebdomadaire")
