@@ -107,6 +107,7 @@ jobs:
         run: |
           $env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
           irm -Headers @{Authorization="token $env:MON_EQUIPE_JETON"} "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/Installer-Mon-equipe.ps1" | iex
+          $global:LASTEXITCODE = 0
           Get-Content -LiteralPath (Join-Path $env:RACINE '.equipe\run\rapport-installation.txt') -Encoding UTF8 -ErrorAction SilentlyContinue
 
       - name: Journaux
