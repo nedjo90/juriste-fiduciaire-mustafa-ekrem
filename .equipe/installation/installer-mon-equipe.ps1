@@ -142,6 +142,18 @@ Dire 'Etape 3/3 : installation des outils de votre equipe...'
 $inst = Join-Path $Dossier '.equipe\installation\installer.ps1'
 $code = Lancer 'powershell.exe' @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + $inst + '"')) 3600 $null -Visible
 Noter ("installateur : code " + $code)
+# cette fenetre devient directement utilisable : reglages relus, positionnee dans le dossier de l'equipe, « claude » actif
+# (une nouvelle fenetre l'a aussi, par le profil PowerShell ; la commande de l'equipe se place toujours dans le bon dossier)
+$env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
+foreach ($v in 'CEREBRO_CLAUDE', 'CEREBRO_PYTHON', 'CLAUDE_CODE_GIT_BASH_PATH') {
+  $val = [Environment]::GetEnvironmentVariable($v, 'User'); if ($val) { Set-Item -Path ('Env:' + $v) -Value $val }
+}
+$cible = Join-Path $Dossier '.equipe\bin\claude.cmd'
+if (Test-Path -LiteralPath $cible) {
+  Set-Item -Path 'function:global:claude' -Value ([ScriptBlock]::Create("& '" + ($cible -replace "'", "''") + "' @args"))
+}
+if (Test-Path -LiteralPath $Dossier) { Set-Location -LiteralPath $Dossier }
 Dire ''
-Dire "C'est termine. Ouvrez une NOUVELLE fenetre PowerShell (ou double-cliquez sur 'Mon equipe' sur le bureau) et tapez :  claude"
+Dire "C'est termine. Tapez maintenant :  claude"
+Dire "(Plus tard : double-cliquez sur 'Mon equipe' sur le bureau, ou tapez claude dans n'importe quelle fenetre PowerShell.)"
 }

@@ -19,7 +19,7 @@ La commande fait tout, sans droits d'administrateur et sans aucune question : el
 
 ## Ensuite
 
-Ouvrir une **nouvelle** fenêtre PowerShell et taper `claude`, ou double-cliquer sur « Mon équipe » sur le bureau. L'équipe s'ouvre directement, avec son brief du jour ; Mustafa n'a plus qu'à parler. Microsoft 365 (Word, Excel, PowerPoint) est utilisé pour les PDF ; aucun autre logiciel n'est nécessaire.
+Dans la même fenêtre, taper `claude` : à la fin de la commande, la fenêtre est déjà placée dans le dossier `mon-equipe` et la commande est active. Plus tard : double-cliquer sur « Mon équipe » sur le bureau, ou taper `claude` dans n'importe quelle fenêtre PowerShell (elle se place toujours d'elle-même dans le bon dossier). L'équipe s'ouvre directement, avec son brief du jour ; Mustafa n'a plus qu'à parler. Microsoft 365 (Word, Excel, PowerPoint) est utilisé pour les PDF ; aucun autre logiciel n'est nécessaire.
 
 **Mac** : ouvrir Terminal et lancer `sh ~/Documents/mon-equipe/.equipe/installation/installer.sh` après avoir récupéré le dossier (`git clone https://github.com/nedjo90/juriste-fiduciaire-mustafa-ekrem.git ~/Documents/mon-equipe`), puis taper `claude` dans un nouveau Terminal.
 
