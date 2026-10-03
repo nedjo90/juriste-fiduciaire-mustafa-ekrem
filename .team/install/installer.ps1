@@ -135,6 +135,27 @@ if (-not $Py) {
       $Py = Trouver-Python
     }
   }
+  if (-not $Py) {
+    # repli sans Windows Installer (échec 1603 constaté avec un profil au nom accentué ou avec espace) : le même Python
+    # officiel, diffusé par python.org sur nuget.org en simple archive, décompressée dans le profil
+    $arch = 'amd64'
+    if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { $arch = 'arm64' }
+    $paquet = if ($arch -eq 'arm64') { 'pythonarm64' } else { 'python' }
+    $zip = Join-Path $Tmp 'python-nuget.zip'
+    if (Telecharger "https://www.nuget.org/api/v2/package/$paquet/3.12.8" $zip) {
+      $x = Join-Path $Tmp 'python-nuget'
+      Remove-Item -LiteralPath $x -Recurse -Force -ErrorAction SilentlyContinue
+      try { Expand-Archive -LiteralPath $zip -DestinationPath $x -Force } catch { Noter ("archive Python illisible : " + $_) }
+      if (Test-Path -LiteralPath (Join-Path $x 'tools\python.exe')) {
+        $dest = Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312'
+        if (Test-Path -LiteralPath $dest) { $dest = Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312-archive' }
+        New-Item -ItemType Directory -Force -Path $dest | Out-Null
+        Copy-Item -Path (Join-Path $x 'tools\*') -Destination $dest -Recurse -Force
+        Noter "Python décompressé dans $dest"
+        $Py = Trouver-Python
+      }
+    }
+  }
 }
 if ($Py) {
   if ($PyDeja) { Bilan "Python : déjà installé ($Py)." } else { Bilan "Python : installé ($Py)." }
