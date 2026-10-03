@@ -117,13 +117,12 @@ fi
 # ------------------------------------------------------------- 7. mémoire de l'équipe
 if [ -n "$PY" ]; then
   export PYTHONIOENCODING=utf-8
-  if [ ! -f "$RACINE/.equipe/cerebro/cerebro.db" ]; then
-    "$PY" "$RACINE/.equipe/cerebro/cerebro.py" init >>"$LOG" 2>&1
-    "$PY" "$RACINE/.equipe/cerebro/cerebro.py" import-exports >>"$LOG" 2>&1
-    bilan "Mémoire de l'équipe : reconstituée."
-  else
-    bilan "Mémoire de l'équipe : déjà en place."
-  fi
+  R_INIT="$("$PY" "$RACINE/.equipe/cerebro/cerebro.py" init --importer-si-vide 2>&1)"
+  echo "cerebro init: $R_INIT" >>"$LOG"
+  case "$R_INIT" in
+    *'"import"'*) bilan "Mémoire de l'équipe : reconstituée." ;;
+    *) bilan "Mémoire de l'équipe : en place." ;;
+  esac
 fi
 
 # ------------------------------------------------------------- 8. raccourci « Mon équipe » sur le bureau

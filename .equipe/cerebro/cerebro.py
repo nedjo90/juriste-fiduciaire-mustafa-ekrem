@@ -17,7 +17,7 @@ def J(s):
 def build():
     p = argparse.ArgumentParser(prog="cerebro", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     s = p.add_subparsers(dest="cmd")
-    a = s.add_parser("init"); a.add_argument("--import-provisoire", action="store_true")
+    a = s.add_parser("init"); a.add_argument("--import-provisoire", action="store_true"); a.add_argument("--importer-si-vide", action="store_true", help="recharge la mémoire livrée (exports) si la base est vide")
     a = s.add_parser("find"); a.add_argument("q", nargs="+"); a.add_argument("--limit", type=int, default=10); a.add_argument("--deep", action="store_true"); a.add_argument("--asof"); a.add_argument("--type", action="append")
     a = s.add_parser("summary"); a.add_argument("id")
     a = s.add_parser("asof", help="état d'un objet à une date (bitemporalité)"); a.add_argument("id"); a.add_argument("date")
@@ -80,6 +80,8 @@ def main(argv=None):
         r = {"db": str(core.DB_PATH), "fts": core.has_fts()}
         if args.import_provisoire:
             r["importes"] = S.importer_provisoire(core.ROOT / "SOMMAIRE.md")
+        if args.importer_si_vide and core.db().execute("SELECT COUNT(*) FROM objets WHERE type IN ('role','skill','methode')").fetchone()[0] == 0:
+            r["import"] = B.importer_exports()
         r["niveau0"] = len(S.tout())
         out(r)
     elif c == "find":

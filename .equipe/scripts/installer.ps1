@@ -282,11 +282,11 @@ open(p, "w", encoding="utf-8").write(json.dumps(d, ensure_ascii=False, indent=2)
 if ($Py) {
   $Cerebro = Join-Path $Racine '.equipe\cerebro\cerebro.py'
   $env:PYTHONIOENCODING = 'utf-8'
-  if (-not (Test-Path -LiteralPath (Join-Path $Racine '.equipe\cerebro\cerebro.db'))) {
-    & $Py $Cerebro init 2>&1 | ForEach-Object { Noter ("cerebro init: " + $_) }
-    & $Py $Cerebro import-exports 2>&1 | ForEach-Object { Noter ("cerebro import: " + $_) }
-    Bilan 'Mémoire de l''équipe : reconstituée.'
-  } else { Bilan 'Mémoire de l''équipe : déjà en place.' }
+  # init idempotent ; la mémoire livrée (rôles, méthodes, règles, inventaire) est rechargée si la base est vide,
+  # où qu'elle soit (dans le projet, ou hors de OneDrive dans le profil local)
+  $r = (& $Py $Cerebro init --importer-si-vide 2>&1 | Out-String)
+  Noter ("cerebro init: " + $r)
+  if ($r -match '"import"') { Bilan 'Mémoire de l''équipe : reconstituée.' } else { Bilan 'Mémoire de l''équipe : en place.' }
 }
 
 # ---------------------------------------------------------------- 8. raccourci « Mon équipe » sur le bureau

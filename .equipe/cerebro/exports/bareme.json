@@ -1,0 +1,242 @@
+[
+{
+"id": "BAR-001",
+"nom": "impot_anticipe",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "taux_pct_capitaux_mobiliers",
+"valeur": "35",
+"source": "RS 642.21 art. 13 al. 1 let. a, version 2025-01-01 (BIB-005) : « à 35 % de la prestation imposable »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-002",
+"nom": "impot_anticipe",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_capitaux_mobiliers",
+"valeur": "35",
+"source": "RS 642.21 art. 13 al. 1 let. a, version 2025-01-01 (BIB-005) : « à 35 % de la prestation imposable »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-003",
+"nom": "impot_anticipe",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "taux_pct_rentes_pensions",
+"valeur": "15",
+"source": "RS 642.21 art. 13 al. 1 let. b, version 2025-01-01 (BIB-005) : « pour les rentes viagères et les pensions: à 15 % de la prestation imposable »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-004",
+"nom": "impot_anticipe",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_rentes_pensions",
+"valeur": "15",
+"source": "RS 642.21 art. 13 al. 1 let. b, version 2025-01-01 (BIB-005) : « pour les rentes viagères et les pensions: à 15 % de la prestation imposable »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-005",
+"nom": "impot_anticipe",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "taux_pct_autres_prestations_assurance",
+"valeur": "8",
+"source": "RS 642.21 art. 13 al. 1 let. c, version 2025-01-01 (BIB-005) : « à 8 % de la prestation imposable »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-006",
+"nom": "impot_anticipe",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_autres_prestations_assurance",
+"valeur": "8",
+"source": "RS 642.21 art. 13 al. 1 let. c, version 2025-01-01 (BIB-005) : « à 8 % de la prestation imposable »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-007",
+"nom": "tva",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_normal",
+"valeur": "8.1",
+"source": "RS 641.20 art. 25 al. 1, version 2025-03-31 (BIB-008) : « est de 8,1 % (taux normal) »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-008",
+"nom": "tva",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_reduit",
+"valeur": "2.6",
+"source": "RS 641.20 art. 25 al. 2, version 2025-03-31 (BIB-008) : « Le taux réduit de 2,6 % est appliqué »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-009",
+"nom": "tva",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_special_hebergement",
+"valeur": "3.8",
+"source": "RS 641.20 art. 25 al. 4, version 2025-03-31 (BIB-008) : « (taux spécial) est fixé à 3,8 % » — appliqué jusqu'au 31 décembre 2027 au plus tard selon l'al. 4",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-010",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2024,
+"cle": "taux_pct_droits_participation",
+"valeur": "1",
+"source": "RS 641.10 art. 8 al. 1, version 2024-01-01 (BIB-007) : « Le droit d’émission sur les droits de participation s’élève à 1 pour cent »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-011",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "taux_pct_droits_participation",
+"valeur": "1",
+"source": "RS 641.10 art. 8 al. 1, version 2024-01-01 (BIB-007) : « Le droit d’émission sur les droits de participation s’élève à 1 pour cent »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-012",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_droits_participation",
+"valeur": "1",
+"source": "RS 641.10 art. 8 al. 1, version 2024-01-01 (BIB-007) : « Le droit d’émission sur les droits de participation s’élève à 1 pour cent »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-013",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2024,
+"cle": "franchise_chf_fondation_augmentation",
+"valeur": "1000000",
+"source": "RS 641.10 art. 6 al. 1 let. h, version 2024-01-01 (BIB-007) : « ne dépassent pas en tout la somme de un million de francs » — SA, SCA, Sàrl : droits émis à titre onéreux lors de la fondation ou de l'augmentation ; versements totaux",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-014",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "franchise_chf_fondation_augmentation",
+"valeur": "1000000",
+"source": "RS 641.10 art. 6 al. 1 let. h, version 2024-01-01 (BIB-007) : « ne dépassent pas en tout la somme de un million de francs » — SA, SCA, Sàrl : droits émis à titre onéreux lors de la fondation ou de l'augmentation ; versements totaux",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-015",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "franchise_chf_fondation_augmentation",
+"valeur": "1000000",
+"source": "RS 641.10 art. 6 al. 1 let. h, version 2024-01-01 (BIB-007) : « ne dépassent pas en tout la somme de un million de francs » — SA, SCA, Sàrl : droits émis à titre onéreux lors de la fondation ou de l'augmentation ; versements totaux",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-016",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2024,
+"cle": "franchise_chf_cooperatives",
+"valeur": "1000000",
+"source": "RS 641.10 art. 6 al. 1 let. b, version 2024-01-01 (BIB-007) : « un million de francs au total »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-017",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "franchise_chf_cooperatives",
+"valeur": "1000000",
+"source": "RS 641.10 art. 6 al. 1 let. b, version 2024-01-01 (BIB-007) : « un million de francs au total »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-018",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "franchise_chf_cooperatives",
+"valeur": "1000000",
+"source": "RS 641.10 art. 6 al. 1 let. b, version 2024-01-01 (BIB-007) : « un million de francs au total »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-019",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2024,
+"cle": "plafond_chf_assainissement",
+"valeur": "10000000",
+"source": "RS 641.10 art. 6 al. 1 let. k, version 2024-01-01 (BIB-007) : « ne dépassent pas 10 millions de francs au total »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-020",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2025,
+"cle": "plafond_chf_assainissement",
+"valeur": "10000000",
+"source": "RS 641.10 art. 6 al. 1 let. k, version 2024-01-01 (BIB-007) : « ne dépassent pas 10 millions de francs au total »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-021",
+"nom": "droit_emission",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "plafond_chf_assainissement",
+"valeur": "10000000",
+"source": "RS 641.10 art. 6 al. 1 let. k, version 2024-01-01 (BIB-007) : « ne dépassent pas 10 millions de francs au total »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-022",
+"nom": "ifd_personnes_morales",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_societes_capitaux_cooperatives",
+"valeur": "8.5",
+"source": "RS 642.11 art. 68, version 2026-09-02 (BIB-003) : « est de 8.5 % du bénéfice net »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-023",
+"nom": "ifd_personnes_morales",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "taux_pct_associations_fondations",
+"valeur": "4.25",
+"source": "RS 642.11 art. 71 al. 1, version 2026-09-02 (BIB-003) : « est de 4,25 % du bénéfice net »",
+"verifie_le": "2026-10-03"
+},
+{
+"id": "BAR-024",
+"nom": "ifd_personnes_morales",
+"juridiction": "CH",
+"annee": 2026,
+"cle": "seuil_chf_non_imposition_associations",
+"valeur": "5000",
+"source": "RS 642.11 art. 71 al. 2, version 2026-09-02 (BIB-003) : « lorsqu’il n’atteint pas 5000 francs »",
+"verifie_le": "2026-10-03"
+}
+]

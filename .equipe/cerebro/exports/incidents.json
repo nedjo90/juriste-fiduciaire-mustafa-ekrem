@@ -1,0 +1,22 @@
+[
+{
+"id": "INC-001",
+"le": "2026-10-03T18:47:52+02:00",
+"categorie": "configuration",
+"description": "configuration refusée par la validation : session de contrôle : délai dépassé",
+"repli": "validation complète réussie le 2026-10-03 (session de contrôle bornée, réglages locaux de construction exclus)",
+"statut": "resolu",
+"resolu_le": "2026-10-03T19:03:31+02:00",
+"phrase": ""
+},
+{
+"id": "INC-002",
+"le": "2026-10-03T19:02:14+02:00",
+"categorie": "configuration",
+"description": "configuration refusée par la validation : hooks non exécutés pendant la session de contrôle : ['SessionStart', 'UserPromptSubmit']",
+"repli": "validation complète réussie le 2026-10-03 (session de contrôle bornée, réglages locaux de construction exclus)",
+"statut": "resolu",
+"resolu_le": "2026-10-03T19:03:31+02:00",
+"phrase": ""
+}
+]

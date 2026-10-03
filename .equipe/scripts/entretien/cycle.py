@@ -104,9 +104,12 @@ def planifier(complet=False, mode="rattrapage"):
                      ("bibliotheque_mise_a_jour", 5), ("tests_cerebro", 6),
                      ("sauvegarde", 6), ("export", 6), ("commit_push", 6)]:
             ajouter(t, "", p)
-        p = EQ / "cerveau" / "session" / "construction.md"
-        if p.exists() and "construction: achevée" not in p.read_text(encoding="utf-8"):
-            ajouter("construction", "", 6)
+    for m in EXTENSIONS:
+        if hasattr(m, "PLANIFIER"):
+            try:
+                m.PLANIFIER(complet, mode, ajouter)
+            except Exception as e:
+                journal("erreurs-fond", job="cycle", ou=f"planifier {getattr(m, '__name__', '?')}", erreur=repr(e)[:300])
 
 
 # ------------------------------------------------------------------ tâches (script d'abord ; renvoient un petit dict)
@@ -379,8 +382,32 @@ TACHES = {"gabarits": t_gabarits, "bibliotheque_mise_a_jour": t_bibliotheque_mis
           "sante": t_sante, "brief": t_brief, "export": t_export, "sauvegarde": t_sauvegarde,
           "test_restauration": t_test_restauration, "commit_push": t_commit_push, "ingesteur": t_ingesteur,
           "initiative": t_initiative, "greffier": t_greffier}
-# Tâches qui demandent un modèle sans script dédié (revue_hebdomadaire, construction, decouverte*, bibliotheque…) :
-# laissées en file pour l'associé ou la fabrique ; le cycle ne les consomme pas.
+
+# ------------------------------------------------------------------ extensions
+# Chaque module .equipe/scripts/entretien/taches/*.py peut définir :
+#   TACHES = {"nom": fonction(arg, fin) -> dict}   CADENCES = {"nom": (jours, priorité)}
+#   MODELES = {"nom", …} (appellent un modèle)      RESEAU = {"nom", …} (interrogent Internet)
+#   def PLANIFIER(complet, mode, ajouter): …          (ajoute ses tâches à la file à chaque cycle)
+# Un module en erreur est journalisé et ignoré : il n'empêche jamais le cycle (§0).
+EXTENSIONS = []
+def _charger_extensions():
+    import importlib.util
+    d = Path(__file__).resolve().parent / "taches"
+    for f in sorted(d.glob("*.py")) if d.exists() else []:
+        if f.name.startswith("_"):
+            continue
+        try:
+            spec = importlib.util.spec_from_file_location(f"taches_{f.stem}", f)
+            m = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(m)
+            TACHES.update(getattr(m, "TACHES", {}))
+            CADENCES.update(getattr(m, "CADENCES", {}))
+            MODELES.update(getattr(m, "MODELES", set()))
+            RESEAU.update(getattr(m, "RESEAU", set()))
+            EXTENSIONS.append(m)
+        except Exception as e:
+            journal("erreurs-fond", job="cycle", ou=f"extension {f.name}", erreur=repr(e)[:300])
+_charger_extensions()
 
 
 # ------------------------------------------------------------------ exécution

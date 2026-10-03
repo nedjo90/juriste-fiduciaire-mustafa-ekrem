@@ -6,4 +6,4 @@ cd /d "%~dp0"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0.equipe\scripts\installer.ps1"
 echo.
 echo Vous pouvez fermer cette fenetre.
-pause >nul
+if not defined MON_EQUIPE_SANS_PAUSE pause >nul

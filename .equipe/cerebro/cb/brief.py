@@ -104,6 +104,9 @@ def etat_session():
     return cut(p.read_text(encoding="utf-8"), 1200) if p.exists() else ""
 
 def construction_ligne():
+    """la reprise de construction ne concerne que la machine de construction (drapeau local, hors git) ; jamais le poste de Mustafa"""
+    if not (EQ / "run" / "machine-de-construction").exists():
+        return ""
     p = SESSION / "construction.md"
     if not p.exists():
         return ""
@@ -294,7 +297,13 @@ def health():
 def export():
     EXPORTS.mkdir(parents=True, exist_ok=True)
     con = db()
-    tables = [r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'objets_fts%' AND name NOT IN ('ouvertures','sqlite_sequence')")]
+    # index plein texte (tables virtuelles et leurs tables internes) : reconstruits sur le poste, jamais exportés
+    virt = [r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table' AND sql LIKE 'CREATE VIRTUAL TABLE%'")]
+    tables = [r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT IN ('ouvertures','sqlite_sequence')")
+              if r[0] not in virt and not any(r[0].startswith(v + "_") for v in virt)]
+    for old in EXPORTS.glob("*.json"):
+        if old.stem not in tables:
+            old.unlink()
     n = 0
     for t in tables:
         rows = [dict(r) for r in con.execute(f"SELECT * FROM {t}")]
@@ -333,6 +342,11 @@ def importer_exports():
     con.commit()
     from .sommaires import tout
     tout()
+    try:
+        from .juridique import reindex_articles
+        reindex_articles()
+    except Exception as e:
+        erreurs.append(f"articles: {repr(e)[:80]}")
     return {"lignes": n, "erreurs": erreurs[:10]}
 
 def reprocess(since):

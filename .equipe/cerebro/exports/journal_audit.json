@@ -1,0 +1,2346 @@
+[
+{
+"n": 1,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-001",
+"detail": "Réclamation contre une décision de taxation IFD"
+},
+{
+"n": 2,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-002",
+"detail": "Recours contre une décision sur réclamation IFD"
+},
+{
+"n": 3,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-003",
+"detail": "Déclaration et paiement de l'impôt anticipé sur dividende"
+},
+{
+"n": 4,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-004",
+"detail": "Décompte TVA de la période"
+},
+{
+"n": 5,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-005",
+"detail": "Assemblée générale ordinaire"
+},
+{
+"n": 6,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-006",
+"detail": "Annonce de l'ayant droit économique à la société"
+},
+{
+"n": 7,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-007",
+"detail": "Opposition au commandement de payer"
+},
+{
+"n": 8,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-008",
+"detail": "Recours au Tribunal fédéral"
+},
+{
+"n": 9,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-009",
+"detail": "Revue périodique du dossier LBA"
+},
+{
+"n": 10,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-010",
+"detail": "Dernier jour pour résilier"
+},
+{
+"n": 11,
+"le": "2026-10-03T18:30:16+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "RD-011",
+"detail": "Relance commerciale"
+},
+{
+"n": 12,
+"le": "2026-10-03T18:38:35+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-001",
+"detail": "CO (fr, état 2026-10-01)"
+},
+{
+"n": 13,
+"le": "2026-10-03T18:38:35+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-001",
+"detail": "220 fr 2026-10-01"
+},
+{
+"n": 14,
+"le": "2026-10-03T18:38:40+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-002",
+"detail": "LFus (fr, état 2023-01-01)"
+},
+{
+"n": 15,
+"le": "2026-10-03T18:38:40+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-002",
+"detail": "221.301 fr 2023-01-01"
+},
+{
+"n": 16,
+"le": "2026-10-03T18:38:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-003",
+"detail": "LIFD (fr, état 2026-09-02)"
+},
+{
+"n": 17,
+"le": "2026-10-03T18:38:43+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-003",
+"detail": "642.11 fr 2026-09-02"
+},
+{
+"n": 18,
+"le": "2026-10-03T18:38:48+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-004",
+"detail": "LHID (fr, état 2025-01-01)"
+},
+{
+"n": 19,
+"le": "2026-10-03T18:38:48+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-004",
+"detail": "642.14 fr 2025-01-01"
+},
+{
+"n": 20,
+"le": "2026-10-03T18:38:51+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-005",
+"detail": "LIA (fr, état 2025-01-01)"
+},
+{
+"n": 21,
+"le": "2026-10-03T18:38:51+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-005",
+"detail": "642.21 fr 2025-01-01"
+},
+{
+"n": 22,
+"le": "2026-10-03T18:38:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-006",
+"detail": "OIA (fr, état 2025-01-01)"
+},
+{
+"n": 23,
+"le": "2026-10-03T18:38:56+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-006",
+"detail": "642.211 fr 2025-01-01"
+},
+{
+"n": 24,
+"le": "2026-10-03T18:39:01+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-007",
+"detail": "LT (fr, état 2024-01-01)"
+},
+{
+"n": 25,
+"le": "2026-10-03T18:39:01+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-007",
+"detail": "641.10 fr 2024-01-01"
+},
+{
+"n": 26,
+"le": "2026-10-03T18:39:04+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-008",
+"detail": "LTVA (fr, état 2025-03-31)"
+},
+{
+"n": 27,
+"le": "2026-10-03T18:39:04+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-008",
+"detail": "641.20 fr 2025-03-31"
+},
+{
+"n": 28,
+"le": "2026-10-03T18:39:09+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-009",
+"detail": "LBA (fr, état 2026-10-01)"
+},
+{
+"n": 29,
+"le": "2026-10-03T18:39:09+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-009",
+"detail": "955.0 fr 2026-10-01"
+},
+{
+"n": 30,
+"le": "2026-10-03T18:39:14+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-010",
+"detail": "LTPM (fr, état 2026-10-01)"
+},
+{
+"n": 31,
+"le": "2026-10-03T18:39:14+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-010",
+"detail": "955.3 fr 2026-10-01"
+},
+{
+"n": 32,
+"le": "2026-10-03T18:39:19+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-011",
+"detail": "LPD (fr, état 2025-07-07)"
+},
+{
+"n": 33,
+"le": "2026-10-03T18:39:19+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-011",
+"detail": "235.1 fr 2025-07-07"
+},
+{
+"n": 34,
+"le": "2026-10-03T18:39:24+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-012",
+"detail": "LP (fr, état 2026-01-01)"
+},
+{
+"n": 35,
+"le": "2026-10-03T18:39:24+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-012",
+"detail": "281.1 fr 2026-01-01"
+},
+{
+"n": 36,
+"le": "2026-10-03T18:39:29+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-013",
+"detail": "LTF (fr, état 2026-04-01)"
+},
+{
+"n": 37,
+"le": "2026-10-03T18:39:29+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-013",
+"detail": "173.110 fr 2026-04-01"
+},
+{
+"n": 38,
+"le": "2026-10-03T18:39:34+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-014",
+"detail": "173.110.3 (fr, état 1963-10-03)"
+},
+{
+"n": 39,
+"le": "2026-10-03T18:39:34+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-014",
+"detail": "173.110.3 fr 1963-10-03"
+},
+{
+"n": 40,
+"le": "2026-10-03T18:39:49+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-015",
+"detail": "OR (de, état 2026-10-01)"
+},
+{
+"n": 41,
+"le": "2026-10-03T18:39:49+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-015",
+"detail": "220 de 2026-10-01"
+},
+{
+"n": 42,
+"le": "2026-10-03T18:39:54+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-016",
+"detail": "DBG (de, état 2026-09-02)"
+},
+{
+"n": 43,
+"le": "2026-10-03T18:39:54+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-016",
+"detail": "642.11 de 2026-09-02"
+},
+{
+"n": 44,
+"le": "2026-10-03T18:40:02+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-017",
+"detail": "ORC (fr, état 2026-10-01)"
+},
+{
+"n": 45,
+"le": "2026-10-03T18:40:02+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-017",
+"detail": "221.411 fr 2026-10-01"
+},
+{
+"n": 46,
+"le": "2026-10-03T18:40:25+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-018",
+"detail": "OT (fr, état 2023-09-01)"
+},
+{
+"n": 47,
+"le": "2026-10-03T18:40:25+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-018",
+"detail": "641.101 fr 2023-09-01"
+},
+{
+"n": 48,
+"le": "2026-10-03T18:40:33+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-019",
+"detail": "OTVA (fr, état 2025-01-01)"
+},
+{
+"n": 49,
+"le": "2026-10-03T18:40:33+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-019",
+"detail": "641.201 fr 2025-01-01"
+},
+{
+"n": 50,
+"le": "2026-10-03T18:40:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-020",
+"detail": "OBA (fr, état 2026-10-01)"
+},
+{
+"n": 51,
+"le": "2026-10-03T18:40:41+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-020",
+"detail": "955.01 fr 2026-10-01"
+},
+{
+"n": 52,
+"le": "2026-10-03T18:40:46+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-021",
+"detail": "OBA-FINMA (fr, état 2023-01-01)"
+},
+{
+"n": 53,
+"le": "2026-10-03T18:40:46+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-021",
+"detail": "955.033.0 fr 2023-01-01"
+},
+{
+"n": 54,
+"le": "2026-10-03T18:40:54+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-022",
+"detail": "OTPM (fr, état 2026-10-01)"
+},
+{
+"n": 55,
+"le": "2026-10-03T18:40:54+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-022",
+"detail": "955.31 fr 2026-10-01"
+},
+{
+"n": 56,
+"le": "2026-10-03T18:41:03+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-023",
+"detail": "CC (fr, état 2026-07-01)"
+},
+{
+"n": 57,
+"le": "2026-10-03T18:41:03+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-023",
+"detail": "210 fr 2026-07-01"
+},
+{
+"n": 58,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-001",
+"detail": "Analyse juridique structurée"
+},
+{
+"n": 59,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-002",
+"detail": "Hiérarchie et datation des sources"
+},
+{
+"n": 60,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-003",
+"detail": "Table des autorités"
+},
+{
+"n": 61,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-004",
+"detail": "Pyramide et SCQA"
+},
+{
+"n": 62,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-005",
+"detail": "Rédaction claire"
+},
+{
+"n": 63,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-006",
+"detail": "Négociation raisonnée"
+},
+{
+"n": 64,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-007",
+"detail": "Parties prenantes"
+},
+{
+"n": 65,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-008",
+"detail": "Pre-mortem"
+},
+{
+"n": 66,
+"le": "2026-10-03T18:41:06+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-009",
+"detail": "Contradiction en deux temps"
+},
+{
+"n": 67,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-010",
+"detail": "Panel adverse"
+},
+{
+"n": 68,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-011",
+"detail": "Niveaux de confort"
+},
+{
+"n": 69,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-012",
+"detail": "Ce qu'on n'écrit pas"
+},
+{
+"n": 70,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-013",
+"detail": "Quel canton, quelle langue, quel délai"
+},
+{
+"n": 71,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-014",
+"detail": "Réponse schématique d'abord"
+},
+{
+"n": 72,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-015",
+"detail": "Lire sans tout relire"
+},
+{
+"n": 73,
+"le": "2026-10-03T18:41:07+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "MET-016",
+"detail": "Réutiliser avant de refaire"
+},
+{
+"n": 74,
+"le": "2026-10-03T18:41:17+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-024",
+"detail": "LPGA (fr, état 2024-01-01)"
+},
+{
+"n": 75,
+"le": "2026-10-03T18:41:17+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-024",
+"detail": "830.1 fr 2024-01-01"
+},
+{
+"n": 76,
+"le": "2026-10-03T18:41:22+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-025",
+"detail": "LAVS (fr, état 2026-01-01)"
+},
+{
+"n": 77,
+"le": "2026-10-03T18:41:22+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-025",
+"detail": "831.10 fr 2026-01-01"
+},
+{
+"n": 78,
+"le": "2026-10-03T18:42:14+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-003",
+"detail": "resume,source,prochaine_action"
+},
+{
+"n": 79,
+"le": "2026-10-03T18:42:14+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-006",
+"detail": "resume,source,prochaine_action"
+},
+{
+"n": 80,
+"le": "2026-10-03T18:42:40+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-001",
+"detail": "resume,source"
+},
+{
+"n": 81,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-002",
+"detail": "resume,source"
+},
+{
+"n": 82,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-003",
+"detail": "resume,source"
+},
+{
+"n": 83,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-004",
+"detail": "resume,source"
+},
+{
+"n": 84,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-005",
+"detail": "resume,source"
+},
+{
+"n": 85,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-006",
+"detail": "resume"
+},
+{
+"n": 86,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-007",
+"detail": "resume,source"
+},
+{
+"n": 87,
+"le": "2026-10-03T18:42:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-008",
+"detail": "resume,source"
+},
+{
+"n": 88,
+"le": "2026-10-03T18:42:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-001",
+"detail": "prochaine_action"
+},
+{
+"n": 89,
+"le": "2026-10-03T18:42:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-002",
+"detail": "prochaine_action"
+},
+{
+"n": 90,
+"le": "2026-10-03T18:42:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-004",
+"detail": "prochaine_action"
+},
+{
+"n": 91,
+"le": "2026-10-03T18:42:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-005",
+"detail": "prochaine_action"
+},
+{
+"n": 92,
+"le": "2026-10-03T18:42:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-007",
+"detail": "prochaine_action"
+},
+{
+"n": 93,
+"le": "2026-10-03T18:42:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "RD-008",
+"detail": "prochaine_action"
+},
+{
+"n": 94,
+"le": "2026-10-03T18:43:40+02:00",
+"acteur": "documentaliste",
+"action": "reviser",
+"objet": "BIB-017",
+"detail": ""
+},
+{
+"n": 95,
+"le": "2026-10-03T18:43:46+02:00",
+"acteur": "documentaliste",
+"action": "reviser",
+"objet": "BIB-003",
+"detail": ""
+},
+{
+"n": 96,
+"le": "2026-10-03T18:43:49+02:00",
+"acteur": "documentaliste",
+"action": "reviser",
+"objet": "BIB-016",
+"detail": ""
+},
+{
+"n": 97,
+"le": "2026-10-03T18:44:01+02:00",
+"acteur": "documentaliste",
+"action": "reviser",
+"objet": "BIB-007",
+"detail": ""
+},
+{
+"n": 98,
+"le": "2026-10-03T18:44:04+02:00",
+"acteur": "documentaliste",
+"action": "reviser",
+"objet": "BIB-018",
+"detail": ""
+},
+{
+"n": 99,
+"le": "2026-10-03T18:44:46+02:00",
+"acteur": "documentaliste",
+"action": "reviser",
+"objet": "BIB-025",
+"detail": ""
+},
+{
+"n": 100,
+"le": "2026-10-03T18:47:52+02:00",
+"acteur": "intendant",
+"action": "incident",
+"objet": "INC-001",
+"detail": "configuration refusée par la validation : session de contrôle : délai dépassé"
+},
+{
+"n": 101,
+"le": "2026-10-03T18:48:53+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-026",
+"detail": "LIA (fr, état 2024-01-01)"
+},
+{
+"n": 102,
+"le": "2026-10-03T18:48:53+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-026",
+"detail": "642.21 fr 2024-01-01"
+},
+{
+"n": 103,
+"le": "2026-10-03T18:48:58+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-027",
+"detail": "LIFD (fr, état 2024-05-16)"
+},
+{
+"n": 104,
+"le": "2026-10-03T18:48:58+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-027",
+"detail": "642.11 fr 2024-05-16"
+},
+{
+"n": 105,
+"le": "2026-10-03T18:49:03+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "BIB-028",
+"detail": "LTVA (fr, état 2024-01-01)"
+},
+{
+"n": 106,
+"le": "2026-10-03T18:49:03+02:00",
+"acteur": "documentaliste",
+"action": "law_ingest",
+"objet": "BIB-028",
+"detail": "641.20 fr 2024-01-01"
+},
+{
+"n": 107,
+"le": "2026-10-03T18:49:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-001",
+"detail": "valide_au"
+},
+{
+"n": 108,
+"le": "2026-10-03T18:49:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-015",
+"detail": "valide_au"
+},
+{
+"n": 109,
+"le": "2026-10-03T18:49:50+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-003",
+"detail": "valide_au"
+},
+{
+"n": 110,
+"le": "2026-10-03T18:49:52+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-016",
+"detail": "valide_au"
+},
+{
+"n": 111,
+"le": "2026-10-03T18:49:55+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-004",
+"detail": "valide_au"
+},
+{
+"n": 112,
+"le": "2026-10-03T18:50:15+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-019",
+"detail": "valide_au"
+},
+{
+"n": 113,
+"le": "2026-10-03T18:50:51+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-025",
+"detail": "valide_au"
+},
+{
+"n": 114,
+"le": "2026-10-03T18:50:54+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-026",
+"detail": ""
+},
+{
+"n": 115,
+"le": "2026-10-03T18:50:57+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-027",
+"detail": "valide_au"
+},
+{
+"n": 116,
+"le": "2026-10-03T18:51:00+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "BIB-028",
+"detail": "valide_au"
+},
+{
+"n": 117,
+"le": "2026-10-03T18:57:34+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-001",
+"detail": "archiviste"
+},
+{
+"n": 118,
+"le": "2026-10-03T18:57:34+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-001",
+"detail": "chemin"
+},
+{
+"n": 119,
+"le": "2026-10-03T18:57:34+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-002",
+"detail": "avocat-plaideur"
+},
+{
+"n": 120,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-002",
+"detail": "chemin"
+},
+{
+"n": 121,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-003",
+"detail": "calculateur"
+},
+{
+"n": 122,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-003",
+"detail": "chemin"
+},
+{
+"n": 123,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-004",
+"detail": "chef-de-cabinet"
+},
+{
+"n": 124,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-004",
+"detail": "chemin"
+},
+{
+"n": 125,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-005",
+"detail": "chercheur"
+},
+{
+"n": 126,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-005",
+"detail": "chemin"
+},
+{
+"n": 127,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-006",
+"detail": "commercial"
+},
+{
+"n": 128,
+"le": "2026-10-03T18:57:35+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-006",
+"detail": "chemin"
+},
+{
+"n": 129,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-007",
+"detail": "communicant"
+},
+{
+"n": 130,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-007",
+"detail": "chemin"
+},
+{
+"n": 131,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-008",
+"detail": "conseiller-anticipation"
+},
+{
+"n": 132,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-008",
+"detail": "chemin"
+},
+{
+"n": 133,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-009",
+"detail": "directeur-artistique"
+},
+{
+"n": 134,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-009",
+"detail": "chemin"
+},
+{
+"n": 135,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-010",
+"detail": "documentaliste"
+},
+{
+"n": 136,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-010",
+"detail": "chemin"
+},
+{
+"n": 137,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-011",
+"detail": "editeur-humain"
+},
+{
+"n": 138,
+"le": "2026-10-03T18:57:36+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-011",
+"detail": "chemin"
+},
+{
+"n": 139,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-012",
+"detail": "fabricant"
+},
+{
+"n": 140,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-012",
+"detail": "chemin"
+},
+{
+"n": 141,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-013",
+"detail": "ingesteur"
+},
+{
+"n": 142,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-013",
+"detail": "chemin"
+},
+{
+"n": 143,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-014",
+"detail": "marketeur"
+},
+{
+"n": 144,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-014",
+"detail": "chemin"
+},
+{
+"n": 145,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-015",
+"detail": "negociateur"
+},
+{
+"n": 146,
+"le": "2026-10-03T18:57:37+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-015",
+"detail": "chemin"
+},
+{
+"n": 147,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-016",
+"detail": "officier-conformite"
+},
+{
+"n": 148,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-016",
+"detail": "chemin"
+},
+{
+"n": 149,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-017",
+"detail": "panel-adverse"
+},
+{
+"n": 150,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-017",
+"detail": "chemin"
+},
+{
+"n": 151,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-018",
+"detail": "producteur"
+},
+{
+"n": 152,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-018",
+"detail": "chemin"
+},
+{
+"n": 153,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-019",
+"detail": "redacteur"
+},
+{
+"n": 154,
+"le": "2026-10-03T18:57:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-019",
+"detail": "chemin"
+},
+{
+"n": 155,
+"le": "2026-10-03T18:57:39+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-020",
+"detail": "relecteur"
+},
+{
+"n": 156,
+"le": "2026-10-03T18:57:39+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-020",
+"detail": "chemin"
+},
+{
+"n": 157,
+"le": "2026-10-03T18:57:39+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-021",
+"detail": "secretaire-societe"
+},
+{
+"n": 158,
+"le": "2026-10-03T18:57:39+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-021",
+"detail": "chemin"
+},
+{
+"n": 159,
+"le": "2026-10-03T18:57:39+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-022",
+"detail": "specialiste-contrats"
+},
+{
+"n": 160,
+"le": "2026-10-03T18:57:39+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-022",
+"detail": "chemin"
+},
+{
+"n": 161,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-023",
+"detail": "specialiste-droit-etranger"
+},
+{
+"n": 162,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-023",
+"detail": "chemin"
+},
+{
+"n": 163,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-024",
+"detail": "specialiste-fiscalite-entreprises"
+},
+{
+"n": 164,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-024",
+"detail": "chemin"
+},
+{
+"n": 165,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-025",
+"detail": "specialiste-fiscalite-internationale"
+},
+{
+"n": 166,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-025",
+"detail": "chemin"
+},
+{
+"n": 167,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-026",
+"detail": "specialiste-immobilier-lex-koller"
+},
+{
+"n": 168,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-026",
+"detail": "chemin"
+},
+{
+"n": 169,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-027",
+"detail": "specialiste-lba-conformite"
+},
+{
+"n": 170,
+"le": "2026-10-03T18:57:40+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-027",
+"detail": "chemin"
+},
+{
+"n": 171,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-028",
+"detail": "specialiste-personnes-physiques"
+},
+{
+"n": 172,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-028",
+"detail": "chemin"
+},
+{
+"n": 173,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-029",
+"detail": "specialiste-poursuites-faillites"
+},
+{
+"n": 174,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-029",
+"detail": "chemin"
+},
+{
+"n": 175,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-030",
+"detail": "specialiste-societes-rc"
+},
+{
+"n": 176,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-030",
+"detail": "chemin"
+},
+{
+"n": 177,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-031",
+"detail": "specialiste-successions-regimes"
+},
+{
+"n": 178,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-031",
+"detail": "chemin"
+},
+{
+"n": 179,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-032",
+"detail": "specialiste-travail-assurances-sociales"
+},
+{
+"n": 180,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-032",
+"detail": "chemin"
+},
+{
+"n": 181,
+"le": "2026-10-03T18:57:41+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-033",
+"detail": "specialiste-tva"
+},
+{
+"n": 182,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-033",
+"detail": "chemin"
+},
+{
+"n": 183,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-034",
+"detail": "stratege"
+},
+{
+"n": 184,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-034",
+"detail": "chemin"
+},
+{
+"n": 185,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-035",
+"detail": "tuteur"
+},
+{
+"n": 186,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-035",
+"detail": "chemin"
+},
+{
+"n": 187,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-036",
+"detail": "veilleur"
+},
+{
+"n": 188,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-036",
+"detail": "chemin"
+},
+{
+"n": 189,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-037",
+"detail": "visualiseur"
+},
+{
+"n": 190,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-037",
+"detail": "chemin"
+},
+{
+"n": 191,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-038",
+"detail": "archiviste (mission de fond)"
+},
+{
+"n": 192,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-038",
+"detail": "chemin"
+},
+{
+"n": 193,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-039",
+"detail": "chef-de-cabinet (mission de fond)"
+},
+{
+"n": 194,
+"le": "2026-10-03T18:57:42+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-039",
+"detail": "chemin"
+},
+{
+"n": 195,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-040",
+"detail": "fabricant (mission de fond)"
+},
+{
+"n": 196,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-040",
+"detail": "chemin"
+},
+{
+"n": 197,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-041",
+"detail": "ingesteur (mission de fond)"
+},
+{
+"n": 198,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-041",
+"detail": "chemin"
+},
+{
+"n": 199,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-042",
+"detail": "tuteur (mission de fond)"
+},
+{
+"n": 200,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-042",
+"detail": "chemin"
+},
+{
+"n": 201,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-043",
+"detail": "veilleur (mission de fond)"
+},
+{
+"n": 202,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-043",
+"detail": "chemin"
+},
+{
+"n": 203,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-001",
+"detail": "alerte-changement-droit"
+},
+{
+"n": 204,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-001",
+"detail": "chemin"
+},
+{
+"n": 205,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-002",
+"detail": "audit-tableur"
+},
+{
+"n": 206,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-002",
+"detail": "chemin"
+},
+{
+"n": 207,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-003",
+"detail": "brief-quotidien"
+},
+{
+"n": 208,
+"le": "2026-10-03T18:57:43+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-003",
+"detail": "chemin"
+},
+{
+"n": 209,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-004",
+"detail": "chronologie-faits"
+},
+{
+"n": 210,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-004",
+"detail": "chemin"
+},
+{
+"n": 211,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-005",
+"detail": "compte-rendu-rdv"
+},
+{
+"n": 212,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-005",
+"detail": "chemin"
+},
+{
+"n": 213,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-006",
+"detail": "controle-conflits"
+},
+{
+"n": 214,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-006",
+"detail": "chemin"
+},
+{
+"n": 215,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-007",
+"detail": "convention-actionnaires"
+},
+{
+"n": 216,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-007",
+"detail": "chemin"
+},
+{
+"n": 217,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-008",
+"detail": "decisions-circulaires"
+},
+{
+"n": 218,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-008",
+"detail": "chemin"
+},
+{
+"n": 219,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-009",
+"detail": "dossier-lba"
+},
+{
+"n": 220,
+"le": "2026-10-03T18:57:44+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-009",
+"detail": "chemin"
+},
+{
+"n": 221,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-010",
+"detail": "fiche-rdv"
+},
+{
+"n": 222,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-010",
+"detail": "chemin"
+},
+{
+"n": 223,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-011",
+"detail": "historique-avenants"
+},
+{
+"n": 224,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-011",
+"detail": "chemin"
+},
+{
+"n": 225,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-012",
+"detail": "ingestion-depot"
+},
+{
+"n": 226,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-012",
+"detail": "chemin"
+},
+{
+"n": 227,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-013",
+"detail": "onboarding-client"
+},
+{
+"n": 228,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-013",
+"detail": "chemin"
+},
+{
+"n": 229,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-014",
+"detail": "pv-assemblee-decisions"
+},
+{
+"n": 230,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-014",
+"detail": "chemin"
+},
+{
+"n": 231,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-015",
+"detail": "recherche-juridique-sourcee"
+},
+{
+"n": 232,
+"le": "2026-10-03T18:57:45+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-015",
+"detail": "chemin"
+},
+{
+"n": 233,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-016",
+"detail": "reclamation-fiscale"
+},
+{
+"n": 234,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-016",
+"detail": "chemin"
+},
+{
+"n": 235,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-017",
+"detail": "frontend-design"
+},
+{
+"n": 236,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-018",
+"detail": "redaction-mail"
+},
+{
+"n": 237,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-018",
+"detail": "chemin"
+},
+{
+"n": 238,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-019",
+"detail": "redaction-memo-avis"
+},
+{
+"n": 239,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-019",
+"detail": "chemin"
+},
+{
+"n": 240,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-020",
+"detail": "revue-anticipation"
+},
+{
+"n": 241,
+"le": "2026-10-03T18:57:46+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-020",
+"detail": "chemin"
+},
+{
+"n": 242,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-021",
+"detail": "revue-tabulaire"
+},
+{
+"n": 243,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-021",
+"detail": "chemin"
+},
+{
+"n": 244,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-001",
+"detail": "Profil de Mustafa Ekrem"
+},
+{
+"n": 245,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-001",
+"detail": "chemin"
+},
+{
+"n": 246,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-002",
+"detail": "Environnement de travail de Mustafa"
+},
+{
+"n": 247,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-002",
+"detail": "chemin"
+},
+{
+"n": 248,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-003",
+"detail": "Identité et posture de la maison"
+},
+{
+"n": 249,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-003",
+"detail": "chemin"
+},
+{
+"n": 250,
+"le": "2026-10-03T18:57:47+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-004",
+"detail": "Échelle des niveaux de confort"
+},
+{
+"n": 251,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-004",
+"detail": "chemin"
+},
+{
+"n": 252,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-005",
+"detail": "Styles par langue et destinataire"
+},
+{
+"n": 253,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-005",
+"detail": "chemin"
+},
+{
+"n": 254,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-006",
+"detail": "Modèles de livrables (structure par type)"
+},
+{
+"n": 255,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-006",
+"detail": "chemin"
+},
+{
+"n": 256,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-007",
+"detail": "Glossaire FR/DE/IT/EN"
+},
+{
+"n": 257,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-007",
+"detail": "chemin"
+},
+{
+"n": 258,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-008",
+"detail": "Lexique interne des abréviations machine"
+},
+{
+"n": 259,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-008",
+"detail": "chemin"
+},
+{
+"n": 260,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "CAB-009",
+"detail": "Instructions de l'associé"
+},
+{
+"n": 261,
+"le": "2026-10-03T18:57:48+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "CAB-009",
+"detail": "chemin"
+},
+{
+"n": 262,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-017",
+"detail": ""
+},
+{
+"n": 263,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-022",
+"detail": "canvas-design"
+},
+{
+"n": 264,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-023",
+"detail": "theme-factory"
+},
+{
+"n": 265,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-024",
+"detail": "brand-guidelines"
+},
+{
+"n": 266,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-025",
+"detail": "doc-coauthoring"
+},
+{
+"n": 267,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-026",
+"detail": "internal-comms"
+},
+{
+"n": 268,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-027",
+"detail": "skill-creator"
+},
+{
+"n": 269,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-028",
+"detail": "humanizer"
+},
+{
+"n": 270,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-029",
+"detail": "humanizer-fr"
+},
+{
+"n": 271,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-030",
+"detail": "humanizer-de"
+},
+{
+"n": 272,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-031",
+"detail": "humanizer-it"
+},
+{
+"n": 273,
+"le": "2026-10-03T18:57:56+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "SK-032",
+"detail": "production-livrables"
+},
+{
+"n": 274,
+"le": "2026-10-03T18:57:57+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "GAB-001",
+"detail": "gabarit memo.docx"
+},
+{
+"n": 275,
+"le": "2026-10-03T18:57:57+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "GAB-002",
+"detail": "gabarit lettre.docx"
+},
+{
+"n": 276,
+"le": "2026-10-03T18:57:57+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "GAB-003",
+"detail": "gabarit pv-assemblee.docx"
+},
+{
+"n": 277,
+"le": "2026-10-03T18:57:57+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "GAB-004",
+"detail": "gabarit modele-calcul.xlsx"
+},
+{
+"n": 278,
+"le": "2026-10-03T18:57:57+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "GAB-005",
+"detail": "gabarit presentation.pptx"
+},
+{
+"n": 279,
+"le": "2026-10-03T18:57:57+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "GAB-006",
+"detail": "gabarit gabarit-rapport.pdf"
+},
+{
+"n": 280,
+"le": "2026-10-03T18:58:58+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "DOCT-001",
+"detail": "Bibliothèque fédérale : état et mode d'emploi"
+},
+{
+"n": 281,
+"le": "2026-10-03T19:01:01+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-044",
+"detail": "greffier (rôle de fond)"
+},
+{
+"n": 282,
+"le": "2026-10-03T19:01:01+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-044",
+"detail": "chemin"
+},
+{
+"n": 283,
+"le": "2026-10-03T19:01:01+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-045",
+"detail": "intendant (rôle de fond)"
+},
+{
+"n": 284,
+"le": "2026-10-03T19:01:01+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-045",
+"detail": "chemin"
+},
+{
+"n": 285,
+"le": "2026-10-03T19:01:01+02:00",
+"acteur": "cerebro",
+"action": "creer",
+"objet": "ROLE-046",
+"detail": "entretien (rôle de fond)"
+},
+{
+"n": 286,
+"le": "2026-10-03T19:01:02+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "ROLE-046",
+"detail": "chemin"
+},
+{
+"n": 287,
+"le": "2026-10-03T19:02:14+02:00",
+"acteur": "intendant",
+"action": "incident",
+"objet": "INC-002",
+"detail": "configuration refusée par la validation : hooks non exécutés pendant la session de contrôle : ['SessionStart', 'UserPromptSubmit']"
+},
+{
+"n": 288,
+"le": "2026-10-03T19:13:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-022",
+"detail": "chemin,statut,prochaine_action"
+},
+{
+"n": 289,
+"le": "2026-10-03T19:13:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-023",
+"detail": "chemin,statut,prochaine_action"
+},
+{
+"n": 290,
+"le": "2026-10-03T19:13:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-017",
+"detail": "chemin,statut,prochaine_action"
+},
+{
+"n": 291,
+"le": "2026-10-03T19:13:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-026",
+"detail": "chemin,statut,prochaine_action"
+},
+{
+"n": 292,
+"le": "2026-10-03T19:13:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-025",
+"detail": "chemin,statut,prochaine_action"
+},
+{
+"n": 293,
+"le": "2026-10-03T19:13:38+02:00",
+"acteur": "cerebro",
+"action": "reviser",
+"objet": "SK-024",
+"detail": "chemin,statut,prochaine_action"
+}
+]

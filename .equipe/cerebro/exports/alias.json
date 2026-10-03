@@ -1,0 +1,1472 @@
+[
+{
+"alias": "Réclamation contre une décision de taxation IFD",
+"alias_fold": "reclamation contre une decision de taxation ifd",
+"id": "RD-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Recours contre une décision sur réclamation IFD",
+"alias_fold": "recours contre une decision sur reclamation ifd",
+"id": "RD-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Déclaration et paiement de l'impôt anticipé sur dividende",
+"alias_fold": "declaration et paiement de l'impot anticipe sur dividende",
+"id": "RD-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Décompte TVA de la période",
+"alias_fold": "decompte tva de la periode",
+"id": "RD-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Assemblée générale ordinaire",
+"alias_fold": "assemblee generale ordinaire",
+"id": "RD-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Annonce de l'ayant droit économique à la société",
+"alias_fold": "annonce de l'ayant droit economique a la societe",
+"id": "RD-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Opposition au commandement de payer",
+"alias_fold": "opposition au commandement de payer",
+"id": "RD-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Recours au Tribunal fédéral",
+"alias_fold": "recours au tribunal federal",
+"id": "RD-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Revue périodique du dossier LBA",
+"alias_fold": "revue periodique du dossier lba",
+"id": "RD-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Dernier jour pour résilier",
+"alias_fold": "dernier jour pour resilier",
+"id": "RD-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Relance commerciale",
+"alias_fold": "relance commerciale",
+"id": "RD-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "CO (fr, état 2026-10-01)",
+"alias_fold": "co (fr, etat 2026-10-01)",
+"id": "BIB-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "CO",
+"alias_fold": "co",
+"id": "BIB-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 220",
+"alias_fold": "rs 220",
+"id": "BIB-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LFus (fr, état 2023-01-01)",
+"alias_fold": "lfus (fr, etat 2023-01-01)",
+"id": "BIB-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LFus",
+"alias_fold": "lfus",
+"id": "BIB-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 221.301",
+"alias_fold": "rs 221.301",
+"id": "BIB-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIFD (fr, état 2026-09-02)",
+"alias_fold": "lifd (fr, etat 2026-09-02)",
+"id": "BIB-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIFD",
+"alias_fold": "lifd",
+"id": "BIB-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.11",
+"alias_fold": "rs 642.11",
+"id": "BIB-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LHID (fr, état 2025-01-01)",
+"alias_fold": "lhid (fr, etat 2025-01-01)",
+"id": "BIB-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LHID",
+"alias_fold": "lhid",
+"id": "BIB-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.14",
+"alias_fold": "rs 642.14",
+"id": "BIB-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIA (fr, état 2025-01-01)",
+"alias_fold": "lia (fr, etat 2025-01-01)",
+"id": "BIB-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIA",
+"alias_fold": "lia",
+"id": "BIB-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.21",
+"alias_fold": "rs 642.21",
+"id": "BIB-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OIA (fr, état 2025-01-01)",
+"alias_fold": "oia (fr, etat 2025-01-01)",
+"id": "BIB-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OIA",
+"alias_fold": "oia",
+"id": "BIB-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.211",
+"alias_fold": "rs 642.211",
+"id": "BIB-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LT (fr, état 2024-01-01)",
+"alias_fold": "lt (fr, etat 2024-01-01)",
+"id": "BIB-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LT",
+"alias_fold": "lt",
+"id": "BIB-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 641.10",
+"alias_fold": "rs 641.10",
+"id": "BIB-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTVA (fr, état 2025-03-31)",
+"alias_fold": "ltva (fr, etat 2025-03-31)",
+"id": "BIB-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTVA",
+"alias_fold": "ltva",
+"id": "BIB-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 641.20",
+"alias_fold": "rs 641.20",
+"id": "BIB-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LBA (fr, état 2026-10-01)",
+"alias_fold": "lba (fr, etat 2026-10-01)",
+"id": "BIB-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LBA",
+"alias_fold": "lba",
+"id": "BIB-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 955.0",
+"alias_fold": "rs 955.0",
+"id": "BIB-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTPM (fr, état 2026-10-01)",
+"alias_fold": "ltpm (fr, etat 2026-10-01)",
+"id": "BIB-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTPM",
+"alias_fold": "ltpm",
+"id": "BIB-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 955.3",
+"alias_fold": "rs 955.3",
+"id": "BIB-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LPD (fr, état 2025-07-07)",
+"alias_fold": "lpd (fr, etat 2025-07-07)",
+"id": "BIB-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LPD",
+"alias_fold": "lpd",
+"id": "BIB-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 235.1",
+"alias_fold": "rs 235.1",
+"id": "BIB-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LP (fr, état 2026-01-01)",
+"alias_fold": "lp (fr, etat 2026-01-01)",
+"id": "BIB-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LP",
+"alias_fold": "lp",
+"id": "BIB-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 281.1",
+"alias_fold": "rs 281.1",
+"id": "BIB-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTF (fr, état 2026-04-01)",
+"alias_fold": "ltf (fr, etat 2026-04-01)",
+"id": "BIB-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTF",
+"alias_fold": "ltf",
+"id": "BIB-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 173.110",
+"alias_fold": "rs 173.110",
+"id": "BIB-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "173.110.3 (fr, état 1963-10-03)",
+"alias_fold": "173.110.3 (fr, etat 1963-10-03)",
+"id": "BIB-014",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 173.110.3",
+"alias_fold": "rs 173.110.3",
+"id": "BIB-014",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OR (de, état 2026-10-01)",
+"alias_fold": "or (de, etat 2026-10-01)",
+"id": "BIB-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OR",
+"alias_fold": "or",
+"id": "BIB-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 220",
+"alias_fold": "rs 220",
+"id": "BIB-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "DBG (de, état 2026-09-02)",
+"alias_fold": "dbg (de, etat 2026-09-02)",
+"id": "BIB-016",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "DBG",
+"alias_fold": "dbg",
+"id": "BIB-016",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.11",
+"alias_fold": "rs 642.11",
+"id": "BIB-016",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "ORC (fr, état 2026-10-01)",
+"alias_fold": "orc (fr, etat 2026-10-01)",
+"id": "BIB-017",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "ORC",
+"alias_fold": "orc",
+"id": "BIB-017",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 221.411",
+"alias_fold": "rs 221.411",
+"id": "BIB-017",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OT (fr, état 2023-09-01)",
+"alias_fold": "ot (fr, etat 2023-09-01)",
+"id": "BIB-018",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OT",
+"alias_fold": "ot",
+"id": "BIB-018",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 641.101",
+"alias_fold": "rs 641.101",
+"id": "BIB-018",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OTVA (fr, état 2025-01-01)",
+"alias_fold": "otva (fr, etat 2025-01-01)",
+"id": "BIB-019",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OTVA",
+"alias_fold": "otva",
+"id": "BIB-019",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 641.201",
+"alias_fold": "rs 641.201",
+"id": "BIB-019",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OBA (fr, état 2026-10-01)",
+"alias_fold": "oba (fr, etat 2026-10-01)",
+"id": "BIB-020",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OBA",
+"alias_fold": "oba",
+"id": "BIB-020",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 955.01",
+"alias_fold": "rs 955.01",
+"id": "BIB-020",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OBA-FINMA (fr, état 2023-01-01)",
+"alias_fold": "oba-finma (fr, etat 2023-01-01)",
+"id": "BIB-021",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OBA-FINMA",
+"alias_fold": "oba-finma",
+"id": "BIB-021",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 955.033.0",
+"alias_fold": "rs 955.033.0",
+"id": "BIB-021",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OTPM (fr, état 2026-10-01)",
+"alias_fold": "otpm (fr, etat 2026-10-01)",
+"id": "BIB-022",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "OTPM",
+"alias_fold": "otpm",
+"id": "BIB-022",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 955.31",
+"alias_fold": "rs 955.31",
+"id": "BIB-022",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "CC (fr, état 2026-07-01)",
+"alias_fold": "cc (fr, etat 2026-07-01)",
+"id": "BIB-023",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "CC",
+"alias_fold": "cc",
+"id": "BIB-023",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 210",
+"alias_fold": "rs 210",
+"id": "BIB-023",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Analyse juridique structurée",
+"alias_fold": "analyse juridique structuree",
+"id": "MET-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Hiérarchie et datation des sources",
+"alias_fold": "hierarchie et datation des sources",
+"id": "MET-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Table des autorités",
+"alias_fold": "table des autorites",
+"id": "MET-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Pyramide et SCQA",
+"alias_fold": "pyramide et scqa",
+"id": "MET-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Rédaction claire",
+"alias_fold": "redaction claire",
+"id": "MET-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Négociation raisonnée",
+"alias_fold": "negociation raisonnee",
+"id": "MET-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Parties prenantes",
+"alias_fold": "parties prenantes",
+"id": "MET-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Pre-mortem",
+"alias_fold": "pre-mortem",
+"id": "MET-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Contradiction en deux temps",
+"alias_fold": "contradiction en deux temps",
+"id": "MET-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Panel adverse",
+"alias_fold": "panel adverse",
+"id": "MET-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Niveaux de confort",
+"alias_fold": "niveaux de confort",
+"id": "MET-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Ce qu'on n'écrit pas",
+"alias_fold": "ce qu'on n'ecrit pas",
+"id": "MET-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Quel canton, quelle langue, quel délai",
+"alias_fold": "quel canton, quelle langue, quel delai",
+"id": "MET-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Réponse schématique d'abord",
+"alias_fold": "reponse schematique d'abord",
+"id": "MET-014",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Lire sans tout relire",
+"alias_fold": "lire sans tout relire",
+"id": "MET-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Réutiliser avant de refaire",
+"alias_fold": "reutiliser avant de refaire",
+"id": "MET-016",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LPGA (fr, état 2024-01-01)",
+"alias_fold": "lpga (fr, etat 2024-01-01)",
+"id": "BIB-024",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LPGA",
+"alias_fold": "lpga",
+"id": "BIB-024",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 830.1",
+"alias_fold": "rs 830.1",
+"id": "BIB-024",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LAVS (fr, état 2026-01-01)",
+"alias_fold": "lavs (fr, etat 2026-01-01)",
+"id": "BIB-025",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LAVS",
+"alias_fold": "lavs",
+"id": "BIB-025",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 831.10",
+"alias_fold": "rs 831.10",
+"id": "BIB-025",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIA (fr, état 2024-01-01)",
+"alias_fold": "lia (fr, etat 2024-01-01)",
+"id": "BIB-026",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIA",
+"alias_fold": "lia",
+"id": "BIB-026",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.21",
+"alias_fold": "rs 642.21",
+"id": "BIB-026",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIFD (fr, état 2024-05-16)",
+"alias_fold": "lifd (fr, etat 2024-05-16)",
+"id": "BIB-027",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LIFD",
+"alias_fold": "lifd",
+"id": "BIB-027",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 642.11",
+"alias_fold": "rs 642.11",
+"id": "BIB-027",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTVA (fr, état 2024-01-01)",
+"alias_fold": "ltva (fr, etat 2024-01-01)",
+"id": "BIB-028",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "LTVA",
+"alias_fold": "ltva",
+"id": "BIB-028",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "RS 641.20",
+"alias_fold": "rs 641.20",
+"id": "BIB-028",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "archiviste",
+"alias_fold": "archiviste",
+"id": "ROLE-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "avocat-plaideur",
+"alias_fold": "avocat-plaideur",
+"id": "ROLE-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "calculateur",
+"alias_fold": "calculateur",
+"id": "ROLE-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "chef-de-cabinet",
+"alias_fold": "chef-de-cabinet",
+"id": "ROLE-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "chercheur",
+"alias_fold": "chercheur",
+"id": "ROLE-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "commercial",
+"alias_fold": "commercial",
+"id": "ROLE-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "communicant",
+"alias_fold": "communicant",
+"id": "ROLE-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "conseiller-anticipation",
+"alias_fold": "conseiller-anticipation",
+"id": "ROLE-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "directeur-artistique",
+"alias_fold": "directeur-artistique",
+"id": "ROLE-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "documentaliste",
+"alias_fold": "documentaliste",
+"id": "ROLE-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "editeur-humain",
+"alias_fold": "editeur-humain",
+"id": "ROLE-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "fabricant",
+"alias_fold": "fabricant",
+"id": "ROLE-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "ingesteur",
+"alias_fold": "ingesteur",
+"id": "ROLE-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "marketeur",
+"alias_fold": "marketeur",
+"id": "ROLE-014",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "negociateur",
+"alias_fold": "negociateur",
+"id": "ROLE-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "officier-conformite",
+"alias_fold": "officier-conformite",
+"id": "ROLE-016",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "panel-adverse",
+"alias_fold": "panel-adverse",
+"id": "ROLE-017",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "producteur",
+"alias_fold": "producteur",
+"id": "ROLE-018",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "redacteur",
+"alias_fold": "redacteur",
+"id": "ROLE-019",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "relecteur",
+"alias_fold": "relecteur",
+"id": "ROLE-020",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "secretaire-societe",
+"alias_fold": "secretaire-societe",
+"id": "ROLE-021",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-contrats",
+"alias_fold": "specialiste-contrats",
+"id": "ROLE-022",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-droit-etranger",
+"alias_fold": "specialiste-droit-etranger",
+"id": "ROLE-023",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-fiscalite-entreprises",
+"alias_fold": "specialiste-fiscalite-entreprises",
+"id": "ROLE-024",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-fiscalite-internationale",
+"alias_fold": "specialiste-fiscalite-internationale",
+"id": "ROLE-025",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-immobilier-lex-koller",
+"alias_fold": "specialiste-immobilier-lex-koller",
+"id": "ROLE-026",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-lba-conformite",
+"alias_fold": "specialiste-lba-conformite",
+"id": "ROLE-027",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-personnes-physiques",
+"alias_fold": "specialiste-personnes-physiques",
+"id": "ROLE-028",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-poursuites-faillites",
+"alias_fold": "specialiste-poursuites-faillites",
+"id": "ROLE-029",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-societes-rc",
+"alias_fold": "specialiste-societes-rc",
+"id": "ROLE-030",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-successions-regimes",
+"alias_fold": "specialiste-successions-regimes",
+"id": "ROLE-031",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-travail-assurances-sociales",
+"alias_fold": "specialiste-travail-assurances-sociales",
+"id": "ROLE-032",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "specialiste-tva",
+"alias_fold": "specialiste-tva",
+"id": "ROLE-033",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "stratege",
+"alias_fold": "stratege",
+"id": "ROLE-034",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "tuteur",
+"alias_fold": "tuteur",
+"id": "ROLE-035",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "veilleur",
+"alias_fold": "veilleur",
+"id": "ROLE-036",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "visualiseur",
+"alias_fold": "visualiseur",
+"id": "ROLE-037",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "archiviste (mission de fond)",
+"alias_fold": "archiviste (mission de fond)",
+"id": "ROLE-038",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "archiviste-fond",
+"alias_fold": "archiviste-fond",
+"id": "ROLE-038",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "chef-de-cabinet (mission de fond)",
+"alias_fold": "chef-de-cabinet (mission de fond)",
+"id": "ROLE-039",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "chef-de-cabinet-fond",
+"alias_fold": "chef-de-cabinet-fond",
+"id": "ROLE-039",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "fabricant (mission de fond)",
+"alias_fold": "fabricant (mission de fond)",
+"id": "ROLE-040",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "fabricant-fond",
+"alias_fold": "fabricant-fond",
+"id": "ROLE-040",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "ingesteur (mission de fond)",
+"alias_fold": "ingesteur (mission de fond)",
+"id": "ROLE-041",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "ingesteur-fond",
+"alias_fold": "ingesteur-fond",
+"id": "ROLE-041",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "tuteur (mission de fond)",
+"alias_fold": "tuteur (mission de fond)",
+"id": "ROLE-042",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "tuteur-fond",
+"alias_fold": "tuteur-fond",
+"id": "ROLE-042",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "veilleur (mission de fond)",
+"alias_fold": "veilleur (mission de fond)",
+"id": "ROLE-043",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "veilleur-fond",
+"alias_fold": "veilleur-fond",
+"id": "ROLE-043",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "alerte-changement-droit",
+"alias_fold": "alerte-changement-droit",
+"id": "SK-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "audit-tableur",
+"alias_fold": "audit-tableur",
+"id": "SK-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "brief-quotidien",
+"alias_fold": "brief-quotidien",
+"id": "SK-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "chronologie-faits",
+"alias_fold": "chronologie-faits",
+"id": "SK-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "compte-rendu-rdv",
+"alias_fold": "compte-rendu-rdv",
+"id": "SK-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "controle-conflits",
+"alias_fold": "controle-conflits",
+"id": "SK-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "convention-actionnaires",
+"alias_fold": "convention-actionnaires",
+"id": "SK-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "decisions-circulaires",
+"alias_fold": "decisions-circulaires",
+"id": "SK-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "dossier-lba",
+"alias_fold": "dossier-lba",
+"id": "SK-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "fiche-rdv",
+"alias_fold": "fiche-rdv",
+"id": "SK-010",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "historique-avenants",
+"alias_fold": "historique-avenants",
+"id": "SK-011",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "ingestion-depot",
+"alias_fold": "ingestion-depot",
+"id": "SK-012",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "onboarding-client",
+"alias_fold": "onboarding-client",
+"id": "SK-013",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "pv-assemblee-decisions",
+"alias_fold": "pv-assemblee-decisions",
+"id": "SK-014",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "recherche-juridique-sourcee",
+"alias_fold": "recherche-juridique-sourcee",
+"id": "SK-015",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "reclamation-fiscale",
+"alias_fold": "reclamation-fiscale",
+"id": "SK-016",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "frontend-design",
+"alias_fold": "frontend-design",
+"id": "SK-017",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "redaction-mail",
+"alias_fold": "redaction-mail",
+"id": "SK-018",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "redaction-memo-avis",
+"alias_fold": "redaction-memo-avis",
+"id": "SK-019",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "revue-anticipation",
+"alias_fold": "revue-anticipation",
+"id": "SK-020",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "revue-tabulaire",
+"alias_fold": "revue-tabulaire",
+"id": "SK-021",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Profil de Mustafa Ekrem",
+"alias_fold": "profil de mustafa ekrem",
+"id": "CAB-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Environnement de travail de Mustafa",
+"alias_fold": "environnement de travail de mustafa",
+"id": "CAB-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Identité et posture de la maison",
+"alias_fold": "identite et posture de la maison",
+"id": "CAB-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Échelle des niveaux de confort",
+"alias_fold": "echelle des niveaux de confort",
+"id": "CAB-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Styles par langue et destinataire",
+"alias_fold": "styles par langue et destinataire",
+"id": "CAB-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Modèles de livrables (structure par type)",
+"alias_fold": "modeles de livrables (structure par type)",
+"id": "CAB-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Glossaire FR/DE/IT/EN",
+"alias_fold": "glossaire fr/de/it/en",
+"id": "CAB-007",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Lexique interne des abréviations machine",
+"alias_fold": "lexique interne des abreviations machine",
+"id": "CAB-008",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Instructions de l'associé",
+"alias_fold": "instructions de l'associe",
+"id": "CAB-009",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "canvas-design",
+"alias_fold": "canvas-design",
+"id": "SK-022",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "theme-factory",
+"alias_fold": "theme-factory",
+"id": "SK-023",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "brand-guidelines",
+"alias_fold": "brand-guidelines",
+"id": "SK-024",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "doc-coauthoring",
+"alias_fold": "doc-coauthoring",
+"id": "SK-025",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "internal-comms",
+"alias_fold": "internal-comms",
+"id": "SK-026",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "skill-creator",
+"alias_fold": "skill-creator",
+"id": "SK-027",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "humanizer",
+"alias_fold": "humanizer",
+"id": "SK-028",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "humanizer-fr",
+"alias_fold": "humanizer-fr",
+"id": "SK-029",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "humanizer-de",
+"alias_fold": "humanizer-de",
+"id": "SK-030",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "humanizer-it",
+"alias_fold": "humanizer-it",
+"id": "SK-031",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "production-livrables",
+"alias_fold": "production-livrables",
+"id": "SK-032",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "gabarit memo.docx",
+"alias_fold": "gabarit memo.docx",
+"id": "GAB-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "gabarit lettre.docx",
+"alias_fold": "gabarit lettre.docx",
+"id": "GAB-002",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "gabarit pv-assemblee.docx",
+"alias_fold": "gabarit pv-assemblee.docx",
+"id": "GAB-003",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "gabarit modele-calcul.xlsx",
+"alias_fold": "gabarit modele-calcul.xlsx",
+"id": "GAB-004",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "gabarit presentation.pptx",
+"alias_fold": "gabarit presentation.pptx",
+"id": "GAB-005",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "gabarit gabarit-rapport.pdf",
+"alias_fold": "gabarit gabarit-rapport.pdf",
+"id": "GAB-006",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "Bibliothèque fédérale : état et mode d'emploi",
+"alias_fold": "bibliotheque federale : etat et mode d'emploi",
+"id": "DOCT-001",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "greffier (rôle de fond)",
+"alias_fold": "greffier (role de fond)",
+"id": "ROLE-044",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "intendant (rôle de fond)",
+"alias_fold": "intendant (role de fond)",
+"id": "ROLE-045",
+"langue": null,
+"confiance": 1.0
+},
+{
+"alias": "entretien (rôle de fond)",
+"alias_fold": "entretien (role de fond)",
+"id": "ROLE-046",
+"langue": null,
+"confiance": 1.0
+}
+]

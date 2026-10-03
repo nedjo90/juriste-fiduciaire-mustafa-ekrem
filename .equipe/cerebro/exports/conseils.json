@@ -1,0 +1,22 @@
+[
+{
+"id": "CONS-001",
+"texte": "Si vous connectiez votre agenda, je préparerais vos rendez-vous la veille.",
+"gain": 4,
+"cle": "agenda",
+"cree_le": "2026-10-03",
+"presente_le": null,
+"nb_ignore": 0,
+"statut": "ouvert"
+},
+{
+"id": "CONS-002",
+"texte": "Un modèle de lettre de la maison rendrait vos mémos identiques à ceux du cabinet : il suffit de le glisser dans le dossier À déposer.",
+"gain": 4,
+"cle": "modele-maison",
+"cree_le": "2026-10-03",
+"presente_le": null,
+"nb_ignore": 0,
+"statut": "ouvert"
+}
+]

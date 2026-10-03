@@ -105,7 +105,13 @@ def article(identifiant, art, date=None, langue="fr"):
     if not v:
         return {"erreur": f"{identifiant} ({langue}) absent de la bibliothèque", "reserve": "⚠ aucune source primaire ingérée"}
     p = abspath(v["chemin"])
-    secs = sections(p.read_text(encoding="utf-8")) if p.exists() else []
+    if not p.exists():
+        # texte pas encore téléchargé sur ce poste (la bibliothèque n'est pas dans git) : rattrapage en file, réserve explicite
+        from .brief import queue_add
+        queue_add("bibliotheque_mise_a_jour", "", 2)
+        return {"source": v["id"], "erreur": f"texte de {v['identifiant']} pas encore disponible sur ce poste (téléchargement en cours)",
+                "reserve": "⚠ source primaire en cours de chargement : vérifier avant d'affirmer"}
+    secs = sections(p.read_text(encoding="utf-8"))
     a = fold(art).replace("art.", "").replace("art", "").strip()
     for t, c in secs:
         ft = fold(t)

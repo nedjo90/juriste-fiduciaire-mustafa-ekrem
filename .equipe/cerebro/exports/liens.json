@@ -1,0 +1,158 @@
+[
+{
+"src": "RD-001",
+"dst": "BIB-003",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-002",
+"dst": "BIB-003",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-004",
+"dst": "BIB-008",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-005",
+"dst": "BIB-001",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-007",
+"dst": "BIB-012",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-008",
+"dst": "BIB-013",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-003",
+"dst": "BIB-005",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-006",
+"dst": "BIB-010",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-001",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-002",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-003",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-004",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-005",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-006",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-007",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "RD-008",
+"dst": "BIB-014",
+"type": "source",
+"cree_le": "2026-10-03"
+},
+{
+"src": "MET-011",
+"dst": "CAB-004",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "BIB-001",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "BIB-003",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "BIB-005",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "BIB-008",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "BIB-007",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "RD-003",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "RD-006",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "CAP-001",
+"type": "lie",
+"cree_le": "2026-10-03"
+},
+{
+"src": "DOCT-001",
+"dst": "CAP-008",
+"type": "lie",
+"cree_le": "2026-10-03"
+}
+]
