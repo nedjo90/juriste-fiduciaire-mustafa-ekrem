@@ -266,6 +266,34 @@ $parts = @($u.Split(';') | Where-Object { $_ -ne '' -and $_ -ne $binEquipe })
 $env:Path = $binEquipe + ';' + (($env:Path.Split(';') | Where-Object { $_ -ne $binEquipe }) -join ';')
 if (-not $Claude) { Bilan "Claude : non installé (connexion Internet ?) ; nouvel essai en relançant la même commande." }
 elseif (Test-Path -LiteralPath (Join-Path $binEquipe 'claude.cmd')) { Bilan 'Commande « claude » : ouvre votre équipe depuis n''importe quelle fenêtre.' }
+# un Claude installé pour tout l'ordinateur (PATH système, lu AVANT le PATH utilisateur) passerait devant la commande de
+# l'équipe : dans PowerShell, une fonction « claude » du profil de l'utilisateur passe devant tout programme du PATH
+try {
+  $cible = Join-Path $binEquipe 'claude.cmd'
+  $bloc = "# >>> mon-equipe >>>`r`n# « claude » ouvre l'équipe (ajouté par l'installateur de Mon équipe)`r`nfunction claude { & '" + ($cible -replace "'", "''") + "' @args }`r`n# <<< mon-equipe <<<"
+  $docs = [Environment]::GetFolderPath('MyDocuments')
+  foreach ($prof in @((Join-Path $docs 'WindowsPowerShell\Microsoft.PowerShell_profile.ps1'), (Join-Path $docs 'PowerShell\Microsoft.PowerShell_profile.ps1'))) {
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $prof) | Out-Null
+    $ancien = ''
+    if (Test-Path -LiteralPath $prof) { $ancien = [IO.File]::ReadAllText($prof) }
+    $neuf = [regex]::Replace($ancien, '(?s)\r?\n?# >>> mon-equipe >>>.*?# <<< mon-equipe <<<\r?\n?', "`r`n").TrimEnd()
+    $neuf = (($neuf + "`r`n`r`n" + $bloc).TrimStart()) + "`r`n"
+    if ($neuf -ne $ancien) { [IO.File]::WriteAllText($prof, $neuf, (New-Object System.Text.UTF8Encoding $true)) }
+  }
+  # le profil n'est lu que si la politique d'exécution le permet ; « Restricted » (défaut des postes Windows) l'empêche :
+  # RemoteSigned pour l'utilisateur seul (défaut de Microsoft sur ses serveurs ; aucun droit d'administrateur)
+  # politique d'une NOUVELLE fenêtre (ce script tourne en Bypass pour son seul processus) : première portée définie
+  function Politique-Fenetre {
+    foreach ($s in 'MachinePolicy', 'UserPolicy', 'CurrentUser', 'LocalMachine') {
+      $v = "$(Get-ExecutionPolicy -Scope $s)"; if ($v -and $v -ne 'Undefined') { return $v }
+    }
+    return 'Restricted'
+  }
+  if ((Politique-Fenetre) -in @('Restricted', 'AllSigned')) {
+    try { Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop } catch { Noter ("politique d'exécution non modifiable : " + $_) }
+  }
+  Noter ("profil PowerShell : fonction claude ; politique d'une nouvelle fenêtre : " + (Politique-Fenetre))
+} catch { Noter ("profil PowerShell en échec : " + $_) }
 
 # ---------------------------------------------------------------- 4 bis. modèles de documents officiels d'Anthropic (plugin)
 if ($Claude -and -not $SansReseau) {

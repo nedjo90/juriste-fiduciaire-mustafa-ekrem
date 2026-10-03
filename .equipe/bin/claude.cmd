@@ -19,6 +19,15 @@ rem un claude.cmd (installation npm) doit etre appele par CALL pour rendre la ma
 set "APPEL="
 if /i "%EXE:~-4%"==".cmd" set "APPEL=call"
 pushd "%~dp0..\.."
+rem commandes d outillage (version, aide, MCP, extensions, compte, mode non interactif) : transmises telles quelles,
+rem sans ouvrir la connexion au compte (elle attendrait un navigateur)
+set "A1=%~1"
+set "DIRECT="
+for %%s in (--version -v -h --help mcp plugin plugins auth update doctor config install setup-token migrate-installer -p --print) do if /i "%A1%"=="%%s" set "DIRECT=1"
+if defined DIRECT (
+  %APPEL% "%EXE%" %*
+  goto fin
+)
 rem pas encore connecte : la page de connexion s ouvre dans le navigateur (aucun /login a taper)
 %APPEL% "%EXE%" auth status --json 2>nul | findstr /c:"\"loggedIn\": true" >nul || %APPEL% "%EXE%" auth login --claudeai
 if "%~1"=="" (
@@ -26,6 +35,7 @@ if "%~1"=="" (
 ) else (
   %APPEL% "%EXE%" --dangerously-skip-permissions %*
 )
+:fin
 set "CODE=%ERRORLEVEL%"
 popd
 exit /b %CODE%

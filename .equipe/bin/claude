@@ -14,6 +14,11 @@ if [ -z "$EXE" ]; then
 fi
 [ -z "$EXE" ] && { echo "Claude n'est pas encore installé : relancez la commande d'installation."; exit 1; }
 cd "$RACINE" || exit 1
+# commandes d'outillage (version, aide, MCP, extensions, compte, mode non interactif) : transmises telles quelles,
+# sans ouvrir la connexion au compte (elle attendrait un navigateur)
+case "${1:-}" in
+  --version|-v|-h|--help|mcp|plugin|plugins|auth|update|doctor|config|install|setup-token|migrate-installer|-p|--print) exec "$EXE" "$@" ;;
+esac
 # pas encore connecté : la page de connexion s'ouvre dans le navigateur (aucun /login à taper)
 "$EXE" auth status --json 2>/dev/null | grep -q '"loggedIn": true' || "$EXE" auth login --claudeai
 if [ "$#" -eq 0 ]; then exec "$EXE" --dangerously-skip-permissions "Bonjour"; fi

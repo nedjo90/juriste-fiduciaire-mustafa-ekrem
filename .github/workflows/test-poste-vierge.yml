@@ -56,7 +56,8 @@ jobs:
           $env:PYTHONIOENCODING = 'utf-8'
           Set-Location $env:USERPROFILE
           $c = Get-Command claude -ErrorAction SilentlyContinue
-          Verif '« claude » désigne la commande de l''équipe' ($c -and $c.Source -like '*\.equipe\bin\claude.cmd') "$($c.Source)"
+          $equipe = $c -and (($c.CommandType -eq 'Function' -and $c.Definition -like '*\.equipe\bin\claude.cmd*') -or $c.Source -like '*\.equipe\bin\claude.cmd')
+          Verif '« claude » désigne la commande de l''équipe' $equipe "$($c.CommandType) $($c.Source) $($c.Definition)"
           $v = (& claude --version 2>&1 | Out-String)
           Verif 'claude --version' ($v -match 'Claude Code') $v
           $m = (& claude mcp list 2>&1 | Out-String)
@@ -163,7 +164,8 @@ jobs:
           if ($env:CEREBRO_CLAUDE -notlike '*claude.cmd' -or $env:CEREBRO_CLAUDE -like '*\.equipe\bin\*') { $ko += "vrai Claude mal résolu : $env:CEREBRO_CLAUDE" }
           Set-Location $env:USERPROFILE
           $c = Get-Command claude -ErrorAction SilentlyContinue
-          if (-not ($c -and $c.Source -like '*\.equipe\bin\claude.cmd')) { $ko += "« claude » n'est pas la commande de l'équipe : $($c.Source)" }
+          "claude -> $($c.CommandType) $($c.Source) $($c.Definition)"
+          if (-not ($c -and (($c.CommandType -eq 'Function' -and $c.Definition -like '*\.equipe\bin\claude.cmd*') -or $c.Source -like '*\.equipe\bin\claude.cmd'))) { $ko += "« claude » n'est pas la commande de l'équipe : $($c.CommandType) $($c.Source)" }
           $v = (& claude --version 2>&1 | Out-String); "claude --version : $v"
           if ($v -notmatch 'Claude Code') { $ko += 'la commande de l''équipe ne lance pas le Claude existant' }
           $m = (& claude mcp list 2>&1 | Out-String); $m
