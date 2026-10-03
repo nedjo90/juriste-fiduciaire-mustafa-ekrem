@@ -11,33 +11,33 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Négociation raisonnée (Harvard, Fisher/Ury) (machine)
-usage: deal, convention d'actionnaires, contrat, transaction avec une partie, discussion avec l'administration (ruling, accord sur des faits), honoraires.
+# Principled negotiation (Harvard, Fisher/Ury) (machine)
+use: deal, convention d'actionnaires, contract, settlement with a party, discussion with the administration (ruling, agreement on facts), fees.
 
-## Fiche de préparation (obligatoire, une page)
-- objectif et mandat (ce que Mustafa/le client a autorisé, par écrit : ID)
-- intérêts : nous / eux (besoins réels derrière les positions : sécurité, délai, image, fiscalité, contrôle, liquidité)
-- MESORE / BATNA : nous / eux (estimés, sourcés) ; prix de réserve ; ZOPA estimée
-- critères objectifs : valeurs de marché, barèmes, pratique administrative, jurisprudence, précédents de la maison (`cerebro find`), expertises
-- options à gains mutuels (≥ 3) : échelonnement, garanties, earn-out, clauses de révision, répartition fiscale
-- plan de concessions : chaque concession conditionnelle « si… alors… », valeur pour eux > coût pour nous ; ordre ; limites
-- parties prenantes et décideurs réels (MET parties prenantes)
-- risques et pre-mortem (MET pre-mortem)
+## Preparation sheet (mandatory, one page)
+- objective and mandate (what Mustafa/the client authorised, in writing: ID)
+- interests: ours / theirs (real needs behind positions: security, timing, image, tax, control, liquidity)
+- MESORE / BATNA: ours / theirs (estimated, sourced); reservation price; estimated ZOPA
+- objective criteria: market values, scales, administrative practice, case law, house precedents (`cerebro find`), expert reports
+- mutual-gain options (≥ 3): staggering, guarantees, earn-out, review clauses, tax allocation
+- concession plan: each concession conditional « si… alors… », value to them > cost to us; order; limits
+- stakeholders and real decision-makers (MET stakeholders)
+- risks and pre-mortem (MET pre-mortem)
 
-## Conduite
-1 ouvrir par les intérêts communs et le processus · 2 ancrer avec un critère objectif, pas un chiffre nu · 3 questions ouvertes, reformulation · 4 jamais de concession sans contrepartie · 5 recadrer toute attaque personnelle sur le problème · 6 récapituler par écrit (term sheet, PV, mail de récapitulation en brouillon)
+## Conduct
+1 open with common interests and the process · 2 anchor with an objective criterion, not a bare figure · 3 open questions, rephrasing · 4 never a concession without consideration · 5 reframe any personal attack onto the problem · 6 recap in writing (term sheet, PV, recap mail as draft)
 
-## Étapes
-1 remplir la fiche de préparation (ci-dessus) avant tout contact ; mandat identifié
-2 faire valider par les spécialistes les effets fiscaux, sociaux et LBA de chaque option
-3 conduire selon la séquence ci-dessous ; noter chaque concession et sa contrepartie
-4 récapituler par écrit (brouillon) et mettre à jour la fiche après chaque échange
+## Steps
+1 fill in the preparation sheet (above) before any contact; mandate identified
+2 have specialists validate the tax, social and LBA effects of each option
+3 conduct per the sequence above; record each concession and its consideration
+4 recap in writing (draft) and update the sheet after each exchange
 
-## Contrôle
-[ ] mandat écrit identifié · [ ] MESORE des deux côtés · [ ] ≥ 3 options · [ ] critères objectifs sourcés · [ ] concessions toutes conditionnelles · [ ] récapitulatif écrit prévu · [ ] conséquences fiscales et LBA des options vérifiées par le spécialiste
+## Checks
+[ ] written mandate identified · [ ] MESORE for both sides · [ ] ≥ 3 options · [ ] sourced objective criteria · [ ] all concessions conditional · [ ] written recap planned · [ ] tax and LBA consequences of options verified by the specialist
 
-## Pièges
-négocier contre soi-même (deux offres d'affilée) · révéler une MESORE faible · s'engager au nom du client sans mandat · accord oral non documenté · oublier l'impôt anticipé, le droit de timbre ou la TVA d'une structure d'accord · confondre négociation et pression illicite.
+## Pitfalls
+negotiating against yourself (two offers in a row) · revealing a weak MESORE · committing in the client's name without mandate · undocumented oral agreement · forgetting impôt anticipé, droit de timbre or TVA of a deal structure · confusing negotiation with unlawful pressure.
 
-## Exemple (court)
-Rachat de parts d'un associé sortant : position adverse « CHF 1,2 mio » ; intérêt réel = liquidité rapide et sortie propre vis-à-vis des banques. Option : CHF 950'000 comptant + CHF 200'000 sur trois ans garantis, libération de cautionnement personnel ; critère : évaluation selon méthode convenue (rapport d'expert ID) ; concession conditionnelle : « si paiement comptant, alors renonciation à l'earn-out ».
+## Example (short)
+Buy-out of an exiting partner's shares: opposing position « CHF 1,2 mio »; real interest = quick liquidity and a clean exit vis-à-vis the banks. Option: CHF 950'000 cash + CHF 200'000 over three years guaranteed, release of personal guarantee (cautionnement); criterion: valuation per agreed method (expert report ID); conditional concession: « si paiement comptant, alors renonciation à l'earn-out ».

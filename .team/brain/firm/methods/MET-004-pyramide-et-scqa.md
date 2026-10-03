@@ -11,32 +11,32 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Pyramide (Minto) et SCQA (machine)
-usage: mémo, avis, mail substantiel, présentation, alerte client, communication délicate.
+# Pyramid (Minto) and SCQA (machine)
+use: memo, opinion, substantial mail, presentation, client alert, delicate communication.
 
-## Pyramide
-- sommet : LA réponse / recommandation (une phrase, avec niveau de confort)
-- niveau 2 : 2 à 5 arguments, mutuellement exclusifs et collectivement exhaustifs (MECE), même nature (raisons OU étapes OU options)
-- niveau 3 : faits, sources, chiffres qui prouvent chaque argument
-- ordre au sein d'un niveau : par importance, chronologique ou structurel — un seul principe par niveau
-- test « so what » : chaque bloc dit ce qu'il implique pour le lecteur ; sinon le supprimer
-- titres-affirmations : « La réclamation doit partir avant le 2 novembre » et non « Délai »
+## Pyramid
+- top: THE answer / recommendation (one sentence, with comfort level)
+- level 2: 2 to 5 arguments, mutually exclusive and collectively exhaustive (MECE), same nature (reasons OR steps OR options)
+- level 3: facts, sources, figures proving each argument
+- order within a level: by importance, chronological or structural — one principle per level
+- « so what » test: each block says what it implies for the reader; otherwise delete it
+- assertion titles: « La réclamation doit partir avant le 2 novembre » and not « Délai »
 
-## SCQA (ouverture)
-S Situation : ce que le lecteur sait et admet (1-2 phrases)
-C Complication : ce qui change ou pose problème
-Q Question : celle que le lecteur se pose (souvent implicite)
-A Réponse : le sommet de la pyramide
-variantes : alerte = C-S-A ; mauvaise nouvelle = A d'abord, puis S-C ; décision = A + options chiffrées.
+## SCQA (opening)
+S Situation: what the reader knows and accepts (1-2 sentences)
+C Complication: what changes or causes a problem
+Q Question: the one the reader asks (often implicit)
+A Answer: the top of the pyramid
+variants: alert = C-S-A; bad news = A first, then S-C; decision = A + costed options.
 
-## Étapes
-1 écrire A en une phrase avant tout le reste · 2 lister les questions que A soulève chez le lecteur → elles deviennent le niveau 2 · 3 regrouper, tester MECE · 4 rattacher preuves sourcées · 5 écrire SCQA · 6 relire uniquement les titres : ils doivent raconter toute l'histoire.
+## Steps
+1 write A in one sentence before anything else · 2 list the questions A raises for the reader → they become level 2 · 3 group, test MECE · 4 attach sourced evidence · 5 write SCQA · 6 re-read only the titles: they must tell the whole story.
 
-## Contrôle
-[ ] réponse dans les 3 premières lignes · [ ] 2-5 arguments, MECE · [ ] titres = affirmations · [ ] chaque affirmation de droit sourcée ou ⚠ · [ ] aucun argument sans « so what » · [ ] pas de résumé redondant en fin
+## Checks
+[ ] answer in the first 3 lines · [ ] 2-5 arguments, MECE · [ ] titles = assertions · [ ] each statement of law sourced or ⚠ · [ ] no argument without « so what » · [ ] no redundant summary at the end
 
-## Pièges
-raconter la chronologie de la recherche · argument fourre-tout « autres considérations » · mélanger raisons et étapes au même niveau · conclusion seulement à la fin · pyramide dans une réponse courte (là : deux phrases suffisent).
+## Pitfalls
+narrating the chronology of the research · catch-all argument « autres considérations » · mixing reasons and steps on the same level · conclusion only at the end · pyramid in a short answer (there: two sentences suffice).
 
-## Exemple (court)
+## Example (short)
 S : La société a reçu sa taxation 2025 le 2 octobre. C : Le bénéfice imposable dépasse de CHF 84'000 celui déclaré, par reprise de frais. Q : Faut-il contester ? A : Oui, partiellement : la reprise des frais de véhicule est contestable (should), celle des frais de représentation l'est moins (reasonable basis) ; réclamation à déposer avant le [date calculée DL-…].

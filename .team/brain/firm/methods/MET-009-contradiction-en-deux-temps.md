@@ -11,29 +11,29 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Contradiction en deux temps (machine)
-usage: toute position importante ; première voix du panel adverse ; préparation d'une réclamation, d'un recours, d'une négociation.
+# Two-step contradiction (machine)
+use: any important position; first voice of the adversarial panel; preparation of a réclamation, recours, negotiation.
 
-## Temps 1 — plaider l'adverse (steelman)
-- se mettre dans le rôle exact : administration fiscale, partie adverse et son avocat, registre, juge, associé minoritaire
-- écrire la meilleure argumentation adverse possible, avec ses sources (bibliothèque) et ses faits les plus favorables
-- interdiction de réfuter pendant ce temps ; pas d'homme de paille
-- inclure « que dirait l'administration » : pratique, circulaires, lecture stricte, charge de la preuve
+## Step 1 — argue the other side (steelman)
+- take the exact role: tax administration, opposing party and its lawyer, registry, judge, minority partner
+- write the best possible opposing argument, with its sources (library) and its most favourable facts
+- no rebuttal allowed during this step; no straw man
+- include « que dirait l'administration »: practice, circulars, strict reading, burden of proof
 
-## Temps 2 — critique
-- reprendre chaque argument adverse : réponse disponible ? sourcée ? fait prouvé ?
-- classer : fatal (renverse la conclusion) · sérieux (abaisse le niveau de confort) · mineur (réponse simple)
-- décider : modifier la position, ajouter une réserve, réunir une preuve, abaisser le niveau de confort, changer de stratégie
-- consigner dans le livrable (section « arguments contraires et réponses ») et dans la table des autorités (lignes « contre »)
+## Step 2 — critique
+- take each opposing argument: reply available? sourced? fact proven?
+- classify: fatal (overturns the conclusion) · serious (lowers the comfort level) · minor (simple reply)
+- decide: change the position, add a reservation, gather evidence, lower the comfort level, change strategy
+- record in the deliverable (section « arguments contraires et réponses ») and in the table of authorities (« contre » rows)
 
-## Étapes
-1 nommer l'adversaire exact et son objectif · 2 rédiger le temps 1 séparément, sources comprises · 3 relire notre position contre chaque argument (temps 2) · 4 classer fatal / sérieux / mineur · 5 modifier position, preuve ou niveau de confort et consigner
+## Steps
+1 name the exact opponent and its objective · 2 write step 1 separately, sources included · 3 re-read our position against each argument (step 2) · 4 classify fatal / serious / minor · 5 change position, evidence or comfort level and record
 
-## Contrôle
-[ ] temps 1 rédigé séparément et complet · [ ] sources adverses réelles (bibliothèque) · [ ] chaque objection classée · [ ] conséquence tirée (position, preuve, confort) · [ ] aucune objection fatale laissée sans réponse ni réserve
+## Checks
+[ ] step 1 written separately and complete · [ ] real opposing sources (library) · [ ] each objection classified · [ ] consequence drawn (position, evidence, comfort) · [ ] no fatal objection left without reply or reservation
 
-## Pièges
-réfuter dès le temps 1 · inventer une jurisprudence adverse « probable » (⚠ si non trouvée) · sous-estimer la pratique administrative · garder le niveau de confort inchangé après une objection sérieuse.
+## Pitfalls
+rebutting during step 1 · inventing « probable » opposing case law (⚠ if not found) · underestimating administrative practice · keeping the comfort level unchanged after a serious objection.
 
-## Exemple (court)
-Position : frais de véhicule déductibles à 92 %. Temps 1 (administration) : le carnet de bord n'est pas probant faute de contemporanéité ; forfait de pratique applicable ; charge de la preuve sur le contribuable. Temps 2 : objection sérieuse (preuve) → réunir relevés de péage et agenda ; niveau de confort abaissé de should à more likely than not jusqu'à réception.
+## Example (short)
+Position: vehicle costs deductible at 92 %. Step 1 (administration): the logbook is not probative for lack of contemporaneity; practice flat rate applicable; burden of proof on the taxpayer. Step 2: serious objection (evidence) → gather toll statements and diary; comfort level lowered from should to more likely than not until received.

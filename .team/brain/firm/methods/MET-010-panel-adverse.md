@@ -11,33 +11,33 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Panel adverse (machine)
-usage: mémos, avis, modèles Excel, documents de société ou de deal, conventions, présentations, réclamations. Jamais pour un mail court (là : lecteur humain intégré à l'appel de rédaction). §6.2.
-ordre: portes déterministes (scripts) → PANEL (un appel) → corrections par le rôle auteur → relecteur → présentation (avec réserves si une correction n'aboutit pas).
+# Adversarial panel (machine)
+use: memos, opinions, Excel models, corporate or deal documents, agreements, presentations, réclamations. Never for a short mail (there: human reader built into the drafting call). §6.2.
+order: deterministic gates (scripts) → PANEL (one call) → corrections by the authoring role → reviewer → presentation (with reservations if a correction does not succeed).
 
-## Les six voix (un seul appel, sous-agent adversarial-panel)
-1 contradicteur : MET contradiction en deux temps (plaide l'adverse, puis critique)
-2 testeur d'erreurs : chiffres, dates, délais, calculs (re-faits par script si possible), renvois internes, identifiants, cohérence des termes définis
-3 client difficile : « et alors ? combien ? quand ? qu'est-ce que je signe ? quel risque pour moi ? » ; lisibilité pour un dirigeant non juriste
-4 juge et administration : lecture stricte, charge de la preuve, forme, compétence, délais, pratique ; « qu'est-ce qui serait rejeté ? »
-5 réviseur : cohérence comptable et fiscale (bilan, réserves, impôt anticipé, écritures), traitement des montants
-6 lecteur humain : tics de machine, ton, longueur, typographie de la langue, rendu visuel (pages rendues en images si disponibles)
+## The six voices (one single call, subagent adversarial-panel)
+1 contradictor: MET two-step contradiction (argues the other side, then critiques)
+2 error tester: figures, dates, deadlines, calculations (redone by script if possible), internal cross-references, IDs, consistency of defined terms
+3 difficult client: « et alors ? combien ? quand ? qu'est-ce que je signe ? quel risque pour moi ? »; readability for a non-lawyer executive
+4 judge and administration: strict reading, burden of proof, form, competence, deadlines, practice; « qu'est-ce qui serait rejeté ? »
+5 auditor: accounting and tax consistency (balance sheet, reserves, impôt anticipé, entries), treatment of amounts
+6 human reader: machine tics, tone, length, typography of the language, visual rendering (pages rendered as images if available)
 
-## Entrée de l'appel
-livrable (chemin) + table des autorités + résultats des portes + mission (destinataire, enjeu, langue) ; rien d'autre (sommaire d'abord).
+## Call input
+deliverable (path) + table of authorities + gate results + mission (recipient, stakes, language); nothing else (summary first).
 
-## Sortie (machine, une ligne par constat)
+## Output (machine, one line per finding)
 {"voix":"juge","gravite":"majeur|important|mineur","lieu":"§3.2","constat":"…","correction":"…","source":"BIB-…|⚠"}
-+ synthèse : nombre par gravité, niveau de confort recommandé, « présentable après corrections : oui/avec réserves ».
++ synthesis: count per severity, recommended comfort level, « présentable après corrections : oui/avec réserves ».
 
-## Étapes
-1 vérifier que les portes déterministes sont passées (résultats joints) · 2 un seul appel au sous-agent adversarial-panel avec l'entrée minimale · 3 trier les constats par gravité · 4 l'auteur corrige les majeurs et importants · 5 relecteur · 6 constats non corrigés → réserves explicites dans le livrable
+## Steps
+1 check that the deterministic gates have passed (results attached) · 2 one single call to the adversarial-panel subagent with the minimal input · 3 sort findings by severity · 4 the author fixes majeurs and importants · 5 reviewer · 6 uncorrected findings → explicit reservations in the deliverable
 
-## Contrôle
-[ ] un seul appel · [ ] six voix présentes · [ ] chaque constat localisé et assorti d'une correction · [ ] aucun constat « de goût » classé majeur · [ ] rapport interne non montré à Mustafa sauf demande · [ ] constats non corrigés → réserves explicites dans le livrable
+## Checks
+[ ] one single call · [ ] six voices present · [ ] each finding located and paired with a correction · [ ] no « taste » finding classified majeur · [ ] internal report not shown to Mustafa unless asked · [ ] uncorrected findings → explicit reservations in the deliverable
 
-## Pièges
-plusieurs appels (coût) · panel qui se contente d'approuver (un modèle ne se juge pas lui-même : il doit chercher l'erreur) · réécrire le livrable au lieu de signaler · rapport interne recopié dans le livrable.
+## Pitfalls
+several calls (cost) · panel that just approves (a model does not judge itself: it must look for the error) · rewriting the deliverable instead of flagging · internal report copied into the deliverable.
 
-## Exemple (court)
+## Example (short)
 {"voix":"testeur","gravite":"majeur","lieu":"tableau 2","constat":"total CHF 84'250 ≠ somme des lignes CHF 82'450","correction":"recalculer par script calcul","source":"DOC-nnnn"}

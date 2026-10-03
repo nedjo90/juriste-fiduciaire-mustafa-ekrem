@@ -1,20 +1,20 @@
-# Échelle des niveaux de confort de la maison (machine)
-source: constitution §10 · méthode d'application : MET-011 · maj: 2026-10-03
-règle cardinale : jamais surélevé ; en cas d'hésitation, le niveau inférieur.
+# House comfort-level scale (machine)
+source: constitution §10 · application method: MET-011 · maj: 2026-10-03
+cardinal rule: never inflated; when in doubt, the lower level.
 
-| code | en | fr (formule) | de (Formel) | it (formula) | exigences minimales |
+| code | en | fr (wording) | de (wording) | it (wording) | minimum requirements |
 |---|---|---|---|---|---|
-| W | will | « sera » / « est » | „wird“ / „ist“ | « sarà » / « è » | texte lu (ID BIB-) dans la version applicable, jurisprudence ou pratique concordante, aucune autorité contraire sérieuse, faits vérifiés |
-| S | should | « devrait » | „sollte“ | « dovrebbe » | texte lu, arguments contraires identifiés et faibles, faits vérifiés ou documentés |
-| M | more likely than not | « plus probable qu'improbable » / « vraisemblablement » | „eher wahrscheinlich als nicht“ / „überwiegend wahrscheinlich“ | « più probabile che no » | balance des arguments favorable, incertitude réelle |
-| R | reasonable basis | « position défendable » / « base raisonnable » | „vertretbar“ | « sostenibile » | argument sérieux et sourcé, mais issue nettement incertaine |
-| N | — | « non recommandé » | „nicht empfohlen“ | « sconsigliato » | en dessous de R : ne pas recommander, expliquer |
+| W | will | « sera » / « est » | „wird“ / „ist“ | « sarà » / « è » | text read (ID BIB-) in the applicable version, concordant case law or practice, no serious contrary authority, facts verified |
+| S | should | « devrait » | „sollte“ | « dovrebbe » | text read, contrary arguments identified and weak, facts verified or documented |
+| M | more likely than not | « plus probable qu'improbable » / « vraisemblablement » | „eher wahrscheinlich als nicht“ / „überwiegend wahrscheinlich“ | « più probabile che no » | balance of arguments favourable, real uncertainty |
+| R | reasonable basis | « position défendable » / « base raisonnable » | „vertretbar“ | « sostenibile » | serious, sourced argument, but outcome clearly uncertain |
+| N | — | « non recommandé » | „nicht empfohlen“ | « sconsigliato » | below R: do not recommend, explain |
 
-## Abaissements obligatoires (au moins un cran)
-droit étranger (étiquette « droit étranger ») · pratique d'un canton non suivi ou non vérifiée · faits seulement déclarés · source ⚠ · jurisprudence divergente · question nouvelle sans autorité · version du droit incertaine pour la période.
+## Mandatory downgrades (at least one notch)
+foreign law (label « droit étranger ») · practice of a canton not followed or not verified · facts only declared · ⚠ source · divergent case law · novel question without authority · uncertain version of the law for the period.
 
-## Usage
-- un niveau par conclusion, dans la phrase même ; rappelé au résumé exécutif
-- pourcentages : usage interne seulement (W ≈ > 90 %, S ≈ 70-90 %, M > 50 %, R : défendable), jamais écrits au client
-- adverbes de certitude (« certainement », „zweifellos“, « indubbiamente ») réservés à W
-- expliquer en une phrase ce qui ferait changer le niveau
+## Use
+- one level per conclusion, in the sentence itself; repeated in the executive summary
+- percentages: internal use only (W ≈ > 90 %, S ≈ 70-90 %, M > 50 %, R: defensible), never written to the client
+- certainty adverbs (« certainement », „zweifellos“, « indubbiamente ») reserved for W
+- explain in one sentence what would change the level

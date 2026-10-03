@@ -1,9 +1,9 @@
-# Glossaire FR / DE / IT / EN — notions fiduciaires, fiscales, sociétés (machine)
-source: constitution §7.1, §10 · maj: 2026-10-03 · statut: libellés et correspondances terminologiques seulement, AUCUNE définition juridique.
-règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothèque (`cerebro law article <abrév> "art. N"` renvoie le texte) ; sinon « ⚠ à relier » ; (2) la loi est citée par son abréviation dans chaque langue (fr/de/it) ; (3) EN = libellé de travail, jamais un terme de droit suisse officiel ; (4) avant usage externe d'une traduction, relecture de langue (relecteur) ; (5) relier : documentaliste, à chaque ingestion de la loi concernée (`cerebro law search "<terme>"`), puis mise à jour de la colonne art.
+# Glossary FR / DE / IT / EN — fiduciary, tax and company notions (machine)
+source: constitution §7.1, §10 · maj: 2026-10-03 · status: labels and terminology equivalents only, NO legal definition. Legal terms stay in French (fr column = reference term); en = working explanation.
+rules: (1) the article is given only if verified in the library (`cerebro law article <abrév> "art. N"` returns the text); otherwise « ⚠ à relier »; (2) the law is cited by its abbreviation in each language (fr/de/it); (3) EN = working label, never an official Swiss legal term; (4) before any external use of a translation, language review (reviewer); (5) linking: documentalist, at each ingestion of the relevant law (`cerebro law search "<terme>"`), then update the art. column. Table headers « loi » and « art. » and the value « ⚠ à relier » are parsed by script: keep them.
 état de la liaison : 11/120 notions reliées à un article vérifié (définition textuelle dans l'alinéa 1) ; le reste « ⚠ à relier » (relier : documentaliste).
 
-## Lois (abréviations)
+## Laws (abbreviations)
 | fr | de | it | en (travail) |
 |---|---|---|---|
 | CC (Code civil) | ZGB | CC | Civil Code |
@@ -33,7 +33,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | LTF (Tribunal fédéral) | BGG | LTF | Federal Supreme Court Act |
 | CPC (procédure civile) | ZPO | CPC | Civil Procedure Code |
 
-## Sociétés et registre
+## Companies and register
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | société anonyme (SA) | Aktiengesellschaft (AG) | società anonima (SA) | company limited by shares | CO | art. 620 CO (BIB-001, état 2026-10-01) |
@@ -76,7 +76,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | rapport annuel | Geschäftsbericht | relazione sulla gestione / rapporto di gestione | annual report | CO | ⚠ à relier |
 | emploi du bénéfice | Verwendung des Bilanzgewinns | impiego dell'utile | appropriation of profit | CO | ⚠ à relier |
 
-## Fiscalité
+## Tax
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | impôt fédéral direct (IFD) | direkte Bundessteuer (DBSt) | imposta federale diretta (IFD) | direct federal tax | LIFD | ⚠ à relier |
@@ -108,7 +108,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | échange automatique de renseignements (EAR) | automatischer Informationsaustausch (AIA) | scambio automatico di informazioni (SAI) | automatic exchange of information (AEOI) | LEAR | ⚠ à relier |
 | Administration fédérale des contributions (AFC) | Eidgenössische Steuerverwaltung (ESTV) | Amministrazione federale delle contribuzioni (AFC) | Federal Tax Administration (FTA) | — | — |
 
-## Travail et assurances sociales
+## Employment and social insurance
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | AVS / AI / APG | AHV / IV / EO | AVS / AI / IPG | OASI / DI / income compensation | LAVS / LAI / LAPG | ⚠ à relier |
@@ -122,7 +122,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | délai de congé | Kündigungsfrist | termine di disdetta | notice period | CO | ⚠ à relier |
 | résiliation en temps inopportun | Kündigung zur Unzeit | disdetta in tempo inopportuno | termination at an improper time | CO | ⚠ à relier |
 
-## Poursuites et faillites
+## Debt enforcement and bankruptcy
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | office des poursuites / des faillites | Betreibungsamt / Konkursamt | ufficio d'esecuzione / dei fallimenti | debt enforcement / bankruptcy office | LP | ⚠ à relier |
@@ -135,7 +135,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | sursis concordataire | Nachlassstundung | moratoria concordataria | composition moratorium | LP | ⚠ à relier |
 | ajournement de la faillite | Konkursaufschub | differimento del fallimento | postponement of bankruptcy | LP / CO | ⚠ à relier |
 
-## Successions et régimes matrimoniaux
+## Estates and matrimonial regimes
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | succession | Erbschaft / Nachlass | successione | estate | CC | ⚠ à relier |
@@ -153,7 +153,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | biens propres / acquêts | Eigengut / Errungenschaft | beni propri / acquisti | separate property / acquired property | CC | ⚠ à relier |
 | impôt sur les successions et donations | Erbschafts- und Schenkungssteuer | imposta di successione e donazione | inheritance and gift tax | loi cantonale | ⚠ à relier |
 
-## LBA et conformité
+## LBA and compliance
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | intermédiaire financier | Finanzintermediär | intermediario finanziario | financial intermediary | LBA | ⚠ à relier |
@@ -164,7 +164,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | personne politiquement exposée (PEP) | politisch exponierte Person (PEP) | persona politicamente esposta (PEP) | politically exposed person | LBA | ⚠ à relier |
 | relation d'affaires à risque accru | Geschäftsbeziehung mit erhöhtem Risiko | relazione d'affari con rischi superiori | higher-risk business relationship | LBA / OBA | ⚠ à relier |
 
-## Immobilier
+## Real estate
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | acquisition d'immeubles par des personnes à l'étranger | Erwerb von Grundstücken durch Personen im Ausland | acquisto di fondi da parte di persone all'estero | acquisition of real estate by persons abroad | LFAIE | ⚠ à relier |
@@ -173,7 +173,7 @@ règles : (1) l'article n'est indiqué que s'il est vérifié dans la bibliothè
 | propriété par étages (PPE) | Stockwerkeigentum (StWE) | proprietà per piani (PPP) | condominium ownership | CC | ⚠ à relier |
 | bail à loyer | Mietvertrag | contratto di locazione | lease | CO | art. 253 CO (BIB-001, état 2026-10-01) |
 
-## Contrats et procédure
+## Contracts and procedure
 | fr | de | it | en (travail) | loi | art. |
 |---|---|---|---|---|---|
 | mandat | Auftrag | mandato | mandate / agency | CO | art. 394 CO (BIB-001, état 2026-10-01) |

@@ -11,29 +11,29 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Analyse juridique structurée (machine)
-usage: toute question de droit (conversation, mémo, avis, réclamation). Style « Gutachten » suisse : Sachverhalt → Rechtsfrage → Rechtsgrundlage → Subsumtion → Ergebnis.
+# Structured legal analysis (machine)
+use: any question of law (conversation, memo, opinion, réclamation). Swiss « Gutachten » style: Sachverhalt → Rechtsfrage → Rechtsgrundlage → Subsumtion → Ergebnis.
 
-## Étapes
-1 QUESTION : une phrase fermée. Qui (P-/E-), quoi, où (canton, commune), quand (date des faits, période fiscale), pour quel usage (conseil, réclamation, acte). Voir MET « quel canton, quelle langue, quel délai ».
-2 FAITS : liste datée ; chaque fait étiqueté [fait vérifié]/[déclaré par X le …]/[perception]/[hypothèse] + ID (DOC-, M-, RDV-). Fait manquant décisif → [hypothèse] explicite + `cerebro question add` si la réponse change l'issue.
-3 NORMES : `cerebro law search "<notion>"` → `cerebro law article <abrév> "art. N"` ; version applicable aux faits : `cerebro law asof <RS> --date <date des faits>`. Niveau : fédéral / cantonal / communal / conventionnel (CDI) / étranger. Pratique administrative (circulaires) à part de la loi. Absent de la bibliothèque → chercheur/documentaliste ; sinon ⚠.
-4 CONDITIONS : découper chaque norme en conditions (éléments constitutifs) et conséquence juridique. Tableau : condition | fait(s) | remplie / non / incertaine | pourquoi | source.
-5 CONTRE-LECTURE : meilleure lecture adverse (MET contradiction en deux temps) ; autorités contraires listées, jamais tues.
-6 CONCLUSION : réponse en une phrase + niveau de confort (MET niveaux de confort) + ce qui le ferait changer.
-7 SUITES : actes, délais (`cerebro clock start`), coûts, qui fait quoi, prochaine action datée.
-8 « CE QUE VOUS N'AVEZ PAS DEMANDÉ » : conséquences croisées (fiscal ↔ sociétés ↔ social ↔ LBA ↔ successions), options, opportunités.
+## Steps
+1 QUESTION: one closed sentence. Who (P-/E-), what, where (canton, commune), when (date of facts, tax period), for what use (advice, réclamation, deed). See MET « quel canton, quelle langue, quel délai ».
+2 FACTS: dated list; each fact tagged [fait vérifié]/[déclaré par X le …]/[perception]/[hypothèse] + ID (DOC-, M-, RDV-). Decisive missing fact → explicit [hypothèse] + `cerebro question add` if the answer changes the outcome.
+3 RULES: `cerebro law search "<notion>"` → `cerebro law article <abrév> "art. N"`; version applicable to the facts: `cerebro law asof <RS> --date <date des faits>`. Level: federal / cantonal / communal / treaty (CDI) / foreign. Administrative practice (circulars) kept separate from the law. Not in the library → researcher/documentalist; otherwise ⚠.
+4 CONDITIONS: break each rule into conditions (constituent elements) and legal consequence. Table: condition | fact(s) | met / not / uncertain | why | source.
+5 COUNTER-READING: best opposing reading (MET two-step contradiction); contrary authorities listed, never hidden.
+6 CONCLUSION: one-sentence answer + comfort level (MET comfort levels) + what would change it.
+7 FOLLOW-UP: acts, deadlines (`cerebro clock start`), costs, who does what, dated next action.
+8 « CE QUE VOUS N'AVEZ PAS DEMANDÉ »: cross-consequences (tax ↔ companies ↔ social ↔ LBA ↔ estates), options, opportunities.
 
-## Contrôle
-[ ] question fermée, canton et période fixés · [ ] faits étiquetés et datés · [ ] chaque norme : ID BIB- + art./al./let. + version + date d'état + canton · [ ] droit intertemporel traité · [ ] chaque condition subsumée · [ ] autorités contraires mentionnées · [ ] niveau de confort non surélevé · [ ] délais calculés par horloge, jamais en prose · [ ] prochaine action datée
+## Checks
+[ ] closed question, canton and period fixed · [ ] facts tagged and dated · [ ] each rule: ID BIB- + art./al./let. + version + date of state + canton · [ ] intertemporal law addressed · [ ] each condition subsumed · [ ] contrary authorities mentioned · [ ] comfort level not inflated · [ ] deadlines computed by clock, never in prose · [ ] dated next action
 
-## Pièges
-répondre de mémoire · appliquer la version actuelle à des faits anciens · oublier le droit cantonal/communal · traiter une circulaire comme une loi · sauter une condition « évidente » · mêler faits déclarés et vérifiés · conclure sans conséquence pratique · ignorer la compétence (autorité, for) et la forme (écrit, acte authentique, inscription).
+## Pitfalls
+answering from memory · applying the current version to old facts · forgetting cantonal/communal law · treating a circular as a law · skipping an « obvious » condition · mixing declared and verified facts · concluding without practical consequence · ignoring competence (authority, for) and form (writing, acte authentique, registration).
 
-## Exemple (court)
-Q : « La SA du client peut-elle verser un dividende en cours d'exercice ? » → C-nnn/E-nnn, VD, exercice 2026.
-Faits : comptes 2025 approuvés [fait vérifié DOC-nnnn] ; bénéfice 2026 en cours [déclaré par le CFO le 2026-09-30].
-Normes : dispositions CO sur le dividende intermédiaire ⚠ (à extraire : `cerebro law search "dividende intermédiaire"`).
-Conditions : tableau (comptes intermédiaires ? révision ? décision AG ?) chacune avec article lu.
-Conclusion : « devrait être possible si … » (should) — jamais plus haut tant que les conditions ne sont pas toutes lues dans le texte.
-Suites : horloge impôt anticipé dès la date d'échéance du dividende ; projet de PV d'AG ; ce que vous n'avez pas demandé : effet sur la réserve légale et sur la planification successorale de l'actionnaire.
+## Example (short)
+Q: « La SA du client peut-elle verser un dividende en cours d'exercice ? » → C-nnn/E-nnn, VD, financial year 2026.
+Facts: 2025 accounts approved [fait vérifié DOC-nnnn]; 2026 profit in progress [déclaré par le CFO le 2026-09-30].
+Rules: CO provisions on the interim dividend ⚠ (to extract: `cerebro law search "dividende intermédiaire"`).
+Conditions: table (interim accounts? audit? AG decision?) each with the article read.
+Conclusion: « devrait être possible si … » (should) — never higher until all conditions are read in the text.
+Follow-up: impôt anticipé clock from the dividend due date; draft PV d'AG; « ce que vous n'avez pas demandé »: effect on the legal reserve and on the shareholder's estate planning.

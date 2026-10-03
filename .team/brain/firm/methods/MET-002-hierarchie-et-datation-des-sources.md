@@ -11,37 +11,37 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Hiérarchie et datation des sources (machine)
-usage: chaque fois qu'une source est citée, comparée ou contredite.
+# Hierarchy and dating of sources (machine)
+use: whenever a source is cited, compared or contradicted.
 
-## Poids (ordre usuel ; un conflit réel se tranche par la règle de conflit applicable, elle-même sourcée)
-1 Constitution fédérale · traités (CDI, accords) selon leur rang
-2 Loi fédérale (RS) · 3 ordonnance fédérale
-4 Droit cantonal : constitution > loi > règlement d'application > pratique publiée ; puis communal
-5 Jurisprudence : TF (ATF publiés > arrêts non publiés) > TAF/TPF > tribunaux cantonaux supérieurs > premières instances
-6 Pratique administrative : circulaires et notices AFC, OFAS, FINMA, administrations cantonales → lient l'administration, pas le juge ; « que dirait l'administration »
-7 Doctrine (commentaires, revues, ouvrages) → persuasive ; références seulement sans abonnement
-8 Étranger : texte officiel du pays ; interprétation = conseil local possible ; niveau de confort abaissé
+## Weight (usual order; a real conflict is settled by the applicable conflict rule, itself sourced)
+1 Federal Constitution · treaties (CDI, agreements) according to their rank
+2 Federal law (RS) · 3 federal ordinance
+4 Cantonal law: constitution > law > implementing regulation > published practice; then communal
+5 Case law: TF (published ATF > unpublished judgments) > TAF/TPF > higher cantonal courts > first instances
+6 Administrative practice: AFC, OFAS, FINMA circulars and notices, cantonal administrations → bind the administration, not the judge; « que dirait l'administration »
+7 Doctrine (commentaries, journals, books) → persuasive; references only without subscription
+8 Foreign: official text of the country; interpretation = local counsel possible; comfort level lowered
 
-## Datation (champs obligatoires de toute citation)
-id BIB- · abrév/RS · art. al. let. ch. · version (entrée en vigueur) · date d'état (« état le ») · langue de la version lue · canton/pays · URL officielle · vérifié_le (date de consultation) · statut [contraignant|persuasif|pratique|doctrine]
-- faits passés → version en vigueur à la date des faits / de la période fiscale : `cerebro law asof <RS> --date AAAA-MM-JJ`
-- texte modifié entre-temps → citer les deux versions et la règle transitoire (article lu, sinon ⚠)
-- versions linguistiques officielles : en cas de doute de sens, comparer fr/de/it et le signaler
-- source cantonale souvent en allemand : citer l'original, traduction de travail marquée [trad. de travail]
+## Dating (mandatory fields of any citation)
+id BIB- · abbr/RS · art. al. let. ch. · version (entry into force) · date of state (« état le ») · language of the version read · canton/country · official URL · vérifié_le (consultation date) · statut [contraignant|persuasif|pratique|doctrine]
+- past facts → version in force at the date of the facts / tax period: `cerebro law asof <RS> --date AAAA-MM-JJ`
+- text amended since → cite both versions and the transitional rule (article read, otherwise ⚠)
+- official language versions: if meaning is in doubt, compare fr/de/it and flag it
+- cantonal source often in German: cite the original, working translation marked [trad. de travail]
 
-## Étapes
-1 classer chaque source trouvée dans l'échelle de poids ci-dessus (une étiquette par source)
-2 dater : version applicable aux faits (`cerebro law asof <RS> --date <date des faits>`), date d'état, date de consultation
-3 remplir les 10 champs de citation ; champ manquant → documentaliste
-4 conflit entre deux sources → règle de conflit lue (lex superior, specialis, posterior, rang du traité) et citée
-5 inscrire la source dans la table des autorités (MET-003) et la lier au livrable (`cerebro link`)
+## Steps
+1 rank each source found on the weight scale above (one label per source)
+2 date: version applicable to the facts (`cerebro law asof <RS> --date <date des faits>`), date of state, consultation date
+3 fill the 10 citation fields; missing field → documentalist
+4 conflict between two sources → conflict rule read (lex superior, specialis, posterior, treaty rank) and cited
+5 enter the source in the table of authorities (MET-003) and link it to the deliverable (`cerebro link`)
 
-## Contrôle
-[ ] chaque source a les 10 champs · [ ] version applicable aux faits vérifiée · [ ] pratique distinguée de la loi · [ ] doctrine jamais présentée comme règle · [ ] source sans texte primaire → ⚠ · [ ] date de consultation < 90 j pour un livrable (sinon re-vérifier : documentaliste)
+## Checks
+[ ] each source has the 10 fields · [ ] version applicable to the facts verified · [ ] practice distinguished from law · [ ] doctrine never presented as a rule · [ ] source without primary text → ⚠ · [ ] consultation date < 90 d for a deliverable (otherwise re-verify: documentalist)
 
-## Pièges
-citer un article renuméroté · citer un résumé au lieu du texte · confondre circulaire abrogée et en vigueur · prendre un arrêt cantonal d'un autre canton pour contraignant · oublier la commune (multiplicateurs, règlements) · traduction présentée comme texte officiel.
+## Pitfalls
+citing a renumbered article · citing a summary instead of the text · confusing a repealed circular with one in force · taking a judgment from another canton as binding · forgetting the commune (multipliers, regulations) · translation presented as official text.
 
-## Exemple (court)
-« art. 132 al. 1 LIFD [BIB-nnnn, RS 642.11, état 2026-01-01, fr, vérifié le 2026-10-03, contraignant] » ; « Circ. AFC n° xx [BIB-nnnn, pratique, vérifié le …] » — numéros fictifs, à remplacer par la bibliothèque.
+## Example (short)
+« art. 132 al. 1 LIFD [BIB-nnnn, RS 642.11, état 2026-01-01, fr, vérifié le 2026-10-03, contraignant] »; « Circ. AFC n° xx [BIB-nnnn, pratique, vérifié le …] » — fictitious numbers, to be replaced from the library.

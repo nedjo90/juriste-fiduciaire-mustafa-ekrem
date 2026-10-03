@@ -11,36 +11,36 @@ mots_clés: méthode cabinet
 liens: CAB-004
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Niveaux de confort (machine) — échelle de la maison : CAB-004 (comfort-levels.md)
-usage: chaque conclusion d'un mémo, avis, réponse de droit ; résumé exécutif ; mails de conseil.
+# Comfort levels (machine) — house scale: CAB-004 (comfort-levels.md)
+use: every conclusion of a memo, opinion, legal answer; executive summary; advisory mails.
 
-## Échelle (convention de la maison, inspirée des opinions fiscales anglo-saxonnes ; pourcentages indicatifs internes, jamais écrits au client)
-| code | en | fr | de | it | sens interne |
-| W | will | « sera » / « est » | „wird“ / „ist“ | « sarà » | texte clair, jurisprudence constante, aucune autorité contraire sérieuse (≈ > 90 %) |
-| S | should | « devrait » | „sollte“ | « dovrebbe » | forte probabilité, arguments contraires faibles (≈ 70-90 %) |
+## Scale (house convention, inspired by Anglo-Saxon tax opinions; internal indicative percentages, never written to the client)
+| code | en | fr | de | it | internal meaning |
+| W | will | « sera » / « est » | „wird“ / „ist“ | « sarà » | clear text, settled case law, no serious contrary authority (≈ > 90 %) |
+| S | should | « devrait » | „sollte“ | « dovrebbe » | high probability, weak contrary arguments (≈ 70-90 %) |
 | M | more likely than not | « plus probable qu'improbable » | „eher wahrscheinlich als nicht“ | « più probabile che no » | > 50 % |
-| R | reasonable basis | « base raisonnable » / « défendable » | „vertretbar“ | « sostenibile » | position défendable, non frivole, nettement incertaine |
-| N | — | « non recommandé » | „nicht empfohlen“ | « sconsigliato » | sous R : ne pas recommander ; dire pourquoi |
+| R | reasonable basis | « base raisonnable » / « défendable » | „vertretbar“ | « sostenibile » | defensible position, not frivolous, clearly uncertain |
+| N | — | « non recommandé » | „nicht empfohlen“ | « sconsigliato » | below R: do not recommend; say why |
 
-## Règles
-1 jamais surélevé : en cas d'hésitation entre deux niveaux, prendre l'inférieur
-2 abaisser d'un cran au moins si : droit étranger (étiquette), pratique cantonale non vérifiée, faits seulement déclarés, source ⚠, jurisprudence divergente, question nouvelle
-3 W exige : texte lu (ID BIB-), version applicable, pas d'autorité contraire dans la table
-4 un niveau par conclusion, placé dans la phrase même (« La reprise devrait être annulée »), rappelé au résumé exécutif
-5 interdits sans W : « certainement », « sans aucun doute », „zweifellos“, « indubbiamente »
-6 expliquer en une phrase ce qui ferait monter ou descendre le niveau
+## Rules
+1 never inflated: when hesitating between two levels, take the lower
+2 lower by at least one notch if: foreign law (label), cantonal practice not verified, facts only declared, ⚠ source, divergent case law, novel question
+3 W requires: text read (ID BIB-), applicable version, no contrary authority in the table
+4 one level per conclusion, placed in the sentence itself (« La reprise devrait être annulée »), repeated in the executive summary
+5 forbidden without W: « certainement », « sans aucun doute », „zweifellos“, « indubbiamente »
+6 explain in one sentence what would raise or lower the level
 
-## Étapes
-1 pour chaque conclusion, lister ce qui la soutient (textes lus, jurisprudence, pratique, faits prouvés) et ce qui la contredit
-2 choisir le niveau selon les exigences de CAB-004 ; appliquer les abaissements obligatoires
-3 écrire la formule du niveau dans la phrase de conclusion et au résumé exécutif
-4 ajouter une phrase : ce qui ferait monter ou descendre le niveau
+## Steps
+1 for each conclusion, list what supports it (texts read, case law, practice, proven facts) and what contradicts it
+2 choose the level per CAB-004 requirements; apply the mandatory downgrades
+3 write the level's wording in the conclusion sentence and in the executive summary
+4 add one sentence: what would raise or lower the level
 
-## Contrôle
-[ ] chaque conclusion a son niveau · [ ] cohérence résumé ↔ corps · [ ] abaissements appliqués · [ ] aucun adverbe de certitude sans W
+## Checks
+[ ] each conclusion has its level · [ ] summary ↔ body consistency · [ ] downgrades applied · [ ] no certainty adverb without W
 
-## Pièges
-« devrait » de politesse (sans analyse) · conditionnel partout · niveau unique pour un avis à plusieurs questions · pourcentages écrits au client.
+## Pitfalls
+courtesy « devrait » (without analysis) · conditional everywhere · single level for a multi-question opinion · percentages written to the client.
 
-## Exemple (court)
+## Example (short)
 « La déduction des frais de véhicule devrait être admise (S) ; celle des frais de représentation est défendable (R), sans plus : la pratique vaudoise publiée n'a pas pu être vérifiée. »

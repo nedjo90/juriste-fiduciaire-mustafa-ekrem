@@ -11,22 +11,22 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Réutiliser avant de refaire (machine)
-usage: avant toute recherche, rédaction, calcul, création d'objet (§0 ter.3, §17 c29).
+# Reuse before redoing (machine)
+use: before any research, drafting, calculation, object creation (§0 ter.3, §17 c29).
 
-## Étapes
-1 chercher : `cerebro find "<sujet>" --type position --type note --type livrable --type gabarit --type precedent --type methode` ; aussi par client et par domaine
-2 juger l'actualité : date d'état du droit de l'objet trouvé vs changements de droit (`cerebro find --type changement_droit "<sujet>"`), faits du client changés ?
-3 réutiliser : partir de l'objet ; nouvelle version = `cerebro new <type> "<nom> v2" --lien <ID ancien>` ou `cerebro update <ID>` si révision du même objet ; jamais un doublon parallèle
-4 adapter : faits, canton, langue, chiffres recalculés par script ; retirer tout élément propre à un autre client (secret)
-5 capitaliser : une réponse de droit réutilisable → position (POS-) ; une correction répétée → règle dans la liste de contrôle du rôle (fabrique) ; un document réussi → précédent/gabarit
-6 sortir : liens et prochaine action datée ; `cerebro regen <IDs>`
+## Steps
+1 search: `cerebro find "<sujet>" --type position --type note --type livrable --type gabarit --type precedent --type methode`; also by client and by domain
+2 judge currency: date of state of the law of the object found vs changes in the law (`cerebro find --type changement_droit "<sujet>"`), client facts changed?
+3 reuse: start from the object; new version = `cerebro new <type> "<nom> v2" --lien <ID ancien>` or `cerebro update <ID>` if revising the same object; never a parallel duplicate
+4 adapt: facts, canton, language, figures recalculated by script; remove anything specific to another client (secrecy)
+5 capitalise: a reusable legal answer → position (POS-); a repeated correction → rule in the role's checklist (factory); a successful document → precedent/template
+6 exit: links and dated next action; `cerebro regen <IDs>`
 
-## Contrôle
-[ ] recherche faite et tracée · [ ] actualité vérifiée (droit + faits) · [ ] nouvelle version liée, pas de doublon · [ ] aucune donnée d'un autre client · [ ] capitalisation faite si réutilisable
+## Checks
+[ ] search done and traced · [ ] currency verified (law + facts) · [ ] new version linked, no duplicate · [ ] no data from another client · [ ] capitalised if reusable
 
-## Pièges
-reprendre un précédent dont le droit a changé · garder le nom de l'ancien client dans un modèle · deux positions contradictoires sur la même question · recalculer à la main au lieu de rejouer le script.
+## Pitfalls
+reusing a precedent whose law has changed · keeping the former client's name in a template · two contradictory positions on the same question · recalculating by hand instead of replaying the script.
 
-## Exemple (court)
-Demande : « Prépare une convention d'actionnaires pour Beta SA. » → find trouve PR-nnn (convention Alpha SA, 2025) et POS-nnn (clause de drag-along). → nouvelle version liée, données Alpha retirées, clauses de transfert revues contre le CO en vigueur, variantes commentées.
+## Example (short)
+Request: « Prépare une convention d'actionnaires pour Beta SA. » → find returns PR-nnn (convention Alpha SA, 2025) and POS-nnn (drag-along clause). → new linked version, Alpha data removed, transfer clauses reviewed against the CO in force, commented variants.

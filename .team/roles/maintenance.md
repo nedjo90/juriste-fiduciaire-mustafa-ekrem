@@ -15,22 +15,24 @@ PROTOCOLE SOMMAIRE (§0 ter)
 Entrer : .team/summaries/SUMMARY.md puis niveau 1 du client/domaine. Cibler : cerebro find → summary <ID> → open <ID> --section <titre>. Réutiliser l'existant avant de rédiger, chercher ou calculer. Affirmer seulement ce qui est lié à un ID ou une source. Sortir : tout objet créé/touché régénéré (cerebro regen <ID>), liens et prochaine action datée. Rapport à l'orchestrateur : IDs + lignes de sommaire, ≤ 1 500 car.
 <!-- /BLOC-CARDINAL -->
 
-# Rôle de fond : cycle d'entretien (boucle de maintenance, rattrapage) — script d'abord
+# Background role: maintenance cycle (maintenance loop, catch-up) — script first
 
-Exécuté par `.team/scripts/maintenance/cycle.py` : à l'ouverture (hook de début, `--rattrapage`), dans les temps morts (hook de fin de réponse, `--increment`), à la fermeture (`session_end.py` puis `--court`), et par le planificateur du système (`--complet` : ouverture de session, sortie de veille, inactivité). La machine est éteinte la nuit : aucune tâche ne suppose une heure.
+Run by `.team/scripts/maintenance/cycle.py`: at opening (start hook, `--rattrapage`), in idle time (end-of-reply hook, `--increment`), at close (`session_end.py` then `--court`), and by the system scheduler (`--complet`: session opening, wake from sleep, inactivity). The machine is off at night: no task assumes a time of day.
 
-## Règles (constitution §11)
-- Un seul processus (verrou `.team/run/entretien.lock`, PID et péremption 3 h), priorité basse, pause quand Mustafa écrit (drapeau `run/mustafa-ecrit` posé à la soumission, effacé à la fin de réponse).
-- File unique persistante (`cerebro queue list`), triée 1 → 6 : (1) sommaires des objets touchés, intendant ; (2) délais, horloges, brouillons (boucle d'initiative) ; (3) classement : ingesteur, greffier ; (4) couverture, zombies, vues client, croisements, rappel, bloc cardinal ; (5) bibliothèque, veille, découverte ; (6) construction restante, sauvegarde, export, commit et envoi.
-- Incréments d'environ deux minutes, reprenables (une tâche partielle reste en file).
-- Cadences de 7 jours (rappel, bloc cardinal, revue hebdomadaire) et 30 jours (test de restauration, découverte) au premier cycle venu après l'échéance (`cerebro` état `cadences`).
-- Cycle complet si le dernier date de plus de 20 h : sommaires, initiative, rappel, santé, brief préparé, sauvegarde chiffrée locale, export, commit + envoi au dépôt privé, poursuite de la construction (en file).
-- Le brief dit en une ligne ce qui a été rattrapé (état `rattrape`, reformulé par l'associé en langage simple).
+Language: reply to Mustafa in his language (French by default, German if he writes German); deliverables in the recipient's language; English only if asked. Keep Swiss legal terms in their original language.
 
-## Tâches par script (aucun modèle)
-regen des objets marqués, sommaires, vues client, croisements, couverture et ramasse-miettes, export, rappel, bloc cardinal, santé, brief, sauvegarde chiffrée (clé du poste `~/.cerebro/cle-sauvegarde.key`, 14 copies gardées) et test de restauration, commit et envoi, ingesteur, intendant.
-## Tâches qui appellent un modèle (scripts dédiés, verrous propres)
-greffier (léger, `clerk.py`), boucle d'initiative (intermédiaire, `initiative.py`). Les autres tâches de modèle (revue hebdomadaire, construction, découverte, bibliothèque) restent en file pour l'associé ou la fabrique.
+## Rules (constitution §11)
+- One single process (lock `.team/run/entretien.lock`, PID and 3 h expiry), low priority, paused while Mustafa writes (flag `run/mustafa-ecrit` set on submit, cleared at end of reply).
+- One persistent queue (`cerebro queue list`), sorted 1 → 6: (1) summaries of touched objects, steward; (2) deadlines, clocks, drafts (initiative loop); (3) filing: ingester, clerk; (4) coverage, zombies, client views, overlaps, recall, cardinal block; (5) library, watch, discovery; (6) remaining construction, backup, export, commit and push.
+- Increments of about two minutes, resumable (a partial task stays queued).
+- 7-day cadences (recall, cardinal block, weekly review) and 30-day cadences (restore test, discovery) at the first cycle after the due date (`cerebro` state `cadences`).
+- Full cycle if the last one is more than 20 h old: summaries, initiative, recall, health, brief prepared, local encrypted backup, export, commit + push to the private repo, construction continued (queued).
+- The brief says in one line what was caught up (state `rattrape`, rephrased by the partner in plain language).
 
-## Sortie
-Journal `brain/log/entretien.jsonl` (début, fin, durée, résultat par tâche) ; échec répété d'une tâche → incident pour l'intendant. Jamais de blocage, jamais de question.
+## Script tasks (no model)
+regen of flagged objects, summaries, client views, overlaps, coverage and garbage collection, export, recall, cardinal block, health, brief, encrypted backup (workstation key `~/.cerebro/cle-sauvegarde.key`, 14 copies kept) and restore test, commit and push, ingester, steward.
+## Tasks that call a model (dedicated scripts, own locks)
+clerk (light, `clerk.py`), initiative loop (intermediate, `initiative.py`). Other model tasks (weekly review, construction, discovery, library) stay queued for the partner or the factory.
+
+## Output
+Log `brain/log/entretien.jsonl` (start, end, duration, result per task); repeated task failure → incident for the steward. Never block, never ask a question.

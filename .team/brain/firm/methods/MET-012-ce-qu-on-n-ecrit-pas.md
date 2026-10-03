@@ -11,34 +11,34 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Ce qu'on n'écrit pas (machine)
-usage: tout livrable ou brouillon destiné à un tiers (client, administration, registre, confrère, partie adverse, banque). Vérifié par le relecteur et les portes.
+# What we do not write (machine)
+use: every deliverable or draft intended for a third party (client, administration, registry, colleague, opposing party, bank). Verified by the reviewer and the gates.
 
-## Jamais dans un document sorti
-- perceptions et notes internes ([perception], [hypothèse] non assumée, appréciations sur des personnes)
-- contenu « entre nous » (aucune trace, aucune réutilisation)
-- identifiants internes (C-nnn, DOC-nnnn, MET-…), étiquettes machine, chemins, noms d'outils, mention de l'IA
-- informations d'un autre client (secret professionnel) ; croisements internes
-- soupçons, analyses ou démarches LBA vis-à-vis du client ou de tiers (interdiction d'informer : règle à lire dans la LBA ⚠ via `cerebro law search "information"`)
-- stratégie de négociation, MESORE, prix de réserve, dans un écrit destiné à l'adverse
-- aveux, reconnaissances de dette ou de faute non voulus par le client
-- affirmation de droit sans source vérifiée (sinon ⚠ et reformulation prudente)
-- menaces, pressions, propos pouvant être pénalement relevants
-- chiffres non vérifiés, taux de mémoire
-- engagements que Mustafa n'a pas autorisés
-- dans un mail : contenu qu'on ne voudrait pas voir transféré à l'adverse
+## Never in an outgoing document
+- perceptions and internal notes ([perception], unowned [hypothèse], assessments of people)
+- « entre nous » content (no trace, no reuse)
+- internal IDs (C-nnn, DOC-nnnn, MET-…), machine tags, paths, tool names, mention of AI
+- another client's information (professional secrecy); internal overlaps
+- LBA suspicions, analyses or steps vis-à-vis the client or third parties (prohibition of information: rule to read in the LBA ⚠ via `cerebro law search "information"`)
+- negotiation strategy, MESORE, reservation price, in a writing intended for the other side
+- admissions, acknowledgements of debt or fault not intended by the client
+- statement of law without verified source (otherwise ⚠ and cautious rewording)
+- threats, pressure, statements that may be criminally relevant
+- unverified figures, rates from memory
+- commitments Mustafa has not authorised
+- in a mail: content one would not want forwarded to the other side
 
-## À écrire avec soin
-« sous réserve de … » : une fois, précise · réserves de faits (« sur la base des pièces reçues au [date] ») · confidentialité en en-tête des mémos.
+## Write with care
+« sous réserve de … »: once, precise · factual reservations (« sur la base des pièces reçues au [date] ») · confidentiality in memo headers.
 
-## Étapes (relecteur)
-1 rechercher les motifs machine : regex identifiants, « [perception] », « [hypothèse] », « ⚠ » non résolus, chemins, noms d'outils · 2 comparer avec la vue client : données d'un autre client ? · 3 vérifier dossier LBA lié : rien n'en transparaît · 4 relire les passages d'engagement.
+## Steps (reviewer)
+1 search for machine patterns: ID regex, « [perception] », « [hypothèse] », unresolved « ⚠ », paths, tool names · 2 compare with the client view: another client's data? · 3 check linked LBA file: nothing of it shows through · 4 re-read commitment passages.
 
-## Contrôle
-[ ] zéro identifiant interne · [ ] zéro perception · [ ] zéro donnée d'un autre client · [ ] zéro trace LBA · [ ] engagements autorisés (ID de la consigne) · [ ] réserves présentes et précises
+## Checks
+[ ] zero internal ID · [ ] zero perception · [ ] zero data from another client · [ ] zero LBA trace · [ ] commitments authorised (ID of the instruction) · [ ] reservations present and precise
 
-## Pièges
-copier-coller depuis une note interne · fiche RDV transformée en compte rendu client sans nettoyage · mail de transfert avec l'historique interne en dessous.
+## Pitfalls
+copy-pasting from an internal note · meeting prep sheet turned into a client report without cleaning · forwarded mail with the internal history below.
 
-## Exemple (court)
-Note interne : « [perception] le CFO semble cacher les avances au directeur. » → dans la lettre : rien ; dans le dossier : question à documenter, pièces demandées de façon neutre (« merci de nous remettre le détail du compte courant actionnaire au 31.12.2025 »).
+## Example (short)
+Internal note: « [perception] le CFO semble cacher les avances au directeur. » → in the letter: nothing; in the file: question to document, documents requested neutrally (« merci de nous remettre le détail du compte courant actionnaire au 31.12.2025 »).

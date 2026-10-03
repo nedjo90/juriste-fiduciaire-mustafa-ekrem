@@ -12,22 +12,22 @@ liens:
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
 # Pre-mortem (Klein) (machine)
-usage: avant toute recommandation importante, restructuration, deal, réclamation, planification successorale ou fiscale, lancement d'une procédure.
+use: before any important recommendation, restructuring, deal, réclamation, estate or tax planning, launch of proceedings.
 
-## Étapes
-1 énoncé : « Nous sommes le [date + 12 mois]. Le projet [X] a échoué. »
-2 causes (≥ 8), par familles : droit (qualification, requalification, évasion fiscale), preuve (pièces manquantes), forme (acte authentique, signature, quorum, inscription au registre), délai (manqué, mal calculé, notification), fiscal croisé (impôt anticipé, timbre, TVA, impôt sur les gains), social (AVS sur dividendes requalifiés), LBA, relations (famille, associé, banque), exécution (personne responsable absente), coût et calendrier.
-3 coter : probabilité (1-3) × impact (1-3) ; trier.
-4 pour chaque cause ≥ 4 : mesure préventive, signal d'alerte observable, responsable, date (prochaine action) ; pour les délais : horloge (`cerebro clock start`).
-5 intégrer : rubrique « risques » du livrable + niveau de confort ajusté ; objets créés reliés au dossier.
+## Steps
+1 statement: « Nous sommes le [date + 12 mois]. Le projet [X] a échoué. »
+2 causes (≥ 8), by family: law (qualification, requalification, tax avoidance), evidence (missing documents), form (acte authentique, signature, quorum, registration), deadline (missed, miscalculated, notification), cross-tax (impôt anticipé, timbre, TVA, gains tax), social (AVS on requalified dividends), LBA, relationships (family, partner, bank), execution (responsible person absent), cost and schedule.
+3 score: probability (1-3) × impact (1-3); sort.
+4 for each cause ≥ 4: preventive measure, observable warning signal, owner, date (next action); for deadlines: clock (`cerebro clock start`).
+5 integrate: « risques » section of the deliverable + adjusted comfort level; objects created linked to the matter.
 
-## Contrôle
-[ ] énoncé d'échec écrit · [ ] ≥ 8 causes, toutes familles balayées · [ ] cotation · [ ] chaque cause majeure a mesure + signal + responsable + date · [ ] délais en horloges · [ ] niveau de confort revu après l'exercice
+## Checks
+[ ] failure statement written · [ ] ≥ 8 causes, all families swept · [ ] scoring · [ ] each major cause has measure + signal + owner + date · [ ] deadlines as clocks · [ ] comfort level reviewed after the exercise
 
-## Pièges
-pre-mortem de complaisance (causes vagues) · seulement des risques juridiques, pas d'exécution · mesure sans responsable · oublier l'administration fiscale comme acteur (pratique, contrôle a posteriori).
+## Pitfalls
+complacent pre-mortem (vague causes) · only legal risks, no execution · measure without owner · forgetting the tax administration as an actor (practice, later audit).
 
-## Exemple (court)
-| cause | P | I | mesure | signal | resp. | date |
-| requalification de la vente en liquidation partielle indirecte ⚠ | 2 | 3 | demande de ruling avant signature | refus/silence de l'administration | spécialiste fiscalité entreprises | 2026-11-15 |
-| assemblée hors délai | 1 | 2 | horloge assemblée + projet de convocation | J-30 sans convocation | secrétaire de société | DL-… |
+## Example (short)
+| cause | P | I | measure | signal | owner | date |
+| sale requalified as liquidation partielle indirecte ⚠ | 2 | 3 | ruling request before signing | refusal/silence of the administration | corporate tax specialist | 2026-11-15 |
+| meeting held late | 1 | 2 | meeting clock + draft convocation | D-30 without convocation | corporate secretary | DL-… |

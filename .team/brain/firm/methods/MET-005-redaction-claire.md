@@ -11,33 +11,33 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Rédaction claire (machine)
-usage: tout texte qui sort (Mustafa, client, administration, confrère). Base §7.2. Contrôle final : éditeur humain + détecteur de tics (portes).
+# Clear drafting (machine)
+use: every outgoing text (Mustafa, client, administration, colleague). Basis §7.2. Final check: human editor + tic detector (gates).
 
-## Règles
-- conclusion d'abord ; « so what » explicite
-- une idée par paragraphe ; première phrase = l'idée
-- phrases courtes mêlées de longues ; longueur variée
-- verbes actifs, sujet identifié (« l'administration a repris » et non « une reprise a été opérée »)
-- termes définis une fois, entre guillemets et parenthèses (la « Société »), puis constants ; majuscule pour un terme défini
-- chiffres précis, unité, source : CHF 84'250.00 (au 31.12.2025, DOC-nnnn)
-- position assumée + niveau de confort ; une seule réserve, au bon endroit
-- correspondance : ni puces ni gras ; mémo : intertitres-affirmations, listes seulement pour des éléments parallèles
-- dates : fr « 3 octobre 2026 » · de « 3. Oktober 2026 » · it « 3 ottobre 2026 » · en « 3 October 2026 »
-- typographie : fr-CH « » avec espace insécable, CHF 1'234.50 ; de-CH «…» sans espace, « ss » (jamais ß) ; destinataire en Allemagne : „…“ et ß ; it-CH «…» ; en : “…”
+## Rules
+- conclusion first; explicit « so what »
+- one idea per paragraph; first sentence = the idea
+- short sentences mixed with long ones; varied length
+- active verbs, identified subject (« l'administration a repris » and not « une reprise a été opérée »)
+- terms defined once, in quotation marks and parentheses (la « Société »), then constant; capital letter for a defined term
+- precise figures, unit, source: CHF 84'250.00 (au 31.12.2025, DOC-nnnn)
+- position owned + comfort level; one single reservation, in the right place
+- correspondence: no bullets or bold; memo: assertion subheadings, lists only for parallel items
+- dates: fr « 3 octobre 2026 » · de « 3. Oktober 2026 » · it « 3 ottobre 2026 » · en « 3 October 2026 »
+- typography: fr-CH « » with non-breaking space, CHF 1'234.50; de-CH «…» without space, « ss » (never ß); recipient in Germany: „…“ and ß; it-CH «…»; en: “…”
 
-## Interdits (tics)
-ouvertures/clôtures passe-partout · « il est important de noter », « n'hésitez pas », « en conclusion », « dans un monde où » · triades systématiques · tirets longs en cascade · précautions répétées · phrases de longueur uniforme · émoticônes · mention de l'IA ou d'un outil · résumé redondant · rappel de ce que le destinataire vient de dire · gras décoratif · « en effet » en série · nominalisations en chaîne.
+## Forbidden (tics)
+boilerplate openings/closings · « il est important de noter », « n'hésitez pas », « en conclusion », « dans un monde où » · systematic triads · cascading long dashes · repeated hedging · sentences of uniform length · emoticons · mention of AI or a tool · redundant summary · restating what the recipient just said · decorative bold · serial « en effet » · chained nominalisations.
 
-## Étapes
-1 lecteur et décision attendue (une ligne) · 2 sommet de pyramide · 3 plan par titres · 4 rédaction d'un trait · 5 couper 20 % · 6 vérifier termes définis, chiffres, dates, renvois · 7 lecture à voix haute mentale : ce qui accroche est réécrit.
+## Steps
+1 reader and expected decision (one line) · 2 top of the pyramid · 3 outline by titles · 4 draft in one go · 5 cut 20 % · 6 check defined terms, figures, dates, cross-references · 7 mental read-aloud: whatever snags is rewritten.
 
-## Contrôle
-[ ] réponse dans les 3 premières lignes · [ ] aucun tic de la liste · [ ] termes définis constants · [ ] chiffres avec unité et source · [ ] typographie de la langue · [ ] langue du destinataire · [ ] signature de la maison (mails)
+## Checks
+[ ] answer in the first 3 lines · [ ] no tic from the list · [ ] defined terms constant · [ ] figures with unit and source · [ ] typography of the language · [ ] recipient's language · [ ] house signature (mails)
 
-## Pièges
-traduire mot à mot une formule française en allemand · registre trop familier avec l'administration · jargon interne (IDs, abréviations machine) dans un texte sorti · conditionnel de prudence partout (tue la position).
+## Pitfalls
+translating a French formula word for word into German · register too familiar with the administration · internal jargon (IDs, machine abbreviations) in an outgoing text · cautious conditional everywhere (kills the position).
 
-## Exemple (court)
+## Example (short)
 Avant : « Il est important de noter que, suite à l'analyse effectuée, il apparaît que la reprise pourrait éventuellement être contestée. »
 Après : « La reprise des frais de véhicule est contestable. Le contrôle a appliqué une part privée forfaitaire alors que le carnet de bord, que nous avons, prouve un usage professionnel de 92 %. »

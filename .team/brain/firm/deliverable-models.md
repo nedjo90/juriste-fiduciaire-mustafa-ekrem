@@ -1,57 +1,57 @@
-# Modèles de livrables : structure par type (machine)
-source: constitution §7.1, §7.3 ; gabarits visuels = système de design (`.team/brain/firm/design/`, rôle producteur) ; production finale = skill deliverable-production · maj: 2026-10-03
-règle : tout livrable sort d'un gabarit (GAB-) ; structure ci-dessous = contenu ; contrôles = portes §7.5 + panel (MET-010) si important + relecteur.
+# Deliverable models: structure per type (machine)
+source: constitution §7.1, §7.3; visual templates = design system (`.team/brain/firm/design/`, producer role); final production = skill deliverable-production · maj: 2026-10-03
+rule: every deliverable comes from a template (GAB-); structure below = content; checks = gates §7.5 + panel (MET-010) if important + reviewer.
 
 ## Mail
-objet précis (client — sujet — action/date) · réponse en tête (1-2 phrases) · motivation brève · prochaine étape et délai · pièces nommées · signature. Sans puces ni gras. Brouillon uniquement.
+precise subject (client — topic — action/date) · answer first (1-2 sentences) · brief reasoning · next step and deadline · named attachments · signature. No bullets or bold. Draft only.
 
 ## Mémo / avis de droit
-en-tête confidentialité · destinataire, date, date d'état du droit, canton · 1 résumé exécutif (≤ 1 page : réponse, niveau de confort, actions, délais) · 2 question(s) · 3 faits retenus (étiquetés, sources) · 4 droit applicable (sourcé, daté) · 5 analyse (MET-001, conditions) · 6 arguments contraires et réponses (MET-009) · 7 options chiffrées (tableau) · 8 risques (pre-mortem MET-008) · 9 recommandation · 10 réserves (faits, droit, étranger) · 11 niveau(x) de confort · annexe : table des autorités (MET-003), pièces. Pied de page : version, date d'état du droit, pagination ; table des matières au-delà de 10 pages.
+confidentiality header · recipient, date, date of state of the law, canton · 1 executive summary (≤ 1 page: answer, comfort level, actions, deadlines) · 2 question(s) · 3 facts retained (tagged, sourced) · 4 applicable law (sourced, dated) · 5 analysis (MET-001, conditions) · 6 counter-arguments and replies (MET-009) · 7 costed options (table) · 8 risks (pre-mortem MET-008) · 9 recommendation · 10 reservations (facts, law, foreign) · 11 comfort level(s) · annex: table of authorities (MET-003), exhibits. Footer: version, date of state of the law, page numbers; table of contents beyond 10 pages.
 
-## Note de recherche
-question · réponse courte + confort · table des autorités · synthèse par autorité · « que dirait l'administration » · doctrine (références) · lacunes ⚠ · prochaines vérifications.
+## Research note
+question · short answer + comfort · table of authorities · synthesis per authority · « que dirait l'administration » · doctrine (references) · gaps ⚠ · next checks.
 
-## Réclamation (fiscale)
-autorité, références de la décision, contribuable, période · conclusions (ce qui est demandé, chiffré) · faits (numérotés, pièces) · motifs en droit (sourcés) · offres de preuve · bordereau de pièces · lieu, date, signature (laissée à Mustafa/au client) · rappel interne du délai (DL-) hors document.
+## Réclamation (tax)
+authority, references of the decision, taxpayer, period · conclusions (what is requested, quantified) · facts (numbered, exhibits) · legal grounds (sourced) · offers of evidence · bordereau de pièces · place, date, signature (left to Mustafa/the client) · internal deadline reminder (DL-) outside the document.
 
-## Recours (préparé pour avocat si judiciaire)
-idem réclamation + recevabilité (délai, qualité, forme) ; « ceci relève d'un avocat » si juridiction judiciaire.
+## Recours (prepared for a lawyer if judicial)
+same as réclamation + admissibility (deadline, standing, form); « ceci relève d'un avocat » if judicial jurisdiction.
 
 ## Mise en demeure
-parties · rappel des faits et de l'obligation (sourcée) · montant/prestation · délai de grâce précis · conséquence annoncée (licite) · réserve de tous droits · sans aveu (MET-012).
+parties · recital of facts and of the obligation (sourced) · amount/performance · precise grace period · announced consequence (lawful) · réserve de tous droits · no admission (MET-012).
 
 ## PV d'assemblée générale / d'associés
-société (raison, IDE, siège) · date, heure, lieu/forme · président, secrétaire, scrutateur · présences, représentations, capital représenté · constatation de la convocation régulière (selon statuts et loi ⚠) · ordre du jour · délibérations et décisions (résultat des votes) · clôture · signatures. Variante avec acte authentique (modification des statuts, etc. : à vérifier).
+company (raison sociale, IDE, siège) · date, time, place/form · chair, secretary, scrutineer · attendance, proxies, capital represented · finding of regular convocation (per statuts and law ⚠) · agenda · deliberations and decisions (vote results) · closing · signatures. Variant with acte authentique (amendment of statuts, etc.: to verify).
 
 ## PV du conseil d'administration / des gérants
-idem, quorum selon règlement d'organisation, conflits d'intérêts déclarés, décisions numérotées.
+same, quorum per règlement d'organisation, declared conflicts of interest, numbered decisions.
 
 ## Décision circulaire
-en-tête « Décision prise par voie de circulation » · organe · rappel du droit de demander une délibération orale (règle à lire ⚠) · décisions numérotées · bulletin de signature par membre (oui/non/abstention, date) · consolidation et constatation du résultat.
+header « Décision prise par voie de circulation » · organ · reminder of the right to request oral deliberation (rule to read ⚠) · numbered decisions · signature ballot per member (oui/non/abstention, date) · consolidation and record of result.
 
 ## Convention d'actionnaires
-parties · préambule · définitions · gouvernance (CA, représentation, majorités) · transferts (préemption, emption, tag-along, drag-along, lock-up) · financement · dividendes · non-concurrence · confidentialité · décès/incapacité · sortie et évaluation · violation (peine conventionnelle) · durée · droit applicable et for/arbitrage · annexes. Chaque clause : variantes commentées (pro-majoritaire / pro-minoritaire).
+parties · preamble · definitions · governance (CA, representation, majorities) · transfers (préemption, emption, tag-along, drag-along, lock-up) · financing · dividends · non-compete · confidentiality · death/incapacity · exit and valuation · breach (peine conventionnelle) · term · applicable law and for/arbitration · annexes. Each clause: commented variants (pro-majority / pro-minority).
 
-## Contrat
-parties · préambule · définitions · objet · prestations · prix et paiement · durée et résiliation · garanties et responsabilité · confidentialité · données · cession · droit applicable et for · signatures ; checklist et variantes commentées.
+## Contract
+parties · preamble · definitions · purpose · services · price and payment · term and termination · warranties and liability · confidentiality · data · assignment · applicable law and for · signatures; checklist and commented variants.
 
-## Modèle Excel
-onglets : Lisez-moi (objet, version, date) · Hypothèses (sources, barèmes cités avec année/canton) · Calculs (formules tracées, aucune valeur en dur) · Sensibilités · Résultats · Sources. Jamais de taux de mémoire.
+## Excel model
+tabs: Lisez-moi (purpose, version, date) · Hypothèses (sources, scales cited with year/canton) · Calculs (traced formulas, no hard-coded value) · Sensibilités · Résultats · Sources. Never a rate from memory.
 
-## Présentation
-une idée par slide · titres-affirmations · résumé exécutif slide 2 · graphiques avec message, unité, source · notes de l'orateur · gabarit.
+## Presentation
+one idea per slide · assertion titles · executive summary on slide 2 · charts with message, unit, source · speaker notes · template.
 
-## Compte rendu de rendez-vous
-date, participants · décisions · actions (qui, quoi, quand) · points ouverts · délais nés · prochain rendez-vous. Version client nettoyée (MET-012).
+## Meeting report
+date, participants · decisions · actions (who, what, when) · open points · deadlines arising · next meeting. Cleaned client version (MET-012).
 
-## Fiche de rendez-vous (la veille)
-qui (liens, rôle, historique), objet, contexte 360, délais ouverts, documents à avoir, questions à poser, « ce que vous n'avez pas demandé ».
+## Meeting prep sheet (day before)
+who (links, role, history), purpose, 360 context, open deadlines, documents to have, questions to ask, « ce que vous n'avez pas demandé ».
 
-## Alerte client (changement de droit)
-ce qui change, depuis quand (source datée) · ce que cela signifie pour vous · ce qu'il faut faire, avant quand · proposition d'accompagnement.
+## Client alert (change in the law)
+what changes, since when (dated source) · what it means for you · what to do, by when · offer of support.
 
-## Dossier LBA (interne)
-identification, ayant(s) droit économique(s), profil, origine des fonds, niveau de risque, pièces, revue périodique (horloge), indices et analyses ; jamais communiqué, jamais mentionné au client.
+## LBA file (internal)
+identification, ayant(s) droit économique(s), profile, origin of funds, risk level, documents, periodic review (clock), indicators and analyses; never communicated, never mentioned to the client.
 
-## Rapport de conflit (interne)
-noms contrôlés, résultats (`cerebro conflict-check`), liens trouvés, appréciation, décision proposée à Mustafa.
+## Conflict report (internal)
+names checked, results (`cerebro conflict-check`), links found, assessment, decision proposed to Mustafa.

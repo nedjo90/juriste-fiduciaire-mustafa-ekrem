@@ -11,13 +11,13 @@ mots_clés: bibliothèque Fedlex RS loi article barème délai
 liens: BIB-001, BIB-003, BIB-005, BIB-007, BIB-008, CAP-001, CAP-008, RD-003, RD-006
 source: https://fedlex.data.admin.ch
 ---
-# Bibliothèque fédérale : état et mode d'emploi
+# Federal library: state and how to use it
 
 ## Résumé
-Textes officiels Fedlex (consolidés, XML Akoma Ntoso) ingérés le 2026-10-03, un article = une section « ## Art. N ». Interroger : `cerebro law article <RS|abrév> "art. N" [--date AAAA-MM-JJ] [--langue de]` → texte, version, URL ; `cerebro law asof <RS> --date` → version en vigueur. Date non couverte par une version ingérée → aucun texte (⚠), jamais un texte périmé.
+Official Fedlex texts (consolidated, Akoma Ntoso XML) ingested on 2026-10-03, one article = one section « ## Art. N ». Query: `cerebro law article <RS|abrév> "art. N" [--date AAAA-MM-JJ] [--langue de]` → text, version, URL; `cerebro law asof <RS> --date` → version in force. Date not covered by an ingested version → no text (⚠), never an outdated text.
 
-## Textes ingérés
-| ID | RS | abrév. | langue | version (dès) | valable jusqu'au (exclu) |
+## Texts ingested
+| ID | RS | abbr. | language | version (from) | valid until (excluded) |
 |---|---|---|---|---|---|
 | BIB-013 | 173.110 | LTF | fr | 2026-04-01 | en vigueur |
 | BIB-014 | 173.110.3 | — | fr | 1963-10-03 | en vigueur |
@@ -47,18 +47,19 @@ Textes officiels Fedlex (consolidés, XML Akoma Ntoso) ingérés le 2026-10-03, 
 | BIB-021 | 955.033.0 | OBA-FINMA | fr | 2023-01-01 | en vigueur |
 | BIB-010 | 955.3 | LTPM | fr | 2026-10-01 | en vigueur |
 | BIB-022 | 955.31 | OTPM | fr | 2026-10-01 | en vigueur |
+(« en vigueur » = in force, no end date)
 
-## Règles de délais vérifiées (cerebro law verify)
-RD-001 LIFD art. 132 al. 1 (30 j) · RD-002 LIFD art. 140 al. 1 (30 j) · RD-003 LIA art. 16 al. 1 let. c + art. 12 al. 1 (trente jours, corrigée) · RD-004 LTVA art. 71 al. 1 (60 j) · RD-005 CO art. 699 al. 2 (six mois) · RD-006 LTPM art. 13 al. 3 (un mois, corrigée : art. 697j CO abrogé au 1.10.2026) · RD-007 LP art. 74 al. 1 (dix jours) · RD-008 LTF art. 100 al. 1 (30 j). Samedi assimilé à un jour férié : RS 173.110.3 art. 1.
+## Verified deadline rules (cerebro law verify)
+RD-001 LIFD art. 132 al. 1 (30 d) · RD-002 LIFD art. 140 al. 1 (30 d) · RD-003 LIA art. 16 al. 1 let. c + art. 12 al. 1 (thirty days, corrected) · RD-004 LTVA art. 71 al. 1 (60 d) · RD-005 CO art. 699 al. 2 (six months) · RD-006 LTPM art. 13 al. 3 (one month, corrected: art. 697j CO repealed as of 1.10.2026) · RD-007 LP art. 74 al. 1 (ten days) · RD-008 LTF art. 100 al. 1 (30 d). Saturday treated as a public holiday: RS 173.110.3 art. 1.
 
-## Barèmes (table bareme, cerebro rates get <nom> --annee A)
-impot_anticipe (LIA art. 13 : 35 / 15 / 8 %) · tva (LTVA art. 25 : 8,1 / 2,6 / 3,8 %) · droit_emission (LT art. 8 : 1 % ; art. 6 al. 1 let. b, h, k : 1 M / 1 M / 10 M CHF) · ifd_personnes_morales (LIFD art. 68 : 8,5 % ; art. 71 : 4,25 %, seuil 5000 CHF). Chaque ligne porte RS, article, version, extrait et date de vérification. Inscription uniquement par `scripts/library/rates.py` (relit l'article avant d'inscrire).
+## Scales (table bareme, cerebro rates get <nom> --annee A)
+impot_anticipe (LIA art. 13: 35 / 15 / 8 %) · tva (LTVA art. 25: 8,1 / 2,6 / 3,8 %) · droit_emission (LT art. 8: 1 %; art. 6 al. 1 let. b, h, k: 1 M / 1 M / 10 M CHF) · ifd_personnes_morales (LIFD art. 68: 8,5 %; art. 71: 4,25 %, threshold 5000 CHF). Each row carries RS, article, version, extract and verification date. Entry only via `scripts/library/rates.py` (re-reads the article before entering).
 
-## Calculs
-`scripts/calc/withholding_tax.py`, `vat.py`, `stamp_duty.py` : JSON + `--excel` (onglets Hypothèses / Calcul / Sources, formules). Barème absent → ⚠ sans chiffre.
+## Calculations
+`scripts/calc/withholding_tax.py`, `vat.py`, `stamp_duty.py`: JSON + `--excel` (tabs Hypothèses / Calcul / Sources, formulas). Scale missing → ⚠ without figure.
 
-## Entretien
-`scripts/library/update.py` à chaque cycle complet : nouvelle consolidation → ingestion, objet changement_droit, tâche `bibliotheque_maj` (priorité 5), relance verify + barèmes. Source injoignable → incident + `bibliotheque_rattrapage`. Priorités : `scripts/library/priorities.yaml`. Cantons VD/GE et LexFind : `scripts/library/cantons.yaml` (repérés, non ingérés : droit cantonal ⚠). Registre du commerce : `scripts/library/zefix.py`.
+## Maintenance
+`scripts/library/update.py` at each full cycle: new consolidation → ingestion, changement_droit object, task `bibliotheque_maj` (priority 5), re-run verify + scales. Source unreachable → incident + `bibliotheque_rattrapage`. Priorities: `scripts/library/priorities.yaml`. Cantons VD/GE and LexFind: `scripts/library/cantons.yaml` (located, not ingested: cantonal law ⚠). Registre du commerce: `scripts/library/zefix.py`.
 
-## Limites
-Traductions DE seulement pour CO et LIFD ; IT absent. Circulaires AFC, jurisprudence, FF non ingérées. Jours fériés cantonaux non pris en compte.
+## Limits
+DE translations only for CO and LIFD; IT absent. AFC circulars, case law, FF not ingested. Cantonal public holidays not taken into account.

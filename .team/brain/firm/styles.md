@@ -1,28 +1,28 @@
-# Styles par langue et par destinataire (machine)
-source: constitution §7.1-7.3 ; MET-005 (rédaction claire) ; profil de style de Mustafa = CAB-001 (appris de ses mails et documents, prime sur ce fichier) · maj: 2026-10-03
-valeurs de la maison (signature, formule, tutoiement) : `cerebro config get firm.signature` / `mustafa.tutoiement` ; vide → défaut ci-dessous.
+# Styles by language and recipient (machine)
+source: constitution §7.1-7.3; MET-005 (clear drafting); Mustafa's style profile = CAB-001 (learned from his mails and documents, prevails over this file) · maj: 2026-10-03
+house values (signature, formula, tutoiement): `cerebro config get firm.signature` / `mustafa.tutoiement`; empty → default below.
 
-## Par langue
-| langue | appel (défaut) | clôture (défaut) | typographie | dates | montants |
+## By language
+| language | salutation (default) | closing (default) | typography | dates | amounts |
 |---|---|---|---|---|---|
-| fr-CH | « Madame, Monsieur, » · « Chère Madame, » si relation établie | « Avec mes meilleures salutations » (courant) · « Je vous prie d'agréer, Madame, Monsieur, mes salutations distinguées » (administration, premier contact) | « » avec espace insécable ; espace insécable avant : ; ? ! | 3 octobre 2026 · 03.10.2026 | CHF 1'234.50 |
-| de-CH | « Sehr geehrte Frau X » (sans virgule finale en usage suisse courant, à aligner sur le profil de Mustafa) · « Guten Tag Frau X » (moins formel) | « Freundliche Grüsse » | «…» sans espace ; ss, jamais ß | 3. Oktober 2026 · 03.10.2026 | CHF 1'234.50 |
-| de-DE (destinataire en Allemagne) | « Sehr geehrte Frau X, » | « Mit freundlichen Grüßen » | „…“ ; ß | 3. Oktober 2026 | 1.234,50 EUR |
-| it-CH | « Gentile Signora X, » · « Egregio Signor X, » | « Cordiali saluti » · « Distinti saluti » (formel) | «…» | 3 ottobre 2026 | CHF 1'234.50 |
-| en | « Dear Ms X, » | « Kind regards » · « Yours sincerely » (formel) | “…” | 3 October 2026 | CHF 1,234.50 |
+| fr-CH | « Madame, Monsieur, » · « Chère Madame, » if relationship established | « Avec mes meilleures salutations » (usual) · « Je vous prie d'agréer, Madame, Monsieur, mes salutations distinguées » (administration, first contact) | « » with non-breaking space; non-breaking space before : ; ? ! | 3 octobre 2026 · 03.10.2026 | CHF 1'234.50 |
+| de-CH | « Sehr geehrte Frau X » (no trailing comma in common Swiss usage, align with Mustafa's profile) · « Guten Tag Frau X » (less formal) | « Freundliche Grüsse » | «…» without space; ss, never ß | 3. Oktober 2026 · 03.10.2026 | CHF 1'234.50 |
+| de-DE (recipient in Germany) | « Sehr geehrte Frau X, » | « Mit freundlichen Grüßen » | „…“ ; ß | 3. Oktober 2026 | 1.234,50 EUR |
+| it-CH | « Gentile Signora X, » · « Egregio Signor X, » | « Cordiali saluti » · « Distinti saluti » (formal) | «…» | 3 ottobre 2026 | CHF 1'234.50 |
+| en | « Dear Ms X, » | « Kind regards » · « Yours sincerely » (formal) | “…” | 3 October 2026 | CHF 1,234.50 |
 
-## Par destinataire
-| destinataire | registre | ce qui compte | forme |
+## By recipient
+| recipient | register | what matters | form |
 |---|---|---|---|
-| Mustafa | collègue, chaleureux, bref ; vouvoiement par défaut | la réponse, le geste à faire, le risque | conversation : deux phrases ou schéma puis texte ; jamais de mécanique, jamais de rappel de sa question |
-| client dirigeant | direct, orienté décision | combien, quand, quoi signer, quel risque | mail court réponse en tête ; mémo avec résumé exécutif d'une page |
-| client particulier | simple, rassurant, sans jargon | conséquences concrètes, prochaines étapes, coûts | phrases courtes, termes juridiques expliqués une fois |
-| administration fiscale | formel, factuel, précis | faits prouvés, base légale, conclusions | réclamation : conclusions, faits, motifs, pièces numérotées ; aucune émotion |
-| registre du commerce | formel, minimal | conformité des pièces, formulations exactes | réquisition et pièces selon les exigences du registre (à vérifier) |
-| avocat / confrère | technique, dense | état de fait, questions, pièces, délais | note de transmission + chronologie + table des autorités |
-| banque | formel, sobre | identité, ayants droit, pouvoirs, source des fonds | lettre + pièces listées |
-| réviseur | technique comptable | cohérence chiffres, écritures, réserves | note + tableau |
-| partie adverse | courtois, ferme, jamais d'aveu | position, délai, conséquence | lettre structurée ; MET-012 strict |
+| Mustafa | colleague, warm, brief; vouvoiement by default | the answer, the action to take, the risk | conversation: two sentences or diagram then text; never mechanics, never restate his question |
+| client executive | direct, decision-oriented | how much, when, what to sign, what risk | short mail, answer first; memo with one-page executive summary |
+| private client | simple, reassuring, no jargon | concrete consequences, next steps, costs | short sentences, legal terms explained once |
+| tax administration | formal, factual, precise | proven facts, legal basis, conclusions | réclamation: conclusions, facts, grounds, numbered exhibits; no emotion |
+| registre du commerce | formal, minimal | compliance of documents, exact wording | réquisition and documents per registry requirements (to verify) |
+| lawyer / colleague | technical, dense | facts, questions, exhibits, deadlines | transmittal note + timeline + table of authorities |
+| bank | formal, sober | identity, ayants droit, powers, source of funds | letter + listed documents |
+| auditor | accounting-technical | consistency of figures, entries, reservations | note + table |
+| opposing party | courteous, firm, never an admission | position, deadline, consequence | structured letter; MET-012 strict |
 
-## Règles communes
-langue du destinataire (sinon langue de la procédure) · objet précis · réponse en tête · une idée par paragraphe · pas de puces ni de gras en correspondance · pièces nommées client-objet-date-version · signature de la maison · aucun tic (MET-005) · aucune note interne (MET-012).
+## Common rules
+recipient's language (otherwise language of the procedure) · precise subject · answer first · one idea per paragraph · no bullets or bold in correspondence · documents named client-subject-date-version · house signature · no tics (MET-005) · no internal note (MET-012).

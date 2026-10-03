@@ -11,21 +11,21 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Parties prenantes (machine)
-usage: dossier à enjeu, restructuration, succession, conflit d'actionnaires, contrôle fiscal, deal, message délicat.
+# Stakeholders (machine)
+use: high-stakes matter, restructuring, succession, shareholder conflict, tax audit, deal, delicate message.
 
-## Étapes
-1 inventaire : organes tirés du registre (`cerebro entity organs <E->`, jamais supposés), actionnaires/associés, ayants droit économiques, famille (conjoint, héritiers réservataires), administration (AFC, administration cantonale, commune), registre du commerce, réviseur, banque, employés, caisse de compensation, partie adverse et son conseil, autorités de surveillance.
-2 pour chacun : pouvoir (décide/influence/subit) · intérêt (élevé/faible) · position actuelle (pour/neutre/contre/inconnue) · besoin réel · relation (lien P-/E-) · source de l'information (étiquetée).
-3 grille 2×2 : pouvoir élevé + intérêt élevé → gérer de près ; pouvoir élevé + faible intérêt → satisfaire ; faible pouvoir + intérêt élevé → informer ; faible + faible → surveiller.
-4 stratégie et message par acteur ; ordre et timing des contacts ; qui parle (Mustafa, client, avocat).
-5 schéma (visualiseur) + table ; mise à jour à chaque événement.
+## Steps
+1 inventory: organs taken from the register (`cerebro entity organs <E->`, never assumed), shareholders/partners, ayants droit économiques, family (spouse, héritiers réservataires), administration (AFC, cantonal administration, commune), registre du commerce, auditor, bank, employees, caisse de compensation, opposing party and counsel, supervisory authorities.
+2 for each: power (decides/influences/undergoes) · interest (high/low) · current position (for/neutral/against/unknown) · real need · relationship (P-/E- link) · source of the information (tagged).
+3 2×2 grid: high power + high interest → manage closely; high power + low interest → keep satisfied; low power + high interest → keep informed; low + low → monitor.
+4 strategy and message per actor; order and timing of contacts; who speaks (Mustafa, client, lawyer).
+5 diagram (visualiser) + table; updated at each event.
 
-## Contrôle
-[ ] organes vérifiés au registre (source datée) · [ ] acteurs silencieux recherchés (conjoint, minoritaires, héritiers, caisse, réviseur) · [ ] décideur réel distinct de l'organe formel si c'est le cas, sourcé · [ ] croisements avec d'autres clients signalés (`cerebro croisements`) · [ ] perceptions marquées [perception] et jamais recopiées dans un livrable
+## Checks
+[ ] organs verified in the register (dated source) · [ ] silent actors sought (spouse, minorities, heirs, caisse, auditor) · [ ] real decision-maker distinct from the formal organ where applicable, sourced · [ ] overlaps with other clients flagged (`cerebro croisements`) · [ ] perceptions marked [perception] and never copied into a deliverable
 
-## Pièges
-supposer les organes · ignorer les héritiers réservataires dans une planification · oublier que l'administration est aussi une partie prenante (pratique, discrétion) · message identique pour tous · conflit d'intérêts non vu entre deux clients.
+## Pitfalls
+assuming the organs · ignoring héritiers réservataires in planning · forgetting that the administration is also a stakeholder (practice, discretion) · same message for everyone · unseen conflict of interest between two clients.
 
-## Exemple (court)
-Transmission de la SA familiale : père (CA, 70 %, décide), fille (directrice, 15 %, intérêt élevé), fils (15 %, hors entreprise, contre une donation inégale), conjointe (régime à vérifier, influence), banque (financement, satisfaire), AFC (liquidation partielle indirecte possible ⚠, informer via ruling ?). Stratégie : réunion de famille préparée, pacte successoral à étudier, ruling avant toute vente.
+## Example (short)
+Transfer of the family SA: father (CA, 70 %, decides), daughter (director, 15 %, high interest), son (15 %, outside the company, against an unequal donation), wife (matrimonial regime to verify, influences), bank (financing, keep satisfied), AFC (liquidation partielle indirecte possible ⚠, inform via ruling?). Strategy: prepared family meeting, pacte successoral to study, ruling before any sale.

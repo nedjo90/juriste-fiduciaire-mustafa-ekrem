@@ -11,32 +11,32 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Table des autorités (machine)
-usage: annexe de tout mémo, avis, note de recherche, réclamation, recours préparé ; produite par le chercheur, vérifiée par le documentaliste.
+# Table of authorities (machine)
+use: annex to every memo, opinion, research note, réclamation, prepared recours; produced by the researcher, verified by the documentalist.
 
-## Colonnes
-n° | autorité (texte/arrêt/circulaire/doctrine) | type | niveau (MET hiérarchie) | juridiction (CH, CH-VD, FR…) | date (version/arrêt) | langue | contraignant/persuasif/pratique | passage exact (cité, guillemets, ≤ 3 lignes) | pour/contre/neutre | ID BIB- | vérifié le
+## Columns
+n° | authority (text/judgment/circular/doctrine) | type | level (MET hierarchy) | jurisdiction (CH, CH-VD, FR…) | date (version/judgment) | language | contraignant/persuasif/pratique | exact passage (quoted, quotation marks, ≤ 3 lines) | for/against/neutral | ID BIB- | vérifié le
 
-## Étapes
-1 Collecter : bibliothèque d'abord (`cerebro law search`, `cerebro find --type source`), puis sources officielles en liste blanche (§10). Aucune autorité de mémoire.
-2 Qualifier chaque ligne (niveau, statut, date) ; écarter ce qui n'est pas applicable dans le temps (le noter).
-3 Trier : poids décroissant, puis date décroissante.
-4 Autorités contraires : toujours présentes, marquées « contre », avec la réponse prévue (renvoi au § de l'analyse).
-5 Vérifier : le documentaliste compare chaque passage au texte (lettre à lettre) et remplit « vérifié le » ; sinon ⚠.
-6 Enregistrer : chaque autorité nouvelle → `cerebro law ingest` (texte) ou fiche `source` ; lien vers le livrable (`cerebro link LIV-… BIB-…`).
+## Steps
+1 Collect: library first (`cerebro law search`, `cerebro find --type source`), then whitelisted official sources (§10). No authority from memory.
+2 Qualify each row (level, status, date); discard what is not applicable in time (note it).
+3 Sort: decreasing weight, then decreasing date.
+4 Contrary authorities: always present, marked « contre », with the planned reply (reference to the § of the analysis).
+5 Verify: the documentalist compares each passage with the text (letter by letter) and fills « vérifié le »; otherwise ⚠.
+6 Record: each new authority → `cerebro law ingest` (text) or `source` record; link to the deliverable (`cerebro link LIV-… BIB-…`).
 
-## Formats de citation
+## Citation formats
 fr : art. 698 al. 2 ch. 4 CO · ATF 1xx II yyy consid. 3.2 · arrêt TF 2C_123/2025 du 1er mars 2025 consid. 4
 de : Art. 698 Abs. 2 Ziff. 4 OR · BGE 1xx II yyy E. 3.2 · Urteil 2C_123/2025 vom 1. März 2025 E. 4
 it : art. 698 cpv. 2 n. 4 CO · DTF 1xx II yyy consid. 3.2 · sentenza 2C_123/2025 del 1° marzo 2025
-(numéros ci-dessus = gabarit de forme, pas des références)
+(numbers above = form template, not references)
 
-## Contrôle
-[ ] aucune ligne sans ID BIB- ou ⚠ · [ ] passages copiés à l'identique · [ ] contraires présents · [ ] dates de version cohérentes avec les faits · [ ] langue de la version lue indiquée · [ ] canton indiqué pour tout texte cantonal
+## Checks
+[ ] no row without ID BIB- or ⚠ · [ ] passages copied identically · [ ] contrary authorities present · [ ] version dates consistent with the facts · [ ] language of the version read stated · [ ] canton stated for any cantonal text
 
-## Pièges
-paraphrase présentée comme citation · arrêt cité par ouï-dire (résumé de presse) · consid. erroné · omettre l'arrêt défavorable · confondre ATF publié et arrêt non publié · doctrine sans édition ni année.
+## Pitfalls
+paraphrase presented as quotation · judgment cited by hearsay (press summary) · wrong consid. · omitting the unfavourable judgment · confusing published ATF and unpublished judgment · doctrine without edition or year.
 
-## Exemple (court)
+## Example (short)
 | 1 | LIFD art. 132 | loi féd. | 2 | CH | état 2026-01-01 | fr | contraignant | « … » | neutre (délai) | BIB-nnnn | 2026-10-03 |
 | 2 | Arrêt TC VD … | jurisp. cant. | 5 | CH-VD | 2024-… | fr | persuasif hors VD | « … » | contre | BIB-nnnn | ⚠ |

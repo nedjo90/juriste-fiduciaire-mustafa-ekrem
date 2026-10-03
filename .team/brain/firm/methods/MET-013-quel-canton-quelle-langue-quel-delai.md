@@ -11,29 +11,29 @@ mots_clés: méthode cabinet
 liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
-# Quel canton, quelle langue, quel délai (machine)
-usage: réflexe d'entrée de toute question, de tout document déposé, de tout délai. §14.
+# Which canton, which language, which deadline (machine)
+use: entry reflex for every question, every dropped document, every deadline. §14.
 
-## Les sept points (ligne de tête de tout dossier)
-1 JURIDICTION : canton et commune (rattachement à déterminer selon la loi applicable : domicile, siège, établissement stable, immeuble, lieu de travail — article lu, sinon ⚠) ; fédéral en parallèle ; étranger ?
-2 LANGUE : de l'autorité/procédure · du client · du destinataire · des sources (souvent de en cantonal)
-3 PÉRIODE : période fiscale, exercice, date des faits → version du droit (`cerebro law asof`)
-4 ÉVÉNEMENT DÉCLENCHEUR : notification, échéance, clôture, décès, signature, dépôt ; date et preuve (enveloppe, accusé, suivi)
-5 DÉLAI : `cerebro clock start <type> --date <déclencheur> --client <C> --canton <CT>` ; jamais calculé en prose ; prolongeable ou non ; féries/suspensions selon la loi applicable (⚠ si non lue)
-6 AUTORITÉ COMPÉTENTE : nom exact, adresse (source officielle)
-7 FORME : écrit, signature, motivation, conclusions, pièces, recommandé, acte authentique, inscription au registre, langue imposée
+## The seven points (head line of every matter)
+1 JURISDICTION: canton and commune (connecting factor to determine per applicable law: domicile, seat, permanent establishment, real estate, place of work — article read, otherwise ⚠); federal in parallel; foreign?
+2 LANGUAGE: of the authority/procedure · of the client · of the recipient · of the sources (often de at cantonal level)
+3 PERIOD: tax period, financial year, date of facts → version of the law (`cerebro law asof`)
+4 TRIGGERING EVENT: notification, due date, closing, death, signature, filing; date and proof (envelope, receipt, tracking)
+5 DEADLINE: `cerebro clock start <type> --date <déclencheur> --client <C> --canton <CT>`; never computed in prose; extendable or not; holidays/suspensions per applicable law (⚠ if not read)
+6 COMPETENT AUTHORITY: exact name, address (official source)
+7 FORM: writing, signature, reasoning, conclusions, exhibits, registered mail, acte authentique, registration, imposed language
 
-format ligne : `CH-VD · Lausanne · fr (client fr, autorité fr) · PF 2025 · notif 2026-10-02 · DL-nnn 2026-11-02 non prolongeable ⚠art. · ACI VD · écrit motivé`
+line format: `CH-VD · Lausanne · fr (client fr, autorité fr) · PF 2025 · notif 2026-10-02 · DL-nnn 2026-11-02 non prolongeable ⚠art. · ACI VD · écrit motivé`
 
-## Étapes
-1 dès l'entrée d'une question ou d'un document, remplir les sept points ci-dessus (⚠ si inconnu)
-2 créer l'horloge du délai et lier le document à préparer · 3 écrire la ligne de tête dans le dossier · 4 point inconnu et décisif → défaut le plus prudent + question simple dans la file
+## Steps
+1 as soon as a question or document comes in, fill the seven points above (⚠ if unknown)
+2 create the deadline clock and link the document to prepare · 3 write the head line in the matter · 4 unknown and decisive point → most prudent default + simple question in the queue
 
-## Contrôle
-[ ] 7 points renseignés ou ⚠ · [ ] horloge créée et document préparé lié · [ ] langue de sortie = langue du destinataire · [ ] canton hors suivi → « pratique cantonale à vérifier »
+## Checks
+[ ] 7 points filled or ⚠ · [ ] clock created and prepared document linked · [ ] output language = recipient's language · [ ] canton not followed → « pratique cantonale à vérifier »
 
-## Pièges
-déménagement intercantonal en cours d'année · double domicile ou séjour · société avec établissements dans plusieurs cantons · notification par courrier A+ ou recommandé non retiré (date à vérifier selon la loi) · langue de procédure imposée ≠ langue du client · délai légal non prolongeable confondu avec délai d'autorité prolongeable · fin de délai un samedi/dimanche/férié (règle à lire).
+## Pitfalls
+intercantonal move during the year · dual domicile or residence · company with establishments in several cantons · notification by A+ mail or uncollected registered mail (date to verify per the law) · imposed procedural language ≠ client's language · non-extendable statutory deadline confused with extendable authority deadline · deadline ending on a Saturday/Sunday/holiday (rule to read).
 
-## Exemple (court)
-Décision de taxation reçue par le client, vaudois, PF 2025, datée du 30.09, reçue le 02.10 → ligne de tête ci-dessus ; horloge réclamation ; projet de réclamation en français préparé ; question à la file seulement si la date de réception n'est pas documentée.
+## Example (short)
+Décision de taxation received by the client, Vaud resident, PF 2025, dated 30.09, received 02.10 → head line above; réclamation clock; draft réclamation in French prepared; question to the queue only if the date of receipt is not documented.
