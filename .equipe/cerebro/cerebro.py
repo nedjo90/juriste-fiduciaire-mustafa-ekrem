@@ -65,6 +65,8 @@ def build():
     a = s.add_parser("queue"); a.add_argument("action", choices=["add", "next", "done", "list"]); a.add_argument("arg", nargs="*"); a.add_argument("--priorite", type=int, default=4)
     a = s.add_parser("task-seen"); a.add_argument("type")
     a = s.add_parser("mesure"); a.add_argument("role"); a.add_argument("tache"); a.add_argument("palier"); a.add_argument("--tokens", type=int, default=0); a.add_argument("--ms", type=int, default=0)
+    a = s.add_parser("source", help="vérifier une source avant de la réutiliser, ou enregistrer une source trouvée en conversation")
+    a.add_argument("action", choices=["verify", "officielle"]); a.add_argument("ref"); a.add_argument("--force", action="store_true")
     from cb import routines as RT; RT.parseurs(s)  # routine, regle, reconcile (chantier autonomie)
     return p
 
@@ -207,6 +209,9 @@ def main(argv=None):
         out(M.pipeline_list() if args.action == "list" else {"id": M.pipeline_add(args.client, args.opportunite, args.valeur)})
     elif c == "engagement":
         out({"id": M.engagement_add(args.client, args.envers, args.objet, args.du_le)})
+    elif c == "source":
+        from cb import sources as SRC
+        out(SRC.verifier(args.ref, args.force) if args.action == "verify" else {"officielle": SRC.officielle(args.ref)})
     elif c == "law":
         if args.action == "ingest":
             txt = open(args.fichier, encoding="utf-8").read()

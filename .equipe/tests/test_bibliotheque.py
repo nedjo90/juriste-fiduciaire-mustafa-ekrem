@@ -177,6 +177,31 @@ def _():
     assert e["forme"] == "Société anonyme" and e["siege"] == "Vevey" and e["but"], e
 
 
+@test("sources vivantes : liste officielle lue dans le fichier ; hors ligne → réserve ; loi absente → ajout en file")
+def _():
+    off = cb("source", "officielle", "https://www.estv.admin.ch/une/page")
+    assert off.get("officielle"), off
+    assert cb("source", "officielle", "https://www.example.com/")["officielle"] is None
+    t = racine_jetable()
+    env = {"CEREBRO_ROOT": str(t), "CEREBRO_SANS_RESEAU": "1"}
+    cb("init", env=env)
+    v = cb("source", "verify", "https://www.admin.ch/gov/fr/accueil.html", env=env)
+    assert v.get("statut") == "hors ligne" and "⚠" in v.get("reserve", ""), v
+    a = cb("law", "article", "221.229.1", "art. 1", env=env)
+    assert "ajout demandé" in a.get("erreur", "") and "⚠" in a.get("reserve", ""), a
+    f = cb("queue", "list", env=env)
+    assert any(x["tache"] == "bibliotheque_ingest" and x["arg"] == "221.229.1" for x in f), f
+    shutil.rmtree(t, ignore_errors=True)
+
+
+@test("veille du Recueil officiel : filtre des domaines suivis (préfixes RS, jamais une liste fermée)")
+def _():
+    import veille_ro as V
+    suivis = set(V.DOMAINES) | {"221.229.1"}
+    assert V.pertinent("642.11", suivis) and V.pertinent("0.672.934.91", suivis) and V.pertinent("221.229.1", suivis)
+    assert not V.pertinent("916.443.112", suivis) and not V.pertinent("6421", suivis)
+
+
 if __name__ == "__main__":
     try:
         sys.stdout.reconfigure(encoding="utf-8")

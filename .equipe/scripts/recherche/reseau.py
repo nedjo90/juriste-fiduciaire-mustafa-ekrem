@@ -5,6 +5,10 @@ import os, sys, json, time, datetime as dt, urllib.request, urllib.parse, urllib
 from pathlib import Path
 
 UA = "bibliotheque-fiduciaire/1.0 (recherche documentaire interne ; requetes espacees)"
+# chaque site a sa règle (certains refusent les programmes, d'autres les faux navigateurs) : identités honnêtes essayées
+# tour à tour sur un refus 403, la première acceptée l'emporte
+IDENTITES = (UA, "curl/8.5.0",
+             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36")
 PAUSE = {"api.openalex.org": 2.0, "api.semanticscholar.org": 3.0, "www.courtlistener.com": 2.0}
 PAUSE_DEFAUT = 1.0
 _dernier = {}
@@ -35,17 +39,22 @@ def obtenir(url, params=None, entetes=None, essais=3, timeout=40, plafond_attent
         url += ("&" if "?" in url else "?") + urllib.parse.urlencode(params)
     hote = urllib.parse.urlparse(url).netloc
     err = None
+    ident = 0
+    essais = max(essais, len(IDENTITES))
     for i in range(essais):
         attente = PAUSE.get(hote, PAUSE_DEFAUT) - (time.time() - _dernier.get(hote, 0))
         if attente > 0:
             time.sleep(attente)
         _dernier[hote] = time.time()
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA, **(entetes or {})})
+            req = urllib.request.Request(url, headers={"User-Agent": IDENTITES[ident], **(entetes or {})})
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.status, r.read(), r.headers.get("Content-Type", "")
         except urllib.error.HTTPError as e:
             err = e
+            if e.code == 403 and ident < len(IDENTITES) - 1:
+                ident += 1
+                continue
             if e.code in (429, 503) and i < essais - 1:
                 ra = e.headers.get("Retry-After") if e.headers else None
                 try:

@@ -3,7 +3,7 @@ langue, dates, version, texte intégral, source, licence), recherche, état du d
 délais contre le texte, barèmes versionnés. Aucun contenu juridique n'est écrit de mémoire : tout vient d'un texte ingéré."""
 import json, re, hashlib
 from pathlib import Path
-from .core import db, iso, today, fold, cut, EQ, audit, journal, new_id, slug
+from .core import db, iso, today, fold, cut, EQ, audit, journal, new_id, slug, get_etat, set_etat
 from .objets import create, update, get, link, abspath, relpath, write_file
 from .recherche import sections
 
@@ -105,8 +105,59 @@ def asof(identifiant, date=None, langue="fr"):
                      (identifiant, identifiant, langue, date, date)).fetchone()
     return dict(r) if r else None
 
+FRAIS_JOURS = 7
+
+
+def _fraicheur(v):
+    """au fil des conversations, pas en tâche de fond : la version citée est-elle toujours celle en vigueur ? Une vérification
+    Fedlex par texte et par semaine au plus (coût : une requête) ; nouvelle version → téléchargée sur-le-champ."""
+    import os, subprocess, sys
+    if v.get("juridiction") != "CH" or os.environ.get("CEREBRO_SANS_RESEAU"):
+        return None, None
+    etat = get_etat("fraicheur_lois", {}) or {}
+    k = v["identifiant"]
+    if etat.get(k) and (today() - __import__("datetime").date.fromisoformat(etat[k][:10])).days < FRAIS_JOURS:
+        return None, etat[k][:10]
+    from .sources import _fedlex_en_vigueur, FEDLEX
+    try:
+        en = _fedlex_en_vigueur(k)
+    except Exception:
+        return {"reserve": "⚠ version non revérifiée (Fedlex injoignable) : citer avec réserve"}, None
+    etat[k] = iso()
+    try:
+        set_etat("fraicheur_lois", etat)
+    except Exception:
+        pass
+    if en and en > v["version"]:
+        try:
+            subprocess.run([sys.executable, str(FEDLEX), "ingest", k, "--langue", v["langue"]], capture_output=True, timeout=180,
+                           env={**os.environ, "PYTHONIOENCODING": "utf-8"}, stdin=subprocess.DEVNULL)
+            return {"mise_a_jour": f"nouvelle version en vigueur depuis le {en}, téléchargée à l'instant"}, iso()
+        except Exception:
+            from .brief import queue_add
+            queue_add("bibliotheque_ingest", k, 1)
+            return {"reserve": f"⚠ une version plus récente est en vigueur depuis le {en} : texte en cours de mise à jour, vérifier avant d'affirmer"}, None
+    return None, iso()
+
+
+def _a_venir(identifiant):
+    """réformes publiées touchant ce texte (veille) : à signaler avec la citation, en une ligne chacune"""
+    ids = [r[0] for r in db().execute("SELECT id FROM bibliotheque WHERE identifiant=?", (identifiant,))]
+    if not ids:
+        return []
+    q = ",".join("?" * len(ids))
+    return [f"{r['nom']} — {cut(r['resume'] or '', 110)}" for r in db().execute(
+        f"SELECT DISTINCT o.nom, o.resume FROM liens l JOIN objets o ON o.id=l.src WHERE l.dst IN ({q}) AND o.type='changement_droit' "
+        f"AND o.statut!='archive' ORDER BY o.id DESC LIMIT 3", ids)]
+
+
 def article(identifiant, art, date=None, langue="fr"):
     v = asof(identifiant, date, langue)
+    note, verifie = (None, None)
+    if v and not date:
+        note, verifie = _fraicheur(v)
+        if note and note.get("mise_a_jour"):
+            v = asof(identifiant, date, langue) or v
     if not v:
         # la bibliothèque n'est jamais limitée à ce qu'elle contient aujourd'hui : texte demandé → ajouté au prochain cycle
         from .brief import queue_add
@@ -129,8 +180,14 @@ def article(identifiant, art, date=None, langue="fr"):
         ft = fold(t)
         m = re.match(r"art\.?\s*([0-9]+[a-z]*)", ft)
         if m and m.group(1) == a.split()[0]:
-            return {"source": v["id"], "identifiant": v["identifiant"], "version": v["version"], "langue": langue, "url": v["url"],
-                    "article": t, "texte": c, "verifie_le": iso()}
+            r = {"source": v["id"], "identifiant": v["identifiant"], "version": v["version"], "langue": langue, "url": v["url"],
+                 "article": t, "texte": c, "version_verifiee_le": verifie or v.get("ingere_le") or v["version"]}
+            if note:
+                r.update(note)
+            av = _a_venir(v["identifiant"])
+            if av:
+                r["reformes_publiees"] = av
+            return r
     return {"source": v["id"], "erreur": f"{art} introuvable dans {v['identifiant']} version {v['version']}"}
 
 def search(q, juridiction=None, limit=10, langue="fr"):

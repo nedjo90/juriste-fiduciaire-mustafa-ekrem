@@ -23,10 +23,19 @@ ARCHIVES_INBOX = EQ / "archives" / "inbox"
 ETAT_GREFFIER = INBOX / "_etat-greffier.json"
 COPIES = EQ / "bibliotheque" / "copies"
 LECONS = EQ / "cerveau" / "doctrine" / "specialistes"
-OFFICIELS = ("admin.ch", "fedlex", "bger.ch", "bstger.ch", "bvger.ch", "vd.ch", "ge.ch", "silgeneve.ch", "lexfind.ch", "finma.ch",
-             "zefix.ch", "shab.ch", "fr.ch", "vs.ch", "ne.ch", "ju.ch", "be.ch", "zh.ch", "ti.ch", "eur-lex.europa.eu", "curia.europa.eu",
-             "legifrance.gouv.fr", "bofip.impots.gouv.fr", "legislation.gov.uk", "bailii.org", "courtlistener.com", "oecd.org",
-             "gesetze-im-internet.de", "normattiva.it", "entscheidsuche.ch", "expertsuisse.ch", "treuhandsuisse.ch")
+def _sources_officielles():
+    fond.cb()
+    from cb import sources
+    return sources.noms_officiels(30)
+
+
+def _officielle(url):
+    """liste officielle vivante (scripts/recherche/liste_blanche.yaml, enrichie au fil des découvertes) : jamais de liste en dur"""
+    fond.cb()
+    from cb import sources
+    return bool(sources.officielle(url))
+
+
 IGNORES = ("claude.ai", "anthropic.com", "localhost", "127.0.0.1", "github.com/anthropics")
 
 
@@ -204,6 +213,12 @@ def candidats_veille():
     chg = [dict(r) for r in con.execute("SELECT id, nom, resume, source FROM objets WHERE type='changement_droit' AND enregistre_le>=? "
                                         "AND statut!='archive' AND COALESCE(json_extract(data,'$.veille_jugee'),'')=''", (_jours(7),))]
     file_ = [dict(r) for r in con.execute("SELECT n, tache, arg FROM file_entretien WHERE statut='attente' AND tache IN ('veille','bibliotheque_maj')")]
+    # sources disparues (cerebro source verify) : la veille cherche leur nouvelle adresse
+    perdues = [dict(r) for r in con.execute("SELECT id, nom, source FROM objets WHERE type='source' AND statut!='archive' "
+                                            "AND json_extract(data,'$.statut_source')='introuvable' LIMIT 10")]
+    chg += [{"id": s["id"], "nom": f"source introuvable : {s['nom']}", "resume": "retrouver la nouvelle adresse officielle "
+             "(même autorité, même texte), puis `cerebro update <ID> source=<nouvelle adresse>` et `cerebro source verify <ID> --force` ; "
+             "à défaut, archiver", "source": s["source"]} for s in perdues]
     return chg, file_
 
 
@@ -240,11 +255,13 @@ def t_veille_hebdo(arg, fin):
                "versions de lois) :\n" + ("\n".join(lignes) or "- aucun cette semaine")
                + "\n\nPour chacun : pertinent pour la maison ? (domaines : `cerebro config get mustafa.domaines`, clients en base). Pertinent → "
                "liens vers clients/positions/règles touchés (`cerebro link`), prochaine action datée.\n\n"
-               "2. Recherche active, sources OFFICIELLES seulement (WebSearch puis WebFetch), sur les 7 derniers jours : circulaires, "
-               "notices et communications de l'AFC (estv.admin.ch) ; arrêts du Tribunal fédéral destinés à publication (bger.ch) en droit "
-               "fiscal, des sociétés, des successions, du travail, des poursuites ; communications de la FINMA et de l'OFAS ; nouveautés "
-               f"fiscales et du registre du commerce des cantons suivis ({', '.join(cantons)}) ; projets mis en consultation ou adoptés "
-               "par le Parlement (admin.ch) dans ces domaines. Pour chaque nouveauté pertinente, absente de la mémoire (`cerebro find` "
+               "2. Recherche active, sources OFFICIELLES seulement (WebSearch puis WebFetch), sur les 7 derniers jours : circulaires et "
+               "notices de l'administration fiscale, arrêts destinés à publication, communications des autorités de surveillance et des "
+               f"assurances sociales, nouveautés fiscales et du registre du commerce des cantons suivis ({', '.join(cantons)}), projets mis "
+               "en consultation ou adoptés, dans les domaines de la maison. Sources officielles connues (liste vivante, à compléter) : "
+               + "; ".join(_sources_officielles()) + ". Une source officielle nouvelle (autorité publique, adresse vérifiée) : "
+               "`python .equipe/scripts/recherche/web_officiel.py ajouter <domaine> --juridiction <CH|canton> --motif \"…\"`. "
+               "Pour chaque nouveauté pertinente, absente de la mémoire (`cerebro find` "
                "d'abord) : `cerebro new changement_droit \"<titre>\" --source <url officielle> --date <date d'analyse> --resume \"<ce qui "
                "change, date d'effet>\" --domaine veille`, liens vers les objets touchés ; texte fédéral à ajouter à la bibliothèque : "
                "`cerebro queue add bibliotheque_ingest <numéro RS>`. Rien d'inventé : sans source officielle datée, rien n'est créé.\n\n"
@@ -446,7 +463,7 @@ def t_enrichissement(arg, fin):
     sources = []
     for u, origine in list(urls_semaine().items())[:15]:
         dom = re.sub(r"^https?://", "", u).split("/")[0].lower()
-        fiab = "officielle" if any(o in u.lower() for o in OFFICIELS) else "secondaire"
+        fiab = "officielle" if _officielle(u) else "secondaire"
         copie = _copier(u)
         sid = O.create("source", core.cut(f"{dom} — {u.split('/', 3)[-1] if u.count('/') >= 3 else dom}", 80), source=u, statut="actif",
                        resume=core.cut(f"Source consultée en ligne et utilisée (capture {origine}) ; fiabilité {fiab} ; copie {copie or 'non faite'}", 280),

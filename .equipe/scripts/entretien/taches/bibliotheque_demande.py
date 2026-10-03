@@ -87,6 +87,17 @@ def t_bibliotheque_cantons_changements(arg, fin):
     return {"changements": faits}
 
 
-TACHES = {"bibliotheque_ingest": t_bibliotheque_ingest, "bibliotheque_cantons_changements": t_bibliotheque_cantons_changements}
+def t_source_officielle_lire(arg, fin):
+    """source officielle nouvelle ou modifiée (cerebro source verify) : lue, copiée et ingérée par web_officiel.py"""
+    if not (arg or "").startswith("http"):
+        return {"rien": True}
+    r = subprocess.run([fond.python_exe(), str(CODE / "scripts" / "recherche" / "web_officiel.py"), "recuperer", arg],
+                       capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=str(ROOT), env=fond.env_fond(),
+                       timeout=600, stdin=subprocess.DEVNULL)
+    return {"sortie": (r.stdout or r.stderr or "")[-300:]}
+
+
+TACHES = {"bibliotheque_ingest": t_bibliotheque_ingest, "bibliotheque_cantons_changements": t_bibliotheque_cantons_changements,
+          "source_officielle_lire": t_source_officielle_lire}
 CADENCES = {"bibliotheque_cantons_changements": (7, 5)}
-RESEAU = {"bibliotheque_ingest"}
+RESEAU = {"bibliotheque_ingest", "source_officielle_lire"}

@@ -26,9 +26,9 @@ DOMAINES = ("210", "211", "220", "221", "231", "235", "281", "291", "641", "642"
             "0.652", "0.653", "822", "831", "832", "833", "834", "835", "836", "837", "952", "954", "955", "956")
 
 
-def pertinent(rs, ingeres):
+def pertinent(rs, suivis):
     rs = str(rs or "")
-    return any(rs == p or rs.startswith(p + ".") for p in (*DOMAINES, *ingeres))
+    return any(rs == p or rs.startswith(p + ".") for p in suivis)
 
 
 def publications(depuis):
@@ -72,12 +72,16 @@ def main(argv=None):
         ingeres = {r[0]: r[1] for r in con.execute(
             "SELECT b.identifiant, MAX(b.id) FROM bibliotheque b WHERE b.juridiction='CH' GROUP BY b.identifiant")}
         deja = {r[0] for r in con.execute("SELECT source FROM objets WHERE type='changement_droit' AND COALESCE(source,'')!=''")}
+        # domaines suivis : réglables (cerebro config set veille.rs_suivis …), complétés seuls par chaque texte de la bibliothèque
+        # (un texte ajouté au fil d'une conversation est aussitôt suivi)
+        from cb import config as K
+        suivis = set(K.get("veille.rs_suivis") or DOMAINES) | set(ingeres)
         pubs = publications(depuis)
         bilan["publications"] = len(pubs)
         for pb in pubs:
             if pb["uri"] in vus or pb["uri"] in deja:
                 continue
-            rs = sorted(r for r in pb["rs"] if pertinent(r, ingeres))
+            rs = sorted(r for r in pb["rs"] if pertinent(r, suivis))
             if not rs:
                 continue
             eif = pb["en_vigueur"] or pb["publie"]

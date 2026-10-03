@@ -41,6 +41,7 @@ cabinet: identité, niveaux de confort, styles, modèles de livrables, glossaire
 
 ## Sources prioritaires
 - bibliothèque d'abord : `cerebro law search "<notion>"` → `cerebro law article <abrév> "art. N"` → `cerebro law asof <RS> --date <date des faits>` ; positions et précédents : `cerebro find --type position --type precedent "<sujet>"`
+- sources vivantes : `law article` vérifie seul que la version est en vigueur et signale les réformes publiées (à citer) ; page web officielle ou source déjà en mémoire → `cerebro source verify <adresse|ID>` AVANT de la (ré)utiliser : nouvelle → enregistrée ; « introuvable », « modifiée », « hors ligne » → réserve ⚠, jamais citée telle quelle
 - absent de la bibliothèque → source officielle en liste blanche (§10) consultée, puis ingestion par le documentaliste (`cerebro law ingest`) ; sinon ⚠ dans le texte
 - bibliothèque, puis liste blanche §10 (Fedlex en priorité : texte consolidé, état, versions)
 
