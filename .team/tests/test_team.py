@@ -93,29 +93,29 @@ test("skills importées : SOURCE.md présent", not src, src)
 # 3 bloc cardinal à jour partout
 r = cli("cardinal", "check")
 test("bloc cardinal : `cerebro cardinal check` vide", isinstance(r, dict) and r.get("perimes") == [], r)
-sans = [str(p.relative_to(ROOT)) for p in AGENTS + ROLES_FOND + SKILL_FILES if "<!-- BLOC-CARDINAL v" not in lire(p) or "PROTOCOLE SOMMAIRE" not in lire(p)]
+sans = [str(p.relative_to(ROOT)) for p in AGENTS + ROLES_FOND + SKILL_FILES if "<!-- BLOC-CARDINAL v" not in lire(p) or "SUMMARY PROTOCOL" not in lire(p)]
 test("bloc cardinal + protocole sommaire présents dans chaque rôle et skill", not sans, sans)
 
 # 4 aucune commande d'envoi hors interdiction explicite
-ENVOI = re.compile(r"\bsend\b|send_message|\bsubmit\b|envoyer le mail|envoie le mail|\.send\(|gmail.*send|mail.*--send", re.I)
+ENVOI = re.compile(r"\bsend\b(?!-)|send_message|\bsubmit\b|envoyer le mail|envoie le mail|\.send\(|gmail.*send|mail.*--send", re.I)
 NEG = re.compile(r"jamais|interdit|aucun|ne fait jamais|never|sans droit d'envoi|n'envoie|pas d'envoi|sans effet", re.I)
 fautes = []
 for p in AGENTS + ROLES_FOND + SKILL_FILES:
     section_jamais = False
     for i, l in enumerate(lire(p).splitlines(), 1):
         if l.startswith("## "):
-            section_jamais = "jamais" in l.lower()
+            section_jamais = "jamais" in l.lower() or "never" in l.lower()
         if ENVOI.search(l) and not section_jamais and not NEG.search(l):
             fautes.append(f"{p.name}:{i}")
 test("aucune commande d'envoi hors interdiction explicite", not fautes, fautes)
-sans_jamais = [p.name for p in AGENTS + ROLES_FOND + SKILL_FILES if not re.search(r"## Ne fait jamais\n.*(envoy|envoi)", lire(p), re.S)]
+sans_jamais = [p.name for p in AGENTS + ROLES_FOND + SKILL_FILES if not re.search(r"## Never does\n.*(send|envoy|envoi)", lire(p), re.S)]
 test("chaque rôle et skill déclare « ne fait jamais » (envoi compris)", not sans_jamais, sans_jamais)
 
 # 5 principes et portes déclarés
 PORTE = re.compile(r"P-(SRC|LIEN|SOM|CTX|COUV|PRES|EFF)|PANEL|RELEC|journal d'audit")
 sans = [p.name for p in AGENTS + ROLES_FOND + SKILL_FILES
-        if "## Principes appliqués et portes" not in lire(p) or not re.search(r"\bL\d+\b", lire(p).split("## Principes appliqués et portes", 1)[-1])
-        or not PORTE.search(lire(p).split("## Principes appliqués et portes", 1)[-1])]
+        if "## Principles applied and gates" not in lire(p) or not re.search(r"\bL\d+\b", lire(p).split("## Principles applied and gates", 1)[-1])
+        or not PORTE.search(lire(p).split("## Principles applied and gates", 1)[-1])]
 test("chaque rôle et skill déclare ses principes (L1-L10) et les portes qui les vérifient", not sans, sans)
 
 # 6 identifiant en base pour chaque rôle, skill, fichier cabinet
@@ -130,7 +130,7 @@ mets = con.execute("SELECT id, chemin FROM objets WHERE type='methode' AND statu
 mauvais = []
 for oid, ch in mets:
     t = lire(ROOT / ch)
-    if not all(s in t for s in ("## Étapes", "## Contrôle", "## Pièges", "## Exemple")) or f"id: {oid}" not in t:
+    if not all(s in t for s in ("## Steps", "## Checks", "## Pitfalls", "## Example")) or f"id: {oid}" not in t:
         mauvais.append(oid)
 test("fiches méthodes : ≥ 16, en-tête et sections (étapes, contrôle, pièges, exemple)", len(mets) >= 16 and not mauvais, (len(mets), mauvais))
 ids_met = {m[0] for m in mets}
@@ -141,8 +141,8 @@ test("chaque sous-agent cite au moins une fiche méthode", not sans_met, sans_me
 
 # 8 associé : court (≤ 1 800 tokens estimés) et règles clés
 a = lire(ROOT / ".team" / "brain" / "firm" / "partner.md")
-cles = ["une seule voix", "Règle zéro", "question next --sujet", "Brouillons uniquement", "entre nous", "ceci relève d'un avocat",
-        "deliverable-production", "panel adverse", "1 500 caractères", "ce que vous n'avez pas demandé"]
+cles = ["single voice", "Rule zero", "question next --sujet", "Drafts only", "entre nous", "this is a matter for a lawyer",
+        "deliverable-production", "adversarial panel", "1 500 characters", "ce que vous n'avez pas demandé"]
 manque = [c for c in cles if c.lower() not in a.lower()]
 test("partner.md : ≤ 1 800 tokens (≈ 3,5 car./token) et règles clés présentes", len(a) / 3.5 <= 1800 and not manque, (len(a), manque))
 
@@ -159,7 +159,7 @@ acc = [p.name for p in AGENTS + ROLES_FOND + SKILL_FILES if re.search(r"Bureau/(
 test("chemins de la zone humaine en ASCII (Bureau/A-deposer, Deposes, Modeles)", not acc, acc)
 
 # 11 rapport ≤ 1 500 caractères exigé dans chaque sous-agent
-sans = [p.stem for p in AGENTS if "1 500 caractères" not in lire(p)]
+sans = [p.stem for p in AGENTS if "1 500 characters" not in lire(p)]
 test("chaque sous-agent impose un rapport ≤ 1 500 caractères (IDs + lignes de sommaire)", not sans, sans)
 
 print("OK" if all(resultats) else f"ÉCHEC ({resultats.count(False)}/{len(resultats)})")

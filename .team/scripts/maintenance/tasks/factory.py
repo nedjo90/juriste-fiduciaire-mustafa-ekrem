@@ -207,18 +207,21 @@ def controler(avant):
 def mission_texte(b):
     cli = "python .team/cerebro/cerebro.py" if os.name == "nt" else ".team/bin/cerebro"
     skills = ", ".join(sorted(p.parent.name for p in (ROOT / ".claude" / "skills").glob("*/SKILL.md")))
-    return (f"Besoin unique de cette semaine (source : {b['source']}) : {b['texte']}\n\n"
-            f"Skills existantes : {skills}.\n"
-            "Choisis la forme la plus légère qui répond durablement : (a) révision d'une skill ou d'un sous-agent existant ; "
-            f"(b) une tâche récurrente → `{cli} routine add \"<énoncé>\" --cadence <lundi…|quotidien|hebdo|mensuel|evenement:<type>> --mission \"<à produire>\"` "
-            "(exécutée par script ou par le cycle, pas de skill) ; (c) une skill `.claude/skills/<nom>/SKILL.md` ; (d) un sous-agent `.claude/agents/<nom>.md`. "
-            "Pour (c)/(d) : en-tête YAML `name` (ASCII minuscules-tirets, = nom du dossier pour une skill) et `description` entre guillemets, ≤ 160 caractères "
-            "(verbe d'usage + déclencheur) ; sous-agent : `tools` et `model` (opus|sonnet|haiku selon §6.6) ; corps sur le modèle des skills existantes "
-            "(Quand l'utiliser, Étapes avec commandes cerebro, Structure du livrable, Ne fait jamais) ; aucun taux, article, délai ni barème de mémoire "
-            "(renvoi à la bibliothèque : cerebro law article). Ajoute la description dans .team/scripts/firm/descriptions.py (AGENTS ou SKILLS). "
-            f"N'enregistre pas toi-même en base : le script de contrôle le fait (YAML, bloc cardinal, inventaire, validation de la configuration). "
-            "Ne modifie ni CLAUDE.md, ni .claude/settings.json, ni la constitution. "
-            'Dernière ligne : {"forme": "revision|routine|skill|role|aucune", "fichiers": ["…"], "routine": "ROUT-…|null", "raison": "…"}')
+    return (f"This week's single need (source: {b['source']}): {b['texte']}\n\n"
+            f"Existing skills: {skills}.\n"
+            "Choose the lightest durable form: (a) revise an existing skill or subagent; "
+            f"(b) a recurring task → `{cli} routine add \"<statement>\" --cadence <lundi…|quotidien|hebdo|mensuel|evenement:<type>> --mission \"<to produce>\"` "
+            "(run by script or by the cycle, no skill); (c) a skill `.claude/skills/<name>/SKILL.md`; (d) a subagent `.claude/agents/<name>.md`. "
+            "For (c)/(d): write in ENGLISH (machine configuration); YAML header `name` (lowercase ASCII with hyphens, = folder name for a skill) "
+            "and `description` in double quotes, ≤ 160 characters (usage verb + trigger, Swiss legal terms in their language); subagent: `tools` "
+            "and `model` (opus|sonnet|haiku per §6.6); body modelled on existing skills (When to use, Steps with cerebro commands, Deliverable "
+            "structure, Never does, Principles applied and gates), with the language rule: reply to Mustafa in his language (French by default), "
+            "deliverables in the recipient's language. No rate, article, deadline or barème from memory (refer to the library: cerebro law "
+            "article). Add the description to .team/scripts/firm/descriptions.py (AGENTS or SKILLS). "
+            f"Do not register in the database yourself: the control script does it (YAML, cardinal block, inventory, configuration validation). "
+            "Do not modify CLAUDE.md, .claude/settings.json or the constitution. "
+            'Last line: {"forme": "revision|routine|skill|role|aucune", "fichiers": ["…"], "routine": "ROUT-…|null", "raison": "…"}')
+
 
 
 def convertir_demandes(bs=None):
