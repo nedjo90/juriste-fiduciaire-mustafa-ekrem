@@ -2,7 +2,7 @@
 id: RD-009
 type: regle_delai
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2027-01-01 vérifier contre le texte officiel
 risque_principal: 
 chiffre_clé: 

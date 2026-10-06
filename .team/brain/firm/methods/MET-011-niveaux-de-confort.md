@@ -2,13 +2,13 @@
 id: MET-011
 type: methode
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2027-01-04 réviser avec les leçons des livrables (fabrique)
 risque_principal: 
 chiffre_clé: 
 résumé: Toute conclusion porte un niveau de confort : will, should, more likely than not, reasonable basis — jamais surélevé, abaissé par le droit étranger, la pratique non vérifiée ou les faits non prouvés ; équivalents FR/DE/IT.
 mots_clés: méthode cabinet
-liens: CAB-004
+liens: 
 source: constitution §10 ; méthodes des grandes études et fiduciaires
 ---
 # Comfort levels (machine) — house scale: CAB-004 (comfort-levels.md)

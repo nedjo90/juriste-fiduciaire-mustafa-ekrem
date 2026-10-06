@@ -2,7 +2,7 @@
 id: MET-016
 type: methode
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2027-01-04 réviser avec les leçons des livrables (fabrique)
 risque_principal: 
 chiffre_clé: 

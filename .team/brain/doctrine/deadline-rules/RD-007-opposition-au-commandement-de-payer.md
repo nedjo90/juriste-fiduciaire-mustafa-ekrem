@@ -2,13 +2,13 @@
 id: RD-007
 type: regle_delai
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2027-01-01 revérifier à chaque nouvelle consolidation (bibliotheque_maj)
 risque_principal: 
 chiffre_clé: 
 résumé: 10 jours dès notification — RS 281.1 (LP) art. 74 al. 1 ; vérifiée le 2026-10-03 contre BIB-012 (version 2026-01-01)
 mots_clés: 
-liens: BIB-012, BIB-014
+liens: 
 source: RS 281.1 art. 74 al. 1
 ---
 # Opposition au commandement de payer

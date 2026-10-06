@@ -2,13 +2,13 @@
 id: RD-005
 type: regle_delai
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2027-01-01 revérifier à chaque nouvelle consolidation (bibliotheque_maj)
 risque_principal: 
 chiffre_clé: 
 résumé: 6 mois dès cloture_exercice — RS 220 (CO) art. 699 al. 2 ; vérifiée le 2026-10-03 contre BIB-001 (version 2026-10-01)
 mots_clés: 
-liens: BIB-001, BIB-014
+liens: 
 source: RS 220 art. 699 al. 2
 ---
 # Assemblée générale ordinaire

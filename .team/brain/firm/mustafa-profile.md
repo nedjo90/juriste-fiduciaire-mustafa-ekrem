@@ -2,10 +2,13 @@
 id: CAB-001
 type: profil
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2026-10-10 compléter depuis les échanges et documents (greffier)
+risque_principal: 
+chiffre_clé: 
 résumé: Profil de Mustafa Ekrem, juriste en fiduciaire suisse. Valeurs par défaut tant que rien n'est déclaré.
-liens: CAB-002
+mots_clés: 
+liens: 
 source: constitution §0bis ; défauts
 ---
 ## Identité
