@@ -2,9 +2,12 @@
 id: CAB-002
 type: environnement
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2026-10-10 détection sur le poste de Mustafa par l'installateur
+risque_principal: 
+chiffre_clé: 
 résumé: Poste, comptes, logiciels, accès, abonnements. Construction faite sur machine distante.
+mots_clés: 
 liens: CAB-001
 source: détecté le 2026-10-03
 ---

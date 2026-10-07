@@ -2,13 +2,13 @@
 id: DOCT-001
 type: doctrine
 statut: actif
-maj: 2026-10-03
+maj: 2026-10-06
 prochaine_action: 2026-10-10 mettre à jour après chaque cycle bibliotheque_maj
 risque_principal: 
 chiffre_clé: 
 résumé: Textes Fedlex ingérés (25 actes, FR ; CO et LIFD en DE), règles de délais RD-001 à RD-008 vérifiées, barèmes sourcés, calculs et entretien
 mots_clés: bibliothèque Fedlex RS loi article barème délai
-liens: BIB-001, BIB-003, BIB-005, BIB-007, BIB-008, CAP-001, CAP-008, RD-003, RD-006
+liens: RD-003, RD-006
 source: https://fedlex.data.admin.ch
 ---
 # Federal library: state and how to use it
